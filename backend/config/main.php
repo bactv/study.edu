@@ -11,7 +11,24 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gii' => [
+            'class' => 'yii\gii\Module',
+            'allowedIPs' => ['127.0.0.1', '::1'],
+            'generators' => [
+                'crud'   => [
+                    'class'     => 'backend\templates\gii\crud\Generator',
+                ],
+                'model'   => [
+                    'class'     => 'backend\templates\gii\model\Generator'
+                ],
+            ]
+        ],
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => ['127.0.0.1', '::1', '118.70.124.143', '113.190.252.218', '183.81.9.171', '123.25.21.138'],
+        ]
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -37,14 +54,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '.html',
             'rules' => [
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ]
+        ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@app/views/default',
+                'baseUrl' => '@web/themes/default',
+                'pathMap' => [
+                    '@app/views' => '@app/views/default',
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

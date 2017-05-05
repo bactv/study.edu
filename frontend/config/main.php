@@ -36,14 +36,44 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '.io',
             'rules' => [
+                'on-thi-<id:\D+>' => 'subject/detail',
+                'luyen-de' => 'quiz/index',
+                'khoa-hoc-truc-tuyen' => 'course/index',
+                'login' => 'site/login',
+                'signup' => 'site/signup',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ]
+        ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@app/views/default',
+                'baseUrl' => '@web/themes/default',
+                'pathMap' => [
+                    '@app/views' => '@app/views/default',
+                ],
             ],
         ],
-        */
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'authClientCollection' => [
+                'class' => 'yii\authclient\Collection',
+                'clients' => [
+                    'facebook' => [
+                        'class' => 'yii\authclient\clients\Facebook',
+                        'clientId' => '798868116932355',
+                        'clientSecret' => 'af027df26fdbe55d47cc5a708a6da72a',
+                    ],
+                ],
+            ]
+        ],
     ],
     'params' => $params,
 ];

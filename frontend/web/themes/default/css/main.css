@@ -1,0 +1,244 @@
+.main {
+    margin-top: 100px;
+}
+.nav-top {}
+.nav-top #btn-notification {
+	padding: 0 0 5px 5px;
+    margin-left: 10px;
+    font-size: 30px;
+    position: relative;
+    background: url("../images/icons/bell.png") no-repeat;
+    background-size: 100% 100%;
+    margin-top: -3px;
+    height: 40px;
+    width: 40px;
+}
+.nav-top #dropdown-menu-profile {
+	margin-top: 59px;
+    right: 0;
+}
+.nav-top #dropdown-menu-profile li {
+	padding: 0;
+}
+
+.carousel-inner img {
+    width: 100%; /* Set width to 100% */
+    margin: auto;
+    min-height: 200px !important;
+}
+
+  /* Hide the carousel text when the screen is less than 600 pixels wide */
+@media (max-width: 600px) {
+   .carousel-caption {
+      	display: none; 
+    }
+}
+
+#myCarousel {
+	margin: 70px 0 0 0;
+}
+.search-course {
+	margin-bottom: 30px;
+}
+
+.search-course span {
+	color: #666;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 38px;
+    margin: 50px 20px 0 20px;
+}
+.search-course .w3-select {
+	border: 1px solid #ccc;
+    width: 50%;
+    height: 50px;
+    padding: 0 10px;
+}
+.list_course {
+	    margin-bottom: 20px;
+}
+.list_course .course_item {
+	    width: 95%;
+    margin: auto;
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+}
+
+.list_course .course_item:hover {
+	box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 10px rgba(0,0,0,.24);
+}
+
+.list_course .course_item .course_img {
+	height: 168px;
+    display: block;
+    overflow: hidden;
+}
+.list_course .course_item .course_img img {
+	width: 100%;
+	height: 100%;
+}
+.list_course .course_item .course_desc {
+	
+}
+.list_course .course_item .course_desc .course_name {
+	    color: #2970b8;
+    font-size: 14px;
+    font-weight: 500;
+     line-height: 1.25; 
+    margin: 5px 0;
+        padding: 3px 10px;
+}
+.list_course .course_item .course_desc .course_name a {
+	color: inherit;
+    height: 2.5em;
+    display: block;
+    overflow: hidden;
+}
+
+.list_course .course_item .course_desc .course_teacher {
+	height: 2.5em;
+    overflow: hidden;
+        padding: 3px 10px;
+    font-size: 13px;
+}
+.list_course .course_item .course_desc .course_teacher a {
+	color: #2970b8;
+}
+.list_course .course_item .course_desc .view_more {
+	text-align: right;
+	padding-bottom: 3px;
+}
+.list_course .course_item .course_desc .view_more a {
+	background-color: #ff7e00;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+} 
+.list_course .course_item .course_desc .register_info {
+        padding: 3px 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.list_course .course_item .course_desc .register_info .course_student {
+	
+}
+.list_course .course_item .course_desc .register_info .course_time {
+	
+}
+.list_course .course_item .course_desc .register_info .course_fee {
+	
+}
+
+footer {
+	margin-top: 100px;
+}
+footer i {
+	font-size: 1.3em !important;
+    padding-right: 30px;
+}
+
+
+
+
+
+
+/* ==================== */
+.main_content {
+    padding-top: 30px;
+    max-width: 1150px;
+    margin: 80px auto 0px auto;
+}
+.main_content ul.list_subject {
+	list-style-type: none;
+    padding: 0;
+    /*border: 1px solid #ccc;*/
+    margin-right: 20px;
+    /*box-shadow: 0px 0px 10px #ccc;*/
+        background: #FFF;
+}
+.main_content ul.list_subject li {
+	padding: 10px;
+    /*margin-bottom: 2px;*/
+    border-bottom: 1px solid #ddd !important;
+}
+.main_content ul.list_subject li:hover {
+	background-color: #ccc;
+}
+.main_content ul.list_subject a {}
+
+.quiz_category {
+	margin-bottom: 20px;
+}
+.quiz_category ul {
+	list-style-type: none;
+    padding: 0 20px 0 0;
+}
+.quiz_category li {
+	display: inline;
+    margin-right: 10px;
+}
+.quiz_category li a {
+    padding: 10px;
+    background: #FFF;
+    font-weight: bold;
+    color: rgba(9, 7, 103, 0.56);
+}
+.list_quiz {
+    margin-right: 20px;
+}
+.list_quiz .box-item {
+	    padding: 15px;
+	    margin-bottom: 20px;
+	        background: #FFF;
+}
+.list_quiz .box-item p#quiz-title{
+
+}
+.list_quiz .box-item p#quiz-title span {
+    color: rgb(195, 12, 12);
+    font-weight: 700;
+}
+.list_quiz .box-item p#quiz-name{
+	    font-size: 1.3em;
+}
+.list_quiz .box-item p#quiz-name a{
+}
+.list_quiz .box-item #quiz-info{
+	font-size: 12px;
+	    color: #717171;
+}
+.list_quiz .box-item #quiz-info span:first-child {
+	margin-right: 10px;
+}
+.list_quiz .box-item #quiz-info span:last-child {
+	margin-left: 10px;
+}
+.list_quiz .box-item #btn-detail{
+    text-align: right;
+}
+
+.leaderboard {
+	background: #FFF;
+	    border: 1px solid #ccc;
+}
+.leaderboard p#title {
+	    padding: 15px;
+    text-align: center;
+    color: #07afb9;
+    text-transform: uppercase;
+    font-weight: bold;
+        margin: 0;
+}	
+
+.leaderboard .nav-pills>li>a {
+	border-radius: 0;
+}
+
+.leaderboard .nav-pills>li {
+    width: 50%;
+    margin: 0 !important;
+    padding: 0;
+    text-align: center;
+}
+.leaderboard .tab-content {
+	padding: 5px;
+}
