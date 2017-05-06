@@ -71,6 +71,11 @@ class User extends \common\models\UserBase implements IdentityInterface
         return $this->username;
     }
 
+    public function getUserType()
+    {
+        return $this->type;
+    }
+
     /**
      * Returns a key that can be used to check the validity of a given identity ID.
      *

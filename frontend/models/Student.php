@@ -15,4 +15,9 @@ class Student extends \common\models\StudentBase
 
         return $model->save();
     }
+
+    public static function findById($user_id)
+    {
+        return self::findOne(['user_id' => $user_id]);
+    }
 }
