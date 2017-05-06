@@ -1,0 +1,43 @@
+.form {
+    width: 30%;
+    margin: auto;
+}
+form {
+    padding: 10px 10px 20px 10px;
+    background-color: #f7f7f7;
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    font-family: 'Oswald', sans-serif !important;
+}
+.colorgraph {
+    height: 2px;
+    border-top: 0;
+    background: teal;
+    border-radius: 5px;
+
+}
+body {
+    background-color: #cad9da !important;
+}
+.ft {
+    font-family: 'Oswald', sans-serif !important;
+}
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-control:focus {
+    z-index: 2;
+}
+input[type="text"] {
+    margin-bottom: -1px;
+}
+input[type="password"] {
+    margin-bottom: 10px;
+}

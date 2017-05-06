@@ -30,17 +30,17 @@ use yii\helpers\Url;
                 <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 10px;">
                     <a href="#projects" class="w3-bar-item" id="btn-notification"></a>
                     <div class="w3-dropdown-click">
-                        <a onclick="myFunction()" class="w3-bar-item w3-text-teal">bactv174 <i class="fa fa-angle-down w3-text-teal" aria-hidden="true"></i></a>
+                        <a onclick="myFunction()" class="w3-bar-item w3-text-teal"><?php echo Yii::$app->user->identity->getUsername() ?> <i class="fa fa-angle-down w3-text-teal" aria-hidden="true"></i></a>
                         <ul id="dropdown-menu-profile" class="w3-dropdown-content w3-bar-block w3-border w3-ul">
-                            <li><a href="#" class="w3-bar-item w3-text-teal"><i class="fa fa-user" aria-hidden="true"></i> Thông tin cá nhân</a></li>
-                            <li><a href="#" class="w3-bar-item w3-text-teal"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Đăng xuất</a></li>
+                            <li><a href="<?php echo Url::toRoute(['/tai-khoan']) ?>" class="w3-bar-item w3-text-teal"><i class="fa fa-user" aria-hidden="true"></i> Thông tin cá nhân</a></li>
+                            <li><a href="<?php echo Url::toRoute(['/dang-xuat']) ?>" class="w3-bar-item w3-text-teal"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Đăng xuất</a></li>
                         </ul>
                     </div>
                 </div>
             <?php } else { ?>
                 <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 4px;text-transform: uppercase;font-size: 12px;font-weight: bold;">
-                    <a href="<?php echo Url::toRoute(['/login']) ?>" class="w3-bar-item w3-button w3-teal w3-border w3-border-teal w3-text-white w3-hover-teal w3-hover-text-white" style="margin-right: 10px;">Đăng ký</a>
-                    <a href="<?php echo Url::toRoute(['/signup']) ?>" class="w3-bar-item w3-button w3-white w3-border w3-border-teal w3-text-teal w3-hover-white w3-hover-text-teal">Đăng nhập</a>
+                    <a href="<?php echo Url::toRoute(['/dang-ky']) ?>" class="w3-bar-item w3-button w3-teal w3-border w3-border-teal w3-text-white w3-hover-teal w3-hover-text-white" style="margin-right: 10px;">Đăng ký</a>
+                    <a href="<?php echo Url::toRoute(['/dang-nhap']) ?>" class="w3-bar-item w3-button w3-white w3-border w3-border-teal w3-text-teal w3-hover-white w3-hover-text-teal">Đăng nhập</a>
                 </div>
             <?php } ?>
         </div>

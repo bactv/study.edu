@@ -2,17 +2,11 @@
 namespace frontend\controllers;
 
 use frontend\models\Slideshow;
+use frontend\models\User;
 use Yii;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 
 /**
  * Site controller
@@ -33,12 +27,101 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        return $this->render('login');
+        $model = new User();
+
+        $model->type = 1;
+        $request = Yii::$app->request->post();
+        $session = Yii::$app->session;
+        if (isset($request['btn-login'])) {
+            $username = isset($request['username'])? Html::encode($request['username']) : '';
+            $password = isset($request['password'])? Html::encode($request['password']) : '';
+            $user_type = isset($request['user_type'])? Html::encode($request['user_type']) : 1;
+            $remember_me = isset($request['remember-me'])? 1 : 0;
+
+            $model->username = $username;
+            $model->password = $password;
+            $model->type = $user_type;
+            $model->rememberMe = $remember_me;
+
+            if ($model->login()) {
+                return $this->goHome();
+            } else {
+                $session->setFlash('error', 'Tên đăng nhập hoặc tài khoản không tồn tại.');
+                return $this->render('login', [
+                    'model' => $model
+                ]);
+            }
+
+        } else {
+            return $this->render('login', [
+                'model' => $model
+            ]);
+        }
     }
 
+    /**
+     * Signup
+     * @return string
+     */
     public function actionSignup()
     {
-        return $this->render('signup');
+        $model = new User();
+        $request = Yii::$app->request->post();
+        $session = Yii::$app->session;
+
+        if (isset($request['btn-signup'])) {
+            $username = isset($request['username']) ? Html::encode($request['username']) : '';
+            $password = isset($request['password']) ? Html::encode($request['password']) : '';
+            $full_name = isset($request['full_name']) ? Html::encode($request['full_name']) : '';
+            $user_type = isset($request['user_type']) ? Html::encode($request['user_type']) : '';
+
+            $model->username = $username;
+            $model->password = $password;
+            $model->type = $user_type;
+            $model->full_name = $full_name;
+
+            if ($model->signup()) {
+                return $this->redirect(Url::toRoute(['/dang-nhap']));
+            } else {
+                $session->setFlash('error', 'Tài khoản không hợp lệ hoặc có lỗi xả ra. Vui lòng thử lại.');
+                return $this->render('signup', [
+                    'model' => $model
+                ]);
+            }
+        } else {
+            return $this->render('signup', [
+                'model' => $model
+            ]);
+        }
+    }
+
+    /**
+     * Kiểm tra tên đăng nhập đã tồn tại hay chưa
+     */
+    public function actionCheckUsername()
+    {
+        $request = Yii::$app->request->get();
+        $username = isset($request['username']) ? Html::encode($request['username']) : '';
+        $user_type = isset($request['user_type']) ? Html::encode($request['user_type']) : '';
+
+        $check = User::findOne(['username' => $username, 'type' => $user_type]);
+        if (!empty($check)) {
+            echo json_encode(['status' => 0]);
+            Yii::$app->end();
+        } else {
+            echo json_encode(['status' => 1]);
+            Yii::$app->end();
+        }
+    }
+
+    /**
+     * Logout
+     * @return \yii\web\Response
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->goHome();
     }
 
     /**
