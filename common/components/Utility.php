@@ -128,18 +128,18 @@ class Utility
         return stripos($headers[0],"200 OK")?true:false;
     }
 
-    public static function get_content_static($path, $name)
+    public static function get_content_static($path, $name_file)
     {
-        $extensions = ['mp4', 'mp3', 'flv', 'avi', 'jpg', 'jpeg', 'gif', 'png', 'doc', 'docx', 'pdf'];
-        $url_remote = Yii::$app->params['storage_url'];
-
-        foreach ($extensions as $e) {
-            $p = $url_remote . $path . $name . '.' . $e;
-            if (self::checkRemoteFile($p)) {
-                return $p;
+        $result = null;
+        $all_files = self::get_all_remote_file_in_folder($path);
+        foreach ($all_files as $pt) {
+            $info = pathinfo($pt);
+            if ($info['filename'] == $name_file) {
+                $result = $pt;
+                break;
             }
         }
-        return null;
+        return $result;
     }
 
     private static function checkRemoteFile($url)

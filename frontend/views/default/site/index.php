@@ -3,40 +3,45 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Hệ thống luyệ thi THPT Quốc Gia - Luyện thi ĐH, CĐ - Luyện thi trắc nghiệm trực tuyến.';
+use common\components\Utility;
 ?>
 <!-- SLIDE SHOW -->
-<div class="slideshow" style="border-bottom: 4px solid green;">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="https://www.lize.vn/images/homepage/banner-slider-6-auto.png" alt="Image">
+<?php if (isset($slides) && count($slides) > 0) { ?>
+    <div class="slideshow" style="border-bottom: 4px solid green;">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <?php foreach ($slides as $k => $slide) {
+                    $path = '' . Yii::$app->params['img_url']['slideshow']['folder'];
+                    $img = Utility::get_content_static($path, $slide['id']);
+                    if (!empty($img)) {
+                        $url = Yii::$app->params['storage_url'] . $img;
+                        ?>
+                    <div class="item <?php echo ($k == 0) ? 'active' : '' ?>">
+                        <a href="<?php echo $slide['url'] ?>" target="_blank">
+                            <img src="<?php echo $url ?>" alt="<?php echo $slide['alt'] ?>">
+                        </a>
+                    </div>
+                <?php } } ?>
             </div>
 
-            <div class="item">
-                <img src="https://www.lize.vn/images/homepage/banner-slider-5.png" alt="Image">
-                <div class="carousel-caption">
-                </div>
-            </div>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
-</div>
+<?php } ?>
 
 
 <!-- FORM TIM KIEM KHOA HOC -->
@@ -252,6 +257,15 @@ $this->title = 'Hệ thống luyệ thi THPT Quốc Gia - Luyện thi ĐH, CĐ -
         </div>
     </div>
 </div>
+<style>
+    .carousel-inner>.item.active {
+        height: 350px;
+    }
+    .carousel-inner>.item.active img {
+        width: 100%;
+        height: 100%;
+    }
+</style>
 
 <script>
     $(document).ready(function(){

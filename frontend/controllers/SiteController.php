@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\Slideshow;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -47,6 +48,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $slides = Slideshow::get_all_slideshows();
+        return $this->render('index', [
+            'slides' => $slides
+        ]);
     }
 }

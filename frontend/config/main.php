@@ -44,6 +44,10 @@ return [
             'rules' => [
                 'on-thi-<id:\D+>' => 'subject/detail',
                 'luyen-de' => 'quiz/index',
+                'tai-khoan' => 'user/index',
+                'khoa-hoc-cua-toi' => 'user/student-course',
+                'lich-su-giao-dich' => 'user/history-transaction',
+                'thong-bao' => 'user/student-notification',
                 'khoa-hoc-truc-tuyen' => 'course/index',
                 'khoa-hoc-truc-tuyen/<category:\D+>' => 'course/index',
                 'khoa-hoc/<str:[0-9a-zA-Z\-]+>' => 'course/detail',

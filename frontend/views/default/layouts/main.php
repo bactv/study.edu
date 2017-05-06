@@ -41,6 +41,7 @@ AppAsset::register($this);
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:300,300italic,400,400italic,500,500italic,700,700italic,&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Taviraj" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Serif|Lato|Oswald|Raleway|Roboto" rel="stylesheet">
     <?php AssetApp::regCssFile('common.css') ?>
     <?php AssetApp::regCssFile('main.css') ?>
 
