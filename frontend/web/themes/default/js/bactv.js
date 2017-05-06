@@ -16,17 +16,3 @@ function toggle_nav() {
         x.className = x.className.replace(" w3-show", "");
     }
 }
-
-$(document).ready(function(){
-  	$('.owl-carousel').owlCarousel({
-	    center: true,
-	    items:4,
-	    loop:true,
-	    margin:10,
-	    responsive:{
-	        600:{
-	            items:4
-	        }
-	    }
-	});
-});

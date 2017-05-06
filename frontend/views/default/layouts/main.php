@@ -23,30 +23,47 @@ AppAsset::register($this);
     <?php AssetApp::regCssFilePlugin('animate.min.css', 'animate') ?>
     <?php AssetApp::regCssFilePlugin('dist/assets/owl.carousel.min.css', 'owl-carousel') ?>
     <?php AssetApp::regCssFilePlugin('dist/assets/owl.theme.default.css', 'owl-carousel') ?>
+
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-1to10.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-movie.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-square.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-pill.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-reversed.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bars-horizontal.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/fontawesome-stars.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/css-stars.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/bootstrap-stars.css', 'jquery-bar-rating') ?>
+    <?php AssetApp::regCssFilePlugin('dist/themes/fontawesome-stars-o.css', 'jquery-bar-rating') ?>
+
     <?php AssetApp::regCssFile('w3.css') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=brick-sign">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic,500,500italic,700,700italic,&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:300,300italic,400,400italic,500,500italic,700,700italic,&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Taviraj" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <?php AssetApp::regCssFile('common.css') ?>
     <?php AssetApp::regCssFile('main.css') ?>
 
     <?php AssetApp::regJsFile('jquery.min.js') ?>
     <?php AssetApp::regJsFile('bootstrap.min.js') ?>
+    <?php AssetApp::regJsFile('jquery.sticky-kit.min.js') ?>
     <?php AssetApp::regJsFile('bactv.js') ?>
     <?php AssetApp::regJsFilePlugin('dist/owl.carousel.min.js', 'owl-carousel') ?>
+    <?php AssetApp::regJsFilePlugin('dist/jquery.barrating.min.js', 'jquery-bar-rating') ?>
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<?php echo $this->render('components/header.php') ?>
+<div class="wrapper">
+    <?php echo $this->render('components/header.php') ?>
 
-<div class="main">
-    <?php echo $content ?>
+    <div class="main">
+        <?php echo $content ?>
+    </div>
+
+    <?php echo $this->render('components/footer.php') ?>
 </div>
-
-<?php echo $this->render('components/footer.php') ?>
 
 <?php $this->endBody() ?>
 </body>

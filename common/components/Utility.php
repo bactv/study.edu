@@ -199,7 +199,8 @@ class Utility
         }
     }
 
-    public static function truncateStringWords($str, $maxlen) {
+    public static function truncateStringWords($str, $maxlen)
+    {
         if (strlen($str) <= $maxlen) {
             return $str;
         }
@@ -211,20 +212,44 @@ class Utility
         return $newstr . ' ...';
     }
 
-    public static function encrypt_decrypt($action, $string) {
-        $key = Yii::$app->params['key_encrypt'];
-
+    public static function encrypt_decrypt($action, $string)
+    {
         if ($action == 'encrypt') {
-            return base64_encode($key . '_' . $string);
+            return base64_encode($string);
         } else if ($action == 'decrypt'){
             return base64_decode($string);
         }
     }
 
-    public static function clean_string($string) {
+    public static function clean_string($string)
+    {
         $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
         $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
 
         return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+    }
+
+    /**
+     * @param $string
+     * @return mixed
+     */
+    public static function stripText($string)
+    {
+        $from = array("à", "ả", "ã", "á", "ạ", "ă", "ằ", "ẳ", "ẵ", "ắ", "ặ", "â", "ầ", "ẩ", "ẫ", "ấ", "ậ", "đ", "è", "ẻ", "ẽ", "é", "ẹ", "ê", "ề", "ể", "ễ", "ế", "ệ", "ì", "ỉ", "ĩ", "í", "ị", "ò", "ỏ", "õ", "ó", "ọ", "ô", "ồ", "ổ", "ỗ", "ố", "ộ", "ơ", "ờ", "ở", "ỡ", "ớ", "ợ", "ù", "ủ", "ũ", "ú", "ụ", "ư", "ừ", "ử", "ữ", "ứ", "ự", "ỳ", "ỷ", "ỹ", "ý", "ỵ", "À", "Ả", "Ã", "Á", "Ạ", "Ă", "Ằ", "Ẳ", "Ẵ", "Ắ", "Ặ", "Â", "Ầ", "Ẩ", "Ẫ", "Ấ", "Ậ", "Đ", "È", "Ẻ", "Ẽ", "É", "Ẹ", "Ê", "Ề", "Ể", "Ễ", "Ế", "Ệ", "Ì", "Ỉ", "Ĩ", "Í", "Ị", "Ò", "Ỏ", "Õ", "Ó", "Ọ", "Ô", "Ồ", "Ổ", "Ỗ", "Ố", "Ộ", "Ơ", "Ờ", "Ở", "Ỡ", "Ớ", "Ợ", "Ù", "Ủ", "Ũ", "Ú", "Ụ", "Ư", "Ừ", "Ử", "Ữ", "Ứ", "Ự", "Ỳ", "Ỷ", "Ỹ", "Ý", "Ỵ");
+        $to = array("a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "d", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "i", "i", "i", "i", "i", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "o", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "u", "y", "y", "y", "y", "y", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "D", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "E", "I", "I", "I", "I", "I", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "O", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "U", "Y", "Y", "Y", "Y", "Y");
+        return str_replace($from, $to, $string);
+    }
+
+    /**
+     * @param $string
+     * @return mixed|string
+     */
+    public static function rewrite($string)
+    {
+        $string = Utility::stripText($string);
+        $string = strtolower(trim($string));
+        $string = preg_replace('/[^a-z0-9-]/', '-', $string);
+        $string = preg_replace('/-+/', "-", $string);
+        return $string;
     }
 }

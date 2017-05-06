@@ -11,7 +11,7 @@ use yii\helpers\Url;
 <div class="nav-top">
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
-        <div class="w3-bar w3-white w3-padding w3-card-2">
+        <div class="w3-bar w3-padding" style="background: #f7f7f7;border-bottom: 1px solid #ccc;">
             <a href="<?php echo Url::to('/') ?>" class="w3-bar-item w3-text-teal w3-col m2 w3-lobster font-effect-brick-sign" style="font-family: Lobster, Sans-serif;font-size: 30px"><b>STUDY.EDU</b></a>
             <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="toggle_nav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
             <!-- Float links to the right. Hide them on small screens -->
