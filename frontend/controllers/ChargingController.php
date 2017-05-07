@@ -8,6 +8,8 @@
 namespace frontend\controllers;
 
 use common\components\Utility;
+use frontend\models\Student;
+use frontend\models\Transaction;
 use frontend\models\TransactionError;
 use frontend\models\User;
 use Yii;
@@ -61,24 +63,27 @@ class ChargingController extends Controller
 
         $return_json = [];
         $result = Utility::curlSendPost(Yii::$app->params['api']['charging'][$telco_type], $params);
+        if ($result == false) {
+            echo json_encode(['status' => 0, 'message' => 'Xin lỗi, hệ thống đang lỗi, vui lòng thử lại sau.']);
+            Yii::$app->end();
+        }
         $str = json_decode($result);
         $return_json['status'] = $str->{'code'};
         $return_json['message'] = Yii::$app->params['charge_code_status']['viettel'][$str->{'code'}];
         if (!empty($str) && $str->{'code'} == 200) {
-            $money = $str->{'money'};
-            Yii::$app->db->createCommand("UPDATE student SET balance = balance + " . intval(Utility::exchangeMoney(intval($money))) . " WHERE user_id=" . Yii::$app->user->identity->getId())->execute();
-            $return_json['message'] = sprintf(Yii::$app->params['charge_code_status']['viettel'][200], number_format(Utility::exchangeMoney(intval($money))));
+            $money = intval(Utility::exchangeMoney(intval($str->{'money'})));
+            Yii::$app->db->createCommand("UPDATE student SET balance = balance + " . $money . " WHERE user_id=" . Yii::$app->user->identity->getId())->execute();
+            $std = Student::findOne(['user_id' => Yii::$app->user->identity->getId()]);
+            // lưu vào transaction
+            Transaction::logTransaction(Yii::$app->user->identity->getId(), 'CHARGE_MONEY', $money, json_encode($request), json_encode($str), $std['balance']);
+
+            $return_json['message'] = sprintf(Yii::$app->params['charge_code_status']['viettel'][200], number_format($money));
             echo json_encode($return_json);
             Yii::$app->end();
         }
         // nếu nhập không đúng mã thẻ
         if ($str->{'code'} != 200) {
-            $transaction_error = new TransactionError();
-            $transaction_error->user_id = Yii::$app->user->identity->getId();
-            $transaction_error->action = 'CHARGE_MONEY';
-            $transaction_error->code = $str->{'code'};
-            $transaction_error->created_time = date('Y-m-d H:i');
-            $transaction_error->save();
+            TransactionError::logTransaction(Yii::$app->user->identity->getId(), 'CHARGE_MONEY', $str->{'code'}, json_encode($request), json_encode($str));
 
             $check = TransactionError::check_over_five_times(Yii::$app->user->identity->getId());
             // nếu 5 lần thất bại, deactive tài khoản

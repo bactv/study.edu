@@ -8,6 +8,7 @@
 
 use yii\helpers\Url;
 use common\components\Utility;
+use yii\widgets\LinkPager;
 
 ?>
 
@@ -25,31 +26,23 @@ use common\components\Utility;
                 <th>Số dư</th>
             </tr>
             </thead>
-            <tr>
-                <td>32249</td>
-                <td>06-05-2017 12:13:24</td>
-                <td>Thanh toán chuyên đề học thử</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>32249</td>
-                <td>06-05-2017 12:13:24</td>
-                <td>Thanh toán chuyên đề học thử</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-            <tr>
-                <td>32249</td>
-                <td>06-05-2017 12:13:24</td>
-                <td>Thanh toán chuyên đề học thử</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
+            <?php foreach ($transactions as $trans) {  ?>
+                <tr>
+                    <td><?php echo $trans['request_id'] ?></td>
+                    <td><?php echo Utility::formatDataTime($trans['created_time'], '-', '/', true) ?></td>
+                    <td><?php echo (isset(Yii::$app->params['transaction_action'][$trans['action']]) ? Yii::$app->params['transaction_action'][$trans['action']] : '') ?></td>
+                    <td><?php echo number_format($trans['price']) ?></td>
+                    <td><?php echo (intval($trans['price']) < 0) ? '-' . number_format($trans['price']) : 0 ?></td>
+                    <td><?php echo number_format($trans['user_balance']) ?></td>
+                </tr>
+            <?php } ?>
         </table>
+        <?php
+        // display pagination
+        echo LinkPager::widget([
+            'pagination' => $pages,
+        ]);
+        ?>
     </div>
 </div>
 

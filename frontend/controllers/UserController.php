@@ -9,10 +9,14 @@ namespace frontend\controllers;
 
 use frontend\models\StaticPage;
 use frontend\models\Student;
+use frontend\models\Transaction;
 use Yii;
 use yii\bootstrap\Html;
+use yii\data\Pagination;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class UserController extends Controller
 {
@@ -28,6 +32,7 @@ class UserController extends Controller
             $student = Student::findById($this->_user['id']);
             Yii::$app->view->params['student'] = $student;
         }
+        Yii::$app->view->params['user'] = $this->_user;
     }
 
     public function actionIndex()
@@ -80,9 +85,18 @@ class UserController extends Controller
 
     public function actionChangeAvatar()
     {
-        $request = Yii::$app->request->post();
-        $file = isset($request['avatar']) ? $request['avatar'] : '';
-        var_dump($file);
+        $model = $this->_user;
+        $session = Yii::$app->session;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+
+            if ($model->uploadAvatar($model['id'])) {
+                $session->setFlash('success', 'Cập nhật thành công.');
+            } else {
+                $session->setFlash('error', 'Cập nhật không thành công.');
+            }
+        }
+        return $this->redirect(Url::toRoute(['/tai-khoan']));
     }
 
     public function actionCharging()
@@ -105,7 +119,18 @@ class UserController extends Controller
     public function actionHistoryTransaction()
     {
         $this->layout = 'student_layout';
-        return $this->render('student/history_transaction');
+
+        $query = Transaction::find()->where(['user_id' => $this->_user['id']]);
+        $pages = new Pagination(['totalCount' => $query->count()]);
+        $pages->defaultPageSize = 10;
+        $trans = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('student/history_transaction', [
+            'transactions' => $trans,
+            'pages' => $pages,
+        ]);
     }
 
     public function actionStudentNotification()

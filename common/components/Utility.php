@@ -84,6 +84,7 @@ class Utility
         curl_setopt($resource, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($resource, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($resource, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($resource, CURLOPT_TIMEOUT_MS, 10000);
 
         $result = curl_exec($resource);
         curl_close($resource);

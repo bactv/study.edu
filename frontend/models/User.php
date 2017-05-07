@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\components\Utility;
 use Yii;
 use yii\web\IdentityInterface;
 
@@ -17,6 +18,7 @@ class User extends \common\models\UserBase implements IdentityInterface
 
     public $rememberMe;
     public $full_name;
+    public $avatar;
     protected $_user = false;
 
     /**
@@ -191,5 +193,24 @@ class User extends \common\models\UserBase implements IdentityInterface
             return false;
         }
         return true;
+    }
+
+    public function uploadAvatar($id)
+    {
+        if ($this->avatar == null) {
+            return false;
+        }
+        $path =  Yii::$app->params['img_url']['user_avatar']['folder'] . '/';
+        $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
+        if (!is_dir($path_admin)) {
+            mkdir($path_admin, 0777, true);
+        }
+        if ($this->validate()) {
+            $this->avatar->saveAs($path_admin . $id . '.png');
+            $c = Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['web_url'] . 'storage/' . $path . $id . '.png');
+            return $c;
+        } else {
+            return false;
+        }
     }
 }

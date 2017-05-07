@@ -8,6 +8,7 @@ use frontend\assets\AppAsset;
 use common\components\AssetApp;
 use yii\helpers\Url;
 use kartik\file\FileInput;
+use common\components\Utility;
 
 AppAsset::register($this);
 ?>
@@ -83,7 +84,16 @@ AppAsset::register($this);
                 <div class="w3-col l3 box_left">
                     <div class="w3-white w3-text-grey w3-card-2">
                         <div class="w3-display-container">
-                            <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" style="width:100%" alt="Avatar">
+                            <?php
+                            $path = Yii::$app->params['img_url']['user_avatar']['folder'] . '/';
+                            $avatar = Utility::get_content_static($path, Yii::$app->view->params['student']['user_id']);
+                            if (!empty($avatar)) {
+                                $img = Yii::$app->params['storage_url'] . $avatar;
+                            } else {
+                                $img = "https://www.w3schools.com/w3images/avatar_hat.jpg";
+                            }
+                            ?>
+                            <img src="<?php echo $img; ?>" style="width:100%;height: 300px" alt="Avatar">
                             <div class="w3-display-bottomleft w3-container w3-text-black">
                                 <a href="#" data-toggle="modal" data-target="#change_avatar"><i class="fa fa-camera fa-fw w3-margin-right w3-large" aria-hidden="true" style="font-size: 2.5em !important; color: rgba(0, 0, 0, 0.23);"></i></a>
                             </div>
@@ -92,11 +102,11 @@ AppAsset::register($this);
                             <h2><?php echo Yii::$app->user->identity->getUsername(); ?></h2>
                         </div>
                         <ul class="w3-ul">
+                            <li class="active_ba"><a href="javascript:void(0)"><i class="fa fa-money fa-fw w3-margin-right w3-large w3-text-teal"></i>Số dư TK: <span class="w3-text-red"><b><?php echo number_format(Yii::$app->view->params['student']['balance']) ?> đ</b></span></a></li>
                             <li class="active_tk"><a href="<?php echo Url::toRoute(['/tai-khoan']) ?>"><i class="fa fa-info fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông tin cá nhân</a></li>
                             <li class="active_mc"><a href="<?php echo Url::toRoute(['/khoa-hoc-cua-toi']) ?>"><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Khóa học của tôi</a></li>
                             <li class="active_ht"><a href="<?php echo Url::toRoute(['/lich-su-giao-dich']) ?>"><i class="fa fa-history fa-fw w3-margin-right w3-large w3-text-teal"></i>Lịch sử giao dịch</a></li>
                             <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo</a></li>
-                            <li class="active_ba"><a href="<?php echo Url::toRoute(['/so-du-tai-khoan']) ?>"><i class="fa fa-money fa-fw w3-margin-right w3-large w3-text-teal"></i>Số dư tài khoản: <span class="w3-text-red"><b><?php echo number_format(Yii::$app->view->params['student']['balance']) ?> đ</b></span></a></li>
                             <li class="active_chr"><a href="<?php echo Url::toRoute(['/nap-tien']) ?>"><i class="fa fa-eur fa-fw w3-margin-right w3-large w3-text-teal"></i>Nạp tiền</a></li>
                         </ul>
                     </div>
@@ -127,14 +137,15 @@ AppAsset::register($this);
                 <div class="modal-body">
                         <?php
                         echo FileInput::widget([
-                            'name' => 'avatar',
+                            'model' => Yii::$app->view->params['user'],
+                            'attribute' => 'avatar',
                             'id' => 'file_avatar'
                         ]);
                         ?>
                     <div class="w3-text-red error_extension"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" data-dismiss="modal" style="display: none" name="btn-update" id="btn-update">Cập nhật</button>
+                    <button type="submit" class="btn btn-success" name="btn-update" id="btn-update">Cập nhật</button>
                 </div>
             </form>
         </div>
@@ -155,27 +166,30 @@ AppAsset::register($this);
             $("#btn-update").show();
         }
     });
-    $(document).on('click', "#btn-update", function () {
-        $("#form_ch_avatar").submit();
-    });
-    $(document).on('submit', '#form_ch_avatar', function (e) {
-        var postData = $(this).serializeArray();
-        console.log(postData);
-        var formURL = $(this).attr("action");
-        console.log(formURL);
-        $.ajax({
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(jqXHR, status, error) {
-                console.log(status + ": " + error);
-            }
-        });
-        e.preventDefault();
-    });
+
+    function submit_form() {
+//        var postData = $("#form_ch_avatar").serializeArray();
+//        var formURL = $("#form_ch_avatar").attr("action");
+//
+//        var formData = new FormData($("#form_ch_avatar")[0]);
+//        console.log(formData);
+//        $.ajax({
+//            url: formURL,
+//            type: "POST",
+//            data: postData,
+//            beforeSend: function () {
+//                $('btn-update').attr("disabled","disabled");
+//                $('.modal-body').css('opacity', '.5');
+//            },
+//            success: function(data) {
+//                console.log(data);
+//            },
+//            error: function(jqXHR, status, error) {
+//                console.log(status + ": " + error);
+//            }
+//        });
+//        return false;
+    }
 </script>
 
 <?php $this->endBody() ?>

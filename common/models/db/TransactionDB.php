@@ -5,24 +5,25 @@ namespace common\models\db;
 use Yii;
 
 /**
- * This is the model class for table "transaction_error".
+ * This is the model class for table "transaction".
  *
  * @property integer $request_id
  * @property integer $user_id
  * @property string $action
- * @property integer $code
- * @property string $response
+ * @property string $price
  * @property string $content
+ * @property string $response
+ * @property string $user_balance
  * @property string $created_time
  */
-class TransactionErrorDB extends \yii\db\ActiveRecord
+class TransactionDB extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'transaction_error';
+        return 'transaction';
     }
 
     /**
@@ -31,10 +32,11 @@ class TransactionErrorDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
-            [['user_id', 'code'], 'integer'],
+            [['user_id', 'action'], 'required'],
+            [['user_id'], 'integer'],
+            [['price', 'user_balance'], 'number'],
             [['created_time'], 'safe'],
-            [['action', 'response', 'content'], 'string', 'max' => 255]
+            [['action', 'content', 'response'], 'string', 'max' => 255]
         ];
     }
 
@@ -47,9 +49,10 @@ class TransactionErrorDB extends \yii\db\ActiveRecord
             'request_id' => Yii::t('cms', 'Request ID'),
             'user_id' => Yii::t('cms', 'User ID'),
             'action' => Yii::t('cms', 'Action'),
-            'code' => Yii::t('cms', 'Code'),
-            'response' => Yii::t('cms', 'Response'),
+            'price' => Yii::t('cms', 'Price'),
             'content' => Yii::t('cms', 'Content'),
+            'response' => Yii::t('cms', 'Response'),
+            'user_balance' => Yii::t('cms', 'User Balance'),
             'created_time' => Yii::t('cms', 'Created Time'),
         ];
     }

@@ -22,11 +22,11 @@ return [
     'storage_url' => 'http://static.study.edu.vn/',
 
     'img_url' => [
-        'avatar_admin' => [
-            'folder' => 'avatar_admin',
+        'admin_avatar' => [
+            'folder' => 'admin_avatar',
         ],
-        'avatar_teacher' => [
-            'folder' => 'avatar_teacher',
+        'user_avatar' => [
+            'folder' => 'user_avatar',
         ],
         'slideshow' => [
             'folder' => 'slideshow',
@@ -41,7 +41,10 @@ return [
             206 => 'Không phải nhà mạng Viettel',
             204 => 'Dữ liệu bạn nhập không đủ',
             200 => 'Chúc mừng, quá trình nạp tiền thành công. Tài khoản của bạn được cộng thêm <b><i>%s</i></b> VNĐ',
-            404 => 'Quá trình nạp tiền thất bại, vui lòng thử lại.'
+            404 => 'Mã thẻ nạp không đúng hoặc đã được sử dụng.'
         ]
-    ]
+    ],
+    'transaction_action' => [
+        'CHARGE_MONEY' => 'Nạp tiền vào tài khoản'
+    ],
 ];
