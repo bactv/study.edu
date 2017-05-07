@@ -183,9 +183,13 @@ footer i {
 }
 .quiz_category li a {
     padding: 10px;
-    background: #FFF;
     font-weight: bold;
-    color: rgba(9, 7, 103, 0.56);
+    background-color: rgba(168, 236, 163, 0.47);
+    color: rgba(17, 113, 183, 0.81);
+}
+.quiz_category li a:hover {
+    color: #00aa00;
+    text-decoration: underline;
 }
 .list_quiz {
     margin-right: 20px;

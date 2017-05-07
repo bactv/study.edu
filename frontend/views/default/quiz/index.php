@@ -15,7 +15,7 @@ Icon::map($this, Icon::FA);
 
 <!-- Page content -->
 <div class="w3-container main_content">
-    <p class="w3-text-teal w3-center" style="margin-bottom: 30px">Luyện thi trắc nghiệm online</p>
+    <p class="w3-text-teal w3-center" style="margin-bottom: 30px" id="title">Luyện thi trắc nghiệm online</p>
     <div class="w3-col l2 m2 s12">
         <ul class="list_subject">
             <?php foreach ($arr_subjects as $k => $subject) {
@@ -29,7 +29,6 @@ Icon::map($this, Icon::FA);
         <div class="quiz_category">
             <ul>
                 <li><a href="#">Trắc nghiệm theo chuyên đề</a></li>
-                <li><a href="#">Đề kiểm tra</a></li>
                 <li><a href="#">Đề thi thử THPT QG</a></li>
             </ul>
         </div>
@@ -94,5 +93,20 @@ Icon::map($this, Icon::FA);
         font-style: italic;
         font-size: 13px;
         color: orange;
+    }
+    .main_content > p#title {
+        font-size: 2.0em;
+        margin-bottom: 50px;
+        position: relative;
+    }
+    .main_content > p#title:after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        margin-left: -100px;
+        width: 210px;
+        background: #009688;
+        height: 2px;
     }
 </style>

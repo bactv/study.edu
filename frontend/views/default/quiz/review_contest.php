@@ -40,6 +40,7 @@ Icon::map($this, Icon::FA);
                 <div class="info" style="margin-bottom: 10px">
                     <span class="w3-text-red" style="margin-right: 10px"><?php echo Icon::show('close') . ' Sai'?></span>
                     <span class="w3-text-teal"><a href="javascript:void(0)" id="1" class="btn_show_solution">Xem đáp án</a></span>
+                    <span class="w3-text-blue w3-right"><a href="javascript:void(0)" id="report"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a></span>
                 </div>
                 <div class="show_solution">
                     <p class="w3-leftbar w3-border-blue w3-pale-blue w3-padding">
@@ -75,6 +76,7 @@ Icon::map($this, Icon::FA);
                 <div class="info" style="margin-bottom: 10px">
                     <span class="w3-text-green" style="margin-right: 10px"><?php echo Icon::show('check') . ' Đúng'?></span>
                     <span class="w3-text-teal"><a href="javascript:void(0)" id="2"  class="btn_show_solution">Xem đáp án</a></span>
+                    <span class="w3-text-blue w3-right"><a href="javascript:void(0)" id="report"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a></span>
                 </div>
                 <div class="show_solution">
                     <p class="w3-leftbar w3-border-blue w3-pale-blue w3-padding">

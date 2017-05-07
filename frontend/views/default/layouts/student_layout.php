@@ -90,7 +90,7 @@ AppAsset::register($this);
                             if (!empty($avatar)) {
                                 $img = Yii::$app->params['storage_url'] . $avatar;
                             } else {
-                                $img = "https://www.w3schools.com/w3images/avatar_hat.jpg";
+                                $img = AssetApp::getImageBaseUrl() . '/icons/student_icon.png';
                             }
                             ?>
                             <img src="<?php echo $img; ?>" style="width:100%;height: 300px" alt="Avatar">
