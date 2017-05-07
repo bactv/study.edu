@@ -15,6 +15,8 @@ use Yii;
  * @property integer $deleted
  * @property string $created_time
  * @property string $updated_time
+ * @property string $deactive_time
+ * @property string $active_time
  */
 class UserDB extends \yii\db\ActiveRecord
 {
@@ -34,7 +36,7 @@ class UserDB extends \yii\db\ActiveRecord
         return [
             [['username', 'password'], 'required'],
             [['type', 'status', 'deleted'], 'integer'],
-            [['created_time', 'updated_time'], 'safe'],
+            [['created_time', 'updated_time', 'deactive_time', 'active_time'], 'safe'],
             [['username'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 255]
         ];
@@ -54,6 +56,8 @@ class UserDB extends \yii\db\ActiveRecord
             'deleted' => Yii::t('cms', 'Deleted'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
+            'deactive_time' => Yii::t('cms', 'Deactive Time'),
+            'active_time' => Yii::t('cms', 'Active Time'),
         ];
     }
 }

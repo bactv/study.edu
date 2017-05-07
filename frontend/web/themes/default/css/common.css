@@ -31,3 +31,7 @@ legend {
 	padding: 5px 5px 5px 10px;
 	background-color: #ffffff;
 }
+.table>thead>tr>th, .table>thead>tr>td,
+.table>tbody>tr>td, .table>tbody>tr>th{
+	vertical-align: middle;
+}

@@ -35,4 +35,13 @@ return [
             'folder' => 'courses_assets'
         ]
     ],
+    'telco_types' => ['viettel', 'mobifone', 'vinaphone', 'vietnamobile'],
+    'charge_code_status' => [
+        'viettel' => [
+            206 => 'Không phải nhà mạng Viettel',
+            204 => 'Dữ liệu bạn nhập không đủ',
+            200 => 'Chúc mừng, quá trình nạp tiền thành công. Tài khoản của bạn được cộng thêm <b><i>%s</i></b> VNĐ',
+            404 => 'Quá trình nạp tiền thất bại, vui lòng thử lại.'
+        ]
+    ]
 ];

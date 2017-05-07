@@ -7,6 +7,7 @@
  */
 namespace frontend\controllers;
 
+use frontend\models\StaticPage;
 use frontend\models\Student;
 use Yii;
 use yii\bootstrap\Html;
@@ -23,6 +24,10 @@ class UserController extends Controller
             throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại");
         }
         $this->_user = Yii::$app->user->identity;
+        if ($this->_user['type'] == 1) {
+            $student = Student::findById($this->_user['id']);
+            Yii::$app->view->params['student'] = $student;
+        }
     }
 
     public function actionIndex()
@@ -31,7 +36,6 @@ class UserController extends Controller
             $this->layout = 'student_layout';
 
             $model = Student::findById($this->_user['id']);
-            Yii::$app->view->params['model'] = $model;
             $session = Yii::$app->session;
 
             $request = Yii::$app->request->post();
@@ -79,6 +83,17 @@ class UserController extends Controller
         $request = Yii::$app->request->post();
         $file = isset($request['avatar']) ? $request['avatar'] : '';
         var_dump($file);
+    }
+
+    public function actionCharging()
+    {
+        $this->layout = 'student_layout';
+        $bank_help = StaticPage::get_by_code('CHARGING_BANK_HELP');
+        $phone_card_help = StaticPage::get_by_code('CHARGING_PHONE_CARD_HELP');
+        return $this->render('student/charging', [
+            'bank_help' => $bank_help,
+            'phone_card_help' => $phone_card_help
+        ]);
     }
 
     public function actionStudentCourse()

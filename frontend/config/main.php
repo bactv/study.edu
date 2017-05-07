@@ -48,6 +48,7 @@ return [
                 'khoa-hoc-cua-toi' => 'user/student-course',
                 'lich-su-giao-dich' => 'user/history-transaction',
                 'thong-bao' => 'user/student-notification',
+                'nap-tien' => 'user/charging',
                 'khoa-hoc-truc-tuyen' => 'course/index',
                 'khoa-hoc-truc-tuyen/<category:\D+>' => 'course/index',
                 'khoa-hoc/<str:[0-9a-zA-Z\-]+>' => 'course/detail',

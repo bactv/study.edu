@@ -96,7 +96,8 @@ AppAsset::register($this);
                             <li class="active_mc"><a href="<?php echo Url::toRoute(['/khoa-hoc-cua-toi']) ?>"><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Khóa học của tôi</a></li>
                             <li class="active_ht"><a href="<?php echo Url::toRoute(['/lich-su-giao-dich']) ?>"><i class="fa fa-history fa-fw w3-margin-right w3-large w3-text-teal"></i>Lịch sử giao dịch</a></li>
                             <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo</a></li>
-                            <li class="active_ba"><a href="<?php echo Url::toRoute(['/so-du-tai-khoan']) ?>"><i class="fa fa-money fa-fw w3-margin-right w3-large w3-text-teal"></i>Số dư tài khoản: <span class="w3-text-red"><b><?php echo number_format(Yii::$app->view->params['model']['balance']) ?> đ</b></span></a></li>
+                            <li class="active_ba"><a href="<?php echo Url::toRoute(['/so-du-tai-khoan']) ?>"><i class="fa fa-money fa-fw w3-margin-right w3-large w3-text-teal"></i>Số dư tài khoản: <span class="w3-text-red"><b><?php echo number_format(Yii::$app->view->params['student']['balance']) ?> đ</b></span></a></li>
+                            <li class="active_chr"><a href="<?php echo Url::toRoute(['/nap-tien']) ?>"><i class="fa fa-eur fa-fw w3-margin-right w3-large w3-text-teal"></i>Nạp tiền</a></li>
                         </ul>
                     </div>
                 </div>
