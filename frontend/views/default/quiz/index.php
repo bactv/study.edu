@@ -9,6 +9,10 @@ use yii\helpers\Url;
 use kartik\icons\Icon;
 use common\components\AssetApp;
 use common\components\Utility;
+use frontend\models\Subject;
+use frontend\models\Topic;
+use frontend\models\QuizAttempt;
+use yii\widgets\LinkPager;
 
 Icon::map($this, Icon::FA);
 ?>
@@ -16,57 +20,53 @@ Icon::map($this, Icon::FA);
 <!-- Page content -->
 <div class="w3-container main_content">
     <p class="w3-text-teal w3-center" style="margin-bottom: 30px" id="title">Luyện thi trắc nghiệm online</p>
-    <div class="w3-col l2 m2 s12">
+    <div class="w3-col l2 m2 s12 box_left">
         <ul class="list_subject">
             <?php foreach ($arr_subjects as $k => $subject) {
                 $arr_left_bar = ['w3-border-blue', 'w3-border-red', 'w3-border-green', 'w3-border-blue', 'w3-border-red', 'w3-border-green', 'w3-border-blue', 'w3-border-red', 'w3-border-green'];
                 ?>
-                <a href="<?php echo Url::toRoute(['/']) ?>"><li class="w3-leftbar <?php echo (isset($arr_left_bar[$k]) ? $arr_left_bar[$k] : 'w3-border-green') ?>"> <?php echo Icon::show($subject['icon']) . ' ' . $subject['name'] ?> <i class="fa fa-angle-right" aria-hidden="true"></i></li></a>
+                <a href="<?php echo Url::toRoute(['/' . $uri . '/' . $subject['name_n']]) ?>"><li class="w3-leftbar <?php echo (($sj_id != '' && $sj_id == $subject['id']) ? 'w3-border-green w3-text-green' : 'w3-border-grey') ?>"> <?php echo Icon::show($subject['icon']) . ' ' . $subject['name'] ?> <i class="fa fa-angle-right" aria-hidden="true"></i></li></a>
             <?php } ?>
         </ul>
     </div>
     <div class="w3-col l6 m6 s12">
         <div class="quiz_category">
             <ul>
-                <li><a href="#">Trắc nghiệm theo chuyên đề</a></li>
-                <li><a href="#">Đề thi thử THPT QG</a></li>
+                <li class="<?php echo ($uri == 'trac-nghiem') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem']) ?>">Trắc nghiệm tổng hợp</a></li>
+                <li class="<?php echo ($uri == 'thi-thu-thpt') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/thi-thu-thpt']) ?>">Đề thi thử THPT QG</a></li>
+                <li class="<?php echo ($uri == 'kiem-tra-nang-luc') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/kiem-tra-nang-luc']) ?>">Kiểm tra năng lực</a></li>
             </ul>
         </div>
         <div class="list_quiz">
-            <div class="w3-row w3-card box-item">
-                <p id="quiz-title"><span><i class="fa fa-calculator" aria-hidden="true"></i> Toán học</span> | Trắc nghiệm theo chuyên đề | 60 phút</p>
-                <p id="quiz-name"><a href="<?php echo Url::toRoute(['/' . Utility::rewrite('Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3') . '-cn' . Utility::encrypt_decrypt('encrypt', '145')]) ?>" class="w3-text-teal">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></p>
-                <div class="w3-col l6 m6 s6 w3-left" id="quiz-info">
-                    <p>
-                        <span><i class="fa fa-users" aria-hidden="true"></i> 30 lượt thi</span>
-                        |
-                        <span><i class="fa fa-building-o" aria-hidden="true"></i> 40 câu hỏi</span>
-                    </p>
+            <?php foreach ($arr_quiz as $quiz) {
+                $subject = Subject::findOne(['id' => $quiz['subject_id']]);
+                $topic = Topic::findOne(['id' => $quiz['topic_id']]);
+                $total_attempts = QuizAttempt::get_total_attempts($quiz['id']);
+                ?>
+                <div class="w3-row w3-card box-item">
+                    <p id="quiz-title"><span><i class="fa fa-<?php echo $subject['icon'] ?>" aria-hidden="true"></i> <?php echo $subject['name'] ?></span> | <?php echo $topic['name'] ?> | <?php echo $quiz['time_length'] ?> phút</p>
+                    <p id="quiz-name"><a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>" class="w3-text-teal"><?php echo $quiz['name'] ?></a></p>
+                    <div class="w3-col l6 m6 s6 w3-left" id="quiz-info">
+                        <p>
+                            <span><i class="fa fa-users" aria-hidden="true"></i> <?php echo number_format($total_attempts) ?> lượt thi</span>
+                            |
+                            <span><i class="fa fa-building-o" aria-hidden="true"></i> <?php echo $quiz['total_question'] ?> câu hỏi</span>
+                        </p>
+                    </div>
+                    <div class="w3-col l6 m6 s6 w3-right" id="btn-detail">
+                        <a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>" role="button">Chi tiết >></a>
+                    </div>
                 </div>
-                <div class="w3-col l6 m6 s6 w3-right" id="btn-detail">
-                    <a href="#" role="button">Chi tiết >></a>
-                </div>
-            </div>
-
-            <div class="w3-row w3-card box-item">
-                <p id="quiz-title"><span><i class="fa fa-calculator" aria-hidden="true"></i> Toán học</span> | Trắc nghiệm theo chuyên đề | 60 phút</p>
-                <p id="quiz-name"><a href="#" class="w3-text-teal">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></p>
-                <div class="w3-col l6 m6 s6 w3-left" id="quiz-info">
-                    <p>
-                        <span><i class="fa fa-users" aria-hidden="true"></i> 30 lượt thi</span>
-                        |
-                        <span><i class="fa fa-building-o" aria-hidden="true"></i> 40 câu hỏi</span>
-                    </p>
-                </div>
-                <div class="w3-col l6 m6 s6 w3-right" id="btn-detail">
-                    <a href="#" role="button">Chi tiết >></a>
-                </div>
-            </div>
-
+            <?php } ?>
+            <?php
+            echo LinkPager::widget([
+                'pagination' => $pages,
+            ]);
+            ?>
         </div>
     </div>
-    <div class="w3-col l4 m4 s12">
-        <div class="leaderboard">
+    <div class="w3-col l4 m4 s12 leaderboard">
+        <div class="">
             <p id="title" class="w3-text-teal">Bảng xếp hạng</p>
             <ul class="nav nav-pills">
                 <li class="active"><a data-toggle="pill" href="#home">Tuần</a></li>
@@ -109,4 +109,19 @@ Icon::map($this, Icon::FA);
         background: #009688;
         height: 2px;
     }
+    .quiz_category li.active a {
+        background: rgba(17, 113, 183, 0.81);
+        color: #FFF;
+    }
+    .list_subject a li.active {
+
+    }
 </style>
+
+<script>
+    $(document).ready(function () {
+        $(".box_left, .leaderboard").stick_in_parent();
+
+
+    });
+</script>

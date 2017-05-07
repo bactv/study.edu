@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "quiz_type".
  *
  * @property integer $id
+ * @property string $code
  * @property string $name
  * @property string $description
  * @property string $created_time
@@ -29,9 +30,9 @@ class QuizTypeDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['code', 'name'], 'required'],
             [['created_time', 'updated_time'], 'safe'],
-            [['name', 'description'], 'string', 'max' => 255]
+            [['code', 'name', 'description'], 'string', 'max' => 255]
         ];
     }
 
@@ -42,6 +43,7 @@ class QuizTypeDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
+            'code' => Yii::t('cms', 'Code'),
             'name' => Yii::t('cms', 'Name'),
             'description' => Yii::t('cms', 'Description'),
             'created_time' => Yii::t('cms', 'Created Time'),

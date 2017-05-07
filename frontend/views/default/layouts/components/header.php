@@ -23,7 +23,7 @@ use yii\helpers\Url;
                 <a href="<?php echo Url::toRoute(['/on-thi-dia-ly']) ?>" class="w3-bar-item">Địa Lý</a>
                 <a href="<?php echo Url::toRoute(['/on-thi-ngu-van']) ?>" class="w3-bar-item">Ngữ Văn</a>
                 <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item">Tiếng Anh</a>
-                <a href="<?php echo Url::toRoute(['/luyen-de']) ?>" class="w3-bar-item">Luyện đề</a>
+                <a href="<?php echo Url::toRoute(['/trac-nghiem']) ?>" class="w3-bar-item">Luyện đề</a>
                 <a href="<?php echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?>" class="w3-bar-item">Khóa Học</a>
             </div>
             <?php if (!empty(Yii::$app->user->identity)) { ?>
@@ -55,7 +55,7 @@ use yii\helpers\Url;
         <a href="<?php echo Url::toRoute(['/on-thi-dia-ly']) ?>" class="w3-bar-item">Địa Lý</a>
         <a href="<?php echo Url::toRoute(['/on-thi-ngu-van']) ?>" class="w3-bar-item">Ngữ Văn</a>
         <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item">Tiếng Anh</a>
-        <a href="<?php echo Url::toRoute(['/luyen-de']) ?>" class="w3-bar-item">Luyện đề</a>
+        <a href="<?php echo Url::toRoute(['/trac-nghiem']) ?>" class="w3-bar-item">Luyện đề</a>
         <a href="<?php echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?>" class="w3-bar-item">Khóa Học</a>
     </div>
 

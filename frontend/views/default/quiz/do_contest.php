@@ -7,55 +7,35 @@
  */
 use common\components\AssetApp;
 use yii\helpers\Url;
+use frontend\models\QuestionAnswer;
+use common\components\Utility;
 ?>
 
 <div class="main_content">
     <div class="w3-row do_contest">
         <div class="box-top">
-            <p id="quiz_name">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</p>
-            <p id="time">Thời gian: 30 phút</p>
+            <p id="quiz_name"><?php echo $quiz['name'] ?></p>
+            <p id="time">Thời gian: <?php echo $quiz['time_length'] ?> phút</p>
         </div>
 
         <div class="w3-col l8 list_questions">
-            <div class="box_question">
-                <p id="question_number">Câu 1</p>
-                <p id="question_name">(Nhận định bóng đá Barcelona - Villarreal, 23h30, 6/5, vòng 36 La Liga) Có thể Barcelona
-                    sẽ chẳng lật đổ được Real. Nhưng cho đến giờ phút cuối cùng, người Catalan vẫn có quyền hy vọng.</p>
-                <ul class="box_answer">
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">A.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">B.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"<span id="stt">C.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">D.</span> Justification changes spacing between words</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="box_question">
-                <p id="question_number">Câu 2</p>
-                <p id="question_name">(Nhận định bóng đá Barcelona - Villarreal, 23h30, 6/5, vòng 36 La Liga) Có thể Barcelona
-                    sẽ chẳng lật đổ được Real. Nhưng cho đến giờ phút cuối cùng, người Catalan vẫn có quyền hy vọng.</p>
-                <ul class="box_answer">
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">A.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">B.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">C.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">D.</span> Justification changes spacing between words</span>
-                    </li>
-                </ul>
-            </div>
+            <?php foreach ($questions as $k => $question) {
+                $arr_ans = QuestionAnswer::findAll(['question_id' => $question['id']]);
+                ?>
+                <div class="box_question">
+                    <p id="question_number">Câu <?php echo ($k + 1) ?></p>
+                    <p id="question_name"><?php echo $question['content'] ?></p>
+                    <ul class="box_answer">
+                        <?php foreach ($arr_ans as $k2 => $ans) {
+                            $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                            ?>
+                            <li>
+                                <input type="radio" name="question_<?php echo $question['id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                            </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            <?php } ?>
         </div>
 
         <div class="w3-col l4 box_right">
@@ -72,9 +52,20 @@ use yii\helpers\Url;
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        $(".box_right").stick_in_parent();
+    });
+
+    $(document).on('click', '#make_exam', function () {
+        window.location = '<?php echo Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>';
+    });
+</script>
+
 <style>
     body {
-        background-color: #f7f7f7;
+        background-color: #cad9da !important;
+
     }
     .do_contest {
         font-family: 'Open Sans', sans-serif;

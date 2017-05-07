@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $code
  * @property string $description
  * @property integer $subject_id
  * @property string $created_time
@@ -31,10 +30,10 @@ class TopicDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'code'], 'required'],
+            [['name'], 'required'],
             [['subject_id'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['name', 'code', 'description'], 'string', 'max' => 255]
+            [['name', 'description'], 'string', 'max' => 255]
         ];
     }
 
@@ -46,7 +45,6 @@ class TopicDB extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('cms', 'ID'),
             'name' => Yii::t('cms', 'Name'),
-            'code' => Yii::t('cms', 'Code'),
             'description' => Yii::t('cms', 'Description'),
             'subject_id' => Yii::t('cms', 'Subject ID'),
             'created_time' => Yii::t('cms', 'Created Time'),

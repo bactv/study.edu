@@ -216,7 +216,8 @@ class Utility
     public static function encrypt_decrypt($action, $string)
     {
         if ($action == 'encrypt') {
-            return base64_encode($string);
+            $str = base64_encode($string);
+            return trim(str_replace('=', '', $str));
         } else if ($action == 'decrypt'){
             return base64_decode($string);
         }
