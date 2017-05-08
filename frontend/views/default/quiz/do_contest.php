@@ -9,6 +9,10 @@ use common\components\AssetApp;
 use yii\helpers\Url;
 use frontend\models\QuestionAnswer;
 use common\components\Utility;
+use kartik\icons\Icon;
+
+Icon::map($this, Icon::FA);
+
 ?>
 
 <div class="main_content">
@@ -30,7 +34,7 @@ use common\components\Utility;
                             $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
                             ?>
                             <li>
-                                <input type="radio" name="question_<?php echo $question['id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                                <input type="radio" name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
                             </li>
                         <?php } ?>
                     </ul>
@@ -43,23 +47,168 @@ use common\components\Utility;
                 <div class="clock_img">
                     <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/clock.png' ?>">
                 </div>
-                <div class="time">
-                    70:00
-                </div>
-                <button id="make_exam" class="btn btn-success"><i class="fa fa-anchor" aria-hidden="true"></i> Nộp bài</button>
+                <div class="time" id="time_run"><?php echo $quiz['time_length'] . ':00' ?></div>
+                <button class="btn btn-success" onclick="submit_contest()"><?php echo Icon::show('gavel') ?> Nộp bài</button>
+                <button class="btn btn-warning" onclick="save_contest()"><?php echo Icon::show('save') ?> Lưu bài</button>
             </div>
         </div>
     </div>
 </div>
+
+<?php $time_start = time(); ?>
 
 <script>
     $(document).ready(function () {
         $(".box_right").stick_in_parent();
     });
 
-    $(document).on('click', '#make_exam', function () {
-        window.location = '<?php echo Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>';
+    $(window).on('load', function () {
+        var minus = '<?php echo $quiz['time_length'] * 60 ?>';
+        var display = document.querySelector('#time_run');
+        startTimer(minus, display);
     });
+
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                submit_contest();
+                return true;
+            }
+        }, 1000);
+    }
+
+    function submit_contest(ck = true) {
+        var time_start = '<?php echo $time_start; ?>';
+
+        var arr_radio = [];
+        $("input[type='radio']").each(function () {
+            arr_radio.push($(this).attr('name'));
+        });
+        arr_radio = jQuery.unique(arr_radio);
+        var arr_selected = [];
+        for (var i = 0; i < arr_radio.length; i++) {
+            arr_selected[i] = {'question_id' : arr_radio[i], 'ans_id' : ''};
+        }
+
+        var count_ans = 0;
+        for (var j = 0; j < arr_radio.length; j++) {
+            $("input:radio[name='" + arr_radio[j] + "']").each(function () {
+                if ($(this).is(':checked')) {
+                    arr_selected[j].ans_id = $(this).attr('value');
+                    count_ans++;
+                }
+            });
+        }
+
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+        var student_id = '<?php echo (isset(Yii::$app->user->identity->user_id) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->user_id : 0 ?>';
+        var data = {
+            '_csrf' : _csrf,
+            'time_start' : time_start,
+            'data' : arr_selected,
+            'quiz_id' : '<?php echo $quiz['id'] ?>',
+            'student_id' : student_id,
+            'user_ip' : '<?php echo Yii::$app->request->getUserIP() ?>',
+            'action' : 'submit'
+        };
+
+        if (ck) {
+            var total_ques = '<?php echo intval(count($questions)) ?>';
+            if (count_ans < total_ques) {
+                var message = "Bài thi chưa hoàn thiện, bạn có muốn nộp bài ngay hay không?";
+            } else {
+                message = "Bạn có muốn nộp bài hay không?";
+            }
+
+            BootstrapDialog.show({
+                title: 'Nộp bài',
+                message: message,
+                buttons: [{
+                    label: 'Nộp bài',
+                    cssClass: 'btn-success',
+                    action: function(dialog) {
+                        ajax_submit(data);
+                        dialog.close();
+                    }
+                }, {
+                    label: 'Hủy',
+                    cssClass: 'btn-warning',
+                    action: function(dialog) {
+                        dialog.close();
+                    }
+                }]
+            });
+        } else {
+            ajax_submit(data);
+        }
+    }
+
+    function save_contest() {
+        var time_start = '<?php echo $time_start; ?>';
+
+        var arr_radio = [];
+        $("input[type='radio']").each(function () {
+            arr_radio.push($(this).attr('name'));
+        });
+        arr_radio = jQuery.unique(arr_radio);
+        var arr_selected = [];
+        for (var i = 0; i < arr_radio.length; i++) {
+            arr_selected[i] = {'question_id' : arr_radio[i], 'ans_id' : ''};
+        }
+
+        var count_ans = 0;
+        for (var j = 0; j < arr_radio.length; j++) {
+            $("input:radio[name='" + arr_radio[j] + "']").each(function () {
+                if ($(this).is(':checked')) {
+                    arr_selected[j].ans_id = $(this).attr('value');
+                    count_ans++;
+                }
+            });
+        }
+
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+        var student_id = '<?php echo (isset(Yii::$app->user->identity->user_id) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->user_id : 0 ?>';
+        var data = {
+            '_csrf' : _csrf,
+            'time_start' : time_start,
+            'data' : arr_selected,
+            'quiz_id' : '<?php echo $quiz['id'] ?>',
+            'student_id' : student_id,
+            'user_ip' : '<?php echo Yii::$app->request->getUserIP() ?>',
+            'action' : 'submit'
+        };
+        ajax_submit(data);
+    }
+
+    function ajax_submit(data) {
+        $.ajax({
+            method: 'POST',
+            data: data,
+            url: '<?php echo Url::toRoute(['/quiz/check-contest']) ?>',
+            success: function (data) {
+                var res = JSON.parse(data);
+                if (res.action == 'save') {
+                    setTimeout(function () {
+                        BootstrapDialog.show({
+                            title: 'Info!',
+                            message: 'Bài làm của bạn đã lưu thành công!'
+                        })
+                    }, 2000);
+                }
+                window.location = res.url_redirect;
+            }
+        });
+    }
+
 </script>
 
 <style>

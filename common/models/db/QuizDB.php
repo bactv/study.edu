@@ -17,6 +17,7 @@ use Yii;
  * @property string $level
  * @property integer $total_question
  * @property integer $status
+ * @property integer $privacy
  * @property string $created_time
  * @property string $updated_time
  */
@@ -37,7 +38,7 @@ class QuizDB extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'subject_id', 'topic_id'], 'required'],
-            [['quiz_type_id', 'subject_id', 'topic_id', 'time_length', 'total_question', 'status'], 'integer'],
+            [['quiz_type_id', 'subject_id', 'topic_id', 'time_length', 'total_question', 'status', 'privacy'], 'integer'],
             [['level'], 'string'],
             [['created_time', 'updated_time'], 'safe'],
             [['name', 'description'], 'string', 'max' => 255]
@@ -60,6 +61,7 @@ class QuizDB extends \yii\db\ActiveRecord
             'level' => Yii::t('cms', 'Level'),
             'total_question' => Yii::t('cms', 'Total Question'),
             'status' => Yii::t('cms', 'Status'),
+            'privacy' => Yii::t('cms', 'Privacy'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
         ];

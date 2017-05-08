@@ -35,6 +35,8 @@ AppAsset::register($this);
     <?php AssetApp::regCssFilePlugin('dist/themes/bootstrap-stars.css', 'jquery-bar-rating') ?>
     <?php AssetApp::regCssFilePlugin('dist/themes/fontawesome-stars-o.css', 'jquery-bar-rating') ?>
 
+    <?php AssetApp::regCssFilePlugin('dist/css/bootstrap-dialog.min.css', 'bootstrap3-dialog') ?>
+
     <?php AssetApp::regCssFile('w3.css') ?>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster&effect=brick-sign">
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,400,400italic,500,500italic,700,700italic,&subset=latin,latin-ext,vietnamese' rel='stylesheet' type='text/css'>
@@ -48,9 +50,10 @@ AppAsset::register($this);
     <?php AssetApp::regJsFile('jquery.min.js') ?>
     <?php AssetApp::regJsFile('bootstrap.min.js') ?>
     <?php AssetApp::regJsFile('jquery.sticky-kit.min.js') ?>
-    <?php AssetApp::regJsFile('bactv.js') ?>
     <?php AssetApp::regJsFilePlugin('dist/owl.carousel.min.js', 'owl-carousel') ?>
     <?php AssetApp::regJsFilePlugin('dist/jquery.barrating.min.js', 'jquery-bar-rating') ?>
+    <?php AssetApp::regJsFilePlugin('dist/js/bootstrap-dialog.min.js', 'bootstrap3-dialog') ?>
+    <?php AssetApp::regJsFile('bactv.js') ?>
     <?php $this->head() ?>
 </head>
 <body>

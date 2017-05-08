@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "question_answer".
  *
+ * @property integer $ans_id
  * @property integer $question_id
  * @property string $content
  * @property integer $is_true
@@ -39,6 +40,7 @@ class QuestionAnswerDB extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'ans_id' => Yii::t('cms', 'Ans ID'),
             'question_id' => Yii::t('cms', 'Question ID'),
             'content' => Yii::t('cms', 'Content'),
             'is_true' => Yii::t('cms', 'Is True'),
