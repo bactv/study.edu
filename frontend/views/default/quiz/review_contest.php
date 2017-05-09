@@ -7,122 +7,126 @@
  */
 use common\components\AssetApp;
 use kartik\icons\Icon;
+use frontend\models\QuestionAnswer;
+use common\components\Utility;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
+?>
+
+<?php
+$data = (array)json_decode($attempt['data']);
 ?>
 
 <div class="main_content">
     <div class="w3-row review_contest">
         <div class="box-top">
-            <p id="quiz_name">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</p>
-            <p id="time">Thời gian: 30 phút</p>
-        </div>
-
-        <div class="w3-col l8 list_questions">
-            <div class="box_question" id="box_question_1">
-                <p id="question_number">Câu 1</p>
-                <p id="question_name">(Nhận định bóng đá Barcelona - Villarreal, 23h30, 6/5, vòng 36 La Liga) Có thể Barcelona
-                    sẽ chẳng lật đổ được Real. Nhưng cho đến giờ phút cuối cùng, người Catalan vẫn có quyền hy vọng.</p>
-                <ul class="box_answer">
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">A.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">B.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"<span id="stt">C.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_1"><span id="ans_name"><span id="stt">D.</span> Justification changes spacing between words</span>
-                    </li>
-                </ul>
-                <div class="info" style="margin-bottom: 10px">
-                    <span class="w3-text-red" style="margin-right: 10px"><?php echo Icon::show('close') . ' Sai'?></span>
-                    <span class="w3-text-teal"><a href="javascript:void(0)" id="1" class="btn_show_solution">Xem đáp án</a></span>
-                    <span class="w3-text-blue w3-right"><a href="javascript:void(0)" id="report"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a></span>
-                </div>
-                <div class="show_solution">
-                    <p class="w3-leftbar w3-border-blue w3-pale-blue w3-padding">
-                        Có thể những cố gắng trong 3 vòng đấu cuối này sẽ chỉ là vô nghĩa, song lòng thù hận không cho phép
-                        Barcelona buông xuôi. Họ phải tạo ra sức ép liên tục khiến cho Real không thể tập trung nguồn lực cho
-                        Champions League. Cứ nhìn Messi và các đồng đội nỗ lực ra sao ở trận Siêu kinh điển, chúng ta sẽ hiểu được điều đó.
-                        Vì lẽ đó, Villarreal chưa bao giờ là đối thủ dễ chơi song nhiệm vụ của Barcelona không gì khác ngoài
-                        3 điểm. Ở lượt đi, Barca bị cầm hòa 1-1 tại sân Ceramica, thậm chí đó còn là một thất bại nếu Messi không cứu rỗi
-                        với bàn thắng phút 90. Hai lần đối đầu gần nhất trên sân khách, trận đấu đều kết thúc bằng tỷ số hòa
-                        (1-1 và 2-2).
-                    </p>
-                </div>
-            </div>
-
-            <div class="box_question" id="box_question_2">
-                <p id="question_number">Câu 2</p>
-                <p id="question_name">(Nhận định bóng đá Barcelona - Villarreal, 23h30, 6/5, vòng 36 La Liga) Có thể Barcelona
-                    sẽ chẳng lật đổ được Real. Nhưng cho đến giờ phút cuối cùng, người Catalan vẫn có quyền hy vọng.</p>
-                <ul class="box_answer">
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">A.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">B.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">C.</span> Justification changes spacing between words</span>
-                    </li>
-                    <li>
-                        <input type="radio" name="question_2"><span id="ans_name"><span id="stt">D.</span> Justification changes spacing between words</span>
-                    </li>
-                </ul>
-                <div class="info" style="margin-bottom: 10px">
-                    <span class="w3-text-green" style="margin-right: 10px"><?php echo Icon::show('check') . ' Đúng'?></span>
-                    <span class="w3-text-teal"><a href="javascript:void(0)" id="2"  class="btn_show_solution">Xem đáp án</a></span>
-                    <span class="w3-text-blue w3-right"><a href="javascript:void(0)" id="report"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a></span>
-                </div>
-                <div class="show_solution">
-                    <p class="w3-leftbar w3-border-blue w3-pale-blue w3-padding">
-                        Có thể những cố gắng trong 3 vòng đấu cuối này sẽ chỉ là vô nghĩa, song lòng thù hận không cho phép
-                        Barcelona buông xuôi. Họ phải tạo ra sức ép liên tục khiến cho Real không thể tập trung nguồn lực cho
-                        Champions League. Cứ nhìn Messi và các đồng đội nỗ lực ra sao ở trận Siêu kinh điển, chúng ta sẽ hiểu được điều đó.
-                        Vì lẽ đó, Villarreal chưa bao giờ là đối thủ dễ chơi song nhiệm vụ của Barcelona không gì khác ngoài
-                        3 điểm. Ở lượt đi, Barca bị cầm hòa 1-1 tại sân Ceramica, thậm chí đó còn là một thất bại nếu Messi không cứu rỗi
-                        với bàn thắng phút 90. Hai lần đối đầu gần nhất trên sân khách, trận đấu đều kết thúc bằng tỷ số hòa
-                        (1-1 và 2-2).
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="w3-col l4 box_right">
-            <div class="box_item">
-                <p id="title">Thống kê</p>
-                <p>Thời gian bắt đấu: 05.05.2017 23:33:00</p>
-                <p>Thời gian kết thúc: 05.05.2017 23:33:00</p>
-                <p>Số câu đúng: 15/30</p>
-            </div>
-            <div class="box_item">
-                <p id="title">Rating</p>
-                <p>Vui lòng dành thời gian để rating cho đề thi này.</p>
-                <select id="rating">
+            <p id="quiz_name">Review: <?php echo $quiz['name'] ?></p>
+            <p id="time">Thời gian: <?php echo $quiz['time_length'] ?> phút</p>
+            <p id="rating-point">
+                <select id="rating_info">
                     <option value="2">1</option>
                     <option value="4">2</option>
                     <option value="6">3</option>
                     <option value="8">4</option>
                     <option value="10">5</option>
                 </select>
+                <i style="font-size: 11px"><b>(<?php echo $quiz_rating['point'] . ' điểm bình chọn/ ' . $quiz_rating['total_rating'] . ' lượt' ?>)</b></i>
+            </p>
+        </div>
+
+        <div class="w3-col l8 list_questions">
+            <?php foreach ($questions as $k => $question) {
+                $arr_ans = QuestionAnswer::findAll(['question_id' => $question['id']]);
+                $ans_true_label = 'A';
+                ?>
+                <div class="box_question" id="box_question_<?php echo $question['id'] ?>">
+                    <p id="question_number"><span class="w3-left">Câu <?php echo ($k + 1) . '. ' ?> </span><span class="w3-right"><b>Mã câu hỏi: <?php echo $question['id'] ?></b></span></p>
+                    <div style="clear: both"></div>
+                    <p id="question_name"><?php echo $quiz['name'] ?></p>
+                    <ul class="box_answer">
+                        <?php foreach ($arr_ans as $k2 => $ans) {
+                        $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                        $checked = '';
+                        if (isset($data['results']->{$question['id']}->{'check'}) && $data['results']->{$question['id']}->{'ans_id'} == $ans['ans_id']) {
+                            $checked = 'checked';
+                        }
+                        if ($ans['is_true'] == 1) {
+                            $ans_true_label = $arr_label[$k2];
+                        }
+                        ?>
+                        <li>
+                            <input type="radio" <?php echo $checked ?> name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                    <div class="info" style="margin-bottom: 10px">
+                        <?php
+                        $check = (isset($data['results']->{$question['id']}->{'check'}) && $data['results']->{$question['id']}->{'check'} == 1) ? true : false;
+                        $text_color = ($check) ? 'green' : 'red';
+                        $icon = ($check) ? Icon::show('check') : Icon::show('close');
+                        $vl = ($check) ? 'Đúng' : 'Sai';
+                        ?>
+                        <span class="w3-text-<?php echo $text_color ?>" style="margin-right: 10px"><?php echo $icon . ' ' . $vl?></span>
+                        <span class="w3-text-teal"><a href="javascript:void(0)" id="<?php echo $question['id'] ?>" class="btn_show_solution">Xem đáp án</a></span>
+                        <?php if (!empty(Yii::$app->user->identity->getId())) { ?>
+                            <span class="w3-text-blue w3-right">
+                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_report_question_<?php echo $question['id'] ?>" data-question_id="<?php echo $question['id'] ?>"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a>
+                            </span>
+                            <!-- Modal -->
+                            <div id="modal_report_question_<?php echo $question['id'] ?>" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: #337ab7;">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title w3-text-white">Phản hồi về câu hỏi mã: <?php echo $question['id'] ?></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><b>Vui lòng cho chúng tôi biết vấn đề về câu hỏi này:</b></p>
+                                            <textarea type="text" class="form-control" rows="3" placeholder="Nhập nội dung..." id="<?php echo 'ct_rp_' .$question['id']  ?>"></textarea>
+                                            <p id="error_<?php echo $question['id'] ?>" class="w3-text-red"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success" data-question_id="<?php echo $question['id'] ?>" onclick="report_question(this)"><?php echo Icon::show('commenting-o') ?>Gửi phản hồi</button>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo Icon::show('close') ?> Hủy</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="show_solution">
+                        <p class="w3-leftbar w3-border-blue w3-pale-blue w3-padding"><?php echo $question['solution'] ?><br>
+                        Đáp án đúng: <b><?php echo $ans_true_label ?></b>
+                        </p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+
+        <div class="w3-col l4 box_right">
+            <div class="box_item">
+                <p id="title">Thống kê</p>
+                <p>Thời gian bắt đấu: <b><?php echo Utility::formatDataTime($data['info']->{'time_start'}, '-', '/', true) ?></b></p>
+                <p>Thời gian kết thúc: <b><?php echo Utility::formatDataTime($data['info']->{'time_submit'}, '-', '/', true) ?></b></p>
+                <p>Số câu đúng: <b><?php echo $data['info']->{'total_true'} . '/' . $quiz['total_question'] ?></b></p>
             </div>
             <div class="box_item">
                 <p id="title">Đề thi khác</p>
                 <ul style="text-align: left">
-                    <li><a href="#">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></li>
-                    <li><a href="#">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></li>
-                    <li><a href="#">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></li>
-                    <li><a href="#">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></li>
-                    <li><a href="#">Đề thi Online Trắc nghiệm Khảo sát hàm số lần 3</a></li>
+                    <?php foreach ($other_quiz as $q) { ?>
+                        <li style="padding: 0 0 10px 0;"><a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($q['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $q['id'])]) ?>"><?php echo $quiz['name'] ?></a></li>
+                    <?php }  ?>
+                    <li>...</li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
 
 <style>
     body {
@@ -196,37 +200,70 @@ Icon::map($this, Icon::FA);
         color: teal;
     }
     .review_contest .box-top #time {}
-
 </style>
 
 <script>
-    $(function() {
-        $('#rating').barrating({
-            theme: 'fontawesome-stars',
-            initialRating: 6
-//            initialRating: '<?php //echo $info['point'] ?>//',
-//            onSelect:function(value, text, event) {
-//                var student_id = '<?php //echo isset(Yii::$app->user->identity->student_id) ? Yii::$app->user->identity->student_id : "" ?>//';
-//                var ip = '<?php //echo DetectClient::get_ip_client() ?>//';
-//
-//                var _csrf = $("meta[name='csrf-param']").attr('content');
-//                var data = {'_csrf' : _csrf, 'student_id' : student_id, 'ip' : ip, 'rate_value' : value, 'quiz_id' : '<?php //echo $quiz_id ?>//'};
-//                $.ajax({
-//                    method: 'POST',
-//                    data: data,
-//                    url: '<?php //echo Url::toRoute(['/quiz/rating-quiz']) ?>//',
-//                    success: function (data) {
-//                        var res = JSON.parse(data);
-//                        BootstrapDialog.show({
-//                            title: res.info,
-//                            message: res.message,
-//                        });
-//                    }
-//                });
-//            }
+    function report_question(selector) {
+        var question_id = $(selector).data('question_id');
+        var content = $("#ct_rp_" + question_id).val();
+        var user_id = '<?php echo Yii::$app->user->identity->getId() ?>';
+        var quiz_id = '<?php echo $quiz['id'] ?>';
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+        if (content == '') {
+            $("p#error_" + question_id).text('Vui lòng nhập nội dung phản hồi.');
+            return false;
+        }
+        $('#modal_report_question_' + question_id).modal('hide');
+        $.ajax({
+            method: 'POST',
+            data: {'user_id' : user_id, 'question_id' : question_id, 'content' : content, '_csrf' : _csrf, 'quiz_id' : quiz_id},
+            url: '<?php echo Url::toRoute(['/quiz/report-question']) ?>',
+            success: function (data) {
+                var res = JSON.parse(data);
+                BootstrapDialog.show({
+                    title: 'Info!',
+                    message: res.message
+                });
+            }
         });
+    }
+    $(document).ready(function () {
+        $(".box_right").stick_in_parent();
+    });
+    $(function() {
+        $('#rating_info').barrating({
+            theme: 'fontawesome-stars',
+            initialRating: '<?php echo $quiz_rating['point'] ?>',
+            onSelect:function(value, text, event) {
+                var student_id = '<?php echo (isset(Yii::$app->user->identity->type) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->getId() : 0 ?>';
 
+                if (student_id == 0) {
+                    BootstrapDialog.show({
+                        title: 'Error!',
+                        message: 'Bạn cần đăng nhập để bình chọn cho đề thi này.'
+                    });
+                    return false;
+                }
 
+                var _csrf = $("meta[name='csrf-param']").attr('content');
+                var data = {'_csrf' : _csrf, 'student_id' : student_id, 'rate_value' : value, 'quiz_id' : '<?php echo $quiz['id'] ?>'};
+                $.ajax({
+                    method: 'POST',
+                    data: data,
+                    url: '<?php echo Url::toRoute(['/quiz/rating-quiz']) ?>',
+                    success: function (data) {
+                        var res = JSON.parse(data);
+                        BootstrapDialog.show({
+                            title: res.info,
+                            message: res.message,
+                        });
+                        if (res.status == 1) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        })
     });
 </script>
 <script>

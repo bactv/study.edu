@@ -12,9 +12,12 @@ use frontend\models\Question;
 use frontend\models\QuestionAnswer;
 use frontend\models\Quiz;
 use frontend\models\QuizAttempt;
+use frontend\models\QuizRating;
+use frontend\models\QuizReport;
 use frontend\models\StudentQuiz;
 use frontend\models\Subject;
 use Yii;
+use yii\bootstrap\Html;
 use yii\data\Pagination;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -33,16 +36,16 @@ class QuizController extends Controller
         $uri_str = trim(str_replace('.io', '', $uri_str));
         $ex = explode('/', $uri_str);
 
-        $uri = 'trac-nghiem';
-        $quiz_type_id = 3;
+        $uri = 'trac-nghiem-theo-chuyen-de';
+        $quiz_type_id = 2;
 
         if (!empty(trim($ex[1]))) {
             $uri = trim($ex[1]);
         }
         if ($uri == 'thi-thu-thpt') {
             $quiz_type_id = 1;
-        } else if ($uri == 'kiem-tra-nang-luc') {
-            $quiz_type_id = 2;
+        } else if ($uri == 'trac-nghiem-tong-hop') {
+            $quiz_type_id = 3;
         }
 
         $subjects = Subject::find()->asArray()->all();
@@ -151,13 +154,6 @@ class QuizController extends Controller
         $time_submit = time();
         $quiz = Quiz::findOne(['id' => $quiz_id]);
 
-        $id = Utility::encrypt_decrypt('encrypt', 2);
-        var_dump($id);
-        $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name'] . '-cn' . $id)]);
-        var_dump($url_redirect);die();
-        return json_encode(['url_redirect' => $url_redirect, 'action' => 'submit']);
-
-
         $arr_results = [
             'info' => [
                 'time_start' => date('Y-m-d H:i:s', $time_start),
@@ -168,7 +164,7 @@ class QuizController extends Controller
         ];
         foreach ($datas as $dt) {
             $check = QuestionAnswer::check_answer($dt['question_id'], $dt['ans_id']);
-            $arr_results['results'][] = [
+            $arr_results['results'][$dt['question_id']] = [
                 'question_id' => $dt['question_id'],
                 'ans_id' => $dt['ans_id'],
                 'check' => ($check == true) ? 1 : 0
@@ -207,7 +203,7 @@ class QuizController extends Controller
             $url_redirect = Url::toRoute(['/trac-nghiem']);
             return json_encode(['url_redirect' => $url_redirect, 'action' => 'save']);
         }
-        $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name'] . '-cn' . Utility::encrypt_decrypt('encrypt', $attempt->id))]);
+        $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $attempt->id)]);
         return json_encode(['url_redirect' => $url_redirect, 'action' => 'submit']);
     }
 
@@ -219,12 +215,94 @@ class QuizController extends Controller
      */
     public function actionReviewContest($str)
     {
-        $attempt = $this->check_url($str);
-        var_dump($attempt);die();
-        if ($attempt == '') {
+        $attempt_id = $this->check_url($str);
+        if ($attempt_id == '') {
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
         }
-        return $this->render('review_contest');
+        $attempt = QuizAttempt::findOne(['id' => $attempt_id]);
+        $quiz = Quiz::findOne(['id' => $attempt['quiz_id']]);
+        $questions = Question::findAll(['quiz_id' => $attempt['quiz_id']]);
+        if (empty($attempt) || empty($quiz) || empty($questions)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
+        }
+        $other_quiz = Quiz::find()->where(['topic_id' => $quiz['topic_id'], 'status' => 1])->andWhere('id <> ' . $quiz['id'])->limit(5);
+        if ($other_quiz->count() < 5) {
+            $other_quiz->orWhere(['subject_id' => $quiz['subject_id']]);
+            if ($other_quiz->count() < 5) {
+                $other_quiz->orWhere(['quiz_type_id' => $quiz['quiz_type_id']]);
+            }
+        }
+        $other_quiz = $other_quiz->orderBy('updated_time DESC')->all();
+        $quiz_rating = QuizRating::get_quiz_rating_info($quiz['id']);
+
+        return $this->render('review_contest', [
+            'attempt' => $attempt,
+            'quiz' => $quiz,
+            'questions' => $questions,
+            'other_quiz' => $other_quiz,
+            'quiz_rating' => $quiz_rating
+        ]);
+    }
+
+
+    public function actionRatingQuiz()
+    {
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPost) {
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+        $quiz_id = isset($request['quiz_id']) ? $request['quiz_id'] : '';
+        $student_id = isset($request['student_id']) ? $request['student_id'] : '';
+        $rate_value = isset($request['rate_value']) ? $request['rate_value'] : '';
+
+        $model = QuizRating::findOne(['user_id' => $student_id, 'quiz_id' => $quiz_id]);
+        if (empty($model)) {
+            $model = new QuizRating();
+        } else {
+            echo json_encode(['status' => 0, 'message' => 'Bạn đã đánh giá bài thi ày rồi. Xin cảm ơn']);
+            Yii::$app->end();
+        }
+        $model->quiz_id = $quiz_id;
+        $model->user_id = $student_id;
+        $model->rate = $rate_value;
+        $model->created_time = date('Y-m-d');
+
+        if ($model->save()) {
+            echo json_encode(['status' => 1, 'info' => 'Success', 'message' => 'Cảm ơn bạn đã dành thời gian.']);
+        } else {
+            echo json_encode(['status' => 0, 'info' => 'Error!', 'message' => 'Có lỗi xả ra, vui lòng tử lại sau.']);
+        }
+        Yii::$app->end();
+    }
+
+    public function actionReportQuestion()
+    {
+        if (!Yii::$app->request->isPost || !Yii::$app->request->isAjax) {
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+        $quiz_id = isset($request['quiz_id']) ? $request['quiz_id'] : '';
+        $question_id = isset($request['question_id']) ? $request['question_id'] : '';
+        $content = isset($request['content']) ? Html::encode($request['content']) : '';
+        $user_id = isset($request['user_id']) ? $request['user_id'] : 0;
+        if ($user_id == 0 || $content == '' || $question_id == '' || $quiz_id == '') {
+            echo json_encode(['status' => 0, 'message' => 'Có lỗi xảy ra. Vui lòng thử lại sau.']);
+            Yii::$app->end();
+        }
+        $obj = new QuizReport();
+        $obj->quiz_id = $quiz_id;
+        $obj->question_id = $question_id;
+        $obj->content_report = $content;
+        $obj->user_id = $user_id;
+        $obj->status = 0;
+        $obj->created_time = date('Y-m-d H:i:s');
+        if ($obj->save()) {
+            echo json_encode(['status' => 1, 'message' => 'Cảm ơn bạn đã phản hồi về câu hỏi này. Chúng tôi sẽ tiếp nhận và xử lý một cách nhanh nhất. Xin cảm ơn.']);
+            Yii::$app->end();
+        } else {
+            echo json_encode(['status' => 0, 'message' => 'Có lỗi xảy ra. Vui lòng thử lại sau.']);
+            Yii::$app->end();
+        }
     }
 
     /**

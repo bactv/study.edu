@@ -32,9 +32,9 @@ Icon::map($this, Icon::FA);
     <div class="w3-col l6 m6 s12">
         <div class="quiz_category">
             <ul>
-                <li class="<?php echo ($uri == 'trac-nghiem') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem']) ?>">Trắc nghiệm tổng hợp</a></li>
+                <li class="<?php echo ($uri == 'trac-nghiem-theo-chuyen-de') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>">Luyện theo chuyên đề</a></li>
+                <li class="<?php echo ($uri == 'trac-nghiem-tong-hop') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem-tong-hop']) ?>">Trắc nghiệm tổng hợp</a></li>
                 <li class="<?php echo ($uri == 'thi-thu-thpt') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/thi-thu-thpt']) ?>">Đề thi thử THPT QG</a></li>
-                <li class="<?php echo ($uri == 'kiem-tra-nang-luc') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/kiem-tra-nang-luc']) ?>">Kiểm tra năng lực</a></li>
             </ul>
         </div>
         <div class="list_quiz">

@@ -3,6 +3,7 @@
 namespace backend\assets;
 
 use yii\web\AssetBundle;
+use Yii;
 
 /**
  * Main backend application asset bundle.
@@ -10,14 +11,19 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@web/themes/default';
     public $css = [
-        'css/site.css',
+        'css/normalize.css',
+        'css/reset_bootstrap.css',
+        'css/common.css',
+        'css/main.css'
     ];
     public $js = [
+        'js/bactv.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
     ];
 }

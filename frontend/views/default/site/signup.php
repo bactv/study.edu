@@ -41,7 +41,7 @@ AssetApp::regCssFile('signup.css');
             </div>
             <div class="w3-row user_type w3-margin-bottom">
                 <div class="w3-col l6 ft w3-left">
-                    Học sinh: <input class="w3-radio" type="radio" name="user_type" value="1" <?php echo ($model['type'] == 1) ? 'checked' : '' ?>>
+                    Học sinh: <input class="w3-radio" type="radio" name="user_type" value="1" <?php echo ($model['type'] == 1 || $model['type'] == '') ? 'checked' : '' ?>>
                 </div>
                 <div class="w3-col l6 ft w3-right">
                     Giáo viên: <input class="w3-radio" type="radio" name="user_type" value="2" <?php echo ($model['type'] == 2) ? 'checked' : '' ?>>

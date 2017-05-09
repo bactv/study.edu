@@ -49,7 +49,9 @@ Icon::map($this, Icon::FA);
                 </div>
                 <div class="time" id="time_run"><?php echo $quiz['time_length'] . ':00' ?></div>
                 <button class="btn btn-success" onclick="submit_contest()"><?php echo Icon::show('gavel') ?> Nộp bài</button>
-                <button class="btn btn-warning" onclick="save_contest()"><?php echo Icon::show('save') ?> Lưu bài</button>
+                <?php if (isset(Yii::$app->user->identity->user_id)) { ?>
+                    <button class="btn btn-warning" onclick="save_contest()"><?php echo Icon::show('save') ?> Lưu bài</button>
+                <?php } ?>
             </div>
         </div>
     </div>

@@ -43,8 +43,8 @@ return [
             'suffix' => '.io',
             'rules' => [
                 'on-thi-<id:\D+>' => 'subject/detail',
-                'trac-nghiem' => 'quiz/index',
-                'trac-nghiem/<subject:[0-9a-zA-Z\-]+>' => 'quiz/index',
+                'trac-nghiem-theo-chuyen-de' => 'quiz/index',
+                'trac-nghiem-theo-chuyen-de/<subject:[0-9a-zA-Z\-]+>' => 'quiz/index',
                 'thi-thu-thpt' => 'quiz/index',
                 'thi-thu-thpt/<subject:[0-9a-zA-Z\-]+>' => 'quiz/index',
                 'kiem-tra-nang-luc/' => 'quiz/index',
