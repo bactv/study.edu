@@ -31,9 +31,9 @@ return [
         'slideshow' => [
             'folder' => 'slideshow',
         ],
-        'courses_assets' => [
-            'folder' => 'courses_assets'
-        ]
+    ],
+    'asset_course' => [
+        'folder' => 'asset_course',
     ],
     'telco_types' => ['viettel', 'mobifone', 'vinaphone', 'vietnamobile'],
     'charge_code_status' => [

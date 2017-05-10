@@ -8,6 +8,7 @@
 namespace console\controllers;
 
 use backend\models\Student;
+use backend\models\Teacher;
 use frontend\models\Question;
 use frontend\models\QuestionAnswer;
 use frontend\models\Quiz;
@@ -109,5 +110,35 @@ class TestDataController extends Controller
                 }
             }
         }
+    }
+
+    public function actionTestTeacherAccount($count = 10)
+    {
+        $faker = \Faker\Factory::create();
+
+        for ($i = 0; $i < $count; $i++) {
+            $user = new User();
+            $user->username = $faker->userName;
+            $user->password = md5('123456');
+            $user->type = 2;
+            $user->created_time = date('Y-m-d H:i:s');
+            $user->updated_time = date('Y-m-d H:i:s');
+
+            if ($user->save()) {
+                $std = new Teacher();
+                $std->user_id = $user->id;
+                $std->full_name = $faker->name;
+                $std->email = $faker->unique()->email;
+                $std->gender = mt_rand(1, 2);
+                $std->intro = $faker->sentence(30);
+                $std->work_place = $faker->address;
+                $std->phone = $faker->unique()->phoneNumber;
+                $std->degree = $faker->randomElement(['Ts', 'Ths', 'Sv']);
+                $std->created_time = date('Y-m-d H:i:s');
+                $std->updated_time = date('Y-m-d H:i:s');
+                $std->save();
+            }
+        }
+        echo "DONE";
     }
 }

@@ -18,8 +18,8 @@ class CourseSearch extends Course
     public function rules()
     {
         return [
-            [['course_id', 'teacher_id', 'party_id', 'course_type_id', 'subject_id', 'class_level_id', 'privacy', 'status', 'approved', 'approver', 'created_by', 'updated_by'], 'integer'],
-            [['course_name', 'course_description', 'signed_to_date', 'start_date', 'end_date', 'created_time', 'updated_time'], 'safe'],
+            [['id', 'party_id', 'status', 'deleted', 'approved', 'approver', 'course_type_id', 'subject_id'], 'integer'],
+            [['name', 'teacher_ids', 'description', 'deadline_register', 'created_time', 'updated_time'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -38,13 +38,11 @@ class CourseSearch extends Course
      *
      * @param array $params
      *
-     * @param int $teacher_id
-     *
      * @return ActiveDataProvider
      */
-    public function search($params, $teacher_id)
+    public function search($params)
     {
-        $query = Course::find()->where(['teacher_id' => $teacher_id])->andWhere('deleted <> 1');
+        $query = Course::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,28 +53,23 @@ class CourseSearch extends Course
         }
 
         $query->andFilterWhere([
-            'course_id' => $this->course_id,
-            'teacher_id' => $this->teacher_id,
+            'id' => $this->id,
             'party_id' => $this->party_id,
-            'course_type_id' => $this->course_type_id,
-            'price' => $this->price,
-            'signed_to_date' => $this->signed_to_date,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'subject_id' => $this->subject_id,
-            'class_level_id' => $this->class_level_id,
-            'privacy' => $this->privacy,
+            'deadline_register' => $this->deadline_register,
             'status' => $this->status,
+            'deleted' => $this->deleted,
             'approved' => $this->approved,
             'approver' => $this->approver,
+            'price' => $this->price,
+            'course_type_id' => $this->course_type_id,
+            'subject_id' => $this->subject_id,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'course_name', $this->course_name])
-            ->andFilterWhere(['like', 'course_description', $this->course_description]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'teacher_ids', $this->teacher_ids])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

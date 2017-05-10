@@ -41,6 +41,7 @@ Icon::map($this, Icon::FA);
                 <thead>
                     <th>Controllers</th>
                     <th>Actions</th>
+                    <th>Mô tả</th>
                     <th>Tất cả
                         <?php echo Html::tag('input', '', array(
                             'type' => 'checkbox',

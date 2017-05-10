@@ -16,15 +16,18 @@ class BackendController extends Controller
 {
     public function beforeAction($action)
     {
-//        $user_id = Yii::$app->user->id;
 //        $controller_name = ucfirst(Yii::$app->controller->id);
 //        $action_name = ucfirst(Yii::$app->controller->action->id);
 //
+//        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->getId() == 1) {
+//            return true;
+//        }
+//
 //        if (Yii::$app->user->isGuest) {
 //            return $this->redirect(Yii::$app->urlManager->createUrl(['default/login']));
-//        } else if (CheckPermission::checkPermission($user_id, $controller_name, $action_name)) {
-//            $model = Admin::findIdentity($user_id);
-//            $model['ad_last_active_time'] = date('Y-m-d H:i:s');
+//        } else if (CheckPermission::checkPermission(Yii::$app->user->getId(), $controller_name, $action_name)) {
+//            $model = Admin::findIdentity(Yii::$app->user->getId());
+//            $model['last_active_time'] = date('Y-m-d H:i:s');
 //            $model->save();
 //            return true;
 //        } else {

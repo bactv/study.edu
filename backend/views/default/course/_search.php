@@ -15,45 +15,35 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'course_id') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'course_name') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'course_description') ?>
-
-    <?= $form->field($model, 'teacher_id') ?>
+    <?= $form->field($model, 'teacher_ids') ?>
 
     <?= $form->field($model, 'party_id') ?>
 
-    <?php // echo $form->field($model, 'course_type_id') ?>
+    <?= $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'signed_to_date') ?>
-
-    <?php // echo $form->field($model, 'start_date') ?>
-
-    <?php // echo $form->field($model, 'end_date') ?>
-
-    <?php // echo $form->field($model, 'subject_id') ?>
-
-    <?php // echo $form->field($model, 'class_level_id') ?>
-
-    <?php // echo $form->field($model, 'privacy') ?>
+    <?php // echo $form->field($model, 'deadline_resgiter') ?>
 
     <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'deleted') ?>
 
     <?php // echo $form->field($model, 'approved') ?>
 
     <?php // echo $form->field($model, 'approver') ?>
 
+    <?php // echo $form->field($model, 'price') ?>
+
+    <?php // echo $form->field($model, 'course_type_id') ?>
+
+    <?php // echo $form->field($model, 'subject_id') ?>
+
     <?php // echo $form->field($model, 'created_time') ?>
 
     <?php // echo $form->field($model, 'updated_time') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>

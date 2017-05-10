@@ -21,11 +21,11 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'type_code')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'type_name')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'code')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'type_description')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

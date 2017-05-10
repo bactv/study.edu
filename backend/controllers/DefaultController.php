@@ -22,6 +22,9 @@ class DefaultController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
             ],
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
         ];
     }
 

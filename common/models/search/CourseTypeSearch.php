@@ -18,8 +18,8 @@ class CourseTypeSearch extends CourseType
     public function rules()
     {
         return [
-            [['type_id'], 'integer'],
-            [['type_code', 'type_name', 'type_description'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'code', 'description'], 'safe'],
         ];
     }
 
@@ -52,12 +52,12 @@ class CourseTypeSearch extends CourseType
         }
 
         $query->andFilterWhere([
-            'type_id' => $this->type_id,
+            'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'type_code', $this->type_code])
-            ->andFilterWhere(['like', 'type_name', $this->type_name])
-            ->andFilterWhere(['like', 'type_description', $this->type_description]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

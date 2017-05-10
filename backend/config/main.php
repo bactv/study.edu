@@ -52,7 +52,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'default/error',
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

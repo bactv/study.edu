@@ -27,10 +27,10 @@ $this->params['menu'] = [
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
 
-            'type_id',
-            'type_code',
-            'type_name',
-            'type_description',
+            'id',
+            'name',
+            'code',
+            'description',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

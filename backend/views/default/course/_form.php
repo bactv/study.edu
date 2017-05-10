@@ -3,16 +3,15 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
-use mihaildev\ckeditor\CKEditor;
-use kartik\select2\Select2;
+use yii\helpers\Url;
 use backend\models\Teacher;
-use yii\helpers\ArrayHelper;
-use backend\models\Party;
 use backend\models\CourseType;
-use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use backend\models\Party;
 use backend\models\Subject;
-use backend\models\ClassLevel;
+use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
+use mihaildev\ckeditor\CKEditor;
 
 Icon::map($this, Icon::FA);
 
@@ -22,146 +21,80 @@ Icon::map($this, Icon::FA);
 ?>
 
 <div class="course-form">
+    <fieldset>
+        <legend><?php echo ($model->isNewRecord)  ? 'Tạo khóa học mới' : 'Chỉnh sửa khóa học' ?></legend>
+        <?php $form = ActiveForm::begin([
+            'type' => ActiveForm::TYPE_HORIZONTAL,
+            'formConfig' => [
+                'labelSpan' => 3,
+                'deviceSize' => ActiveForm::SIZE_SMALL
+            ],
+            'options' => ['enctype' => 'multipart/form-data']
+        ]); ?>
 
-    <?php $form = ActiveForm::begin([
-        'type' => ActiveForm::TYPE_HORIZONTAL,
-        'formConfig' => [
-            'labelSpan' => 2,
-            'deviceSize' => ActiveForm::SIZE_SMALL
-        ],
-        'options' => [
-            'enctype' => 'multipart/form-data',
-            'enableAjaxValidation' => true,
-            'enableClientValidation' => true,
-            'clientOptions' => [
-                'validateOnSubmit'=>true,
-            ]
-        ],
-    ]); ?>
+        <div class="col-md-6" style="padding: 10px; border-right: 1px solid #ccc">
+            <?= $form->field($model, 'name')->textInput() ?>
 
-    <?= $form->field($model, 'course_name')->textInput(['maxlength' => 255]) ?>
+            <?= $form->field($model, 'teacher_ids')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(Teacher::get_all_teacher_active(), 'user_id', 'full_name'),
+                'options' => [
+                    'multiple' => true,
+                ]
+            ]) ?>
 
-    <?= $form->field($model, 'logo')->widget(FileInput::className(), [
-        'options'=>[
-            'multiple' => false
-        ],
-        'pluginOptions' => [
+            <?= $form->field($model, 'party_id')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(Party::find()->where(['party_type_id' => 1])->all(), 'party_id', 'party_name'),
+                'options' => [
+                    'prompt' => 'Đối tác cung cấp ...'
+                ]
+            ]) ?>
 
-        ]
-    ]) ?>
+            <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(CourseType::find()->all(), 'id', 'name'),
+            ]) ?>
 
-    <?= $form->field($model, 'video_intro')->widget(FileInput::className(), [
+            <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+            ]) ?>
+            <?= $form->field($model, 'price')->textInput(['maxlength' => 10, 'type' => 'number', 'min' => 10000]) ?>
 
-    ]) ?>
+            <?php if (!$model->isNewRecord) { ?>
+                <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
-    <?= $form->field($model, 'lecture_note')->widget(FileInput::className(), [
+                <?= $form->field($model, 'deleted')->checkbox(['label' => false])->label('Xóa?') ?>
 
-    ]) ?>
+                <?= $form->field($model, 'approved')->dropDownList([
+                    -1 => 'Từ chối phê duyệt',
+                    0 => 'Đang xem xét',
+                    1 => 'Đã phê duyệt'
+                ]) ?>
 
-    <?= $form->field($model, 'course_description')->widget(CKEditor::className(), [
-        'editorOptions' => [
-            'preset' => 'basic',
-            'inline' => false,
-            'rows' => 5
-        ],
-    ]) ?>
+            <?php } ?>
+        </div>
 
-    <?= $form->field($model, 'teacher_id')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(Teacher::find()->all(), 'tch_id', 'tch_full_name'),
-        'options' => [
-            'prompt' => 'Giáo viên',
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ]
-    ])?>
+        <div class="col-md-6" style="padding: 10px">
 
-    <?= $form->field($model, 'party_id')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(Party::find()->all(), 'party_id', 'party_name'),
-        'options' => [
-            'prompt' => 'Đối tác'
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ]
-    ])?>
+            <?= $form->field($model, 'description')->widget(CKEditor::className(),[
+                'editorOptions' => [
+                    'preset' => 'basic',
+                    'inline' => false,
+                ],
+            ]); ?>
 
-    <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(CourseType::find()->all(), 'type_id', 'type_name'),
-        'options' => [
-            'prompt' => 'Hình thức học...'
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ]
-    ]) ?>
+            <?= $form->field($model, 'outline_document')->widget(FileInput::className(), [
 
-    <?= $form->field($model, 'price', [
-        'addon' => [
-            'append' => [
-                'content'=>'<b>VNĐ</b>'
-            ]
-        ]
-    ])->textInput(['maxlength' => 11, 'type' => 'number', 'min' => 0, '']) ?>
+            ]) ?>
+            <p style="font-size: 12px;padding-top: 10px"><b>( Mẫu đề cương: <a href="#"><i>Download</i></a> )</b></p>
+        </div>
 
-    <?= $form->field($model, 'signed_to_date')->widget(DatePicker::className(), [
-        'type' => DatePicker::TYPE_COMPONENT_PREPEND,
-        'value' => date('d/m/Y'),
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy'
-        ]
-    ]) ?>
+        <div class="clear" style="clear: both"></div>
 
-    <?= $form->field($model, 'start_date')->widget(DatePicker::className(), [
-        'type' => DatePicker::TYPE_COMPONENT_PREPEND,
-        'value' => date('d/m/Y'),
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy'
-        ]
-    ]) ?>
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>
+        </div>
 
-    <?= $form->field($model, 'end_date')->widget(DatePicker::className(), [
-        'type' => DatePicker::TYPE_COMPONENT_PREPEND,
-        'value' => date('d/m/Y'),
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'dd/mm/yyyy'
-        ]
-    ]) ?>
-
-    <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(Subject::find()->all(), 'subject_id', 'subject_name'),
-        'options' => [
-            'prompt' => 'Môn học...'
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ]
-    ]) ?>
-
-    <?= $form->field($model, 'class_level_id')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(ClassLevel::find()->all(), 'class_level_id', 'class_level_name'),
-        'options' => [
-            'prompt' => 'Trình độ lớp...'
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ]
-    ]) ?>
-
-    <?= $form->field($model, 'privacy')->dropDownList([1 => 'Public', 2 => 'Private'], [
-        'prompt' => 'Quyền riêng tư ...'
-    ]) ?>
-
-    <?= $form->field($model, 'approved')->dropDownList([1 => 'Đã phê duyệt', 0 => 'Đang xem xét', -1 => 'Từ chôi phê duyệt']) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
+    </fieldset>
 
 </div>
