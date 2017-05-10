@@ -26,14 +26,14 @@ use backend\models\Menu;
         <div class="row avatar">
             <?php
             $avatar = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-//            if (isset(Yii::$app->user->identity->ad_avatar) && Yii::$app->user->identity->ad_avatar > 0) {
-//                $avatar = Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . Yii::$app->user->identity->ad_id . '.png';
-//            }
+            if (isset(Yii::$app->user->identity->avatar) && Yii::$app->user->identity->avatar > 0) {
+                $avatar = Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . Yii::$app->user->identity->getId() . '.png';
+            }
             ?>
             <?php echo Html::img($avatar, ['alt' => 'admin']) ?>
         </div>
         <div class="row username">
-            <?php echo Yii::$app->user->identity->ad_username ?>
+            <?php echo Yii::$app->user->identity->getUsername() ?>
         </div>
     </div>
 </div>

@@ -22,7 +22,9 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widgets": "*",
         "fzaninotto/faker": "^1.6",
-        "yiisoft/yii2-faker": "^2.0"
+        "yiisoft/yii2-faker": "^2.0",
+        "leandrogehlen/yii2-treegrid": "*",
+        "2amigos/yii2-ckeditor-widget": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

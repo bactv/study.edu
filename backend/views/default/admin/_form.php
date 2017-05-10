@@ -34,22 +34,22 @@ Icon::map($this, Icon::FA);
         ],
     ]); ?>
 
-    <?= $form->field($model, 'ad_username')->textInput(['maxlength' => 50, 'disabled' => (!$model->isNewRecord ? true : false)]) ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => 50, 'disabled' => (!$model->isNewRecord ? true : false)]) ?>
 
     <?php if ($model->isNewRecord) {
-        echo $form->field($model, 'ad_password')->passwordInput(['maxlength' => 255]);
+        echo $form->field($model, 'password')->passwordInput(['maxlength' => 255]);
     } else {
         echo $form->field($model, 'new_password')->passwordInput(['maxlength' => 255])->label(Yii::t('cms', 'New Password'));
         echo $form->field($model, 're_new_password')->passwordInput(['maxlength' => 255])->label(Yii::t('cms', 'Re-New Password'));
     } ?>
 
-    <?= $form->field($model, 'ad_full_name')->textInput(['maxlength' => 100]) ?>
+    <?= $form->field($model, 'full_name')->textInput(['maxlength' => 100]) ?>
 
-    <?= $form->field($model, 'ad_email')->textInput(['maxlength' => 100]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 100]) ?>
 
-    <?= $form->field($model, 'ad_profession')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'profession')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'ad_birthday')->widget(DatePicker::className(), [
+    <?= $form->field($model, 'birthday')->widget(DatePicker::className(), [
         'type' => DatePicker::TYPE_COMPONENT_PREPEND,
         'options' => [
             'placeholder' => 'dd/mm/yyyy',
@@ -60,8 +60,9 @@ Icon::map($this, Icon::FA);
         ]
     ]) ?>
 
-    <?= $form->field($model, 'ad_group_ids')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(AdminGroup::getAllAdminGroups(['ad_group_status' => 1]), 'ad_group_id', 'ad_group_name'),
+    <?php if (Yii::$app->user->identity->getUsername() == 'admin') { ?>
+    <?= $form->field($model, 'group_ids')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(AdminGroup::getAllAdminGroups(['status' => 1]), 'id', 'name'),
         'options' => [
             'multiple' => true,
             'placeholder' => 'Chọn danh sách nhóm quyền ...',
@@ -70,24 +71,15 @@ Icon::map($this, Icon::FA);
             'allowClear' => true
         ],
     ]) ?>
+    <?php } ?>
 
-    <?= $form->field($model, 'ad_status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
+    <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
     <?= $form->field($model, 'avatar')->widget(FileInput::className(), [
         'options'=>[
             'multiple' => false
         ],
         'pluginOptions' => [
-//            'initialPreview'=>[
-//                "http://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/631px-FullMoon2010.jpg"
-//            ],
-//            'initialPreviewAsData' => true,
-//            'initialCaption' => "The Moon and the Earth",
-//            'initialPreviewConfig' => [
-//                ['caption' => 'Moon.jpg', 'size' => '873727'],
-//            ],
-//            'overwriteInitial' => false,
-//            'maxFileSize' => 2800
         ]
     ]) ?>
 

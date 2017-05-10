@@ -13,7 +13,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Admin */
 
-$this->title = $model->ad_username;
+$this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Admins'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -22,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="margin-bottom: 10px"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->ad_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->ad_id], [
+        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('cms', 'Are you sure you want to delete this item?'),
@@ -35,64 +35,64 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'ad_id',
-            'ad_username',
-            'ad_full_name',
-            'ad_email',
-            'ad_profession',
+            'id',
+            'username',
+            'full_name',
+            'email',
+            'profession',
             [
-                'attribute' => 'ad_birthday',
-                'value' => Utility::formatDataTime($model['ad_birthday'], '-', '/', false),
+                'attribute' => 'birthday',
+                'value' => Utility::formatDataTime($model['birthday'], '-', '/', false),
             ],
             [
-                'attribute' => 'ad_avatar',
+                'attribute' => 'avatar',
                 'format' => ['image',['width'=>'70','height'=>'70']],
                 'value' => function ($model) {
-                    if ($model['ad_avatar'] == 1) {
-                        return Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . $model['ad_id'] . '.png';
+                    if ($model['avatar'] == 1) {
+                        return Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . $model['id'] . '.png';
                     } else {
                         return AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
                     }
                 }
             ],
             [
-                'attribute' => 'ad_status',
-                'value' => ($model['ad_status'] == 1) ? 'Active' : 'Deactive'
+                'attribute' => 'status',
+                'value' => ($model['status'] == 1) ? 'Active' : 'Deactive'
             ],
             [
-                'attribute' => 'ad_last_active_time',
+                'attribute' => 'last_active_time',
                 'label' => Yii::t('cms','Last active time' ),
-                'value' => Utility::formatDataTime($model['ad_last_active_time'], '-', '/', true),
+                'value' => Utility::formatDataTime($model['last_active_time'], '-', '/', true),
             ],
             [
-                'attribute' => 'ad_created_by',
+                'attribute' => 'created_by',
                 'label' => Yii::t('cms','Created By' ),
-                'value' => Admin::getAttributeValue(['ad_id' => $model['ad_created_by']], 'ad_username')
+                'value' => Admin::getAttributeValue(['id' => $model['created_by']], 'username')
             ],
             [
-                'attribute' => 'ad_updated_by',
+                'attribute' => 'updated_by',
                 'label' => Yii::t('cms','Updated By' ),
-                'value' => Admin::getAttributeValue(['ad_id' => $model['ad_updated_by']], 'ad_username')
+                'value' => Admin::getAttributeValue(['id' => $model['updated_by']], 'username')
             ],
             [
-                'attribute' => 'ad_created_time',
+                'attribute' => 'created_time',
                 'label' => Yii::t('cms','Created Time' ),
-                'value' => Utility::formatDataTime($model['ad_created_time'], '-', '/', true),
+                'value' => Utility::formatDataTime($model['created_time'], '-', '/', true),
             ],
             [
-                'attribute' => 'ad_updated_time',
+                'attribute' => 'updated_time',
                 'label' => Yii::t('cms','Updated Time' ),
-                'value' => Utility::formatDataTime($model['ad_updated_time'], '-', '/', true),
+                'value' => Utility::formatDataTime($model['updated_time'], '-', '/', true),
             ],
             [
-                'attribute' => 'ad_group_ids',
+                'attribute' => 'group_ids',
                 'label' => Yii::t('cms','Admin Groups' ),
                 'format' => ['html'],
                 'value' => function ($model) {
-                    $str_ids = ($model['ad_group_ids'] != '') ? json_decode($model['ad_group_ids']) : [];
+                    $str_ids = ($model['group_ids'] != '') ? json_decode($model['group_ids']) : [];
                     $str = '';
                     foreach ($str_ids as $gr_id) {
-                        $str .= '<p>' . AdminGroup::getAttributeValue(['ad_group_id' => $gr_id], 'ad_group_name') . '</p>';
+                        $str .= '<p>' . AdminGroup::getAttributeValue(['id' => $gr_id], 'group_name') . '</p>';
                     }
                     return $str;
                 }
@@ -101,3 +101,9 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

@@ -64,9 +64,9 @@ class AdminGroupController extends BackendController
         $request = Yii::$app->request->post();
 
         if ($model->load($request)) {
-            $model->ad_group_action_ids = isset($request['action_ids']) ? json_encode($request['action_ids']) : '';
+            $model->action_ids = isset($request['action_ids']) ? json_encode($request['action_ids']) : '';
             if($model->save()) {
-                return $this->redirect(['view', 'id' => $model->ad_group_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -88,13 +88,13 @@ class AdminGroupController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $actions_ids = ($model->ad_group_action_ids != '') ? json_decode($model->ad_group_action_ids) : '';
+        $actions_ids = ($model->action_ids != '') ? json_decode($model->action_ids) : '';
         $request = Yii::$app->request->post();
 
         if ($model->load($request)) {
-            $model->ad_group_action_ids = isset($request['action_ids']) ? json_encode($request['action_ids']) : '';
+            $model->action_ids = isset($request['action_ids']) ? json_encode($request['action_ids']) : '';
             if($model->save()) {
-                return $this->redirect(['view', 'id' => $model->ad_group_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -117,10 +117,10 @@ class AdminGroupController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+        $this->findModel($id)->delete();
+//        $model = $this->findModel($id);
+//        $model->deleted = 1;
+//        $model->save();
         return $this->redirect(['index']);
     }
 

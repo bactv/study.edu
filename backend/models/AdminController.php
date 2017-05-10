@@ -18,8 +18,8 @@ class AdminController extends \common\models\AdminControllerBase
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('ad_controller_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('ad_controller_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
         );

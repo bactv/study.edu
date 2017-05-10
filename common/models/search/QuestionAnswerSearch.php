@@ -19,7 +19,7 @@ class QuestionAnswerSearch extends QuestionAnswer
     {
         return [
             [['ans_id', 'question_id', 'is_true'], 'integer'],
-            [['question_content', 'ans_content'], 'safe'],
+            [['content'], 'safe'],
         ];
     }
 
@@ -57,8 +57,7 @@ class QuestionAnswerSearch extends QuestionAnswer
             'is_true' => $this->is_true,
         ]);
 
-        $query->andFilterWhere(['like', 'question_content', $this->question_content])
-            ->andFilterWhere(['like', 'ans_content', $this->ans_content]);
+        $query->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

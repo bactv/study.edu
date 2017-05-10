@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
-use backend\models\Subject;
 use backend\models\QuizType;
-use backend\models\ClassLevel;
+use backend\models\Subject;
+use backend\models\Topic;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
@@ -17,6 +18,7 @@ $this->title = $this->params['title'] = Yii::t('cms', 'Quizzes');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import đề thi'), 'url' => ['create'], 'options' => ['class' => 'btn btn-warning']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -28,82 +30,49 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            ['class' => 'yii\grid\CheckboxColumn'],
             [
-                'class' => 'yii\grid\CheckboxColumn',
-                'options' => ['width' => '50px'],
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
+                'attribute' => 'id',
             ],
-            [
-                'attribute' => 'quiz_id',
-                'options' => ['width' => '50px'],
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-            ],
-            [
-                'attribute' => 'quiz_name',
-                'options' => ['width' => '150px'],
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
-            ],
-            [
-                'attribute' => 'quiz_description',
-                'options' => ['width' => '150px'],
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
-            ],
+            'name',
             [
                 'attribute' => 'quiz_type_id',
-                'label' => Yii::t('cms', 'Quiz Types'),
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return QuizType::getAttributeValue(['quiz_type_id' => $model['quiz_type_id']], 'quiz_type_name');
-                },
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+                    return QuizType::getAttributeValue(['id' => $model['quiz_type_id']], 'name');
+                }
             ],
             [
                 'attribute' => 'subject_id',
-                'label' => Yii::t('cms', 'Subjects'),
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Subject::getAttributeValue(['subject_id' => $model['subject_id']], 'subject_name');
-                },
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+                    return Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
+                }
             ],
             [
-                'attribute' => 'class_level_id',
-                'label' => Yii::t('cms', 'Class Levels'),
+                'attribute' => 'topic_id',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ClassLevel::getAttributeValue(['class_level_id' => $model['class_level_id']], 'class_level_name');
-                },
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
-            ],
-            [
-                'attribute' => 'section',
-                'options' => ['width' => '150px'],
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+                    return Topic::getAttributeValue(['id' => $model['topic_id']], 'name');
+                }
             ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ($model['status'] == 1 ? 'Active' : 'Deactive');
-                },
-                'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
-                'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+                    if ($model['status'] == 0) {
+                        return 'Deactive';
+                    }
+                    return 'Active';
+                }
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {update} {delete} {question}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
-                'options' => ['width' => '120px'],
+                'options' => ['width' => '150px'],
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a(Icon::show('info-circle'), $url, [
@@ -128,8 +97,16 @@ $this->params['menu'] = [
                             'data-pjax' => 'w0'
                         ]);
                     },
+                    'question' => function ($url, $model) {
+                        $url = Url::toRoute(['/quiz/question', 'quiz_id' => $model['id']]);
+                        return Html::a(Icon::show('question-circle'), $url, [
+                            'title' => Yii::t('cms', 'Quản lý câu hỏi'),
+                            'class'=>'btn btn-primary btn-xs btn-app',
+                            'data-pjax' => '0',
+                        ]);
+                    },
                 ]
             ],
         ],
     ]); ?>
-<?php Pjax::end();?> 
+<?php Pjax::end();?>

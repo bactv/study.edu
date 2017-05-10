@@ -23,13 +23,13 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
 
-            'subject_id',
-            'subject_name',
-            'subject_description',
+            'id',
+            'name',
+            'short_name',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

@@ -21,9 +21,9 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'subject_name')->textInput(['maxlength' => 50]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 50]) ?>
 
-    <?= $form->field($model, 'subject_description')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'short_name')->textInput(['maxlength' => 255]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

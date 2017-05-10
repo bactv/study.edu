@@ -15,13 +15,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'quiz_type_id') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'quiz_type_name') ?>
+    <?= $form->field($model, 'code') ?>
 
-    <?= $form->field($model, 'quiz_type_description') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'number_quiz') ?>
+    <?= $form->field($model, 'description') ?>
+
+    <?= $form->field($model, 'created_time') ?>
+
+    <?php // echo $form->field($model, 'updated_time') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>

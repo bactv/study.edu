@@ -33,8 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ans_id',
             'question_id',
-            'question_content',
-            'ans_content',
+            'content',
             'is_true',
         ],
     ]) ?>

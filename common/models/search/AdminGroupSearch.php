@@ -18,8 +18,8 @@ class AdminGroupSearch extends AdminGroup
     public function rules()
     {
         return [
-            [['ad_group_id', 'ad_group_status'], 'integer'],
-            [['ad_group_name', 'ad_group_description', 'ad_group_action_ids', 'ad_group_created_time', 'ad_group_updated_time'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['name', 'description', 'action_ids', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -52,15 +52,15 @@ class AdminGroupSearch extends AdminGroup
         }
 
         $query->andFilterWhere([
-            'ad_group_id' => $this->ad_group_id,
-            'ad_group_status' => $this->ad_group_status,
-            'ad_group_created_time' => $this->ad_group_created_time,
-            'ad_group_updated_time' => $this->ad_group_updated_time,
+            'id' => $this->id,
+            'status' => $this->status,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
         ]);
 
-        $query->andFilterWhere(['like', 'ad_group_name', $this->ad_group_name])
-            ->andFilterWhere(['like', 'ad_group_description', $this->ad_group_description])
-            ->andFilterWhere(['like', 'ad_group_action_ids', $this->ad_group_action_ids]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'action_ids', $this->action_ids]);
 
         return $dataProvider;
     }

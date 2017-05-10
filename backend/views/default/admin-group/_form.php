@@ -24,11 +24,11 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'ad_group_name')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'ad_group_description')->textarea(['rows' => 5]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 5]) ?>
 
-    <?= $form->field($model, 'ad_group_status')->checkbox(['label' => '<i>(Active | Deactive)</i>'])->label(Yii::t('cms', 'Status')) ?>
+    <?= $form->field($model, 'status')->checkbox(['label' => '<i>(Active | Deactive)</i>'])->label(Yii::t('cms', 'Status')) ?>
 
     <div class="list_permission">
         <h3><b><?php echo Yii::t('cms', 'Permissions') ?></b></h3>
@@ -51,24 +51,24 @@ Icon::map($this, Icon::FA);
                 <tbody>
                 <?php foreach (AdminController::getAllAdminControllers() as $controller) { ?>
                     <tr>
-                        <td><?php echo Html::encode($controller['ad_controller_name']) ?></td>
+                        <td><?php echo Html::encode($controller['controller_name']) ?></td>
                         <td>
                             <?php
-                            $actions = AdminAction::getAllAdminActions(array('ad_controller_id' => $controller['ad_controller_id']));
+                            $actions = AdminAction::getAllAdminActions(array('controller_id' => $controller['controller_id']));
                             $arr_action_ids = [];
                             foreach ($actions as $action) {
-                                $arr_action_ids[] = $action['ad_action_id'];
+                                $arr_action_ids[] = $action['action_id'];
                                 $checked = false;
-                                if (isset($actions_ids) && in_array($action['ad_action_id'], $actions_ids)) {
+                                if (isset($actions_ids) && in_array($action['action_id'], $actions_ids)) {
                                     $checked = true;
                                 }
                                 echo "<p>" . Html::tag('input', '', array(
                                     'type' => 'checkbox',
                                     'name' => 'action_ids[]',
-                                    'value' => $action['ad_action_id'],
-                                    'id' => 'all-action-' . $controller['ad_controller_id'],
+                                    'value' => $action['action_id'],
+                                    'id' => 'all-action-' . $controller['controller_id'],
                                     'checked' => $checked
-                                )) . " " . $action['ad_action_name'] . "</p>";
+                                )) . " " . $action['action_name'] . "</p>";
                             }
                             ?>
                         </td>
@@ -82,7 +82,7 @@ Icon::map($this, Icon::FA);
                             <?php echo Html::tag('input', '', array(
                                 'type' => 'checkbox',
                                 'class' => 'check-all',
-                                'id' => $controller['ad_controller_id'],
+                                'id' => $controller['controller_id'],
                                 'checked' => $checked,
                                 'onclick' => 'checkAllControllerPermission(this)'
                             )); ?>

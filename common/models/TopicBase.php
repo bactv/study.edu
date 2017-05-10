@@ -20,4 +20,28 @@ class TopicBase extends \common\models\db\TopicDB
             ]
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('cms', 'ID'),
+            'name' => Yii::t('cms', 'Tên chuyên đề'),
+            'description' => Yii::t('cms', 'Mô tả chuyên đề'),
+            'subject_id' => Yii::t('cms', 'Môn học'),
+            'created_time' => Yii::t('cms', 'Ngày tạo'),
+            'updated_time' => Yii::t('cms', 'Ngày cập nhật'),
+        ];
+    }
+
+    public static function getAttributeValue($conditions, $attribute)
+    {
+        $obj = self::findOne([$conditions]);
+        if (!empty($obj) && isset($obj->{$attribute})) {
+            return $obj->{$attribute};
+        }
+        return '';
+    }
 }

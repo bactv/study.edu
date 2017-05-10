@@ -19,18 +19,18 @@ class CheckPermission
     {
         $check = false;
         $admin = Admin::findIdentity($admin_id);
-        $arr_ad_group_ids = !empty($admin['ad_group_ids']) ? json_decode($admin['ad_group_ids']) : [];
+        $arr_ad_group_ids = !empty($admin['group_ids']) ? json_decode($admin['group_ids']) : [];
         if (!empty($arr_ad_group_ids)) {
             foreach ($arr_ad_group_ids as $ad_group_id) {
-                $admin_group = AdminGroup::find()->where(['ad_group_id' => $ad_group_id])->one();
+                $admin_group = AdminGroup::find()->where(['id' => $ad_group_id])->one();
                 $arr_controllers = [];
                 $arr_actions = [];
-                $arr_actions_ids = !empty($admin_group['ad_group_action_ids']) ? json_decode($admin_group['ad_group_action_ids']) : [];
+                $arr_actions_ids = !empty($admin_group['action_ids']) ? json_decode($admin_group['action_ids']) : [];
                 if (!empty($arr_actions_ids)) {
                     foreach ($arr_actions_ids as $action_id) {
-                        $admin_action = AdminAction::getAdminAction(['ad_action_id' => $action_id]);
-                        $arr_controllers[] = strtolower($admin_action['ad_controller_name']);
-                        $arr_actions[] = strtolower($admin_action['ad_action_name']);
+                        $admin_action = AdminAction::getAdminAction(['action_id' => $action_id]);
+                        $arr_controllers[] = strtolower($admin_action['controller_name']);
+                        $arr_actions[] = strtolower($admin_action['action_name']);
                     }
                 }
                 if (in_array(strtolower($controller_name), $arr_controllers) && in_array(strtolower($action_name), $arr_actions)) {

@@ -2,10 +2,13 @@
 
 namespace backend\controllers;
 
+use backend\models\Question;
+use backend\models\Topic;
 use Yii;
 use backend\models\Quiz;
 use common\models\search\QuizSearch;
 use backend\components\BackendController;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -62,8 +65,15 @@ class QuizController extends BackendController
     {
         $model = new Quiz();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->quiz_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->subject_id = Topic::findOne(['id' => $model->topic_id])['subject_id'];
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +91,16 @@ class QuizController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->quiz_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->subject_id = Topic::findOne(['id' => $model->topic_id])['subject_id'];
+            $model->total_question = count(Question::findAll(['quiz_id' => $model->id]));
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -119,5 +137,17 @@ class QuizController extends BackendController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionQuestion($quiz_id)
+    {
+        $quiz = Quiz::findOne(['id' => $quiz_id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Question::find()->where(['quiz_id' => $quiz_id])
+        ]);
+        return $this->render('question/index', [
+            'quiz' => $quiz,
+            'dataProvider' => $dataProvider
+        ]);
     }
 }

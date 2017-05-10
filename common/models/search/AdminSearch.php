@@ -18,8 +18,8 @@ class AdminSearch extends Admin
     public function rules()
     {
         return [
-            [['ad_id', 'ad_avatar', 'ad_status', 'ad_created_by', 'ad_updated_by'], 'integer'],
-            [['ad_username', 'ad_password', 'ad_full_name', 'ad_email', 'ad_profession', 'ad_birthday', 'ad_last_active_time', 'ad_created_time', 'ad_updated_time', 'ad_group_ids'], 'safe'],
+            [['id', 'thumb', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['username', 'password', 'full_name', 'email', 'profession', 'birthday', 'last_active_time', 'group_ids', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -52,23 +52,23 @@ class AdminSearch extends Admin
         }
 
         $query->andFilterWhere([
-            'ad_id' => $this->ad_id,
-            'ad_birthday' => $this->ad_birthday,
-            'ad_avatar' => $this->ad_avatar,
-            'ad_status' => $this->ad_status,
-            'ad_last_active_time' => $this->ad_last_active_time,
-            'ad_created_by' => $this->ad_created_by,
-            'ad_updated_by' => $this->ad_updated_by,
-            'ad_created_time' => $this->ad_created_time,
-            'ad_updated_time' => $this->ad_updated_time,
+            'id' => $this->id,
+            'birthday' => $this->birthday,
+            'thumb' => $this->thumb,
+            'status' => $this->status,
+            'last_active_time' => $this->last_active_time,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
         ]);
 
-        $query->andFilterWhere(['like', 'ad_username', $this->ad_username])
-            ->andFilterWhere(['like', 'ad_password', $this->ad_password])
-            ->andFilterWhere(['like', 'ad_full_name', $this->ad_full_name])
-            ->andFilterWhere(['like', 'ad_email', $this->ad_email])
-            ->andFilterWhere(['like', 'ad_profession', $this->ad_profession])
-            ->andFilterWhere(['like', 'ad_group_ids', $this->ad_group_ids]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'full_name', $this->full_name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'profession', $this->profession])
+            ->andFilterWhere(['like', 'group_ids', $this->group_ids]);
 
         return $dataProvider;
     }

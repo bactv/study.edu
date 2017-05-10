@@ -18,8 +18,8 @@ class AdminGroup extends \common\models\AdminGroupBase
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('ad_group_created_time', 'ad_group_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('ad_group_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('created_time', 'updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
         );

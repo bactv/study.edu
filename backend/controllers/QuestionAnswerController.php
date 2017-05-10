@@ -120,4 +120,14 @@ class QuestionAnswerController extends BackendController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionListAnswer()
+    {
+        $request = Yii::$app->request->get();
+        $question_id = isset($request['question_id']) ? $request['question_id'] : '';
+        $lists = QuestionAnswer::findAll(['question_id' => $question_id]);
+        return $this->renderAjax('list_answer_by_question', [
+            'lists' => $lists
+        ]);
+    }
 }

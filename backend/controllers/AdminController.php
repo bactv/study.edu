@@ -66,10 +66,10 @@ class AdminController extends BackendController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($model->avatar)) {
-                $model->ad_avatar = 1;
+                $model->avatar = 1;
             }
-            if ($model->save() && $model->uploadAvatar($model->ad_id)) {
-                return $this->redirect(['view', 'id' => $model->ad_id]);
+            if ($model->save() && $model->uploadAvatar($model->id)) {
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -94,10 +94,10 @@ class AdminController extends BackendController
         if ($model->load(Yii::$app->request->post())) {
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($model->avatar)) {
-                $model->ad_avatar = 1;
+                $model->avatar = 1;
             }
-            if ($model->save() && $model->uploadAvatar($model->ad_id)) {
-                return $this->redirect(['view', 'id' => $model->ad_id]);
+            if ($model->save() && $model->uploadAvatar($model->id)) {
+                return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,

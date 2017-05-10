@@ -32,17 +32,17 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_id',
+                'attribute' => 'id',
                 'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_avatar',
+                'attribute' => 'avatar',
                 'options' => ['width' => '120px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    if ($model['ad_avatar'] == 1) {
+                    if ($model['avatar'] == 1) {
                         return Html::img(Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . $model['ad_id'] . '.png', [
                             'width' => '70px',
                             'height' => '70px'
@@ -58,26 +58,26 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_username',
+                'attribute' => 'username',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_full_name',
+                'attribute' => 'full_name',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_email',
+                'attribute' => 'email',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_status',
+                'attribute' => 'status',
                 'options' => ['width' => '100px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ($model['ad_status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']

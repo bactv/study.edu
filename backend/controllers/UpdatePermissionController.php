@@ -32,7 +32,7 @@ class UpdatePermissionController extends BackendController
         $listControllersDB = AdminController::getAllAdminControllers();
         if (!empty($listControllersDB)) {
             foreach ($listControllersDB as $con) {
-                $arr_controllerDB[] = $con['ad_controller_name'];
+                $arr_controllerDB[] = $con['controller_name'];
             }
         }
 
@@ -41,8 +41,8 @@ class UpdatePermissionController extends BackendController
         if (!empty($listUpdateController)) {
             foreach ($listUpdateController as $item) {
                 $model_controller = new AdminController();
-                $model_controller->ad_controller_name = $item;
-                $model_controller->ad_controller_description = $item;
+                $model_controller->controller_name = $item;
+                $model_controller->description = $item;
                 $model_controller->save();
             }
         }
@@ -50,8 +50,8 @@ class UpdatePermissionController extends BackendController
         $listDeleteController = array_diff($arr_controllerDB, $arr_controller);
         if (!empty($listDeleteController)) {
             foreach ($listDeleteController as $item) {
-                $model_controller = AdminController::getAdminController(array('ad_controller_name' => $item));
-                $actions = AdminAction::getAllAdminActions(array('ad_controller_id' => $model_controller['ad_controller_id']));
+                $model_controller = AdminController::getAdminController(array('controller_name' => $item));
+                $actions = AdminAction::getAllAdminActions(array('controller_id' => $model_controller['controller_id']));
                 if (!empty($actions)) {
                     foreach ($actions as $at) {
                         $at->delete();
@@ -64,7 +64,7 @@ class UpdatePermissionController extends BackendController
         $listActionController = AdminController::getAllAdminControllers();
         if (!empty($listActionController)) {
             foreach ($listActionController as $controller) {
-                $controllerName = $controller['ad_controller_name'] . 'Controller';
+                $controllerName = $controller['controller_name'] . 'Controller';
                 $className = "backend\\controllers\\{$controllerName}";
                 if (class_exists($className)) {
                     $obj = new $className($controllerName, null);
@@ -77,25 +77,25 @@ class UpdatePermissionController extends BackendController
                         }
                     }
                     $arrActionDB = [];
-                    $listActionDB = AdminAction::getAllAdminActions(array('ad_controller_id' => $controller['ad_controller_id']));
+                    $listActionDB = AdminAction::getAllAdminActions(array('controller_id' => $controller['controller_id']));
                     if (!empty($listActionDB)) {
                         foreach ($listActionDB as $at) {
-                            $arrActionDB[] = $at['ad_action_name'];
+                            $arrActionDB[] = $at['action_name'];
                         }
                     }
                     // Insert Or Update
                     $listActionUpdate = array_diff($arrActionFile, $arrActionDB);
                     foreach ($listActionUpdate as $at) {
                         $model = new AdminAction();
-                        $model->ad_action_name = $at;
-                        $model->ad_controller_id = $controller['ad_controller_id'];
-                        $model->ad_controller_name = $controller['ad_controller_name'];
+                        $model->action_name = $at;
+                        $model->controller_id = $controller['controller_id'];
+                        $model->controller_name = $controller['controller_name'];
                         $model->save();
                     }
                     // Delete
                     $listActionDelete = array_diff($arrActionDB, $arrActionFile);
                     foreach ($listActionDelete as $at) {
-                        $model = AdminAction::getAdminAction(array('ad_controller_id' => $controller['ad_controller_id'], 'ad_action_name' => $at));
+                        $model = AdminAction::getAdminAction(array('controller_id' => $controller['controller_id'], 'action_name' => $at));
                         if (!empty($model)) {
                             $model->delete();
                         }

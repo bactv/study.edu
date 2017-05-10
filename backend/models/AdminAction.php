@@ -18,8 +18,8 @@ class AdminAction extends \common\models\AdminActionBase
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('ad_action_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('ad_action_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
         );

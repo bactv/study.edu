@@ -18,9 +18,8 @@ class QuizSearch extends Quiz
     public function rules()
     {
         return [
-            [['quiz_id', 'quiz_type_id', 'subject_id', 'class_level_id', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['quiz_name', 'quiz_description', 'quiz_level', 'question_ids', 'section', 'created_time', 'updated_time'], 'safe'],
-            [['price'], 'number'],
+            [['id', 'quiz_type_id', 'subject_id', 'topic_id', 'time_length', 'total_question', 'status', 'privacy'], 'integer'],
+            [['name', 'description', 'level', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -53,23 +52,21 @@ class QuizSearch extends Quiz
         }
 
         $query->andFilterWhere([
-            'quiz_id' => $this->quiz_id,
+            'id' => $this->id,
             'quiz_type_id' => $this->quiz_type_id,
             'subject_id' => $this->subject_id,
-            'class_level_id' => $this->class_level_id,
+            'topic_id' => $this->topic_id,
+            'time_length' => $this->time_length,
+            'total_question' => $this->total_question,
             'status' => $this->status,
-            'price' => $this->price,
+            'privacy' => $this->privacy,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'quiz_name', $this->quiz_name])
-            ->andFilterWhere(['like', 'quiz_description', $this->quiz_description])
-            ->andFilterWhere(['like', 'quiz_level', $this->quiz_level])
-            ->andFilterWhere(['like', 'question_ids', $this->question_ids])
-            ->andFilterWhere(['like', 'section', $this->section]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'level', $this->level]);
 
         return $dataProvider;
     }

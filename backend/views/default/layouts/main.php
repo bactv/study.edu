@@ -10,6 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use yii\widgets\Menu;
+use common\components\AssetApp;
 
 AppAsset::register($this);
 ?>
@@ -21,6 +22,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <?php AssetApp::regJsFile('jquery.min.js') ?>
     <?php $this->head() ?>
 </head>
 <body>

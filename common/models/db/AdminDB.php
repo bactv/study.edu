@@ -16,6 +16,7 @@ use Yii;
  * @property string $birthday
  * @property integer $thumb
  * @property integer $status
+ * @property integer $deleted
  * @property string $last_active_time
  * @property string $group_ids
  * @property integer $created_by
@@ -41,7 +42,7 @@ class AdminDB extends \yii\db\ActiveRecord
         return [
             [['username', 'password'], 'required'],
             [['birthday', 'last_active_time', 'created_time', 'updated_time'], 'safe'],
-            [['thumb', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['thumb', 'status', 'deleted', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'string', 'max' => 50],
             [['password', 'profession', 'group_ids'], 'string', 'max' => 255],
             [['full_name', 'email'], 'string', 'max' => 100]
@@ -63,6 +64,7 @@ class AdminDB extends \yii\db\ActiveRecord
             'birthday' => Yii::t('cms', 'Birthday'),
             'thumb' => Yii::t('cms', 'Thumb'),
             'status' => Yii::t('cms', 'Status'),
+            'deleted' => Yii::t('cms', 'Deleted'),
             'last_active_time' => Yii::t('cms', 'Last Active Time'),
             'group_ids' => Yii::t('cms', 'Group Ids'),
             'created_by' => Yii::t('cms', 'Created By'),

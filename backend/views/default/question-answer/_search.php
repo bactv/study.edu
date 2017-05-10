@@ -19,9 +19,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'question_id') ?>
 
-    <?= $form->field($model, 'question_content') ?>
-
-    <?= $form->field($model, 'ans_content') ?>
+    <?= $form->field($model, 'content') ?>
 
     <?= $form->field($model, 'is_true') ?>
 

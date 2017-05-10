@@ -31,32 +31,27 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_group_id',
+                'attribute' => 'id',
                 'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_group_name',
+                'attribute' => 'name',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_group_description',
+                'attribute' => 'description',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'ad_group_action_ids',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'ad_group_status',
+                'attribute' => 'status',
                 'options' => ['width' => '100px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ($model['ad_group_status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']

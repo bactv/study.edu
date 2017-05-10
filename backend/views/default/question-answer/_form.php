@@ -23,9 +23,7 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'question_id')->textInput() ?>
 
-    <?= $form->field($model, 'question_content')->textInput(['maxlength' => 500]) ?>
-
-    <?= $form->field($model, 'ans_content')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'content')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'is_true')->textInput() ?>
 

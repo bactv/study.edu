@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
+use kartik\select2\Select2;
+use backend\models\QuizType;
+use backend\models\Topic;
+use yii\helpers\ArrayHelper;
 
 Icon::map($this, Icon::FA);
 
@@ -12,48 +16,49 @@ Icon::map($this, Icon::FA);
 ?>
 
 <div class="quiz-form">
+    <fieldset>
+        <legend><?php  echo (!$model->isNewRecord) ? 'Cập nhập đề thi' : 'Tạo mới đề thi'?></legend>
 
-    <?php $form = ActiveForm::begin([
-        'type' => ActiveForm::TYPE_HORIZONTAL,
-        'formConfig' => [
-            'labelSpan' => 2,
-            'deviceSize' => ActiveForm::SIZE_SMALL
-        ]
-    ]); ?>
+        <?php $form = ActiveForm::begin([
+            'type' => ActiveForm::TYPE_HORIZONTAL,
+            'formConfig' => [
+                'labelSpan' => 2,
+                'deviceSize' => ActiveForm::SIZE_SMALL
+            ]
+        ]); ?>
 
-    <?= $form->field($model, 'quiz_name')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'quiz_description')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'quiz_type_id')->textInput() ?>
+        <?= $form->field($model, 'quiz_type_id')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(QuizType::find()->all(), 'id', 'name')
+        ]) ?>
 
-    <?= $form->field($model, 'quiz_level')->dropDownList([ 'hard' => 'Hard', 'normal' => 'Normal', 'easy' => 'Easy', ], ['prompt' => '']) ?>
+        <?= $form->field($model, 'topic_id')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(Topic::find()->all(), 'id', 'name')
+        ]) ?>
 
-    <?= $form->field($model, 'subject_id')->textInput() ?>
+        <?= $form->field($model, 'time_length')->textInput([
+            'type' => 'number',
+            'max' => 200,
+            'min' => 10
+        ]) ?>
 
-    <?= $form->field($model, 'class_level_id')->textInput() ?>
+        <?= $form->field($model, 'level')->dropDownList([ 'easy' => 'Easy', 'normal' => 'Normal', 'hard' => 'Hard', ], ['prompt' => '']) ?>
 
-    <?= $form->field($model, 'question_ids')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
-    <?= $form->field($model, 'section')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'privacy')->dropDownList([
+            0 => 'Công khai',
+            1 => 'Yêu cầu đăng nhập'
+        ]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+        <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>
+        </div>
 
-    <?= $form->field($model, 'price')->textInput(['maxlength' => 10]) ?>
-
-    <?= $form->field($model, 'created_time')->textInput() ?>
-
-    <?= $form->field($model, 'updated_time')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+        <?php ActiveForm::end(); ?>
+    </fieldset>
 </div>

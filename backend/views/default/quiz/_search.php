@@ -15,35 +15,31 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'quiz_id') ?>
+    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'quiz_name') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'quiz_description') ?>
+    <?= $form->field($model, 'description') ?>
 
     <?= $form->field($model, 'quiz_type_id') ?>
 
-    <?= $form->field($model, 'quiz_level') ?>
+    <?= $form->field($model, 'subject_id') ?>
 
-    <?php // echo $form->field($model, 'subject_id') ?>
+    <?php // echo $form->field($model, 'topic_id') ?>
 
-    <?php // echo $form->field($model, 'class_level_id') ?>
+    <?php // echo $form->field($model, 'time_length') ?>
 
-    <?php // echo $form->field($model, 'question_ids') ?>
+    <?php // echo $form->field($model, 'level') ?>
 
-    <?php // echo $form->field($model, 'section') ?>
+    <?php // echo $form->field($model, 'total_question') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'price') ?>
+    <?php // echo $form->field($model, 'privacy') ?>
 
     <?php // echo $form->field($model, 'created_time') ?>
 
     <?php // echo $form->field($model, 'updated_time') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>

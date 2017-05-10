@@ -87,6 +87,7 @@ form .control-label {
 #admin-grid-view .grid-view .table > thead > tr > th {
     background: url("../images/table_th_4.png") repeat-x;
     color: #337ab7;
+    vertical-align: middle;
 }
 
 #admin-grid-view .grid-view .table > thead > tr > th > a{
@@ -103,7 +104,7 @@ form .control-label {
 }
 
 #admin-grid-view .grid-view .table > tbody > tr > td {
-
+    vertical-align: middle;
 }
 
 #admin-grid-view .grid-view .table .empty {

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\Utility;
 use Yii;
 use backend\models\Subject;
 use common\models\search\SubjectSearch;
@@ -62,8 +63,15 @@ class SubjectController extends BackendController
     {
         $model = new Subject();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->subject_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->name_n = Utility::rewrite($model->name);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +89,15 @@ class SubjectController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->subject_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->name_n = Utility::rewrite($model->name);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -98,10 +113,10 @@ class SubjectController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+        $this->findModel($id)->delete();
+//        $model = $this->findModel($id);
+//        $model->deleted = 1;
+//        $model->save();
         return $this->redirect(['index']);
     }
 

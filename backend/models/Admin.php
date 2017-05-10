@@ -25,8 +25,8 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('ad_created_time', 'ad_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('ad_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('created_time', 'updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
         );
@@ -51,7 +51,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public static function findIdentity($id)
     {
         // TODO: Implement findIdentity() method.
-        $admin = static::find()->where(['ad_id' => $id, 'ad_status' => 1])->one();
+        $admin = static::find()->where(['id' => $id, 'status' => 1])->one();
         return (!empty($admin) ? $admin : null);
     }
     /**
@@ -64,7 +64,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public static function findByUsername($username)
     {
         // TODO: Implement findIdentity() method.
-        $admin = static::find()->where(['ad_username' => $username, 'ad_status' => 1])->one();
+        $admin = static::find()->where(['username' => $username, 'status' => 1])->one();
         return (!empty($admin) ? $admin : null);
     }
     /**
@@ -87,8 +87,14 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public function getId()
     {
         // TODO: Implement getId() method.
-        return $this->ad_id;
+        return $this->id;
     }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
     /**
      * Returns a key that can be used to check the validity of a given identity ID.
      *
@@ -124,7 +130,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->ad_password = Yii::$app->security->generatePasswordHash($password);
+        $this->password = Yii::$app->security->generatePasswordHash($password);
     }
     /**
      * Validate password
@@ -133,7 +139,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->ad_password);
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**

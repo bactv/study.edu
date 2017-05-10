@@ -18,8 +18,8 @@ class QuizTypeSearch extends QuizType
     public function rules()
     {
         return [
-            [['quiz_type_id', 'number_quiz'], 'integer'],
-            [['quiz_type_name', 'quiz_type_description'], 'safe'],
+            [['id'], 'integer'],
+            [['code', 'name', 'description', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -52,12 +52,14 @@ class QuizTypeSearch extends QuizType
         }
 
         $query->andFilterWhere([
-            'quiz_type_id' => $this->quiz_type_id,
-            'number_quiz' => $this->number_quiz,
+            'id' => $this->id,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
         ]);
 
-        $query->andFilterWhere(['like', 'quiz_type_name', $this->quiz_type_name])
-            ->andFilterWhere(['like', 'quiz_type_description', $this->quiz_type_description]);
+        $query->andFilterWhere(['like', 'code', $this->code])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
