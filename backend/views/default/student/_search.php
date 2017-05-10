@@ -15,27 +15,23 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'std_id') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'std_username') ?>
+    <?= $form->field($model, 'full_name') ?>
 
-    <?= $form->field($model, 'std_password') ?>
+    <?= $form->field($model, 'birthday') ?>
 
-    <?= $form->field($model, 'std_full_name') ?>
+    <?= $form->field($model, 'school') ?>
 
-    <?= $form->field($model, 'std_phone') ?>
+    <?= $form->field($model, 'email') ?>
 
-    <?php // echo $form->field($model, 'std_birthday') ?>
+    <?php // echo $form->field($model, 'phone') ?>
 
-    <?php // echo $form->field($model, 'std_school_name') ?>
+    <?php // echo $form->field($model, 'balance') ?>
 
-    <?php // echo $form->field($model, 'std_balance') ?>
+    <?php // echo $form->field($model, 'created_time') ?>
 
-    <?php // echo $form->field($model, 'std_status') ?>
-
-    <?php // echo $form->field($model, 'std_created_time') ?>
-
-    <?php // echo $form->field($model, 'std_updated_time') ?>
+    <?php // echo $form->field($model, 'updated_time') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>

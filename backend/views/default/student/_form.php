@@ -21,9 +21,23 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'newPassword')->passwordInput(['maxlength' => 100]) ?>
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'std_status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
+    <?= $form->field($model, 'full_name')->textInput(['maxlength' => 60]) ?>
+
+    <?= $form->field($model, 'birthday')->textInput(['maxlength' => 60]) ?>
+
+    <?= $form->field($model, 'school')->textInput(['maxlength' => 60]) ?>
+
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'phone')->textInput(['maxlength' => 30]) ?>
+
+    <?= $form->field($model, 'balance')->textInput(['maxlength' => 10]) ?>
+
+    <?= $form->field($model, 'created_time')->textInput() ?>
+
+    <?= $form->field($model, 'updated_time')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

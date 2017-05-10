@@ -18,8 +18,9 @@ class StudentSearch extends Student
     public function rules()
     {
         return [
-            [['std_id', 'std_balance', 'std_status'], 'integer'],
-            [['std_username', 'std_password', 'std_full_name', 'std_phone', 'std_birthday', 'std_school_name', 'std_created_time', 'std_updated_time'], 'safe'],
+            [['user_id'], 'integer'],
+            [['full_name', 'birthday', 'school', 'email', 'phone', 'created_time', 'updated_time'], 'safe'],
+            [['balance'], 'number'],
         ];
     }
 
@@ -52,19 +53,17 @@ class StudentSearch extends Student
         }
 
         $query->andFilterWhere([
-            'std_id' => $this->std_id,
-            'std_balance' => $this->std_balance,
-            'std_status' => $this->std_status,
-            'std_created_time' => $this->std_created_time,
-            'std_updated_time' => $this->std_updated_time,
+            'user_id' => $this->user_id,
+            'balance' => $this->balance,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
         ]);
 
-        $query->andFilterWhere(['like', 'std_username', $this->std_username])
-            ->andFilterWhere(['like', 'std_password', $this->std_password])
-            ->andFilterWhere(['like', 'std_full_name', $this->std_full_name])
-            ->andFilterWhere(['like', 'std_phone', $this->std_phone])
-            ->andFilterWhere(['like', 'std_birthday', $this->std_birthday])
-            ->andFilterWhere(['like', 'std_school_name', $this->std_school_name]);
+        $query->andFilterWhere(['like', 'full_name', $this->full_name])
+            ->andFilterWhere(['like', 'birthday', $this->birthday])
+            ->andFilterWhere(['like', 'school', $this->school])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'phone', $this->phone]);
 
         return $dataProvider;
     }

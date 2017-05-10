@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use backend\models\User;
 use Yii;
 use backend\models\Student;
 use common\models\search\StudentSearch;
@@ -64,7 +63,7 @@ class StudentController extends BackendController
         $model = new Student();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->std_id]);
+            return $this->redirect(['view', 'id' => $model->user_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,22 +80,9 @@ class StudentController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $user = User::findOne(['student_id' => $id]);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->newPassword != '') {
-                $model->std_password = md5($model->newPassword);
-            }
-
-            if ($model->save()) {
-                $user->password = $model->std_password;
-                $user->save();
-                return $this->redirect(['view', 'id' => $model->std_id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->user_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

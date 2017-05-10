@@ -11,6 +11,7 @@ use Yii;
  * @property string $full_name
  * @property string $birthday
  * @property string $school
+ * @property string $email
  * @property string $phone
  * @property string $balance
  * @property string $created_time
@@ -37,6 +38,7 @@ class StudentDB extends \yii\db\ActiveRecord
             [['balance'], 'number'],
             [['created_time', 'updated_time'], 'safe'],
             [['full_name', 'birthday', 'school'], 'string', 'max' => 60],
+            [['email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30]
         ];
     }
@@ -51,6 +53,7 @@ class StudentDB extends \yii\db\ActiveRecord
             'full_name' => Yii::t('cms', 'Full Name'),
             'birthday' => Yii::t('cms', 'Birthday'),
             'school' => Yii::t('cms', 'School'),
+            'email' => Yii::t('cms', 'Email'),
             'phone' => Yii::t('cms', 'Phone'),
             'balance' => Yii::t('cms', 'Balance'),
             'created_time' => Yii::t('cms', 'Created Time'),

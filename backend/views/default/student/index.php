@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
+use backend\models\User;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
@@ -13,7 +15,7 @@ Icon::map($this, Icon::FA);
 $this->title = $this->params['title'] = Yii::t('cms', 'Students');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
-//    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -23,65 +25,38 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
+            ['class' => 'yii\grid\CheckboxColumn'],
+
+            'user_id',
+            'full_name',
+            'birthday',
+            'school',
+            'email',
+            'phone',
             [
-                'class' => 'yii\grid\CheckboxColumn',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_id',
-                'options' => ['width' => '50px'],
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_username',
-                'headerOptions' => ['style'=>'vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_full_name',
-                'headerOptions' => ['style'=>'vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_phone',
-                'headerOptions' => ['style'=>'vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_school_name',
-                'headerOptions' => ['style'=>'vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'std_balance',
+                'attribute' => 'balance',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return number_format($model['std_balance']);
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+                    return number_format($model['balance']);
+                }
             ],
             [
-                'attribute' => 'std_status',
                 'label' => Yii::t('cms', 'Status'),
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ($model['std_status'] == 1) ? 'Active' : 'Inactive';
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+                    $user = User::findOne(['id' => $model['user_id']]);
+                    return $user['status'] == 1 ? 'Active' : 'Inactive';
+                }
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {update} {delete} {active}',
                 'header' => Yii::t('cms', 'Actions'),
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'options' => ['width' => '120px'],
+                'headerOptions' => ['style'=>'text-align: center;'],
+                'contentOptions'=>['style'=>'text-align: center;'],
+                'options' => ['width' => '150px'],
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a(Icon::show('info-circle'), $url, [
@@ -102,6 +77,15 @@ $this->params['menu'] = [
                             'title' => Yii::t('cms', 'Delete'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => 'w0'
+                        ]);
+                    },
+                    'active' => function ($url, $model) {
+                        return Html::a(Icon::show('user'), Url::toRoute(['/user/active-account', 'id' => $model['user_id']]), [
+                            'title' => Yii::t('cms', 'Active Account'),
+                            'class'=>'btn btn-primary btn-xs btn-app',
+                            'data-confirm' => Yii::t('yii', 'Bạn có muốn active tài khoản này hay không?'),
                             'data-method' => 'post',
                             'data-pjax' => 'w0'
                         ]);
