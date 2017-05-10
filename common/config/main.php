@@ -20,7 +20,8 @@ return [
                     'basePath' => '@common/messages'
                 ],
             ]
-        ]
+        ],
+        'db' => require(__DIR__ . '/db.php'),
     ],
     'sourceLanguage' => 'en-US',
     'language' => 'vi',
