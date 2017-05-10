@@ -20,7 +20,8 @@ $this->params['menu'] = [
 ?>
 <div class="question-answer-update">
     <?= $this->render('_form', [
-    'model' => $model,
+        'model' => $model,
+        'question_id' => $question_id
     ]) ?>
 </div>
 

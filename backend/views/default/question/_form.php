@@ -37,6 +37,8 @@ Icon::map($this, Icon::FA);
         <?php ActiveForm::end(); ?>
     </fieldset>
     <br><br><br>
+    <?php echo Html::a(Icon::show('spinner fa-pulse') . ' Reload', 'javascript:void(0)', ['class' => 'btn btn-warning', 'onclick' => 'get_list_answer()']) ?>
+    <br><br>
     <fieldset>
         <legend>Đáp án câu hỏi</legend>
         <div class="list_answer"></div>

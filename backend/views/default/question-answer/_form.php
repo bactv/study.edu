@@ -21,11 +21,13 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'question_id')->textInput() ?>
+    <?php if ($model->isNewRecord) { ?>
+        <?= $form->field($model, 'question_id')->hiddenInput([
+            'value' => $question_id
+        ])->label(false) ?>
+    <?php } ?>
 
     <?= $form->field($model, 'content')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'is_true')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

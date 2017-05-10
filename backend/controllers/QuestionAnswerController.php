@@ -6,6 +6,7 @@ use Yii;
 use backend\models\QuestionAnswer;
 use common\models\search\QuestionAnswerSearch;
 use backend\components\BackendController;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -46,10 +47,11 @@ class QuestionAnswerController extends BackendController
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $question_id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'question_id' => $question_id
         ]);
     }
 
@@ -58,15 +60,16 @@ class QuestionAnswerController extends BackendController
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($question_id)
     {
         $model = new QuestionAnswer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ans_id]);
+            return $this->redirect(['view', 'id' => $model->ans_id, 'question_id' => $question_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'question_id' => $question_id
             ]);
         }
     }
@@ -77,15 +80,16 @@ class QuestionAnswerController extends BackendController
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $question_id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ans_id]);
+            return $this->redirect(['view', 'id' => $model->ans_id, 'question_id' => $question_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'question_id' => $question_id
             ]);
         }
     }
@@ -96,13 +100,10 @@ class QuestionAnswerController extends BackendController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $question_id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
-        return $this->redirect(['index']);
+        $this->findModel($id)->delete();
+        return $this->redirect(Url::toRoute(['/question/update', 'id' => $question_id]));
     }
 
     /**
@@ -127,7 +128,8 @@ class QuestionAnswerController extends BackendController
         $question_id = isset($request['question_id']) ? $request['question_id'] : '';
         $lists = QuestionAnswer::findAll(['question_id' => $question_id]);
         return $this->renderAjax('list_answer_by_question', [
-            'lists' => $lists
+            'lists' => $lists,
+            'question_id' => $question_id
         ]);
     }
 }
