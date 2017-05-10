@@ -38,7 +38,7 @@ class LoginForm extends Model
         return [
             'username' => Yii::t('cms', 'username'),
             'password' => Yii::t('cms', 'password'),
-            'verifyCode' => Yii::t('cms', 'verify_code'),
+            'verifyCode' => Yii::t('cms', 'Captcha'),
             'rememberMe' => Yii::t('cms', 'rememberMe'),
         ];
     }
@@ -54,7 +54,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('cms', 'check_login_fail'));
+                $this->addError($attribute, Yii::t('cms', 'Tên đăng nhập hoặc tài khoản không tồn tại.'));
             } else {
 //                Yii::$app->session->set('role', $user->admin_group_id);
             }

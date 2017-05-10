@@ -5,6 +5,7 @@ use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
 use common\components\AssetApp;
+use common\components\Utility;
 
 Icon::map($this, Icon::FA);
 
@@ -42,17 +43,16 @@ $this->params['menu'] = [
                 'options' => ['width' => '120px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    if ($model['avatar'] == 1) {
-                        return Html::img(Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . $model['ad_id'] . '.png', [
-                            'width' => '70px',
-                            'height' => '70px'
-                        ]);
-                    } else {
-                        return Html::img(AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png', [
-                            'width' => '70px',
-                            'height' => '70px'
-                        ]);
+                    $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
+                    $path = Yii::$app->params['img_url']['admin_avatar']['folder'];
+                    $check = Utility::get_content_static($path, Yii::$app->user->identity->getId());
+                    if ($check != null) {
+                        $img = Yii::$app->params['storage_url'] . $check;
                     }
+                    return Html::img($img, [
+                        'width' => '70px',
+                        'height' => '70px'
+                    ]);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']

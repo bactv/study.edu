@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\components\CheckPermission;
 use yii\web\UploadedFile;
 use Yii;
 use backend\models\Admin;
@@ -63,12 +64,18 @@ class AdminController extends BackendController
     {
         $model = new Admin();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model->scenario = 'create';
+
+        if ($model->load(Yii::$app->request->post())) {
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($model->avatar)) {
-                $model->avatar = 1;
+                $model->thumb = 1;
             }
-            if ($model->save() && $model->uploadAvatar($model->id)) {
+            $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            if (!empty($model->group_ids)) {
+                $model->group_ids = json_encode($model->group_ids);
+            }
+            if ($model->validate() && $model->save() && $model->uploadAvatar($model->id)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 return $this->render('create', [
@@ -91,10 +98,19 @@ class AdminController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post())) {
+
+        if (!empty($model->group_ids)) {
+            $model->group_ids = json_decode($model->group_ids);
+        }
+
+        $request = Yii::$app->request->post();
+        if ($model->load($request) && $model->validate()) {
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            if (!empty($model->avatar)) {
-                $model->avatar = 1;
+            if (!empty($request['Admin']['group_ids'])) {
+                $model->group_ids = json_encode($request['Admin']['group_ids']);
+            }
+            if ($model->password != '') {
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
             }
             if ($model->save() && $model->uploadAvatar($model->id)) {
                 return $this->redirect(['view', 'id' => $model->id]);

@@ -48,11 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'avatar',
                 'format' => ['image',['width'=>'70','height'=>'70']],
                 'value' => function ($model) {
-                    if ($model['avatar'] == 1) {
-                        return Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . $model['id'] . '.png';
-                    } else {
-                        return AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
+                    $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
+                    $path = Yii::$app->params['img_url']['admin_avatar']['folder'];
+                    $check = Utility::get_content_static($path, Yii::$app->user->identity->getId());
+                    if ($check != null) {
+                        $img = Yii::$app->params['storage_url'] . $check;
                     }
+                    return $img;
                 }
             ],
             [
@@ -92,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $str_ids = ($model['group_ids'] != '') ? json_decode($model['group_ids']) : [];
                     $str = '';
                     foreach ($str_ids as $gr_id) {
-                        $str .= '<p>' . AdminGroup::getAttributeValue(['id' => $gr_id], 'group_name') . '</p>';
+                        $str .= '<p>' . AdminGroup::getAttributeValue(['id' => $gr_id], 'name') . '</p>';
                     }
                     return $str;
                 }

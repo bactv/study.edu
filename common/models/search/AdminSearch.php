@@ -41,7 +41,7 @@ class AdminSearch extends Admin
      */
     public function search($params)
     {
-        $query = Admin::find();
+        $query = Admin::find()->where(['deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

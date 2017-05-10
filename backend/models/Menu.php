@@ -31,13 +31,14 @@ class Menu extends \common\models\MenuBase
     public static function getAllMenus()
     {
         $allMenus =  static::find()->where(['status' => 1, 'module' => 1])->all();
-//        $menus = [];
-//        foreach ($allMenus as $menu) {
-//            if (self::checkMenuPermission($menu)) {
-//                $menus[] = $menu;
-//            }
-//        }
-        return $allMenus;
+        $menus = [];
+        foreach ($allMenus as $menu) {
+            if (self::checkMenuPermission($menu)) {
+                $menus[] = $menu;
+            }
+        }
+        return $menus;
+//        return $allMenus;
     }
     /**
      * Get menu backend by menu_id
@@ -65,13 +66,14 @@ class Menu extends \common\models\MenuBase
     public static function getChildMenu($parent_id)
     {
         $allMenus = static::find()->where(['status' => 1, 'module' => 1, 'parent_id' => $parent_id])->orderBy('sort')->all();
-//         $menus = [];
-//         foreach ($allMenus as $menu) {
-//             if (self::checkMenuPermission($menu)) {
-//                 $menus[] = $menu;
-//             }
-//         }
-        return $allMenus;
+        $menus = [];
+        foreach ($allMenus as $menu) {
+            if (self::checkMenuPermission($menu)) {
+                $menus[] = $menu;
+            }
+        }
+        return $menus;
+//        return $allMenus;
     }
     /**
      * Show menu
@@ -144,9 +146,12 @@ class Menu extends \common\models\MenuBase
     private static function checkMenuPermission($menu)
     {
         $user_id = Yii::$app->user->id;
+        if ($user_id == 1) {
+            return true;
+        }
         $ex = explode('/', $menu['url']);
-        $controller_name = isset($ex[0]) ? $ex[0] : '';
-        $action_name = isset($ex[1]) ? $ex[1] : '';
+        $controller_name = isset($ex[0]) ? trim(str_replace('-', '', $ex[0])) : '';
+        $action_name = isset($ex[1]) ? trim(str_replace('-', '', $ex[1])) : '';
         if (CheckPermission::checkPermission($user_id, $controller_name, $action_name)) {
             return true;
         }

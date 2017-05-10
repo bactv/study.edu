@@ -12,8 +12,6 @@ use yii\web\IdentityInterface;
 class Admin extends \common\models\AdminBase implements IdentityInterface
 {
     public $avatar;
-    public $new_password;
-    public $re_new_password;
 
     /**
      * Behaviors
@@ -34,11 +32,16 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
 
     public function rules()
     {
-        $new_rule = [
-//            [['avatar'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg']
-            ['re_new_password', 'validateRe_new_password'],
+        return [
+            [['username', 'password'], 'required'],
+            [['birthday', 'last_active_time', 'created_time', 'updated_time'], 'safe'],
+            [['thumb', 'status', 'deleted', 'created_by', 'updated_by'], 'integer'],
+            [['username'], 'string', 'max' => 50],
+            [['password', 'profession', 'access_token', 'auth_key'], 'string', 'max' => 255],
+            [['full_name', 'email'], 'string', 'max' => 100],
+            [['avatar'], 'file', 'extensions' => 'png, jpeg, gif, jpg'],
+            ['username', 'validateUsername', 'on' => 'create']
         ];
-        return array_merge(parent::rules(), $new_rule);
     }
 
     /**
@@ -79,6 +82,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         // TODO: Implement findIdentityByAccessToken() method.
+        return self::findOne(['access_token' => $token]);
     }
     /**
      * Returns an ID that can uniquely identify a user identity.
@@ -110,6 +114,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public function getAuthKey()
     {
         // TODO: Implement getAuthKey() method.
+        return $this->auth_key;
     }
     /**
      * Validates the given auth key.
@@ -122,7 +127,9 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         // TODO: Implement validateAuthKey() method.
+        return $this->auth_key == $authKey;
     }
+
     /**
      * Encrypt password
      * @param $password
@@ -152,29 +159,13 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
         if ($this->avatar == null) {
             return true;
         }
-        $path =  Yii::$app->params['img_url']['avatar_admin']['folder'] . '/';
+        $path =  Yii::$app->params['img_url']['admin_avatar']['folder'] . '/';
         $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
         if (!is_dir($path_admin)) {
             mkdir($path_admin, 0777);
         }
-        if ($this->validate()) {
-            $this->avatar->saveAs($path_admin . $id . '.png');
-            return Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['cms_url'] . 'storage/' . $path . $id . '.png');
-        } else {
-            return false;
-        }
-    }
-
-    public function validateRe_new_password($attribute, $params, $validator)
-    {
-        if ($this->new_password != '') {
-            if ($this->$attribute == '') {
-                $this->addError($attribute, 'Vui lòng nhập lại mật khẩu lần nữa');
-            }
-            if ($this->$attribute != '' && $this->$attribute !== $this->new_password) {
-                $this->addError($attribute, 'Không khớp mật khẩu');
-            }
-        }
+        $this->avatar->saveAs($path_admin . $id . '.png');
+        return Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['cms_url'] . 'storage/' . $path . $id . '.png');
     }
 
     public static function getAttributeValue($conditions, $attr_return)
@@ -184,5 +175,13 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
             return $object->{$attr_return};
         }
         return '';
+    }
+
+    public function validateUsername()
+    {
+        $check = Admin::findAll(['username' => $this->username]);
+        if (!empty($check)) {
+            $this->addError('username', 'Tên đăng nhập đã tồn tại');
+        }
     }
 }

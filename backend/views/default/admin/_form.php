@@ -36,12 +36,7 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => 50, 'disabled' => (!$model->isNewRecord ? true : false)]) ?>
 
-    <?php if ($model->isNewRecord) {
-        echo $form->field($model, 'password')->passwordInput(['maxlength' => 255]);
-    } else {
-        echo $form->field($model, 'new_password')->passwordInput(['maxlength' => 255])->label(Yii::t('cms', 'New Password'));
-        echo $form->field($model, 're_new_password')->passwordInput(['maxlength' => 255])->label(Yii::t('cms', 'Re-New Password'));
-    } ?>
+    <?php echo $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'value' => '']); ?>
 
     <?= $form->field($model, 'full_name')->textInput(['maxlength' => 100]) ?>
 
@@ -61,16 +56,16 @@ Icon::map($this, Icon::FA);
     ]) ?>
 
     <?php if (Yii::$app->user->identity->getUsername() == 'admin') { ?>
-    <?= $form->field($model, 'group_ids')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(AdminGroup::getAllAdminGroups(['status' => 1]), 'id', 'name'),
-        'options' => [
-            'multiple' => true,
-            'placeholder' => 'Chọn danh sách nhóm quyền ...',
-        ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]) ?>
+        <?= $form->field($model, 'group_ids')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(AdminGroup::getAllAdminGroups(['status' => 1]), 'id', 'name'),
+            'options' => [
+                'multiple' => true,
+                'placeholder' => 'Chọn danh sách nhóm quyền ...',
+            ],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
     <?php } ?>
 
     <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>

@@ -8,6 +8,7 @@
 use yii\helpers\Html;
 use common\components\AssetApp;
 use kartik\icons\Icon;
+use common\components\Utility;
 
 Icon::map($this, Icon::FA);
 use backend\models\Menu;
@@ -26,8 +27,12 @@ use backend\models\Menu;
         <div class="row avatar">
             <?php
             $avatar = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-            if (isset(Yii::$app->user->identity->avatar) && Yii::$app->user->identity->avatar > 0) {
-                $avatar = Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_admin']['folder'] . '/' . Yii::$app->user->identity->getId() . '.png';
+            if (!empty(Yii::$app->user->identity)) {
+                $path = Yii::$app->params['img_url']['admin_avatar']['folder'];
+                $check = Utility::get_content_static($path, Yii::$app->user->identity->getId());
+                if ($check != null) {
+                    $avatar = Yii::$app->params['storage_url'] . $check;
+                }
             }
             ?>
             <?php echo Html::img($avatar, ['alt' => 'admin']) ?>

@@ -23,6 +23,8 @@ use Yii;
  * @property integer $updated_by
  * @property string $created_time
  * @property string $updated_time
+ * @property string $access_token
+ * @property string $auth_key
  */
 class AdminDB extends \yii\db\ActiveRecord
 {
@@ -44,7 +46,7 @@ class AdminDB extends \yii\db\ActiveRecord
             [['birthday', 'last_active_time', 'created_time', 'updated_time'], 'safe'],
             [['thumb', 'status', 'deleted', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'string', 'max' => 50],
-            [['password', 'profession', 'group_ids'], 'string', 'max' => 255],
+            [['password', 'profession', 'group_ids', 'access_token', 'auth_key'], 'string', 'max' => 255],
             [['full_name', 'email'], 'string', 'max' => 100]
         ];
     }
@@ -71,6 +73,8 @@ class AdminDB extends \yii\db\ActiveRecord
             'updated_by' => Yii::t('cms', 'Updated By'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
+            'access_token' => Yii::t('cms', 'Access Token'),
+            'auth_key' => Yii::t('cms', 'Auth Key'),
         ];
     }
 }
