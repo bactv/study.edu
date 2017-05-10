@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-05-10 01:58:59
+Date: 2017-05-11 01:06:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,19 +29,23 @@ CREATE TABLE `admin` (
   `birthday` date DEFAULT NULL,
   `thumb` tinyint(1) DEFAULT '0',
   `status` tinyint(1) DEFAULT '1',
+  `deleted` tinyint(1) DEFAULT '0' COMMENT '1',
   `last_active_time` datetime DEFAULT NULL,
   `group_ids` varchar(255) DEFAULT NULL,
   `created_by` int(11) DEFAULT '0',
   `updated_by` int(11) DEFAULT '0',
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
+  `access_token` varchar(255) DEFAULT NULL,
+  `auth_key` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', 'admin', '$2y$13$K9vy95X.hgT4Puo/wMjdCuBg73HA114fi9N9NFvoh36eyAYXGljSa', 'Administrator', 'admin@study.edu.vn', '', '0000-00-00', '1', '1', null, '[\"1\"]', '0', '0', null, '2017-04-10 23:22:28');
+INSERT INTO `admin` VALUES ('1', 'admin', '$2y$13$K9vy95X.hgT4Puo/wMjdCuBg73HA114fi9N9NFvoh36eyAYXGljSa', 'Administrator', 'admin@study.edu.vn', '', '0000-00-00', '1', '1', '0', '2017-05-10 13:26:18', '[\"1\"]', '0', '0', null, '2017-05-10 13:26:18', null, null);
+INSERT INTO `admin` VALUES ('18', 'hd_bichphuong', '$2y$13$uUiyxY7M1uDuCmeU0pAf.OYFWwtHYC5VRLxp5Ah2sV.DU.i4a/o3q', 'bich phuong', '', '', null, '1', '1', '0', '2017-05-10 18:44:55', '[\"2\"]', '0', '0', '2017-05-10 18:02:03', '2017-05-10 18:44:55', null, null);
 
 -- ----------------------------
 -- Table structure for admin_action
@@ -52,32 +56,151 @@ CREATE TABLE `admin_action` (
   `controller_id` int(11) NOT NULL,
   `controller_name` varchar(30) DEFAULT NULL,
   `action_name` varchar(50) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`action_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_action
 -- ----------------------------
-INSERT INTO `admin_action` VALUES ('1', '1', 'Admin', 'Index', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('2', '1', 'Admin', 'View', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('3', '1', 'Admin', 'Create', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('4', '1', 'Admin', 'Update', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('5', '1', 'Admin', 'Delete', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('6', '2', 'AdminGroup', 'Index', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('7', '2', 'AdminGroup', 'View', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('8', '2', 'AdminGroup', 'Create', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('9', '2', 'AdminGroup', 'Update', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('10', '2', 'AdminGroup', 'Delete', '2017-03-07 23:35:58');
-INSERT INTO `admin_action` VALUES ('11', '3', 'Site', 'Index', '2017-03-07 23:35:59');
-INSERT INTO `admin_action` VALUES ('12', '3', 'Site', 'Login', '2017-03-07 23:35:59');
-INSERT INTO `admin_action` VALUES ('13', '3', 'Site', 'Logout', '2017-03-07 23:35:59');
-INSERT INTO `admin_action` VALUES ('15', '4', 'UpdatePermission', 'UpdateRouter', '2017-03-08 00:04:16');
-INSERT INTO `admin_action` VALUES ('16', '5', 'Menu', 'Index', '2017-03-13 23:56:04');
-INSERT INTO `admin_action` VALUES ('17', '5', 'Menu', 'View', '2017-03-13 23:56:04');
-INSERT INTO `admin_action` VALUES ('18', '5', 'Menu', 'Create', '2017-03-13 23:56:04');
-INSERT INTO `admin_action` VALUES ('19', '5', 'Menu', 'Update', '2017-03-13 23:56:04');
-INSERT INTO `admin_action` VALUES ('20', '5', 'Menu', 'Delete', '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('1', '1', 'Admin', 'Index', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('2', '1', 'Admin', 'View', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('3', '1', 'Admin', 'Create', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('4', '1', 'Admin', 'Update', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('5', '1', 'Admin', 'Delete', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('6', '2', 'AdminGroup', 'Index', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('7', '2', 'AdminGroup', 'View', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('8', '2', 'AdminGroup', 'Create', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('9', '2', 'AdminGroup', 'Update', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('10', '2', 'AdminGroup', 'Delete', null, '2017-03-07 23:35:58');
+INSERT INTO `admin_action` VALUES ('11', '3', 'Site', 'Index', null, '2017-03-07 23:35:59');
+INSERT INTO `admin_action` VALUES ('12', '3', 'Site', 'Login', null, '2017-03-07 23:35:59');
+INSERT INTO `admin_action` VALUES ('13', '3', 'Site', 'Logout', null, '2017-03-07 23:35:59');
+INSERT INTO `admin_action` VALUES ('15', '4', 'UpdatePermission', 'UpdateRouter', null, '2017-03-08 00:04:16');
+INSERT INTO `admin_action` VALUES ('16', '5', 'Menu', 'Index', null, '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('17', '5', 'Menu', 'View', null, '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('18', '5', 'Menu', 'Create', null, '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('19', '5', 'Menu', 'Update', null, '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('20', '5', 'Menu', 'Delete', null, '2017-03-13 23:56:04');
+INSERT INTO `admin_action` VALUES ('21', '6', 'AgreementAddendum', 'Index', null, '2017-05-10 08:17:33');
+INSERT INTO `admin_action` VALUES ('22', '6', 'AgreementAddendum', 'View', null, '2017-05-10 08:17:33');
+INSERT INTO `admin_action` VALUES ('23', '6', 'AgreementAddendum', 'Create', null, '2017-05-10 08:17:33');
+INSERT INTO `admin_action` VALUES ('24', '6', 'AgreementAddendum', 'Update', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('25', '6', 'AgreementAddendum', 'Delete', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('26', '7', 'Agreement', 'Index', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('27', '7', 'Agreement', 'View', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('28', '7', 'Agreement', 'Create', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('29', '7', 'Agreement', 'Update', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('30', '7', 'Agreement', 'Delete', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('31', '7', 'Agreement', 'ViewAgreement', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('32', '7', 'Agreement', 'Addendum', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('33', '8', 'AgreementRight', 'Index', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('34', '8', 'AgreementRight', 'View', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('35', '8', 'AgreementRight', 'Create', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('36', '8', 'AgreementRight', 'Update', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('37', '8', 'AgreementRight', 'Delete', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('38', '9', 'AgreementType', 'Index', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('39', '9', 'AgreementType', 'View', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('40', '9', 'AgreementType', 'Create', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('41', '9', 'AgreementType', 'Update', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('42', '9', 'AgreementType', 'Delete', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('43', '10', 'ClassLevel', 'Index', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('44', '10', 'ClassLevel', 'View', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('45', '10', 'ClassLevel', 'Create', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('46', '10', 'ClassLevel', 'Update', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('47', '10', 'ClassLevel', 'Delete', null, '2017-05-10 08:17:34');
+INSERT INTO `admin_action` VALUES ('48', '11', 'Course', 'Index', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('49', '11', 'Course', 'View', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('50', '11', 'Course', 'Create', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('51', '11', 'Course', 'Update', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('52', '11', 'Course', 'Delete', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('53', '11', 'Course', 'Approve', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('54', '11', 'Course', 'Refuse', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('55', '11', 'Course', 'SendFeedbackTeacher', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('56', '12', 'CourseNews', 'Index', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('57', '12', 'CourseNews', 'View', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('58', '12', 'CourseNews', 'Create', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('59', '12', 'CourseNews', 'Update', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('60', '12', 'CourseNews', 'Delete', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('61', '13', 'CourseType', 'Index', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('62', '13', 'CourseType', 'View', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('63', '13', 'CourseType', 'Create', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('64', '13', 'CourseType', 'Update', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('65', '13', 'CourseType', 'Delete', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('66', '14', 'Feedback', 'Index', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('67', '14', 'Feedback', 'View', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('68', '14', 'Feedback', 'Create', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('69', '14', 'Feedback', 'Update', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('70', '14', 'Feedback', 'Delete', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('71', '15', 'ImportFile', 'Index', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('72', '15', 'ImportFile', 'View', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('73', '15', 'ImportFile', 'Create', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('74', '15', 'ImportFile', 'Update', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('75', '15', 'ImportFile', 'Delete', null, '2017-05-10 08:17:35');
+INSERT INTO `admin_action` VALUES ('76', '16', 'Package', 'Index', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('77', '16', 'Package', 'View', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('78', '16', 'Package', 'Create', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('79', '16', 'Package', 'Update', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('80', '16', 'Package', 'Delete', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('81', '17', 'Party', 'Index', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('82', '17', 'Party', 'View', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('83', '17', 'Party', 'Create', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('84', '17', 'Party', 'Update', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('85', '17', 'Party', 'Delete', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('86', '18', 'PartyType', 'Index', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('87', '18', 'PartyType', 'View', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('88', '18', 'PartyType', 'Create', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('89', '18', 'PartyType', 'Update', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('90', '18', 'PartyType', 'Delete', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('91', '19', 'QuestionAnswer', 'Index', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('92', '19', 'QuestionAnswer', 'View', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('93', '19', 'QuestionAnswer', 'Create', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('94', '19', 'QuestionAnswer', 'Update', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('95', '19', 'QuestionAnswer', 'Delete', null, '2017-05-10 08:17:36');
+INSERT INTO `admin_action` VALUES ('96', '20', 'Question', 'Index', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('97', '20', 'Question', 'View', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('98', '20', 'Question', 'Create', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('99', '20', 'Question', 'Update', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('100', '20', 'Question', 'Delete', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('101', '21', 'Quiz', 'Index', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('102', '21', 'Quiz', 'View', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('103', '21', 'Quiz', 'Create', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('104', '21', 'Quiz', 'Update', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('105', '21', 'Quiz', 'Delete', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('106', '22', 'QuizType', 'Index', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('107', '22', 'QuizType', 'View', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('108', '22', 'QuizType', 'Create', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('109', '22', 'QuizType', 'Update', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('110', '22', 'QuizType', 'Delete', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('111', '23', 'Slideshow', 'Index', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('112', '23', 'Slideshow', 'View', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('113', '23', 'Slideshow', 'Create', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('114', '23', 'Slideshow', 'Update', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('115', '23', 'Slideshow', 'Delete', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('116', '24', 'Student', 'Index', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('117', '24', 'Student', 'View', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('118', '24', 'Student', 'Create', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('119', '24', 'Student', 'Update', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('120', '24', 'Student', 'Delete', null, '2017-05-10 08:17:37');
+INSERT INTO `admin_action` VALUES ('121', '25', 'Subject', 'Index', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('122', '25', 'Subject', 'View', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('123', '25', 'Subject', 'Create', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('124', '25', 'Subject', 'Update', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('125', '25', 'Subject', 'Delete', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('126', '26', 'Teacher', 'Index', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('127', '26', 'Teacher', 'View', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('128', '26', 'Teacher', 'Create', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('129', '26', 'Teacher', 'Update', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('130', '26', 'Teacher', 'Delete', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('131', '27', 'Test', 'Index', null, '2017-05-10 08:17:38');
+INSERT INTO `admin_action` VALUES ('132', '19', 'QuestionAnswer', 'ListAnswer', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('133', '21', 'Quiz', 'Question', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('134', '28', 'Topic', 'Index', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('135', '28', 'Topic', 'View', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('136', '28', 'Topic', 'Create', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('137', '28', 'Topic', 'Update', null, '2017-05-10 13:35:42');
+INSERT INTO `admin_action` VALUES ('138', '28', 'Topic', 'Delete', null, '2017-05-10 13:35:42');
 
 -- ----------------------------
 -- Table structure for admin_controller
@@ -89,7 +212,7 @@ CREATE TABLE `admin_controller` (
   `description` varchar(255) DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`controller_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_controller
@@ -99,6 +222,29 @@ INSERT INTO `admin_controller` VALUES ('2', 'AdminGroup', 'AdminGroup', '2017-03
 INSERT INTO `admin_controller` VALUES ('3', 'Site', 'Site', '2017-03-07 22:56:38');
 INSERT INTO `admin_controller` VALUES ('4', 'UpdatePermission', 'UpdatePermission', '2017-03-07 22:56:38');
 INSERT INTO `admin_controller` VALUES ('5', 'Menu', 'Menu', '2017-03-13 23:56:04');
+INSERT INTO `admin_controller` VALUES ('6', 'AgreementAddendum', 'AgreementAddendum', '2017-05-10 08:17:32');
+INSERT INTO `admin_controller` VALUES ('7', 'Agreement', 'Agreement', '2017-05-10 08:17:32');
+INSERT INTO `admin_controller` VALUES ('8', 'AgreementRight', 'AgreementRight', '2017-05-10 08:17:32');
+INSERT INTO `admin_controller` VALUES ('9', 'AgreementType', 'AgreementType', '2017-05-10 08:17:32');
+INSERT INTO `admin_controller` VALUES ('10', 'ClassLevel', 'ClassLevel', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('11', 'Course', 'Course', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('12', 'CourseNews', 'CourseNews', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('13', 'CourseType', 'CourseType', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('14', 'Feedback', 'Feedback', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('15', 'ImportFile', 'ImportFile', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('16', 'Package', 'Package', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('17', 'Party', 'Party', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('18', 'PartyType', 'PartyType', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('19', 'QuestionAnswer', 'QuestionAnswer', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('20', 'Question', 'Question', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('21', 'Quiz', 'Quiz', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('22', 'QuizType', 'QuizType', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('23', 'Slideshow', 'Slideshow', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('24', 'Student', 'Student', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('25', 'Subject', 'Subject', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('26', 'Teacher', 'Teacher', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('27', 'Test', 'Test', '2017-05-10 08:17:33');
+INSERT INTO `admin_controller` VALUES ('28', 'Topic', 'Topic', '2017-05-10 13:35:42');
 
 -- ----------------------------
 -- Table structure for admin_group
@@ -113,12 +259,13 @@ CREATE TABLE `admin_group` (
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_group
 -- ----------------------------
-INSERT INTO `admin_group` VALUES ('1', 'Administator', 'Quản trị hệ thống, Phát triển hệ thống', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\"]', '1', '2017-03-08 00:33:05', '2017-03-13 23:56:16');
+INSERT INTO `admin_group` VALUES ('1', 'Administator', 'Quản trị hệ thống, Phát triển hệ thống', '[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\"]', '1', '2017-03-08 00:33:05', '2017-05-10 13:33:34');
+INSERT INTO `admin_group` VALUES ('2', 'Quản lý hợp đồng', 'Nhóm admin quản lý hợp đồng', '[\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\",\"40\",\"41\",\"42\",\"81\",\"82\",\"83\",\"84\",\"85\",\"86\",\"87\",\"88\",\"89\",\"90\"]', '1', '2017-05-10 17:27:17', '2017-05-10 17:27:17');
 
 -- ----------------------------
 -- Table structure for agreement
@@ -271,10 +418,10 @@ DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `teacher_id` int(11) DEFAULT NULL,
+  `teacher_ids` varchar(30) DEFAULT NULL,
   `party_id` int(11) DEFAULT NULL,
   `description` text NOT NULL,
-  `deadline_resgiter` date DEFAULT NULL,
+  `deadline_register` date DEFAULT NULL,
   `status` tinyint(1) DEFAULT '0' COMMENT '0: chua active, 1: active',
   `deleted` tinyint(1) DEFAULT '0' COMMENT '0: not delete, 1: deleted',
   `approved` tinyint(3) DEFAULT '0' COMMENT '0: dang xem xet, 1: da phe duyet, -1: tu choi phe duyet',
@@ -285,10 +432,27 @@ CREATE TABLE `course` (
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of course
+-- ----------------------------
+INSERT INTO `course` VALUES ('4', 'Khóa H2 - Luyện thi THPT Quốc gia môn Ngữ văn năm 2018', '[\"7\"]', null, '<p><strong>Study.edu</strong> thiết kế v&agrave; cung cấp chương tr&igrave;nh&nbsp;luyện thi to&agrave;n diện&nbsp;THPT Quốc gia m&ocirc;n Ngữ Văn năm 2018 theo&nbsp;cấu tr&uacute;c MỚI&nbsp;m&agrave; Bộ Gi&aacute;o Dục v&agrave; Đ&agrave;o Tạo vừa ban h&agrave;nh. Một trong những kh&oacute;a học quan trọng nhất l&agrave;&nbsp;Kh&oacute;a nền tảng H2&nbsp;được giảng dạy bởi&nbsp;C&ocirc;<em>&nbsp;<strong>Bernhard</strong></em><strong>&nbsp;</strong>- Gi&aacute;o vi&ecirc;n Ngữ văn&nbsp;<em>trường THCS - THPT Nguyễn Khuyến &ndash; TP.HCM.</em></p>\r\n\r\n<p>Kh&oacute;a học nền tảng H2 sẽ cung cấp cho c&aacute;c em đầy đủ kiến thức cơ bản, trọng t&acirc;m v&agrave; bao qu&aacute;t to&agrave;n diện&nbsp;chương tr&igrave;nh lớp 12&nbsp;nhằm chuẩn bị cho k&igrave; thi&nbsp;THPT Quốc gia m&ocirc;n Ngữ Văn năm 2018&nbsp;đạt kết quả cao nhất. Nội dung b&agrave;i học được tr&igrave;nh b&agrave;y một c&aacute;ch hệ thống, dễ hiểu, dễ ghi nhớ.</p>\r\n\r\n<p>Sau mỗi b&agrave;i giảng, c&aacute;c em được thực h&agrave;nh kiến thức đ&atilde; học qua c&aacute;c d&agrave;n &yacute; văn mẫu v&agrave; t&agrave;i liệu tham khảo nhằm nắm chắc kiến thức vừa học,&nbsp;ho&agrave;n thiện kỹ năng l&agrave;m b&agrave;i.</p>\r\n\r\n<p>NỘI DUNG KH&Oacute;A HỌC</p>\r\n\r\n<p>Kh&oacute;a học gồm 5 chuy&ecirc;n đề&nbsp;bao qu&aacute;t to&agrave;n bộ chương tr&igrave;nh lớp&nbsp;Ngữ Văn&nbsp;12 v&agrave; một phần chương tr&igrave;nh Ngữ Văn lớp 11.</p>\r\n\r\n<p>Hơn 60 video b&agrave;i giảng gi&uacute;p c&aacute;c em nắm vững kiến thức m&ocirc;n&nbsp;Ngữ Văn.</p>\r\n\r\n<p>Tr&ecirc;n 200 d&agrave;n &yacute; văn mẫu ti&ecirc;u biểu tr&iacute;ch lọc v&agrave; bi&ecirc;n soạn từ c&aacute;c t&aacute;c phẩm.</p>\r\n\r\n<p>Ch&uacute;c c&aacute;c em c&oacute; những giờ học th&uacute; vị, bổ &iacute;ch v&agrave; hiệu quả qua sự dẫn dắt của C&ocirc;&nbsp;<em><strong>Bernhard</strong></em><strong>&nbsp;</strong>!</p>\r\n', null, '0', '0', '0', null, null, '1', '6', '2017-05-10 15:28:33', '2017-05-10 15:28:33');
+
+-- ----------------------------
+-- Table structure for course_teacher
+-- ----------------------------
+DROP TABLE IF EXISTS `course_teacher`;
+CREATE TABLE `course_teacher` (
+  `course_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  `course_name` varchar(255) NOT NULL,
+  `teacher_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`course_id`,`teacher_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of course_teacher
 -- ----------------------------
 
 -- ----------------------------
@@ -352,6 +516,51 @@ CREATE TABLE `import_file` (
 INSERT INTO `import_file` VALUES ('2', 'test_agreement_1', '1', 'agreement', '2017-03-25 10:26:42', '2017-03-25 10:26:42', '1', '1');
 
 -- ----------------------------
+-- Table structure for import_question
+-- ----------------------------
+DROP TABLE IF EXISTS `import_question`;
+CREATE TABLE `import_question` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `quiz_id` int(11) NOT NULL,
+  `question_content` varchar(255) DEFAULT NULL,
+  `question_solution` varchar(255) DEFAULT NULL,
+  `answer_1` varchar(255) DEFAULT NULL,
+  `answer_2` varchar(0) DEFAULT NULL,
+  `answer_3` varchar(0) DEFAULT NULL,
+  `answer_4` varchar(0) DEFAULT NULL,
+  `answer_5` varchar(0) DEFAULT NULL,
+  `answer_6` varchar(0) DEFAULT NULL,
+  `ans_true` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of import_question
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for import_quiz
+-- ----------------------------
+DROP TABLE IF EXISTS `import_quiz`;
+CREATE TABLE `import_quiz` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1: da xu ly, 0: chua xu ly',
+  `quiz_name` varchar(255) DEFAULT NULL,
+  `quiz_description` varchar(255) DEFAULT NULL,
+  `quiz_type_id` varchar(255) DEFAULT NULL,
+  `topic_id` varchar(255) DEFAULT NULL,
+  `time_length` varchar(0) DEFAULT NULL,
+  `level` varchar(255) DEFAULT NULL,
+  `privacy` varchar(255) DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of import_quiz
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for lesson
 -- ----------------------------
 DROP TABLE IF EXISTS `lesson`;
@@ -410,8 +619,8 @@ INSERT INTO `menu` VALUES ('10', '9', 'Loại đối tượng', '1', 'party-type
 INSERT INTO `menu` VALUES ('11', '9', 'Đối tượng', '1', 'party/index', 'user-plus', '1', '1', '2', '2017-03-15 23:47:51', '2017-03-15 23:47:54');
 INSERT INTO `menu` VALUES ('12', '0', 'Quản lý đề thi, câu hỏi', '1', 'quiz/index', 'graduation-cap', '1', '1', null, '2017-03-22 23:41:15', '2017-03-22 23:41:18');
 INSERT INTO `menu` VALUES ('13', '12', 'Môn học', '1', 'subject/index', 'id-card', '1', '1', '1', '2017-03-22 23:42:06', '2017-03-22 23:42:09');
-INSERT INTO `menu` VALUES ('14', '12', 'Trình độ lớp ', '1', 'class-level/index', 'ravelry ', '1', '1', '2', '2017-03-22 23:42:47', '2017-03-22 23:42:50');
-INSERT INTO `menu` VALUES ('15', '12', 'Quản lý câu hỏi', '1', 'question/index', 'telegram', '1', '1', '3', '2017-03-22 23:43:44', '2017-03-22 23:43:47');
+INSERT INTO `menu` VALUES ('14', '12', 'Chuyên đề môn học', '1', 'topic/index', 'ravelry ', '1', '1', '2', '2017-03-22 23:42:47', '2017-03-22 23:42:50');
+INSERT INTO `menu` VALUES ('15', '12', 'Quản lý câu hỏi', '1', 'question/index', 'telegram', '1', '0', '3', '2017-03-22 23:43:44', '2017-03-22 23:43:47');
 INSERT INTO `menu` VALUES ('16', '12', 'Loại đề thi', '1', 'quiz-type/index', 'podcast', '1', '1', '4', '2017-03-22 23:44:25', '2017-03-22 23:44:27');
 INSERT INTO `menu` VALUES ('17', '12', 'Quản lý đề thi', '1', 'quiz/index', 'newspaper-o', '1', '1', '5', '2017-03-22 23:45:19', '2017-03-22 23:45:23');
 INSERT INTO `menu` VALUES ('18', '0', 'Quản lý học sinh, giáo viên', '1', 'student/index', 'users', '1', '1', null, '2017-03-23 00:24:49', '2017-03-23 00:24:51');
@@ -1068,7 +1277,7 @@ CREATE TABLE `question_answer` (
   `content` varchar(255) DEFAULT NULL,
   `is_true` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1: true, 0:false',
   PRIMARY KEY (`ans_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2201 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2202 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question_answer
@@ -3290,6 +3499,7 @@ CREATE TABLE `quiz` (
   `total_question` int(11) DEFAULT '10',
   `status` tinyint(1) DEFAULT '1' COMMENT '1: active',
   `privacy` tinyint(5) DEFAULT '0' COMMENT '0: public, 1: yeu cau dang nhap',
+  `deleted` tinyint(1) DEFAULT '0' COMMENT '0: chua xoa, 1: da xoa',
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -3298,30 +3508,30 @@ CREATE TABLE `quiz` (
 -- ----------------------------
 -- Records of quiz
 -- ----------------------------
-INSERT INTO `quiz` VALUES ('1', 'Illum rerum laborum molestias voluptates et.', 'Inventore inventore molestias ad fugiat nemo sed sit rem totam ab quo quia fuga totam non eos voluptatibus autem ipsum quos ullam eligendi vel et explicabo est ipsum voluptatem magnam voluptas.', '1', '3', '32', '15', 'easy', '10', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('2', 'Sint nostrum est totam.', 'Quibusdam nesciunt tenetur dignissimos soluta distinctio minus quam autem vel velit eligendi ut quos non non rerum officia et modi illum est fugit sed et ipsam reprehenderit quisquam maxime sint nobis.', '3', '2', '2', '30', 'hard', '20', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('3', 'Quas ut consequatur voluptas quis nulla autem.', 'Et excepturi reprehenderit ratione ut aut magnam est provident aut voluptas quia labore quis harum nemo molestiae dolores dolores est.', '2', '1', '19', '15', 'hard', '10', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('4', 'Repellat quia assumenda dolor quae.', 'Quos sit laborum nisi consequuntur vel mollitia assumenda possimus laborum et quas perspiciatis quas assumenda neque nihil quam quia non voluptatem.', '2', '7', '40', '30', 'easy', '20', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('5', 'Et hic non architecto a velit.', 'Doloribus itaque accusamus facere modi est molestiae magnam deleniti qui quia veritatis cupiditate nam autem illum et quo alias ut aliquam praesentium aut autem.', '2', '6', '41', '60', 'easy', '40', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('6', 'Aspernatur similique non voluptatum.', 'Modi unde voluptatem eum unde aperiam consequuntur ducimus possimus sit autem nam necessitatibus itaque cumque maxime eum delectus assumenda officia sit tempore quia tempore iusto illo aut repellat voluptatem repudiandae assumenda dolorem.', '1', '7', '40', '40', 'easy', '30', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('7', 'Qui voluptatem provident error sit et.', 'Quia iure voluptatibus dolorem soluta voluptates qui commodi quod qui quo eum ut error culpa molestiae sed nesciunt sed sunt quos nihil blanditiis et non quisquam alias quidem et quidem sint sunt totam sequi labore dolores animi nobis quis.', '2', '2', '9', '30', 'hard', '20', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('8', 'Doloribus nemo dolores est.', 'Sapiente molestiae molestiae et iusto dolorem aperiam nobis ducimus nobis ea nihil facilis iusto aut enim distinctio quae eaque quia enim fuga ab iste voluptas illum voluptatibus eligendi explicabo voluptatem sint quam omnis molestiae non saepe est.', '1', '7', '40', '30', 'easy', '20', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('9', 'Impedit ducimus consectetur tempore.', 'Nisi consequatur porro aliquam velit laudantium aliquam voluptas accusamus est asperiores provident inventore sint quidem voluptatum dolores ut nam perspiciatis ducimus.', '2', '3', '35', '15', 'normal', '10', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('10', 'Laboriosam illo ex necessitatibus consectetur.', 'Quam tempora ipsum voluptate aut id alias dolor temporibus eum incidunt ut sint eos aut qui nostrum reiciendis labore eos non repellendus.', '2', '7', '31', '60', 'hard', '40', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('11', 'Cumque officiis fugiat iure eum harum commodi consequatur.', 'Nemo laboriosam maxime eveniet tempora totam laudantium libero sint ut nihil nihil nulla est maxime similique quia accusamus est in est necessitatibus est id consequatur error.', '3', '3', '32', '15', 'normal', '10', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('12', 'Vel quidem libero voluptates.', 'Laborum nobis molestias ut consequatur voluptas repudiandae autem consequatur est nesciunt quibusdam inventore omnis asperiores provident dolores modi autem laboriosam aut quibusdam.', '1', '4', '11', '40', 'easy', '30', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('13', 'Est deserunt unde ullam dicta necessitatibus rem.', 'Error voluptas ea quaerat eligendi nam voluptatum autem voluptatem dolorum consequatur corrupti totam reprehenderit similique consequatur itaque sapiente assumenda dolores dolor eos quo quia.', '2', '2', '25', '60', 'hard', '40', '1', '1', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
-INSERT INTO `quiz` VALUES ('14', 'Distinctio consequatur similique corporis ratione.', 'Cum sint saepe quo nisi repellat voluptate perferendis cupiditate eius quae fuga consectetur a voluptates quia sed ipsam quo aut nobis et harum magnam dolorum.', '1', '3', '35', '30', 'hard', '20', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('15', 'Adipisci dolores libero est.', 'Consequatur et excepturi exercitationem animi sed ratione cum dolorem a mollitia incidunt reiciendis ut vel et et sunt et sed alias quo fuga quod eos autem.', '1', '5', '33', '60', 'normal', '40', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('16', 'Quam rerum sed dolor.', 'Consequatur autem corporis nostrum dolorem occaecati vero ducimus quia consequatur omnis impedit qui consequuntur quibusdam ea totam unde officia perferendis debitis possimus molestiae molestias ullam aut sint doloribus accusamus aliquid quia.', '1', '3', '26', '60', 'easy', '40', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('17', 'Aliquid tenetur eius voluptatibus et aperiam.', 'Sed accusantium ea aliquid pariatur ea magnam aut quia aut vitae laboriosam ex reiciendis deserunt culpa voluptas tenetur sed veniam nihil fuga enim id nisi dolorem deserunt aut illo quas enim ab est aut rerum quis aut rerum eligendi.', '3', '7', '31', '30', 'hard', '20', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('18', 'Beatae enim placeat architecto.', 'Expedita blanditiis quas facilis atque voluptatum dolorem sunt neque non ducimus voluptatem aliquid quia saepe molestiae ab et sint ad corporis vitae iusto cum ipsum modi reprehenderit voluptate.', '1', '5', '1', '30', 'hard', '20', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('19', 'Iure impedit recusandae dolor nihil.', 'Quod et sit aperiam facilis voluptate sed illum fugiat deleniti deserunt reiciendis ut eum similique sunt quos nihil voluptates eligendi quia sunt aliquid beatae similique.', '3', '4', '21', '30', 'easy', '20', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('20', 'Id repellat sit iste laudantium sunt.', 'Modi ut illum ullam eius et eum est voluptatem cupiditate voluptates natus quo vel pariatur voluptatem consequatur unde deserunt iure eos sunt quasi molestiae aut error dolore totam autem iste repellendus animi delectus.', '3', '2', '18', '30', 'easy', '20', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('21', 'Animi itaque nihil officia quos.', 'Iure reprehenderit commodi iure quasi ut incidunt harum recusandae quaerat aut dolor voluptates sint repudiandae porro atque quas optio.', '1', '2', '2', '40', 'hard', '30', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('22', 'Eaque quas fugiat illo veniam aut aliquam qui.', 'Quam omnis qui rerum corporis ratione nisi qui praesentium consequatur corrupti sint nisi qui eos unde delectus voluptatem aut ut repellendus sint enim cumque autem sed et.', '1', '3', '32', '15', 'normal', '10', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('23', 'Qui non necessitatibus consequatur voluptas quo.', 'Voluptatibus itaque ea et libero qui nulla rerum eligendi dolorum fugiat rerum iusto ea quia fuga non accusamus ut eos voluptatem ex hic porro architecto alias sint ex.', '3', '2', '5', '30', 'hard', '20', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
-INSERT INTO `quiz` VALUES ('24', 'Commodi quo fugiat laboriosam ut quidem.', 'At beatae laborum ut deserunt ea suscipit qui culpa eligendi dolor animi ab fugit ea cumque aut doloribus quos libero quis mollitia unde est sunt perferendis ab nam aperiam sapiente sed autem animi.', '2', '7', '15', '15', 'normal', '10', '1', '1', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('1', 'Illum rerum laborum molestias voluptates et.', 'Inventore inventore molestias ad fugiat nemo sed sit rem totam ab quo quia fuga totam non eos voluptatibus autem ipsum quos ullam eligendi vel et explicabo est ipsum voluptatem magnam voluptas.', '1', '3', '32', '15', 'normal', '10', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-10 09:23:53');
+INSERT INTO `quiz` VALUES ('2', 'Sint nostrum est totam.', 'Quibusdam nesciunt tenetur dignissimos soluta distinctio minus quam autem vel velit eligendi ut quos non non rerum officia et modi illum est fugit sed et ipsam reprehenderit quisquam maxime sint nobis.', '3', '2', '2', '30', 'hard', '20', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('3', 'Quas ut consequatur voluptas quis nulla autem.', 'Et excepturi reprehenderit ratione ut aut magnam est provident aut voluptas quia labore quis harum nemo molestiae dolores dolores est.', '2', '1', '19', '15', 'hard', '10', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('4', 'Repellat quia assumenda dolor quae.', 'Quos sit laborum nisi consequuntur vel mollitia assumenda possimus laborum et quas perspiciatis quas assumenda neque nihil quam quia non voluptatem.', '2', '7', '40', '30', 'easy', '20', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('5', 'Et hic non architecto a velit.', 'Doloribus itaque accusamus facere modi est molestiae magnam deleniti qui quia veritatis cupiditate nam autem illum et quo alias ut aliquam praesentium aut autem.', '2', '6', '41', '60', 'easy', '40', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('6', 'Aspernatur similique non voluptatum.', 'Modi unde voluptatem eum unde aperiam consequuntur ducimus possimus sit autem nam necessitatibus itaque cumque maxime eum delectus assumenda officia sit tempore quia tempore iusto illo aut repellat voluptatem repudiandae assumenda dolorem.', '1', '7', '40', '40', 'easy', '30', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('7', 'Qui voluptatem provident error sit et.', 'Quia iure voluptatibus dolorem soluta voluptates qui commodi quod qui quo eum ut error culpa molestiae sed nesciunt sed sunt quos nihil blanditiis et non quisquam alias quidem et quidem sint sunt totam sequi labore dolores animi nobis quis.', '2', '2', '9', '30', 'hard', '20', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('8', 'Doloribus nemo dolores est.', 'Sapiente molestiae molestiae et iusto dolorem aperiam nobis ducimus nobis ea nihil facilis iusto aut enim distinctio quae eaque quia enim fuga ab iste voluptas illum voluptatibus eligendi explicabo voluptatem sint quam omnis molestiae non saepe est.', '1', '7', '40', '30', 'easy', '20', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('9', 'Impedit ducimus consectetur tempore.', 'Nisi consequatur porro aliquam velit laudantium aliquam voluptas accusamus est asperiores provident inventore sint quidem voluptatum dolores ut nam perspiciatis ducimus.', '2', '3', '35', '15', 'normal', '10', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('10', 'Laboriosam illo ex necessitatibus consectetur.', 'Quam tempora ipsum voluptate aut id alias dolor temporibus eum incidunt ut sint eos aut qui nostrum reiciendis labore eos non repellendus.', '2', '7', '31', '60', 'hard', '40', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('11', 'Cumque officiis fugiat iure eum harum commodi consequatur.', 'Nemo laboriosam maxime eveniet tempora totam laudantium libero sint ut nihil nihil nulla est maxime similique quia accusamus est in est necessitatibus est id consequatur error.', '3', '3', '32', '15', 'normal', '10', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('12', 'Vel quidem libero voluptates.', 'Laborum nobis molestias ut consequatur voluptas repudiandae autem consequatur est nesciunt quibusdam inventore omnis asperiores provident dolores modi autem laboriosam aut quibusdam.', '1', '4', '11', '40', 'easy', '30', '1', '0', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('13', 'Est deserunt unde ullam dicta necessitatibus rem.', 'Error voluptas ea quaerat eligendi nam voluptatum autem voluptatem dolorum consequatur corrupti totam reprehenderit similique consequatur itaque sapiente assumenda dolores dolor eos quo quia.', '2', '2', '25', '60', 'hard', '40', '1', '1', '0', '2017-05-07 22:29:04', '2017-05-07 22:29:04');
+INSERT INTO `quiz` VALUES ('14', 'Distinctio consequatur similique corporis ratione.', 'Cum sint saepe quo nisi repellat voluptate perferendis cupiditate eius quae fuga consectetur a voluptates quia sed ipsam quo aut nobis et harum magnam dolorum.', '1', '3', '35', '30', 'hard', '20', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('15', 'Adipisci dolores libero est.', 'Consequatur et excepturi exercitationem animi sed ratione cum dolorem a mollitia incidunt reiciendis ut vel et et sunt et sed alias quo fuga quod eos autem.', '1', '5', '33', '60', 'normal', '40', '1', '0', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('16', 'Quam rerum sed dolor.', 'Consequatur autem corporis nostrum dolorem occaecati vero ducimus quia consequatur omnis impedit qui consequuntur quibusdam ea totam unde officia perferendis debitis possimus molestiae molestias ullam aut sint doloribus accusamus aliquid quia.', '1', '3', '26', '60', 'easy', '40', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('17', 'Aliquid tenetur eius voluptatibus et aperiam.', 'Sed accusantium ea aliquid pariatur ea magnam aut quia aut vitae laboriosam ex reiciendis deserunt culpa voluptas tenetur sed veniam nihil fuga enim id nisi dolorem deserunt aut illo quas enim ab est aut rerum quis aut rerum eligendi.', '3', '7', '31', '30', 'hard', '20', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('18', 'Beatae enim placeat architecto.', 'Expedita blanditiis quas facilis atque voluptatum dolorem sunt neque non ducimus voluptatem aliquid quia saepe molestiae ab et sint ad corporis vitae iusto cum ipsum modi reprehenderit voluptate.', '1', '5', '1', '30', 'hard', '20', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('19', 'Iure impedit recusandae dolor nihil.', 'Quod et sit aperiam facilis voluptate sed illum fugiat deleniti deserunt reiciendis ut eum similique sunt quos nihil voluptates eligendi quia sunt aliquid beatae similique.', '3', '4', '21', '30', 'easy', '20', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('20', 'Id repellat sit iste laudantium sunt.', 'Modi ut illum ullam eius et eum est voluptatem cupiditate voluptates natus quo vel pariatur voluptatem consequatur unde deserunt iure eos sunt quasi molestiae aut error dolore totam autem iste repellendus animi delectus.', '3', '2', '18', '30', 'easy', '20', '1', '0', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('21', 'Animi itaque nihil officia quos.', 'Iure reprehenderit commodi iure quasi ut incidunt harum recusandae quaerat aut dolor voluptates sint repudiandae porro atque quas optio.', '1', '2', '2', '40', 'hard', '30', '1', '0', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('22', 'Eaque quas fugiat illo veniam aut aliquam qui.', 'Quam omnis qui rerum corporis ratione nisi qui praesentium consequatur corrupti sint nisi qui eos unde delectus voluptatem aut ut repellendus sint enim cumque autem sed et.', '1', '3', '32', '15', 'normal', '10', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('23', 'Qui non necessitatibus consequatur voluptas quo.', 'Voluptatibus itaque ea et libero qui nulla rerum eligendi dolorum fugiat rerum iusto ea quia fuga non accusamus ut eos voluptatem ex hic porro architecto alias sint ex.', '3', '2', '5', '30', 'hard', '20', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
+INSERT INTO `quiz` VALUES ('24', 'Commodi quo fugiat laboriosam ut quidem.', 'At beatae laborum ut deserunt ea suscipit qui culpa eligendi dolor animi ab fugit ea cumque aut doloribus quos libero quis mollitia unde est sunt perferendis ab nam aperiam sapiente sed autem animi.', '2', '7', '15', '15', 'normal', '10', '1', '1', '0', '2017-05-07 22:29:05', '2017-05-07 22:29:05');
 
 -- ----------------------------
 -- Table structure for quiz_attempt
@@ -3479,6 +3689,7 @@ CREATE TABLE `student` (
   `full_name` varchar(60) NOT NULL,
   `birthday` varchar(60) DEFAULT NULL,
   `school` varchar(60) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `phone` varchar(30) DEFAULT NULL,
   `balance` decimal(10,0) DEFAULT '0',
   `created_time` datetime DEFAULT NULL,
@@ -3489,11 +3700,10 @@ CREATE TABLE `student` (
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', 'Mrs. Bridget Abbott MD', '10/05/2017', 'Omnis quos atque excepturi et deleniti odio.', '0983048031', '680000', '2017-05-06 22:43:31', '2017-05-07 01:31:01');
-INSERT INTO `student` VALUES ('2', 'Ms. Lonie Reichel PhD', '24/05/2017', 'Sint eius debitis neque quod ut autem ipsa labore.', 'Ms. Lonie Reichel PhD', '1320000', '2017-05-06 22:43:31', '2017-05-07 15:36:51');
-INSERT INTO `student` VALUES ('3', 'Dr. Keagan McClure I', null, 'Explicabo doloremque ut eos.', null, '0', '2017-05-06 22:43:31', '2017-05-06 22:43:31');
-INSERT INTO `student` VALUES ('4', 'Ewell Johnson', null, 'Voluptate quos qui ab aut accusamus.', null, '0', '2017-05-06 22:43:32', '2017-05-06 22:43:32');
-INSERT INTO `student` VALUES ('6', 'adsads', null, null, null, '0', null, null);
+INSERT INTO `student` VALUES ('1', 'Mrs. Bridget Abbott MD', '10/05/2017', 'Omnis quos atque excepturi et deleniti odio.', null, '0983048031', '680000', '2017-05-06 22:43:31', '2017-05-07 01:31:01');
+INSERT INTO `student` VALUES ('2', 'Ms. Lonie Reichel PhD', '24/05/2017', 'Sint eius debitis neque quod ut autem ipsa labore.', null, 'Ms. Lonie Reichel PhD', '1320000', '2017-05-06 22:43:31', '2017-05-07 15:36:51');
+INSERT INTO `student` VALUES ('3', 'Dr. Keagan McClure I', null, 'Explicabo doloremque ut eos.', null, null, '0', '2017-05-06 22:43:31', '2017-05-06 22:43:31');
+INSERT INTO `student` VALUES ('4', 'Ewell Johnson', null, 'Voluptate quos qui ab aut accusamus.', null, null, '0', '2017-05-06 22:43:32', '2017-05-06 22:43:32');
 
 -- ----------------------------
 -- Table structure for student_quiz
@@ -3523,7 +3733,7 @@ CREATE TABLE `subject` (
   `name_n` varchar(40) NOT NULL,
   `icon` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of subject
@@ -3557,6 +3767,18 @@ CREATE TABLE `teacher` (
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
+INSERT INTO `teacher` VALUES ('7', 'Prof. Gwen Bernhard', 'davonte.pfannerstill@bashirian.com', '2', 'Blanditiis suscipit praesentium pariatur nostrum ut dolorem ut autem quo reiciendis necessitatibus quo amet sapiente nihil nihil nobis dolores optio ipsam natus ex velit corrupti vel.', '18707 Runolfsdottir Orchard\nWittingtown, AZ 58759-3366', '854.396.4909', 'Ths', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('8', 'Prof. Damon Von', 'vkub@mraz.org', '2', 'Reprehenderit sapiente debitis omnis veritatis quod laborum qui corrupti repellendus iusto ab error perferendis optio aut et est officia vitae quis et iusto consequatur id corrupti dignissimos nam consequatur distinctio impedit nisi est similique porro optio.', '1801 Ursula Forges Suite 803\nDurganmouth, WV 14813-6464', '+17542145077', 'Sv', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('9', 'Austin Funk', 'emely41@hotmail.com', '1', 'Voluptatem suscipit soluta debitis dolore sint quis veniam nisi et ipsa quo illo accusantium error vero consequatur ut error quisquam ullam.', '58818 Tad Valleys Suite 648\nWest Aurore, MA 10422-9549', '+1 (446) 591-9123', 'Sv', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('10', 'Opal Breitenberg', 'ondricka.ova@koss.com', '2', 'Consequuntur repudiandae maiores sunt laborum assumenda molestiae assumenda doloribus quo velit fuga natus illo veniam alias sapiente quidem tempore deserunt reprehenderit et aut quis facilis sunt in nobis ratione ut numquam aut asperiores qui cum neque.', '15951 Eunice Locks\nCecilchester, ME 59187-5616', '1-782-918-9564 x1075', 'Ts', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('11', 'Bertram Bartell MD', 'corbin62@yahoo.com', '2', 'Facere ut corporis commodi velit quo veritatis sit qui consequatur nesciunt veniam quasi quos et vero voluptate et consequatur.', '6294 Alvah Street Suite 044\nNew Easterberg, NH 43014-3386', '(885) 207-6716 x069', 'Ts', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('12', 'Valentina Hyatt PhD', 'gaylord.gayle@friesen.org', '1', 'Sint voluptatem quasi minima non voluptas a ipsum nulla suscipit est explicabo ad incidunt reprehenderit eaque deleniti eaque quia facilis error non dolores.', '13050 Clinton Ferry Apt. 288\nTrantowborough, HI 33253-6485', '665.589.2638 x0648', 'Ts', '2017-05-10 15:02:10', '2017-05-10 15:02:10');
+INSERT INTO `teacher` VALUES ('13', 'Hilario Weber Sr.', 'kassulke.keely@mclaughlin.com', '1', 'Dignissimos debitis tempora rerum sint dolorem fugiat explicabo recusandae facere quo maxime ut voluptatum velit veniam est incidunt et ut reprehenderit at ut unde aliquam impedit quo saepe.', '41502 Towne Path\nEast Joshport, WA 24059', '1-615-421-9865', 'Ths', '2017-05-10 15:02:11', '2017-05-10 15:02:11');
+INSERT INTO `teacher` VALUES ('14', 'Velda Windler', 'ryan.olga@wilderman.biz', '1', 'Quae dolores veniam rerum ad officia quis laborum velit quisquam cumque consequatur qui a aliquam quidem possimus iure hic quos voluptas ut repudiandae quia aut voluptate accusantium magnam expedita recusandae aspernatur voluptatibus voluptas sit velit earum totam eveniet repudiandae vel et velit.', '527 Reichel Mission Apt. 057\nWillmsside, MN 20571-0393', '(524) 328-1465', 'Sv', '2017-05-10 15:02:11', '2017-05-10 15:02:11');
+INSERT INTO `teacher` VALUES ('15', 'Mr. Ross Batz', 'twolff@bednar.net', '2', 'Qui aspernatur quasi eos deleniti debitis perferendis ut maxime perspiciatis ut adipisci beatae dignissimos assumenda nulla et numquam nisi quisquam quia maiores aut voluptatem et.', '84367 Leannon Forks\nRogahnfort, AL 13464', '1-825-708-2821', 'Ths', '2017-05-10 15:02:11', '2017-05-10 15:02:11');
+INSERT INTO `teacher` VALUES ('16', 'Krista Stark', 'west.lilian@hotmail.com', '1', 'Non aut dolorem qui esse maiores sit et consequatur recusandae quo expedita reprehenderit non enim fuga ullam officia quia tenetur nam natus nostrum dolor ut quos aut tempore consequatur in et quia nam nulla molestiae eaque omnis.', '141 Nolan Pass Suite 230\nPort Veronica, WY 40003', '1-238-656-5132 x1877', 'Sv', '2017-05-10 15:02:11', '2017-05-10 15:02:11');
+INSERT INTO `teacher` VALUES ('17', 'Simone Koch', null, null, null, null, null, null, '2017-05-10 16:55:02', '2017-05-10 16:55:02');
+INSERT INTO `teacher` VALUES ('18', 'Lê Văn Lan', 'lanlevan@gmail.com', '1', 'Lê Văn Lan (sinh năm 1936, người Hà Nội) là giáo sư sử học [1], tuy nhiên có một số nguồn ghi ông có học hàm phó giáo sư [2][3], chuyên ngành cổ sử, phó chủ tịch Hội đồng khoa học Khu di tích lịch sử đền Hùng,[4] một trong những người sáng lập Viện sử học Việt Nam,[5] nhiều năm làm cố vấn lịch sử chương trình Đường lên đỉnh Olympia và SV 96 trên Đài truyền hình Việt Nam. Ông là người phụ trách chuyên mục giải đáp các vấn đề lịch sử của báo Khoa học và Đời sống số ra ngày thứ sáu, ở trang sáu, 55 năm làm cộng tác viên báo Thiếu niên tiền phong từ ngày thành lập.[6]', 'Ban cổ sử Viện Sử học Việt Nam', '', 'Gs', '2017-05-10 20:29:43', '2017-05-10 20:29:43');
 
 -- ----------------------------
 -- Table structure for topic
@@ -3683,14 +3905,24 @@ CREATE TABLE `user` (
   `deactive_time` datetime DEFAULT NULL,
   `active_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'schoen.candido', 'ceefa3c572382b7cb78346b4f7330153', '1', '0', '0', '2017-05-06 22:43:31', '2017-05-07 12:15:52', '2017-05-07 12:15:00', '2017-05-08 12:15:00');
+INSERT INTO `user` VALUES ('1', 'schoen.candido', 'ceefa3c572382b7cb78346b4f7330153', '1', '1', '0', '2017-05-06 22:43:31', '2017-05-10 19:07:48', '2017-05-07 12:15:00', '2017-05-08 12:15:00');
 INSERT INTO `user` VALUES ('2', 'nannie06', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:31', '2017-05-06 22:43:31', null, null);
-INSERT INTO `user` VALUES ('3', 'simone.koch', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:31', '2017-05-06 22:43:31', null, null);
-INSERT INTO `user` VALUES ('4', 'schumm.shayna', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:32', '2017-05-06 22:43:32', null, null);
-INSERT INTO `user` VALUES ('5', 'chelsey.schmitt', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:32', '2017-05-06 22:43:32', null, null);
-INSERT INTO `user` VALUES ('6', 'schoen.candidos', 'd241ec8d05916285c4c5e0cc7571f35e', '1', '1', '0', null, null, '2017-05-07 12:50:25', '2017-05-07 12:51:00');
+INSERT INTO `user` VALUES ('3', 'simone.koch', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:31', '2017-05-10 19:59:55', null, null);
+INSERT INTO `user` VALUES ('4', 'schumm.shayna', 'e10adc3949ba59abbe56e057f20f883e', '1', '1', '0', '2017-05-06 22:43:32', '2017-05-10 19:58:45', null, null);
+INSERT INTO `user` VALUES ('7', 'trevion27', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:09', '2017-05-10 15:02:09', null, null);
+INSERT INTO `user` VALUES ('8', 'piper.ohara', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:10', '2017-05-10 15:02:10', null, null);
+INSERT INTO `user` VALUES ('9', 'dlesch', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:10', '2017-05-10 15:02:10', null, null);
+INSERT INTO `user` VALUES ('10', 'laron01', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:10', '2017-05-10 15:02:10', null, null);
+INSERT INTO `user` VALUES ('11', 'hudson.judd', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:10', '2017-05-10 15:02:10', null, null);
+INSERT INTO `user` VALUES ('12', 'treva.emard', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:10', '2017-05-10 15:02:10', null, null);
+INSERT INTO `user` VALUES ('13', 'bgoldner', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:11', '2017-05-10 15:02:11', null, null);
+INSERT INTO `user` VALUES ('14', 'swift.travis', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:11', '2017-05-10 15:02:11', null, null);
+INSERT INTO `user` VALUES ('15', 'anya.hudson', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:11', '2017-05-10 15:02:11', null, null);
+INSERT INTO `user` VALUES ('16', 'hyman10', 'e10adc3949ba59abbe56e057f20f883e', '2', '1', '0', '2017-05-10 15:02:11', '2017-05-10 15:02:11', null, null);
+INSERT INTO `user` VALUES ('17', 'simone.koch', '96e79218965eb72c92a549dd5a330112', '2', '1', '0', '2017-05-10 16:55:02', '2017-05-10 16:55:02', null, null);
+INSERT INTO `user` VALUES ('18', 'admin_18', 'b062daadae0bdc1f036e4bc3145e00ab', '2', '1', '0', '2017-05-10 20:29:42', '2017-05-10 20:29:42', null, null);

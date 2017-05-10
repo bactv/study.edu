@@ -1,0 +1,194 @@
+.main_content {
+    /*padding-top: 30px;*/
+    max-width: 100%;
+    margin: 80px auto 0 auto;
+    background: #f7f7f7;
+}
+
+.course_video_detail {}
+.course_video_detail .box_top {
+    padding-bottom: 20px;
+    border-bottom: 1px solid teal;
+    margin-bottom: 20px;
+}
+.course_video_detail .box_top #course_name {
+    font-size: 20px;
+    color: teal;
+    font-weight: bold;
+}
+.course_video_detail .box_top #course_teacher {}
+
+.course_video_detail .box_left {
+    background: #FFF;
+    padding: 10px;
+}
+.course_video_detail .box_left .box_item {
+    margin-bottom: 30px;
+}
+.course_video_detail .box_left .box_item #title{
+    font-size: 2.2em;
+    font-weight: bold;
+    color: teal;
+    border-bottom: 2px solid teal;
+}
+.course_video_detail .box_left .box_item .course_desc {}
+.course_video_detail .box_left .box_item ul.list_lesson {
+    list-style-type: none;
+    padding-left: 20px;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li {
+    padding: 5px 0 15px 30px;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li:hover {
+    background: #f7f7f7;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li:before {
+    background: #e6e5e5 none repeat scroll 0 0;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 5px;
+    position: absolute;
+    top: 0;
+    width: 2px;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li #lesson_name{
+    font-weight: bold;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li .lesson_info {
+    font-size: 12px;
+    color: grey;
+    font-style: italic;
+}
+.course_video_detail .box_left .box_item ul.list_lesson li .lesson_info span#icon {
+    margin-right: 10px;
+}
+
+
+.course_video_detail .box_right {}
+.course_video_detail .box_right .course_info {
+    margin-left: 20px;
+    background: #FFF;
+    padding: 20px;
+}
+.course_video_detail .box_right .course_info #course_fee {
+    font-size: 2.2em;
+    text-align: center;
+}
+.course_video_detail .box_right .course_info #btn_reg {
+    font-size: 20px;
+}
+.course_video_detail .box_right .course_info p#span {
+    font-style: italic;
+    color: grey;
+    text-align: center;
+}
+.course_video_detail .box_right .course_info .btn_reg {
+    text-align: center;
+    margin-top: 30px;
+}
+.course_video_detail {
+    position: relative;
+}
+
+.course_video_detail .box_top {
+    position: relative;
+    max-height: 414px;
+    margin-bottom: 414px;
+}
+.course_video_detail .box_top img {
+    position: absolute;
+    width: 100%;
+    height: 414px;
+}
+.course_video_detail .box_top .info {
+    position: absolute;
+    width: 100%;
+    height: 414px;
+}
+.course_video_detail .box_top .info #course_name {
+    width: 100%;
+    padding-top: 100px;
+    font-size: 30px;
+ }
+.course_video_detail .box_top .info #lesson_course {
+    bottom: 10px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.course_video_detail .box_top .info #lesson_course span {
+    margin-right: 20px;
+}
+
+.course_video_detail .box_top .info #course_teacher a:hover {
+    color: #ccc;
+}
+
+.w3-container-fluid {
+    max-width: 1150px !important;
+    margin: auto;
+}
+
+.other_course {
+    background: #FFF;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.other_course #title{
+    font-size: 20px;
+    color: teal;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.other_course .item{
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.other_course .item .course_logo {
+    height: 95px;
+}
+
+.other_course .item .course_logo img {
+    width: 100%;
+    height: 100%;
+}
+
+.other_course .item .info {
+    padding-left: 5px;
+
+}
+
+.other_course .item .info .course_name {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+.other_course .item .info .course_fee {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
