@@ -18,8 +18,8 @@ class TeacherSearch extends Teacher
     public function rules()
     {
         return [
-            [['tch_id', 'tch_gender', 'tch_status', 'tch_created_by', 'tch_updated_by'], 'integer'],
-            [['tch_username', 'tch_password', 'tch_full_name', 'tch_intro', 'tch_work_place', 'tch_degree', 'tch_email', 'tch_created_time', 'tch_updated_time'], 'safe'],
+            [['user_id', 'gender'], 'integer'],
+            [['full_name', 'email', 'intro', 'work_place', 'phone', 'degree', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class TeacherSearch extends Teacher
      */
     public function search($params)
     {
-        $query = Teacher::find();
+        $query = Teacher::find()->innerJoin('user', 'user.id=teacher.user_id')->where(['user.deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,22 +52,18 @@ class TeacherSearch extends Teacher
         }
 
         $query->andFilterWhere([
-            'tch_id' => $this->tch_id,
-            'tch_gender' => $this->tch_gender,
-            'tch_status' => $this->tch_status,
-            'tch_created_time' => $this->tch_created_time,
-            'tch_updated_time' => $this->tch_updated_time,
-            'tch_created_by' => $this->tch_created_by,
-            'tch_updated_by' => $this->tch_updated_by,
+            'user_id' => $this->user_id,
+            'gender' => $this->gender,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
         ]);
 
-        $query->andFilterWhere(['like', 'tch_username', $this->tch_username])
-            ->andFilterWhere(['like', 'tch_password', $this->tch_password])
-            ->andFilterWhere(['like', 'tch_full_name', $this->tch_full_name])
-            ->andFilterWhere(['like', 'tch_intro', $this->tch_intro])
-            ->andFilterWhere(['like', 'tch_work_place', $this->tch_work_place])
-            ->andFilterWhere(['like', 'tch_degree', $this->tch_degree])
-            ->andFilterWhere(['like', 'tch_email', $this->tch_email]);
+        $query->andFilterWhere(['like', 'full_name', $this->full_name])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'intro', $this->intro])
+            ->andFilterWhere(['like', 'work_place', $this->work_place])
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'degree', $this->degree]);
 
         return $dataProvider;
     }

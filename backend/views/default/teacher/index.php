@@ -25,7 +25,7 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'yii\grid\CheckboxColumn',
@@ -33,66 +33,52 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'tch_id',
-                'options' => ['width' => '50px'],
+                'attribute' => 'user_id',
+                'label' => 'ID',
+                'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'tch_avatar',
-                'options' => ['width' => '120px'],
+                'attribute' => 'avatar',
+                'options' => ['width' => '120px;'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    if ($model['tch_avatar'] == 1 && Utility::UR_exists(Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_teacher']['folder'] . '/' . $model['tch_id'] . '.png')) {
-                        return Html::img(Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['avatar_teacher']['folder'] . '/' . $model['tch_id'] . '.png', [
-                            'width' => '70px',
-                            'height' => '70px'
-                        ]);
-                    } else {
-                        return Html::img(AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png', [
-                            'width' => '70px',
-                            'height' => '70px'
-                        ]);
+                    $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
+                    $path = Yii::$app->params['img_url']['user_avatar']['folder'];
+                    $check = Utility::get_content_static($path, $model['user_id']);
+                    if ($check != null) {
+                        $img = Yii::$app->params['storage_url'] . $check;
                     }
+                    return Html::img($img, [
+                        'width' => '70px',
+                        'height' => '70px'
+                    ]);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'tch_username',
+                'attribute' => 'full_name',
                 'headerOptions' => ['style'=>'vertical-align: middle;'],
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
-                'attribute' => 'tch_full_name',
+                'attribute' => 'email',
                 'headerOptions' => ['style'=>'vertical-align: middle;'],
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
-                'attribute' => 'tch_work_place',
+                'attribute' => 'phone',
                 'headerOptions' => ['style'=>'vertical-align: middle;'],
                 'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'tch_email',
-                'headerOptions' => ['style'=>'vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'tch_status',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return ($model['tch_status'] == 1) ? 'Active' : 'Inactive';
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
                 'header' => Yii::t('cms', 'Actions'),
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'headerOptions' => ['style'=>'text-align: center;'],
+                'contentOptions'=>['style'=>'text-align: center;'],
                 'options' => ['width' => '120px'],
                 'buttons' => [
                     'view' => function ($url) {

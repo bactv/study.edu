@@ -3,13 +3,13 @@
 namespace backend\controllers;
 
 use backend\models\User;
-use yii\web\UploadedFile;
 use Yii;
 use backend\models\Teacher;
 use common\models\search\TeacherSearch;
 use backend\components\BackendController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * TeacherController implements the CRUD actions for Teacher model.
@@ -65,16 +65,23 @@ class TeacherController extends BackendController
         $model = new Teacher();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            if (!empty($model->avatar)) {
-                $model->tch_avatar = 1;
-            }
-            if ($model->save() && $model->uploadAvatar($model->tch_id)) {
-                return $this->redirect(['view', 'id' => $model->tch_id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
+            $last_user_id = intval(User::getLastId()['id']);
+            $user = new User();
+            $user->type = 2;
+            $user->username = 'admin_' . ($last_user_id + 1);
+            $user->password = md5('admin_' . ($last_user_id + 1));
+
+            if ($user->save()) {
+                $model->user_id = $user->id;
+                $model->avatar = UploadedFile::getInstance($model, 'avatar');
+
+                if ($model->save() && $model->uploadAvatar($model->user_id)) {
+                    return $this->redirect(['view', 'id' => $model->user_id]);
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
             }
         } else {
             return $this->render('create', [
@@ -92,25 +99,9 @@ class TeacherController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $user = User::findOne(['teacher_id' => $id]);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->newPassword != '') {
-                $model->tch_password = md5($model->newPassword);
-            }
-            $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            if (!empty($model->avatar)) {
-                $model->tch_avatar = 1;
-            }
-            if ($model->save() && $model->uploadAvatar($model->tch_id)) {
-                $user->password = $model->tch_password;
-                $user->save();
-                return $this->redirect(['view', 'id' => $model->tch_id]);
-            } else {
-                return $this->render('update', [
-                    'model' => $model,
-                ]);
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->user_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

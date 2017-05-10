@@ -42,7 +42,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find();
+        $query = Student::find()->innerJoin('user', 'user.id=student.user_id')->where(['user.deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

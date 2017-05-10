@@ -8,6 +8,7 @@ use Yii;
 
 class TeacherBase extends \common\models\db\TeacherDB
 {
+    public $avatar;
     public function behaviors()
     {
         return [
@@ -35,6 +36,7 @@ class TeacherBase extends \common\models\db\TeacherDB
             'work_place' => Yii::t('cms', 'Địa chỉ công tác'),
             'phone' => Yii::t('cms', 'Số điện thoại'),
             'degree' => Yii::t('cms', 'Học hàm'),
+            'avatar' => Yii::t('cms', 'Ảnh đại diện'),
             'created_time' => Yii::t('cms', 'Ngày tạo'),
             'updated_time' => Yii::t('cms', 'Ngày cập nhật'),
         ];

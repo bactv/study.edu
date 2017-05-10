@@ -7,6 +7,7 @@ use yii\grid\GridView;
 use backend\models\User;
 use yii\helpers\Url;
 
+
 Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
@@ -15,12 +16,13 @@ Icon::map($this, Icon::FA);
 $this->title = $this->params['title'] = Yii::t('cms', 'Students');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
-    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+<?php echo $this->render('/commons/_alert.php') ?>
 
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
@@ -52,11 +54,11 @@ $this->params['menu'] = [
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {active}',
+                'template' => '{view} {delete} {active}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
-                'options' => ['width' => '150px'],
+                'options' => ['width' => '120px'],
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a(Icon::show('info-circle'), $url, [
@@ -65,15 +67,8 @@ $this->params['menu'] = [
                             'data-pjax' => '0',
                         ]);
                     },
-                    'update' => function ($url) {
-                        return Html::a(Icon::show('pencil-square-o'), $url, [
-                            'title' => Yii::t('cms', 'Update'),
-                            'class'=>'btn btn-primary btn-xs btn-app',
-                            'data-pjax' => '0',
-                        ]);
-                    },
-                    'delete' => function ($url) {
-                        return Html::a(Icon::show('trash-o'), $url, [
+                    'delete' => function ($url, $model) {
+                        return Html::a(Icon::show('trash-o'), Url::toRoute(['/user/delete-account', 'id' => $model['user_id']]), [
                             'title' => Yii::t('cms', 'Delete'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),

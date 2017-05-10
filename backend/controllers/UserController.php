@@ -41,4 +41,19 @@ class UserController extends BackendController
         }
         return $this->redirect($_SERVER['HTTP_REFERER']);
     }
+
+    public function actionDeleteAccount($id)
+    {
+        $user = User::findOne(['id' => $id]);
+        if (!empty($user)) {
+            $user->deleted = 1;
+        }
+        $session = Yii::$app->session;
+        if ($user->save()) {
+            $session->setFlash('success', 'Cập nhật thành công');
+        } else {
+            $session->setFlash('error', 'Có lỗi xảy ra.');
+        }
+        return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
 }

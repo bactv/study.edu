@@ -4,8 +4,6 @@ use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
 use mihaildev\ckeditor\CKEditor;
-use backend\models\Degree;
-use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
 
 Icon::map($this, Icon::FA);
@@ -33,38 +31,21 @@ Icon::map($this, Icon::FA);
         ],
     ]); ?>
 
-    <?php if (!$model->isNewRecord) { ?>
-        <?= $form->field($model, 'tch_username')->textInput(['maxlength' => 255]) ?>
-        <?= $form->field($model, 'newPassword')->passwordInput()->label(Yii::t('cms', 'New Password')) ?>
-    <?php } ?>
+    <?= $form->field($model, 'full_name')->textInput(['maxlength' => 60]) ?>
 
-    <?= $form->field($model, 'tch_full_name')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 60]) ?>
 
-    <?= $form->field($model, 'tch_gender')->dropDownList([1 => 'Nam', 2 => 'Nữ']) ?>
+    <?= $form->field($model, 'gender')->textInput() ?>
 
-    <?= $form->field($model, 'tch_intro')->widget(CKEditor::className(), [
-        'editorOptions' => [
-            'preset' => 'basic',
-            'inline' => false,
-            'rows' => 5
-        ],
-    ]) ?>
+    <?= $form->field($model, 'intro')->textarea(['rows' => 10]) ?>
 
-    <?= $form->field($model, 'tch_work_place')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'work_place')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'tch_degree')->dropDownList(ArrayHelper::map(Degree::find()->all(), 'id', 'degree_name')) ?>
+    <?= $form->field($model, 'phone')->textInput(['maxlength' => 30, 'type' => 'number']) ?>
 
-    <?= $form->field($model, 'tch_email')->textInput(['maxlength' => 255, 'type' => 'email']) ?>
+    <?= $form->field($model, 'degree')->textInput(['maxlength' => 30]) ?>
 
-    <?= $form->field($model, 'tch_status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
-
-    <?= $form->field($model, 'avatar')->widget(FileInput::className(), [
-        'options'=>[
-            'multiple' => false
-        ],
-        'pluginOptions' => [
-        ]
-    ]) ?>
+    <?= $form->field($model, 'avatar')->widget(FileInput::className()) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

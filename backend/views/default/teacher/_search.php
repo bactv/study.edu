@@ -15,33 +15,25 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'tch_id') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'tch_username') ?>
+    <?= $form->field($model, 'full_name') ?>
 
-    <?= $form->field($model, 'tch_password') ?>
+    <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'tch_full_name') ?>
+    <?= $form->field($model, 'gender') ?>
 
-    <?= $form->field($model, 'tch_gender') ?>
+    <?= $form->field($model, 'intro') ?>
 
-    <?php // echo $form->field($model, 'tch_intro') ?>
+    <?php // echo $form->field($model, 'work_place') ?>
 
-    <?php // echo $form->field($model, 'tch_work_place') ?>
+    <?php // echo $form->field($model, 'phone') ?>
 
-    <?php // echo $form->field($model, 'tch_degree') ?>
+    <?php // echo $form->field($model, 'degree') ?>
 
-    <?php // echo $form->field($model, 'tch_email') ?>
+    <?php // echo $form->field($model, 'created_time') ?>
 
-    <?php // echo $form->field($model, 'tch_status') ?>
-
-    <?php // echo $form->field($model, 'tch_created_time') ?>
-
-    <?php // echo $form->field($model, 'tch_updated_time') ?>
-
-    <?php // echo $form->field($model, 'tch_created_by') ?>
-
-    <?php // echo $form->field($model, 'tch_updated_by') ?>
+    <?php // echo $form->field($model, 'updated_time') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>
