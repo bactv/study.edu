@@ -29,7 +29,7 @@ class CourseController extends Controller
         ]);
     }
 
-    public function actionDetail($str)
+    public function actionIntro($str)
     {
         $course_id = $this->check_url($str);
         if ($course_id == '') {
@@ -37,8 +37,13 @@ class CourseController extends Controller
         }
         $type = 1; // video
         if ($type == 1) {
-            return $this->render('video_detail');
+            return $this->render('video_intro');
         }
+    }
+
+    public function actionDetail()
+    {
+        return $this->render('video_detail');
     }
 
     private function check_url($str)

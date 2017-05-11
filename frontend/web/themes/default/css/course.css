@@ -34,7 +34,7 @@
 .course_video_detail .box_left .box_item .course_desc {}
 .course_video_detail .box_left .box_item ul.list_lesson {
     list-style-type: none;
-    padding-left: 20px;
+    padding-left: 0;
 }
 .course_video_detail .box_left .box_item ul.list_lesson li {
     padding: 5px 0 15px 30px;

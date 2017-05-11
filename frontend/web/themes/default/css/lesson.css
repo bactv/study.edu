@@ -1,0 +1,63 @@
+.w3-container {
+    padding: 0;
+}
+.lesson_detail {
+
+}
+.lesson_detail .box_top {
+    padding: 15px 20px;
+    background: #f7f7f7;
+    color: teal;
+    font-size: 13px;
+    font-weight: bold;
+    border-bottom: 1px solid teal;
+    font-style: italic;
+}
+.lesson_detail .box_top .prev {
+
+}
+
+.lesson_detail .box_top .next {
+    text-align: right;
+}
+.lesson_detail .box_right {
+
+}
+.lesson_detail .box_right .video_container {
+    background-color: rgba(0,0,0,0.8);
+    padding: 28px 0 2px;
+    width: 100%;
+}
+.lesson_detail .box_right .video_container iframe {
+    height: 480px;
+    width: 100%;
+    padding: 30px;
+    border: 0;
+}
+.lesson_detail .box_left {
+    padding: 10px 0;
+}
+.lesson_detail .box_left #lesson_title {
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    padding: 0 10px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+.lesson_detail .box_left ul.lesson_assets {
+    list-style-type: none;
+    padding: 0;
+}
+.lesson_detail .box_left ul.lesson_assets li {
+    padding: 10px 20px;
+}
+.lesson_detail .box_left ul.lesson_assets li:hover {
+    background-color: rgba(207, 216, 207, 0.32);
+}
+.lesson_detail .box_left ul.lesson_assets li.active {
+    background-color: rgba(207, 216, 207, 0.32);
+}
+.lesson_detail .box_left ul.lesson_assets li a {}
+.lesson_detail .box_left ul.lesson_assets li a i {
+}

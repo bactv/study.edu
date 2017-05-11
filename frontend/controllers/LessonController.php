@@ -17,7 +17,7 @@ class LessonController extends Controller
     {
         $id = $this->check_url($str);
         $type = 1;
-        return $this->render('detail');
+        return $this->render('video_detail');
     }
 
     private function check_url($str)
