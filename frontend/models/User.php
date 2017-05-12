@@ -200,17 +200,14 @@ class User extends \common\models\UserBase implements IdentityInterface
         if ($this->avatar == null) {
             return false;
         }
-        $path =  Yii::$app->params['img_url']['user_avatar']['folder'] . '/';
-        $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
-        if (!is_dir($path_admin)) {
-            mkdir($path_admin, 0777, true);
+
+        $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['img.user']['path'];
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
         if ($this->validate()) {
-            $this->avatar->saveAs($path_admin . $id . '.png');
-            $c = Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['web_url'] . 'storage/' . $path . $id . '.png');
-            return $c;
-        } else {
-            return false;
+            return $this->avatar->saveAs($path . $id . '.png');
         }
+        return false;
     }
 }

@@ -15,8 +15,15 @@ class LessonController extends Controller
 {
     public function actionDetail($str)
     {
+        $this->layout = 'student_lesson_layout';
         $id = $this->check_url($str);
         $type = 1;
+        return $this->render('video_detail');
+    }
+
+    public function actionQuiz()
+    {
+        $this->layout = 'student_lesson_layout';
         return $this->render('video_detail');
     }
 

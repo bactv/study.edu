@@ -85,12 +85,10 @@ AppAsset::register($this);
                     <div class="w3-white w3-text-grey w3-card-2">
                         <div class="w3-display-container">
                             <?php
-                            $path = Yii::$app->params['img_url']['user_avatar']['folder'] . '/';
-                            $avatar = Utility::get_content_static($path, Yii::$app->view->params['student']['user_id']);
-                            if (!empty($avatar)) {
-                                $img = Yii::$app->params['storage_url'] . $avatar;
-                            } else {
-                                $img = AssetApp::getImageBaseUrl() . '/icons/student_icon.png';
+                            $img = AssetApp::getImageBaseUrl() . '/icons/student_icon.png';
+                            $path = Yii::$app->params['assets_path']['img.user'] . Yii::$app->user->identity->getId() . '.png';
+                            if (Utility::check_url_file_exists($path) !== false) {
+                                $img = $path;
                             }
                             ?>
                             <img src="<?php echo $img; ?>" style="width:100%;height: 300px" alt="Avatar">

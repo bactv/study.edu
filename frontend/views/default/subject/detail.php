@@ -7,7 +7,7 @@
  */
 ?>
 
-<div class="w3-container prep-subject">
+<div class="w3-container main_content prep-subject">
     <p id="title" class="w3-center w3-text-teal">Ôn thi THPT Quốc Gia môn <?php echo $subject['short_name'] ?></p>
 
     <div class="w3-row-padding list_quiz">

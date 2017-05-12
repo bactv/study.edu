@@ -7,7 +7,7 @@ use common\components\Utility;
 ?>
 <!-- SLIDE SHOW -->
 <?php if (isset($slides) && count($slides) > 0) { ?>
-    <div class="slideshow" style="border-bottom: 4px solid green;">
+    <div class="slideshow">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -17,14 +17,15 @@ use common\components\Utility;
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <?php foreach ($slides as $k => $slide) {
-                    $path = '' . Yii::$app->params['img_url']['slideshow']['folder'];
-                    $img = Utility::get_content_static($path, $slide['id']);
-                    if (!empty($img)) {
-                        $url = Yii::$app->params['storage_url'] . $img;
-                        ?>
+                    $img = '';
+                    $path = Yii::$app->params['assets_path']['img.slide'] . ($k + 1) . '.png';
+                    if (Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
+                    }
+                    if (!empty($img)) { ?>
                     <div class="item <?php echo ($k == 0) ? 'active' : '' ?>">
                         <a href="<?php echo $slide['url'] ?>" target="_blank">
-                            <img src="<?php echo $url ?>" alt="<?php echo $slide['alt'] ?>">
+                            <img src="<?php echo $img ?>" alt="<?php echo $slide['alt'] ?>">
                         </a>
                     </div>
                 <?php } } ?>
@@ -226,7 +227,7 @@ use common\components\Utility;
         <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16 w3-center w3-text-teal">Giáo viên</h3>
     </div>
 
-    <div class="w3-row-padding w3-grayscale owl-carousel" style="padding: 0px 30px;">
+    <div class="w3-row-padding w3-grayscale owl-carousel" style="padding: 0 30px;">
         <div class="w3-margin-bottom">
             <img src="https://www.w3schools.com/w3images/team2.jpg" alt="John" style="width:100%">
             <h3 class="w3-text-teal">John Doe</h3>

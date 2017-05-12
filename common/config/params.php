@@ -17,24 +17,9 @@ return [
     'key_encrypt' => 'bactv',
     'number_free_lesson' => 2,
     'cms_url' => 'http://cms.study.edu.vn/',
-    'cms_teacher_url' => 'http://cms-teacher.study.edu.vn/',
     'web_url' => 'http://study.edu.vn/',
     'storage_url' => 'http://static.study.edu.vn/',
 
-    'img_url' => [
-        'admin_avatar' => [
-            'folder' => 'admin_avatar',
-        ],
-        'user_avatar' => [
-            'folder' => 'user_avatar',
-        ],
-        'slideshow' => [
-            'folder' => 'slideshow',
-        ],
-    ],
-    'asset_course' => [
-        'folder' => 'asset_course',
-    ],
     'telco_types' => ['viettel', 'mobifone', 'vinaphone', 'vietnamobile'],
     'charge_code_status' => [
         'viettel' => [
@@ -47,4 +32,17 @@ return [
     'transaction_action' => [
         'CHARGE_MONEY' => 'Nạp tiền vào tài khoản'
     ],
+    'storage' => [
+        'path' => dirname(dirname(__DIR__)) . '/storage/',
+        'img.user' => [
+            'path' => 'img.user/',
+        ],
+        'img.slide' => [
+            'path' => 'img.slide/',
+        ],
+    ],
+    'assets_path' => [
+        'img.user' => 'http://static.study.edu.vn/img.user/',
+        'img.slide' => 'http://static.study.edu.vn/img.slide/',
+    ]
 ];
