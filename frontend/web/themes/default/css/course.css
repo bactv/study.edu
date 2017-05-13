@@ -31,7 +31,10 @@
     color: teal;
     border-bottom: 2px solid teal;
 }
-.course_video_detail .box_left .box_item .course_desc {}
+.course_video_detail .box_left .box_item .course_desc {
+    text-align: justify;
+    line-height: 25px;
+}
 .course_video_detail .box_left .box_item ul.list_lesson {
     list-style-type: none;
     padding-left: 0;

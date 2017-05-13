@@ -7,6 +7,31 @@ use Yii;
 
 class Course extends \common\models\CourseBase
 {
+    public static function get_list_feature_course($limit = 8, $offset = 1, $params = [])
+    {
+        $sql = "SELECT
+                t1.*,
+                COUNT(t2.student_id) as total_student
+                FROM course as t1
+                LEFT JOIN student_course as t2 ON t2.course_id=t1.id
+                WHERE t1.status = 1 AND t1.deleted = 0 AND t1.approved = 1";
+        if (isset($params['subject_id']) && $params['subject_id'] > 0) {
+            $sql .= " AND t1.subject_id=" . $params['subject_id'];
+        }
 
+        $sql .= " GROUP BY t1.id ORDER BY total_student DESC, t1.updated_time";
 
+        if ($offset > 1) {
+            $sql .= " LIMIT " . $limit * $offset;
+        } else {
+            $sql .= " LIMIT " . $limit;
+        }
+        $data = Yii::$app->db->createCommand($sql)->queryAll();
+        return $data;
+    }
+
+    public static function get_course_by_id($id)
+    {
+        return self::findOne(['id' => $id, 'status' => 1, 'deleted' => 0, 'approved' => 1]);
+    }
 }

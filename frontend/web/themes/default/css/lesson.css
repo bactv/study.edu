@@ -28,7 +28,7 @@
     padding: 28px 0 2px;
     width: 100%;
 }
-.lesson_detail .box_right .video_container iframe {
+.lesson_detail .box_right .video_container video {
     height: 480px;
     width: 100%;
     padding: 30px;

@@ -47,6 +47,7 @@ AppAsset::register($this);
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <?php AssetApp::regCssFile('common.css') ?>
     <?php AssetApp::regCssFile('main.css') ?>
+    <?php AssetApp::regCssFile('mobile.css') ?>
 
     <?php AssetApp::regJsFile('bootstrap.min.js') ?>
     <?php AssetApp::regJsFile('jquery.sticky-kit.min.js') ?>

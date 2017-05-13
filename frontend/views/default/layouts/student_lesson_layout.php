@@ -51,6 +51,7 @@ AppAsset::register($this);
     <?php AssetApp::regCssFile('common.css') ?>
     <?php AssetApp::regCssFile('main.css') ?>
     <?php AssetApp::regCssFile('lesson.css') ?>
+    <?php AssetApp::regCssFile('mobile.css') ?>
 
     <?php AssetApp::regJsFile('bootstrap.min.js') ?>
     <?php AssetApp::regJsFile('jquery.sticky-kit.min.js') ?>
@@ -66,23 +67,31 @@ AppAsset::register($this);
 <div class="wrapper">
     <?php echo $this->render('components/header.php') ?>
 
+    <?php
+    $lesson = Yii::$app->params['lesson'];
+    $course = Yii::$app->params['course'];
+    $lesson_quiz = Yii::$app->params['lesson_quiz'];
+    $lesson_document = Yii::$app->params['lesson_document'];
+    ?>
     <div class="w3-container main lesson_detail">
         <div class="w3-container">
             <div class="w3-row box_top">
                 <div class="w3-col l3 w3-left prev"><a href="#" ><?php echo Icon::show('angle-left') ?> Bài trước</a></div>
-                <div class="w3-col l6 w3-center"><a href="#" >Chuyên đề 1: Dao động cơ học</a></div>
+                <div class="w3-col l6 w3-center"><a href="#" ><?php echo $course['name'] ?></a></div>
                 <div class="w3-col l3 w3-right next"><a href="#" >Bài tiếp theo <?php echo Icon::show('angle-right') ?></a></div>
             </div>
         </div>
         <div class="w3-container">
             <div class="w3-col l3 box_left">
-                <p id="lesson_title">Bài 1: Tế bào và hệ thống các cấp tổ chức sống</p>
+                <p id="lesson_title"><?php echo $lesson['name'] ?></p>
                 <ul class="lesson_assets">
                     <li class="active"><a href="#"><span><?php echo Icon::show('play-circle', ['style' => 'color: #2ab573']) ?> Video</span></a></li>
-                    <li><a href="#"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> Bài giảng (PDF)</span></a></li>
-                    <li><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> Quiz 1</span></a></li>
-                    <li><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> Quiz 2</span></a></li>
-                    <li><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> Quiz 3</span></a></li>
+                    <?php foreach ($lesson_document as $k => $doc) { ?>
+                        <li><a href="#"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> <?php echo ($k + 1) . '. ' . $doc['document_name'] ?></span></a></li>
+                    <?php } ?>
+                    <?php foreach ($lesson_quiz as $k => $quiz) { ?>
+                        <li><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Quiz ' . ($k + 1) ?></span></a></li>
+                    <?php } ?>
                 </ul>
             </div>
 

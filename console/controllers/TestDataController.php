@@ -8,7 +8,11 @@
 namespace console\controllers;
 
 use backend\models\Student;
-use backend\models\Teacher;
+use frontend\models\Lesson;
+use frontend\models\Teacher;
+use frontend\controllers\CourseController;
+use frontend\models\Course;
+use frontend\models\CourseTeacher;
 use frontend\models\Question;
 use frontend\models\QuestionAnswer;
 use frontend\models\Quiz;
@@ -138,6 +142,68 @@ class TestDataController extends Controller
                 $std->updated_time = date('Y-m-d H:i:s');
                 $std->save();
             }
+        }
+        echo "DONE";
+    }
+
+    public static function actionTestCourse($count = 30)
+    {
+        $faker = \Faker\Factory::create();
+
+        for ($i = 0; $i < $count; $i++) {
+            $course = new Course();
+            $course->name = $faker->sentence(6);
+            $course->teacher_ids = json_encode($faker->randomElements([7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], mt_rand(1, 2)));
+            if ($i % 5 == 0) {
+                $course->party_id = mt_rand(2, 11);
+            }
+            $course->description = $faker->sentence(500);
+            $course->price = $faker->randomElement([0, 100000, 300000, 500000, 700000, 900000]);
+            $course->course_type_id = mt_rand(1,2);
+            $course->subject_id = mt_rand(1, 7);
+            $course->status = mt_rand(0, 1);
+            $course->deleted = mt_rand(0, 1);
+            $course->approved = $faker->randomElement([-1, 0, 1]);
+            if ($course->price > 0) {
+                $course->deadline_register = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . mt_rand(3, 7) . ' days'));
+            }
+            $course->created_time = date('Y-m-d H:i:s');
+            $course->updated_time = date('Y-m-d H:i:s');
+
+            if ($course->save()) {
+                $de = json_decode($course->teacher_ids);
+                if (is_array($de)) {
+                    foreach ($de as $tch) {
+                        $course_teacher = new CourseTeacher();
+                        $course_teacher->course_id = $course->id;
+                        $course_teacher->course_name = $course->name;
+                        $course_teacher->teacher_id = $tch;
+                        $course_teacher->teacher_name = Teacher::getAttributeValue(['user_id' => $tch], 'full_name');
+                        if (!$course_teacher->save()) {
+                            break;
+                        }
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    public static function actionTestLesson($count = 1000)
+    {
+        $faker = \Faker\Factory::create();
+
+        for ($i = 0; $i < $count; $i++) {
+            $lesson = new Lesson();
+            $lesson->course_id = mt_rand(1, 30);
+            $lesson->name = $faker->sentence(8);
+            $lesson->description = $faker->sentence(100);
+            $lesson->link_video = "https://www.youtube.com/watch?v=zwoTa2AyLNI";
+            $lesson->time_length = mt_rand(20, 50);
+            $lesson->publish_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . mt_rand(0, 5) . ' days'));
+            $lesson->created_time = $lesson->updated_time = date('Y-m-d H:i:s');
+            $lesson->save();
         }
         echo "DONE";
     }

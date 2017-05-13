@@ -15,6 +15,10 @@ Icon::map($this, Icon::FA);
 ?>
 
 <div class="video_container">
-    <iframe src="https://d3c33hcgiwev3.cloudfront.net/X7ooto0AEeWisRLkE7o57Q.processed/full/540p/index.mp4?Expires=1494633600&Signature=GYSk~fddic2f2Bj2VWQrmKgJ1J1JtSWPgz7DuAN7onGoT9tSdsGT8-Phdtfg1TslSapM--U1Q8M0ysCb93eUtvWMdd~Ci0xCRVhntYuQGQBogXT52wz8QIxH228NObtCidc0BJQ0UX463JAb9q4yQFlSiljiCgzCrdm37o6gCcU_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A">
-    </iframe>
+    <object width="560" height="315">
+        <param name="movie" value="http://www.youtube.com/v/aBcDeFg?hl=en_US&amp;version=3"></param>
+        <param name="allowFullScreen" value="true"></param>
+        <param name="allowscriptaccess" value="always"></param>
+        <embed src="http://www.youtube.com/v/aBcDeFg?hl=en_US&amp;version=3" type="application/x-shockwave-flash" width="560" height="315" allowscriptaccess="always" allowfullscreen="true"></embed>
+    </object>
 </div>

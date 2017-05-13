@@ -46,6 +46,7 @@ AppAsset::register($this);
     <link href="https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Serif|Lato|Oswald|Raleway|Roboto" rel="stylesheet">
     <?php AssetApp::regCssFile('common.css') ?>
     <?php AssetApp::regCssFile('main.css') ?>
+    <?php AssetApp::regCssFile('mobile.css') ?>
 
     <?php AssetApp::regJsFile('jquery.min.js') ?>
     <?php AssetApp::regJsFile('bootstrap.min.js') ?>

@@ -4,6 +4,9 @@
 
 $this->title = 'Hệ thống luyệ thi THPT Quốc Gia - Luyện thi ĐH, CĐ - Luyện thi trắc nghiệm trực tuyến.';
 use common\components\Utility;
+use common\components\AssetApp;
+use frontend\models\Teacher;
+use yii\helpers\Url;
 ?>
 <!-- SLIDE SHOW -->
 <?php if (isset($slides) && count($slides) > 0) { ?>
@@ -47,17 +50,17 @@ use common\components\Utility;
 
 <!-- FORM TIM KIEM KHOA HOC -->
 <div class="w3-center search-course w3-theme-l4 w3-padding-64">
-    <h2 class="w3-text-white w3-margin-bottom w3-text-teal">Tìm kiếm khóa học</h2>
-    <div class="w3-col m6" style="text-align: right;padding-right: 20px;">
+    <h2 class="w3-text-white w3-margin-bottom w3-text-teal title">Tìm kiếm khóa học</h2>
+    <div class="w3-col l6 m6 s12 sj" style="text-align: right;padding-right: 20px;">
         <select class="w3-select" name="option">
-            <option value="1">Option 1</option>
+            <option value="1">-- Môn học --</option>
             <option value="2">Option 2</option>
             <option value="3">Option 3</option>
         </select>
     </div>
-    <div class="w3-col m6" style="text-align: left;padding-left: 20px;">
+    <div class="w3-col l6 m6 s12 tp" style="text-align: left;padding-left: 20px;">
         <select class="w3-select" name="option">
-            <option value="1">Option 1</option>
+            <option value="1">-- Chuyên đề --</option>
             <option value="2">Option 2</option>
             <option value="3">Option 3</option>
         </select>
@@ -76,148 +79,52 @@ use common\components\Utility;
     </div>
     <!-- First Photo Grid-->
     <div class="w3-row-padding list_course">
+        <?php foreach ($feature_course as $course) {
+            $logo = AssetApp::getImageBaseUrl() . '/icons/img_course_default.jpg';
+            $url = Yii::$app->params['assets_path']['img.course'] . $course['id'] . '.png';
+            if (Utility::check_url_file_exists($url)) {
+                $logo = $url;
+            }
+            $teachers = '';
+            $ex = json_decode($course['teacher_ids']);
+            if (is_array($ex)) {
+                foreach ($ex as $item) {
+                    $tch = Teacher::getAttributeValue(['user_id' => $item], 'full_name');
+                    $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($tch) . '-cn' . Utility::encrypt_decrypt('encrypt', $item)]);
+                    $teachers .= '<a href="' . $url_teacher . '" class="teacher_name w3-text-teal" target="_blank">' . $tch . '</a>' . ', ';
+                }
+            }
+            $teachers = substr(trim($teachers), 0, strlen(trim($teachers)) - 1);
+            $deadline = 'Không giới hạn';
+            if ($course['deadline_register'] != '') {
+                $deadline = Utility::formatDataTime($course['deadline_register'], '-', '.', false);
+            }
+            $course_fee = number_format($course['price']);
+            $url_course = Url::toRoute(['/khoa-hoc/' . Utility::rewrite($course['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $course['id'])]);
+            ?>
         <div class="w3-quarter w3-container w3-margin-bottom w3-display-container">
-            <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
+            <?php if ($course['price'] == 0) { ?>
+                <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
+            <?php } ?>
             <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
+                <a href="<?php echo $url_course ?>" class="course_img"><img src="<?php echo $logo ?>" alt="<?php echo $course['name'] ?>" /></a>
                 <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà </a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
+                    <p class="course_name"><a href="#" class="w3-text-teal"><?php echo $course['name'] ?> </a></p>
+                    <p class="course_teacher">Giáo viên: <?php echo $teachers ?></p>
 
                     <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
+                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> <?php echo $course['total_student'] ?> học sinh</p>
+                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: <?php echo $deadline ?></p>
+                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: <?php echo $course_fee ?> VNĐ</p>
                     </div>
 
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
+                    <div class="view_more"><a href="<?php echo $url_course ?>">Xem thêm >></a></div>
                 </div>
             </div>
         </div>
-        <div class="w3-quarter w3-container w3-margin-bottom  w3-display-container">
-            <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
+        <?php } ?>
     </div>
-    <!-- First Photo Grid-->
-    <div class="w3-row-padding list_course">
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
 
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
@@ -228,34 +135,26 @@ use common\components\Utility;
     </div>
 
     <div class="w3-row-padding w3-grayscale owl-carousel" style="padding: 0 30px;">
+        <?php foreach ($list_teacher as $teacher) {
+            if ($teacher['gender'] == 1) {
+                $avatar = AssetApp::getImageBaseUrl() . '/icons/male_teacher_icon.png';
+            } else {
+                $avatar = AssetApp::getImageBaseUrl() . '/icons/female_teacher_icon.png';
+            }
+            $url = Yii::$app->params['assets_path']['img.user'] . $teacher['user_id'] . '.png';
+            if (Utility::check_url_file_exists($url)) {
+                $avatar = $url;
+            }
+            $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($teacher['full_name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $teacher['user_id'])]);
+            ?>
         <div class="w3-margin-bottom">
-            <img src="https://www.w3schools.com/w3images/team2.jpg" alt="John" style="width:100%">
-            <h3 class="w3-text-teal">John Doe</h3>
+            <img src="<?php echo $avatar ?>" alt="<?php echo $teacher['full_name'] ?>" style="width:100%;border-radius: 50%;">
+            <h3 class="w3-text-teal"><?php echo $teacher['degree'] . '. ' . $teacher['full_name'] ?></h3>
             <p class="w3-opacity">CEO & Founder</p>
-            <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-            <p><button class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></p>
+            <p><?php echo Utility::truncateStringWords($teacher['intro'], 70) ?></p>
+            <p><a href="<?php echo $url_teacher ?>" ><a class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></a></p>
         </div>
-        <div class="w3-margin-bottom">
-            <img src="https://www.w3schools.com/w3images/team1.jpg" alt="Jane" style="width:100%">
-            <h3 class="w3-text-teal">Jane Doe</h3>
-            <p class="w3-opacity">Architect</p>
-            <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-            <p><button class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></p>
-        </div>
-        <div class="w3-margin-bottom">
-            <img src="https://www.w3schools.com/w3images/team3.jpg" alt="Mike" style="width:100%">
-            <h3 class="w3-text-teal">Mike Ross</h3>
-            <p class="w3-opacity">Architect</p>
-            <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-            <p><button class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></p>
-        </div>
-        <div class="w3-margin-bottom">
-            <img src="https://www.w3schools.com/w3images/team4.jpg" alt="Dan" style="width:100%">
-            <h3 class="w3-text-teal">Dan Star</h3>
-            <p class="w3-opacity">Architect</p>
-            <p>Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.</p>
-            <p><button class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></p>
-        </div>
+        <?php } ?>
     </div>
 </div>
 <style>
@@ -272,7 +171,7 @@ use common\components\Utility;
     $(document).ready(function(){
         $('.owl-carousel').owlCarousel({
             center: true,
-            items:4,
+            items:6,
             loop:true,
             margin:10,
             responsive:{

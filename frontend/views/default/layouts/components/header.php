@@ -6,6 +6,9 @@
  * Time: 9:25 CH
  */
 use yii\helpers\Url;
+use kartik\icons\Icon;
+
+Icon::map($this, Icon::FA);
 ?>
 
 <div class="nav-top">
@@ -48,15 +51,22 @@ use yii\helpers\Url;
 
     <!-- Navbar on small screens -->
     <div id="mobile_nav" class="w3-bar-block w3-white w3-text-teal w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-        <a href="<?php echo Url::toRoute(['/on-thi-toan-hoc']) ?>" class="w3-bar-item">Toán Học</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-vat-ly']) ?>" class="w3-bar-item">Vật Lý</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-hoa-hoc']) ?>" class="w3-bar-item">Hóa Học</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-sinh-hoc']) ?>" class="w3-bar-item">Sinh Học</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-dia-ly']) ?>" class="w3-bar-item">Địa Lý</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-ngu-van']) ?>" class="w3-bar-item">Ngữ Văn</a>
-        <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item">Tiếng Anh</a>
-        <a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>" class="w3-bar-item">Luyện đề</a>
-        <a href="<?php echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?>" class="w3-bar-item">Khóa Học</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-toan-hoc']) ?>" class="w3-bar-item"><?php echo Icon::show('calculator') ?> Toán Học</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-vat-ly']) ?>" class="w3-bar-item"><?php echo Icon::show('thermometer') ?> Vật Lý</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-hoa-hoc']) ?>" class="w3-bar-item"><?php echo Icon::show('flask') ?> Hóa Học</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-sinh-hoc']) ?>" class="w3-bar-item"><?php echo Icon::show('mars') ?> Sinh Học</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-dia-ly']) ?>" class="w3-bar-item"><?php echo Icon::show('flag') ?> Địa Lý</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-ngu-van']) ?>" class="w3-bar-item"><?php echo Icon::show('pencil-square-o') ?> Ngữ Văn</a>
+        <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item"><?php echo Icon::show('users') ?> Tiếng Anh</a>
+        <a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>" class="w3-bar-item"><?php echo Icon::show('book') ?> Luyện đề</a>
+        <a href="<?php echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?>" class="w3-bar-item"><?php echo Icon::show('graduation-cap') ?> Khóa Học</a>
+        <?php if (!empty(Yii::$app->user->identity)) { ?>
+            <a href="<?php echo Url::toRoute(['/tai-khoan']) ?>" class="w3-bar-item"><i class="fa fa-user" aria-hidden="true"></i> Thông tin cá nhân</a>
+            <a href="<?php echo Url::toRoute(['/dang-xuat']) ?>" class="w3-bar-item"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Đăng xuất</a>
+        <?php } else { ?>
+            <a href="<?php echo Url::toRoute(['/dang-ky']) ?>" class="w3-bar-item"><?php echo Icon::show('user-plus') ?> Đăng ký</a>
+            <a href="<?php echo Url::toRoute(['/dang-nhap']) ?>" class="w3-bar-item"><?php echo Icon::show('key') ?> Đăng nhập</a>
+        <?php } ?>
     </div>
 
 

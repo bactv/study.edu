@@ -1,0 +1,32 @@
+/* MÀN HÌNH < 480px  */
+@media screen and (max-width: 480px) {
+    .carousel-inner, .carousel-inner>.item.active img {
+        height: 200px !important;
+    }
+    .search-course {
+        margin-bottom: 50px;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    .search-course .title {
+        font-size: 1.5em;
+    }
+    .search-course .sj {
+        text-align: center !important;
+        margin-bottom: 10px;
+        padding: 0 5px !important;
+    }
+    .search-course .tp {
+        padding: 0 5px !important;
+    }
+    .search-course select {
+        width: 100% !important;
+    }
+
+    .w3-bar .w3-bar-item {
+        padding: 0;
+    }
+    .main {
+        margin-top: 50px;
+    }
+}

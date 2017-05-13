@@ -40,9 +40,22 @@ return [
         'img.slide' => [
             'path' => 'img.slide/',
         ],
+        'img.course' => [
+            'path' => 'img.course/',
+        ]
     ],
     'assets_path' => [
         'img.user' => 'http://static.study.edu.vn/img.user/',
         'img.slide' => 'http://static.study.edu.vn/img.slide/',
+        'img.course' => 'http://static.study.edu.vn/img.course/',
+    ],
+    'banner_subject_course' => [
+        'math' => '',
+        'physical' => '',
+        'chemistry' => '',
+        'biology' => '',
+        'geography' => '',
+        'literature' => '',
+        'english' => '',
     ]
 ];

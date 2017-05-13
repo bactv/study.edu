@@ -9,10 +9,28 @@ use yii\helpers\Url;
 use common\components\Utility;
 use kartik\icons\Icon;
 use common\components\AssetApp;
+use frontend\models\Teacher;
+use frontend\models\Lesson;
+use frontend\models\StudentCourse;
 
 Icon::map($this, Icon::FA);
 
 ?>
+
+<?php
+    $teachers = '';
+    $ex = json_decode($course['teacher_ids']);
+    if (is_array($ex)) {
+        foreach ($ex as $item) {
+            $tch = Teacher::getAttributeValue(['user_id' => $item], 'full_name');
+            $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($tch) . '-cn' . Utility::encrypt_decrypt('encrypt', $item)]);
+            $teachers .= '<span><a href="' . $url_teacher . '">' . $tch . '</a></span>';
+        }
+    }
+    $teachers = substr(trim($teachers), 0, strlen(trim($teachers)) - 1);
+?>
+
+
 <link rel="stylesheet" type="text/css" href="/themes/default/css/course.css">
 
 <div class="main_content">
@@ -20,12 +38,12 @@ Icon::map($this, Icon::FA);
         <div class="box_top">
             <img src="<?php echo AssetApp::getImageBaseUrl() . '/bg/course_bg.jpg' ?>">
             <div class="info">
-                <p class="w3-center w3-text-white" id="course_name">Chuyên đề 1: Dao động cơ học</p>
-                <p class="w3-center w3-text-white" id="course_teacher">Giáo viên: <span><a href="#">Trần Văn A</a></span>, <span><a href="#">Trần Văn B</a></span></p>
+                <p class="w3-center w3-text-white" id="course_name"><?php echo $course['name'] ?></p>
+                <p class="w3-center w3-text-white" id="course_teacher">Giáo viên: <?php echo $teachers ?></p>
                 <br><br><br>
                 <p class="w3-center w3-text-white" id="lesson_course">
-                    <span style="margin-right: 20px"><?php echo Icon::show('book') . ' 30 bài giảng' ?></span>
-                    <span><?php echo Icon::show('book') . ' 30 bài tập, contest' ?></span>
+                    <span style="margin-right: 20px"><?php echo Icon::show('book') . ' ' . count($lessons) . ' bài giảng' ?></span>
+                    <span><?php echo Icon::show('book') . ' ' . count($lesson_quiz) . ' bài tập, contest' ?></span>
                 </p>
             </div>
         </div>
@@ -33,75 +51,55 @@ Icon::map($this, Icon::FA);
             <div class="w3-col l8 box_left">
                 <div class="box_item">
                     <p id="title">Giới thiệu khóa học</p>
-                    <div class="course_desc">
-                        HỌC247 thiết kế và cung cấp chương trình luyện thi toàn diện THPT Quốc gia môn Sinh học năm 2018 theo cấu trúc MỚI mà Bộ Giáo Dục và Đào Tạo vừa ban hành. Một trong những khóa học quan trọng nhất là Khóa nền tảng H2 được giảng dạy bởi Ths. Cao Minh Sáng - Giáo viên bộ môn Sinh học trường THPT Nguyễn Thượng Hiền - Q. Tân Bình - Tp. HCM và Ths. Nguyễn Văn Quang - Tổ trưởng bộ môn Sinh học trường THPT Trần Khai Nguyên - Tp. HCM.
-
-                        Khóa học này sẽ cung cấp cho các em đầy đủ kiến thức cơ bản, kiến thức trọng tâm và bao quát toàn diện chương trình lớp 12 nhằm chuẩn bị cho kì thi THPT Quốc gia môn Sinh học năm 2018 đạt kết quả tốt nhất. Phương pháp giải toán được trình bày một cách hệ thống, dễ hiểu, dễ nhớ thông qua các ví dụ minh họa từ cơ bản đến nâng cao.
-
-                        Sau mỗi bài giảng các em được luyện tập qua các bài tập tự luận và trắc nghiệm chọn lọc có đáp án và lời giải chi tiết nhằm hiểu sâu lý thuyết, áp dụng phương pháp giải thuần thục và hoàn thiện kỹ năng làm bài.
-
-                        Kết thúc một số bài học quan trọng các em được làm các bài kiểm tra trắc nghiệm Online nhằm đánh giá chính xác năng lực tiếp thu kiến thức trong từng phần cụ thể. Cuối các chuyên đề các em được bổ sung thêm các bài toán nâng cao và tham gia đề thi trắc nghiệm Online nhằm đánh giá chất lượng mà các em học chuyên đề đó và giúp các em làm quen với loại hình thi trắc nghiệm mới của Bộ GD&ĐT.
-
-                        Hệ thống phần mềm ưu việt của HỌC247 sẽ theo sát quá trình học tập của các em, chấm điểm, đưa ra đánh giá năng lực và tư vấn giúp các em hoàn thành việc học của mình một cách hiệu quả nhất.
-                        Chúc các em có những giờ học thú vị, bổ ích và hiệu quả qua sự dẫn dắt của Thầy Ths. Cao Minh Sáng và Thầy Ths. Nguyễn Văn Quang!
-                    </div>
+                    <div class="course_desc"><?php echo $course['description'] ?></div>
                 </div>
                 <div class="box_item">
                     <p id="title">Danh sách bài học</p>
                     <ul class="list_lesson">
-                        <?php
-                        $url = Url::toRoute(['/bai-giang/' . Utility::rewrite("Bài 1: Tế bào và hệ thống các cấp tổ chức sống") . '-cn' . Utility::encrypt_decrypt('encrypt', '132')]);
-                        ?>
+                        <?php foreach ($lessons as $k => $lesson) {
+                            $url = Url::toRoute(['/bai-giang/' . Utility::rewrite($lesson['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $lesson['id'])]);
+                            $public_data  = Utility::formatDataTime($lesson['publish_date'], '-', '.', false);
+                            ?>
                         <a href="<?php echo $url ?>" target="_blank">
                             <li>
-                                <p id="lesson_name">Bài 1: Tế bào và hệ thống các cấp tổ chức sống</p>
+                                <p id="lesson_name"><?php echo 'Bài ' . ($k + 1) . ': ' . $lesson['name'] ?></p>
                                 <div class="lesson_info">
-                                    <span id="icon"><?php echo Icon::show('play-circle') . ' 30 phút' ?></span>
-                                    <span id="icon"><?php echo Icon::show('users') . ' 500 lượt xem' ?></span>
-                                    <span id="icon"><?php echo Icon::show('calendar') . ' 20.05.2017' ?></span>
+                                    <span id="icon"><?php echo Icon::show('play-circle') .  ' ' . $lesson['time_length'] . ' phút' ?></span>
+                                    <span id="icon"><?php echo Icon::show('users') . ' ' . $lesson['number_view'] . ' lượt xem' ?></span>
+                                    <span id="icon"><?php echo Icon::show('calendar') . ' ' . $public_data ?></span>
                                 </div>
                             </li>
                         </a>
-
-                        <a href="#">
-                            <li>
-                                <p id="lesson_name">Bài 2: Tế bào và hệ thống các cấp tổ chức sống</p>
-                                <div class="lesson_info">
-                                    <span id="icon"><?php echo Icon::show('play-circle') . ' 30 phút' ?></span>
-                                    <span id="icon"><?php echo Icon::show('users') . ' 500 lượt xem' ?></span>
-                                </div>
-                            </li>
-                        </a>
-
-                        <a href="#">
-                            <li>
-                                <p id="lesson_name">Bài 3: Tế bào và hệ thống các cấp tổ chức sống</p>
-                                <div class="lesson_info">
-                                    <span id="icon"><?php echo Icon::show('play-circle') . ' 30 phút' ?></span>
-                                    <span id="icon"><?php echo Icon::show('users') . ' 500 lượt xem' ?></span>
-                                </div>
-                            </li>
-                        </a>
-
-                        <a href="#">
-                            <li>
-                                <p id="lesson_name">Bài 4: Tế bào và hệ thống các cấp tổ chức sống</p>
-                                <div class="lesson_info">
-                                    <span id="icon"><?php echo Icon::show('play-circle') . ' 30 phút' ?></span>
-                                    <span id="icon"><?php echo Icon::show('users') . ' 500 lượt xem' ?></span>
-                                </div>
-                            </li>
-                        </a>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
             <div class="w3-col l4 box_right">
                 <div class="course_info">
-                    <p class="w3-text-red" id="course_fee">350.000 đ</p>
-                    <p id="span"><?php echo Icon::show('calendar') ?> Ngày hết hạn: 15/07/2018</p>
-                    <p id="span"><?php echo Icon::show('users') ?> Số học sinh đăng ký: 30</p>
-                    <p class="btn_reg"><a href="" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
-                    <p class="btn_reg"><a href="<?php echo Url::toRoute(['/course/detail']) ?>" role="button" class="btn btn-warning" id="btn_reg">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
+                    <?php
+                        $price = number_format($course['price']) . ' VNĐ';
+                        $deadline = 'Không giới hạn';
+                        if ($course['deadline_register'] != '') {
+                            $deadline = Utility::formatDataTime($course['deadline_register'], '-', '.', false);
+                        }
+                        $total_student = count(StudentCourse::findAll(['course_id' => $course['id']]));
+                        $user_id = !empty(Yii::$app->user->identity) ? Yii::$app->user->identity->getId() : 0;
+                        $check_student_count = false;
+                        if ($user_id > 0) {
+                            $c = StudentCourse::findOne(['course_id' => $course['id'], 'student_id' => $user_id]);
+                            if (!empty($c)) {
+                                $check_student_count = true;
+                            }
+                        }
+                    ?>
+                    <p class="w3-text-red" id="course_fee"><?php echo $price ?></p>
+                    <p id="span"><?php echo Icon::show('calendar') ?> Hạn đăg ký: <?php echo $deadline ?></p>
+                    <p id="span"><?php echo Icon::show('users') ?> Số học sinh đăng ký: <?php echo number_format($total_student) ?></p>
+                    <?php if ($check_student_count) { ?>
+                        <p class="btn_reg"><a href="<?php echo Url::toRoute(['/course/detail']) ?>" role="button" class="btn btn-warning" id="btn_reg">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
+                    <?php } else { ?>
+                        <p class="btn_reg"><a href="" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
+                    <?php } ?>
                 </div>
 
                 <div class="other_course">

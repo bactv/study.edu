@@ -5,6 +5,13 @@
  * Date: 05/05/2017
  * Time: 10:16 CH
  */
+use common\components\AssetApp;
+use common\components\Utility;
+use kartik\icons\Icon;
+use frontend\models\Teacher;
+use yii\helpers\Url;
+
+Icon::map($this, Icon::FA);
 ?>
 
 <div class="w3-container main_content prep-subject">
@@ -34,82 +41,58 @@
         </div>
     </div>
 
+    <?php if (isset($courses) && count($courses) > 0) { ?>
     <div class="w3-row-padding list_course">
         <p id="category">Khóa học trực tuyến</p>
 
-        <div class="w3-quarter w3-container w3-margin-bottom w3-display-container">
-            <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà </a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
+        <?php foreach ($courses as $course) {
+            $logo = AssetApp::getImageBaseUrl() . '/icons/img_course_default.jpg';
+            $url = Yii::$app->params['assets_path']['img.course'] . $course['id'] . '.png';
+            if (Utility::check_url_file_exists($url)) {
+                $logo = $url;
+            }
+            $teachers = '';
+            $ex = json_decode($course['teacher_ids']);
+            if (is_array($ex)) {
+                foreach ($ex as $item) {
+                    $tch = Teacher::getAttributeValue(['user_id' => $item], 'full_name');
+                    $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($tch) . '-cn' . Utility::encrypt_decrypt('encrypt', $item)]);
+                    $teachers .= '<a href="' . $url_teacher . '" class="teacher_name w3-text-teal" target="_blank">' . $tch . '</a>' . ', ';
+                }
+            }
+            $teachers = substr(trim($teachers), 0, strlen(trim($teachers)) - 1);
+            $deadline = 'Không giới hạn';
+            if ($course['deadline_register'] != '') {
+                $deadline = Utility::formatDataTime($course['deadline_register'], '-', '.', false);
+            }
+            $course_fee = number_format($course['price']);
+            $url_course = Url::toRoute(['/khoa-hoc/' . Utility::rewrite($course['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $course['id'])]);
+            ?>
+            <div class="w3-quarter w3-container w3-margin-bottom w3-display-container">
+                <?php if ($course['price'] == 0) { ?>
+                    <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
+                <?php } ?>
+                <div class="course_item">
+                    <a href="<?php echo $url_course ?>" class="course_img"><img src="<?php echo $logo ?>" alt="<?php echo $course['name'] ?>" /></a>
+                    <div class="w3-container w3-white course_desc" style="padding: 0">
+                        <p class="course_name"><a href="#" class="w3-text-teal"><?php echo $course['name'] ?> </a></p>
+                        <p class="course_teacher">Giáo viên: <?php echo $teachers ?></p>
 
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
+                        <div class="register_info">
+                            <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> <?php echo $course['total_student'] ?> học sinh</p>
+                            <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: <?php echo $deadline ?></p>
+                            <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: <?php echo $course_fee ?> VNĐ</p>
+                        </div>
+
+                        <div class="view_more"><a href="<?php echo $url_course ?>">Xem thêm >></a></div>
                     </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
                 </div>
             </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom  w3-display-container">
-            <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
+        <?php } ?>
 
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-quarter w3-container w3-margin-bottom">
-            <div class="course_item">
-                <a href="#" class="course_img"><img src="https://www.w3schools.com/w3images/p2.jpg" alt="Norway" /></a>
-                <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal">PEN-M Vật lí (K-G) - Thầy Đỗ Ngọc Hà</a></p>
-                    <p class="course_teacher">Giáo viên: <a href="#" class="teacher_name w3-text-teal">Đỗ Ngọc Hà</a></p>
-
-                    <div class="register_info">
-                        <p class="course_student"><i class="fa fa-users" aria-hidden="true"></i> 3000 học sinh</p>
-                        <p class="course_time"><i class="fa fa-calendar" aria-hidden="true"></i> Hạn đăng ký: 30.05.2017</p>
-                        <p class="course_fee"><i class="fa fa-tag" aria-hidden="true"></i> Học phí: 300,000 VNĐ</p>
-                    </div>
-
-                    <div class="view_more"><a href="#">Xem thêm >></a></div>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <p class="w3-center"><button id="view_more" class="w3-button w3-center w3-teal w3-hover-teal w3-hover-text-light-gray"><i class="fa fa-search-plus" aria-hidden="true"></i> Xem thêm</button></p>
+        <p class="w3-center"><a href="<?php echo Yii::$app->request->getBaseUrl() . '?page=' . ($page + 1) ?>"><button id="view_more" class="w3-button w3-center w3-teal w3-hover-teal w3-hover-text-light-gray"><?php echo Icon::show('search-plus') ?> Xem thêm</button></a></p>
+    <?php } ?>
 
 </div>
 

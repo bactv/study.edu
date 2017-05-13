@@ -8,6 +8,9 @@
 namespace frontend\controllers;
 
 use common\components\Utility;
+use frontend\models\Course;
+use frontend\models\Lesson;
+use frontend\models\LessonQuiz;
 use frontend\models\Subject;
 use Yii;
 use yii\web\Controller;
@@ -32,12 +35,18 @@ class CourseController extends Controller
     public function actionIntro($str)
     {
         $course_id = $this->check_url($str);
-        if ($course_id == '') {
+        $course = Course::get_course_by_id($course_id);
+        if ($course_id == '' || empty($course)) {
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
         }
-        $type = 1; // video
-        if ($type == 1) {
-            return $this->render('video_intro');
+        $lessons = Lesson::findAll(['course_id' => $course['id']]);
+        $lesson_quiz = LessonQuiz::findAll(['course_id' => $course['id']]);
+        if ($course['course_type_id'] == 1) {
+            return $this->render('video_intro', [
+                'course' => $course,
+                'lessons' => $lessons,
+                'lesson_quiz' => $lesson_quiz
+            ]);
         }
     }
 
