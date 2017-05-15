@@ -3,12 +3,16 @@ body {
 	font-size: 14px;
 	height: 100%;
 }
+.w3-top {
+	position: relative;
+}
 .wrapper {
 	min-height:100%;
 	position:relative;
 }
 a:hover {
-	text-decoration: none;	
+	text-decoration: none;
+	color: #0080AF;
 }
 
 fieldset {

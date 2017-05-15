@@ -20,8 +20,9 @@ Icon::map($this, Icon::FA);
     <div class="w3-row-padding list_quiz">
         <p id="category">Thi trắc nghiệm online</p>
         <div class="box">
+<!--            --><?php //foreach ($list_quiz as $quiz) { ?>
             <div class="w3-col l6 m6 s12">
-                <ul style="border-right: 1px solid #ccc;">
+                <ul style=" border-right: 1px solid #ccc;">
                     <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
                     <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
                     <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
@@ -29,6 +30,7 @@ Icon::map($this, Icon::FA);
                     <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
                 </ul>
             </div>
+<!--            --><?php //} ?>
             <div class="w3-col l6 m6 s12">
                 <ul>
                     <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
@@ -43,7 +45,7 @@ Icon::map($this, Icon::FA);
 
     <?php if (isset($courses) && count($courses) > 0) { ?>
     <div class="w3-row-padding list_course">
-        <p id="category">Khóa học trực tuyến</p>
+<!--        <p id="category">Khóa học trực tuyến</p>-->
 
         <?php foreach ($courses as $course) {
             $logo = AssetApp::getImageBaseUrl() . '/icons/img_course_default.jpg';

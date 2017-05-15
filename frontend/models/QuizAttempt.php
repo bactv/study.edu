@@ -15,4 +15,14 @@ class QuizAttempt extends \common\models\QuizAttemptBase
         $rs = Yii::$app->db->createCommand($query)->queryScalar();
         return intval($rs);
     }
+
+    public static function check_quiz_not_complete($quiz_id, $user_id, $user_ip)
+    {
+        $attempt = self::find()
+            ->where(['quiz_id' => $quiz_id])
+            ->andWhere('user_id="' . $user_id . '" OR user_ip="' . $user_ip . '"')
+            ->andWhere('time_remain > 0 AND status=0')
+            ->one();
+        return (!empty($attempt)) ? $attempt : null;
+    }
 }

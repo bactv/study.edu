@@ -13,6 +13,8 @@ use kartik\icons\Icon;
 
 Icon::map($this, Icon::FA);
 
+
+$data = (array)json_decode($attempt['data']);
 ?>
 
 <div class="main_content">
@@ -20,6 +22,7 @@ Icon::map($this, Icon::FA);
         <div class="box-top">
             <p id="quiz_name"><?php echo $quiz['name'] ?></p>
             <p id="time">Thời gian: <?php echo $quiz['time_length'] ?> phút</p>
+            <p id="time">Thời gian còn lại của bạn: <?php echo $attempt['time_remain'] ?> phút</p>
         </div>
 
         <div class="w3-col l8 list_questions">
@@ -32,9 +35,13 @@ Icon::map($this, Icon::FA);
                     <ul class="box_answer">
                         <?php foreach ($arr_ans as $k2 => $ans) {
                             $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                            $checked = '';
+                            if (isset($data['results']->{$question['id']}->{'check'}) && $data['results']->{$question['id']}->{'ans_id'} == $ans['ans_id']) {
+                                $checked = 'checked';
+                            }
                             ?>
                             <li>
-                                <input type="radio" name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                                <input type="radio" <?php echo $checked ?> name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
                             </li>
                         <?php } ?>
                     </ul>
@@ -47,9 +54,9 @@ Icon::map($this, Icon::FA);
                 <div class="clock_img">
                     <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/clock.png' ?>">
                 </div>
-                <div class="time" id="time_run"><?php echo $quiz['time_length'] . ':00' ?></div>
+                <div class="time" id="time_run"><?php echo $attempt['time_remain'] . ':00' ?></div>
                 <button class="btn btn-success" onclick="submit_contest()"><?php echo Icon::show('gavel') ?> Nộp bài</button>
-                <?php if (isset(Yii::$app->user->identity->id)) { ?>
+                <?php if (!empty(Yii::$app->user->identity->getId())) { ?>
                     <button class="btn btn-warning" onclick="save_contest()"><?php echo Icon::show('save') ?> Lưu bài</button>
                 <?php } ?>
             </div>
@@ -65,7 +72,7 @@ Icon::map($this, Icon::FA);
     });
 
     $(window).on('load', function () {
-        var minus = '<?php echo $quiz['time_length'] * 60 ?>';
+        var minus = '<?php echo $attempt['time_remain'] * 60 ?>';
         var display = document.querySelector('#time_run');
         startTimer(minus, display);
     });
@@ -112,7 +119,7 @@ Icon::map($this, Icon::FA);
         }
 
         var _csrf = $("meta[name='csrf-param']").attr('content');
-        var student_id = '<?php echo (isset(Yii::$app->user->identity->id) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->id : 0 ?>';
+        var student_id = '<?php echo (!empty(Yii::$app->user->identity->getId()) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->getId() : 0 ?>';
         var data = {
             '_csrf' : _csrf,
             'time_start' : time_start,
@@ -120,7 +127,8 @@ Icon::map($this, Icon::FA);
             'quiz_id' : '<?php echo $quiz['id'] ?>',
             'student_id' : student_id,
             'user_ip' : '<?php echo Yii::$app->request->getUserIP() ?>',
-            'action' : 'submit'
+            'action' : 'submit',
+            'attempt_id': '<?php echo $attempt['id'] ?>'
         };
 
         if (ck) {
@@ -178,7 +186,7 @@ Icon::map($this, Icon::FA);
         }
 
         var _csrf = $("meta[name='csrf-param']").attr('content');
-        var student_id = '<?php echo (isset(Yii::$app->user->identity->id) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->id : 0 ?>';
+        var student_id = '<?php echo (!empty(Yii::$app->user->identity->getId()) && (Yii::$app->user->identity->type == 1)) ? Yii::$app->user->identity->getId() : 0 ?>';
         var data = {
             '_csrf' : _csrf,
             'time_start' : time_start,
@@ -186,7 +194,8 @@ Icon::map($this, Icon::FA);
             'quiz_id' : '<?php echo $quiz['id'] ?>',
             'student_id' : student_id,
             'user_ip' : '<?php echo Yii::$app->request->getUserIP() ?>',
-            'action' : 'save'
+            'action' : 'save',
+            'attempt_id': '<?php echo $attempt['id'] ?>'
         };
         ajax_submit(data);
     }
@@ -199,14 +208,14 @@ Icon::map($this, Icon::FA);
             success: function (data) {
                 var res = JSON.parse(data);
                 if (res.action == 'save') {
-                    BootstrapDialog.show({
-                        title: 'Info!',
-                        message: 'Bài làm của bạn đã lưu thành công!'
-                    })
+                    setTimeout(function () {
+                        BootstrapDialog.show({
+                            title: 'Info!',
+                            message: 'Bài làm của bạn đã lưu thành công!'
+                        })
+                    }, 2000);
                 }
-                setTimeout(function () {
-                    window.location = res.url_redirect;
-                }, 2000);
+                window.location = res.url_redirect;
             }
         });
     }

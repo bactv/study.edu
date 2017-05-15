@@ -21,9 +21,3 @@ use yii\helpers\Url;
         <div class="w3-col l6 m6 s12 w3-right">Copyright &copy 2017 -  STUDY.EDU</div>
     </div>
 </footer>
-
-<style>
-    a:hover {
-        color: #9acfea;
-    }
-</style>

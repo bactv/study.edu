@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Course;
+use frontend\models\Quiz;
 use frontend\models\Slideshow;
 use frontend\models\Teacher;
 use frontend\models\User;
@@ -136,10 +137,12 @@ class SiteController extends Controller
         $slides = Slideshow::get_all_slideshows();
         $feature_course = Course::get_list_feature_course(8);
         $list_teacher = Teacher::get_list_teacher_feature(8);
+        $list_quiz = Quiz::get_list_quiz(5);
         return $this->render('index', [
             'slides' => $slides,
             'feature_course' => $feature_course,
-            'list_teacher' => $list_teacher
+            'list_teacher' => $list_teacher,
+            'list_quiz' => $list_quiz
         ]);
     }
 }

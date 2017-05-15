@@ -12,6 +12,7 @@ use Yii;
  * @property string $short_name
  * @property string $name_n
  * @property string $icon
+ * @property string $icon_color
  */
 class SubjectDB extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class SubjectDB extends \yii\db\ActiveRecord
         return [
             [['name', 'short_name', 'name_n'], 'required'],
             [['name'], 'string', 'max' => 30],
-            [['short_name', 'icon'], 'string', 'max' => 20],
+            [['short_name', 'icon', 'icon_color'], 'string', 'max' => 20],
             [['name_n'], 'string', 'max' => 40]
         ];
     }
@@ -47,6 +48,7 @@ class SubjectDB extends \yii\db\ActiveRecord
             'short_name' => Yii::t('cms', 'Short Name'),
             'name_n' => Yii::t('cms', 'Name N'),
             'icon' => Yii::t('cms', 'Icon'),
+            'icon_color' => Yii::t('cms', 'Icon Color'),
         ];
     }
 }

@@ -8,6 +8,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Course;
+use frontend\models\Quiz;
 use frontend\models\Subject;
 use Yii;
 use yii\web\Controller;
@@ -26,10 +27,12 @@ class SubjectController extends Controller
             'subject_id' => $subject['id'],
         ];
         $courses = Course::get_list_feature_course(8, $page, $params);
+        $list_quiz = Quiz::get_list_quiz(10, ['subject_id' => $subject['id']]);
         return $this->render('detail', [
             'subject' => $subject,
             'courses' => $courses,
-            'page' => $page
+            'page' => $page,
+            'list_quiz' => $list_quiz
         ]);
     }
 }

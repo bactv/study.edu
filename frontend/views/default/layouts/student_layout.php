@@ -92,7 +92,7 @@ AppAsset::register($this);
                                 $img = $path;
                             }
                             ?>
-                            <img src="<?php echo $img; ?>" style="width:100%;height: 300px" alt="Avatar">
+                            <img src="<?php echo $img; ?>" style="width:100%;height: 200px" alt="Avatar">
                             <div class="w3-display-bottomleft w3-container w3-text-black">
                                 <a href="#" data-toggle="modal" data-target="#change_avatar"><i class="fa fa-camera fa-fw w3-margin-right w3-large" aria-hidden="true" style="font-size: 2.5em !important; color: rgba(0, 0, 0, 0.23);"></i></a>
                             </div>

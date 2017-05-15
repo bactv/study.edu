@@ -7,7 +7,13 @@ use common\components\Utility;
 use common\components\AssetApp;
 use frontend\models\Teacher;
 use yii\helpers\Url;
+use kartik\icons\Icon;
+
+Icon::map($this, Icon::FA);
+
 ?>
+<link rel="stylesheet" type="text/css" href="/themes/default/css/site.css">
+
 <!-- SLIDE SHOW -->
 <?php if (isset($slides) && count($slides) > 0) { ?>
     <div class="slideshow">
@@ -48,26 +54,29 @@ use yii\helpers\Url;
 <?php } ?>
 
 
-<!-- FORM TIM KIEM KHOA HOC -->
-<div class="w3-center search-course w3-theme-l4 w3-padding-64">
-    <h2 class="w3-text-white w3-margin-bottom w3-text-teal title">Tìm kiếm khóa học</h2>
-    <div class="w3-col l6 m6 s12 sj" style="text-align: right;padding-right: 20px;">
-        <select class="w3-select" name="option">
-            <option value="1">-- Môn học --</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-        </select>
+<!-- TRẮC NGHIỆM VÀ SỰ KIỆN -->
+
+<div class="w3-container w3-center main_content_2">
+    <div class="w3-col l6 m6 s12 list_quiz">
+        <p id="title"><span><?php echo Icon::show('th-list') ?></span>Thi trắc nghiệm online</p>
+        <?php if (isset($list_quiz) && count($list_quiz) > 0) { ?>
+            <div class="list_item">
+                <?php foreach ($list_quiz as $quiz) { ?>
+                    <div class="item">
+                        <a href="#">
+                            <div class="quiz_name"><span class="icon" style="color: <?php echo $quiz['icon_color'] ?>"><?php echo Icon::show($quiz['subject_icon']) ?></span> <?php echo $quiz['name'] ?> </div>
+                        </a>
+                    </div>
+                    <div class="clear" style="clear: both"></div>
+                <?php } ?>
+            </div>
+        <?php } ?>
     </div>
-    <div class="w3-col l6 m6 s12 tp" style="text-align: left;padding-left: 20px;">
-        <select class="w3-select" name="option">
-            <option value="1">-- Chuyên đề --</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-        </select>
+
+    <div class="w3-col l6 m6 s12 list_events">
+        <p id="title"><span><?php echo Icon::show('leaf') ?></span>Sự kiện nổi bật</p>
     </div>
 </div>
-
-<hr>
 
 
 <!-- Page content -->
@@ -164,6 +173,9 @@ use yii\helpers\Url;
     .carousel-inner>.item.active img {
         width: 100%;
         height: 100%;
+    }
+    .slideshow {
+        margin-bottom: 50px;
     }
 </style>
 

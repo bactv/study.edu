@@ -14,6 +14,7 @@ use frontend\models\Quiz;
 use frontend\models\QuizAttempt;
 use frontend\models\QuizRating;
 use frontend\models\QuizReport;
+use frontend\models\QuizScore;
 use frontend\models\StudentQuiz;
 use frontend\models\Subject;
 use Yii;
@@ -101,6 +102,7 @@ class QuizController extends Controller
         $request = Yii::$app->request->get();
         $quiz_id = isset($request['quiz_id']) ? $request['quiz_id'] : '';
         $user_id = isset($request['user_id']) ? $request['user_id'] : '';
+        $user_ip = isset($request['user_ip']) ? $request['user_ip'] : '';
 
         $quiz = Quiz::get_quiz_by_id($quiz_id);
         if (empty($quiz)) {
@@ -114,8 +116,65 @@ class QuizController extends Controller
                 Yii::$app->end();
             }
         }
+        // kiểm tra có phải bài làm dở hay không.
+        $quiz_attempt = QuizAttempt::check_quiz_not_complete($quiz_id, $user_id, $user_ip);
+        if (!empty($quiz_attempt)) {
+            echo json_encode([
+                'status' => 2,
+                'message' => 'Bạn đã làm bài thi này nhưng chưa hoàn thiện. Bạn có muốn tiếp tục không?',
+                'url' => Url::toRoute(['quiz/do-continue', 'str' => Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id']), 'attempt_id' => $quiz_attempt['id']]),
+                'attempt_id' => $quiz_attempt['id']
+            ]);
+            Yii::$app->end();
+        }
         echo json_encode(['status' => 1, 'message' => 'OK']);
         Yii::$app->end();
+    }
+
+    public function actionDoContinue($str, $attempt_id)
+    {
+        $quiz_id = $this->check_url($str);
+        if ($quiz_id == '') {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
+        }
+        $quiz = Quiz::findOne(['id' => $quiz_id]);
+        $questions = Question::findAll(['quiz_id' => $quiz_id, 'status' => 1]);
+        $attempt = QuizAttempt::findOne(['id' => $attempt_id]);
+        return $this->render('continue_contest', [
+            'quiz' => $quiz,
+            'questions' => $questions,
+            'attempt' => $attempt
+        ]);
+    }
+
+    public function actionClearAttempt($attempt_id, $user_id, $user_ip)
+    {
+        $at = QuizAttempt::findOne(['id' => $attempt_id]);
+        if (!empty($at)) {
+            $data = json_decode($at->data);
+
+            $at->status = 1;
+            $at->time_remain = 0;
+
+            $at->save(false);
+
+            $quiz_score = QuizScore::findOne(['quiz_id' => $at->quiz_id, 'user_id' => $user_id]);
+            if (empty($quiz_score)) {
+                $quiz_score = new QuizScore();
+                $quiz_score->quiz_id = $at->quiz_id;
+                $quiz_score->user_id = $user_id;
+                $quiz_score->score = $data->{'info'}->{'total_true'};
+                $quiz_score->time_complete = strtotime($data->{'info'}->{'time_submit'}) - strtotime($data->{'info'}->{'time_start'});
+                $quiz_score->created_time = date('Y-m-d H:i:s');
+                $quiz_score->save(false);
+            }
+        }
+        // check score
+    }
+
+    public function actionTest()
+    {
+        var_dump((array)json_decode('{"info":{"time_start":"2017-05-15 12:08:38","time_submit":"2017-05-15 12:08:43","total_true":0},"results":{"541":{"question_id":"541","ans_id":"2161","check":0},"542":{"question_id":"542","ans_id":"","check":0},"543":{"question_id":"543","ans_id":"2170","check":0},"544":{"question_id":"544","ans_id":"","check":0},"545":{"question_id":"545","ans_id":"","check":0},"546":{"question_id":"546","ans_id":"","check":0},"547":{"question_id":"547","ans_id":"","check":0},"548":{"question_id":"548","ans_id":"","check":0},"549":{"question_id":"549","ans_id":"","check":0},"550":{"question_id":"550","ans_id":"","check":0}}}'));
     }
 
     /**
@@ -153,6 +212,7 @@ class QuizController extends Controller
         $action = isset($request['action']) ? $request['action'] : 'submit';
         $time_submit = time();
         $quiz = Quiz::findOne(['id' => $quiz_id]);
+        $attempt_id = isset($request['attempt_id']) ? $request['attempt_id'] : '';
 
         $arr_results = [
             'info' => [
@@ -173,7 +233,12 @@ class QuizController extends Controller
                 $arr_results['info']['total_true'] += 1;
             }
         }
-        $attempt = new QuizAttempt();
+        if ($attempt_id != '') {
+            $attempt = QuizAttempt::findOne(['id' => $attempt_id]);
+        }
+        if (empty($attempt)) {
+            $attempt = new QuizAttempt();
+        }
         $attempt->quiz_id = $quiz_id;
         $attempt->user_id = $student_id;
         $attempt->user_ip = $user_ip;
@@ -182,25 +247,25 @@ class QuizController extends Controller
             $attempt->time_remain = 0;
             $attempt->status = 1;
         } else {    // save
-            $attempt->time_remain = (intval($quiz['time_length'])) - (intval($time_submit) - intval($time_start));
+            $attempt->time_remain = floor((intval($quiz['time_length']) * 60) - (intval($time_submit) - intval($time_start))) / 60;
             $attempt->status = 0;
         }
         $attempt->created_time = date('Y-m-d H:i:s');
         $attempt->save(false);
 
         if ($student_id != 0 && $action = 'submit') {
-            $student_quiz = StudentQuiz::findOne(['quiz_id' => $quiz_id, 'student_id' => $student_id]);
-            if (empty($student_quiz)) {
-                $student_quiz = new StudentQuiz();
-                $student_quiz->quiz_id = $quiz_id;
-                $student_quiz->student_id = $student_id;
-                $student_quiz->mark = number_format($arr_results['info']['total_true'] / $quiz['total_question'], 2);
-                $student_quiz->test_date = date('Y-m-d');
-                $student_quiz->save(false);
+            $quiz_score = QuizScore::findOne(['quiz_id' => $quiz_id, 'user_id' => $student_id]);
+            if (empty($quiz_score)) {
+                $quiz_score = new QuizScore();
+                $quiz_score->quiz_id = $quiz_id;
+                $quiz_score->user_id = $student_id;
+                $quiz_score->score = $arr_results['info']['total_true'];
+                $quiz_score->time_complete = intval($time_submit) - intval($time_start);
+                $quiz_score->save(false);
             }
         }
-        if ($action != 'submit') {
-            $url_redirect = Url::toRoute(['/trac-nghiem']);
+        if ($action == 'save') {
+            $url_redirect = Url::toRoute(['/trac-nghiem-theo-chuyen-de']);
             return json_encode(['url_redirect' => $url_redirect, 'action' => 'save']);
         }
         $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $attempt->id)]);

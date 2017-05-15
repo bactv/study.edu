@@ -15,8 +15,6 @@ use Yii;
  * @property integer $status
  * @property string $created_time
  * @property string $updated_time
- * @property integer $created_by
- * @property integer $updated_by
  */
 class SlideshowDB extends \yii\db\ActiveRecord
 {
@@ -35,7 +33,7 @@ class SlideshowDB extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'alt'], 'required'],
-            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['status'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
             [['title', 'description', 'alt', 'url'], 'string', 'max' => 255]
         ];
@@ -55,8 +53,6 @@ class SlideshowDB extends \yii\db\ActiveRecord
             'status' => Yii::t('cms', 'Status'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
-            'created_by' => Yii::t('cms', 'Created By'),
-            'updated_by' => Yii::t('cms', 'Updated By'),
         ];
     }
 }

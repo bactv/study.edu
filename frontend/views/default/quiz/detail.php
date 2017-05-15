@@ -17,7 +17,7 @@ AssetApp::regJsFile('quiz.js');
 
 <?php
 $url = Url::toRoute(['/luyen-de/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]);
-$user_id = !empty(Yii::$app->user->identity->user_id) ? Yii::$app->user->identity->getId() : 0;
+$user_id = !empty(Yii::$app->user->identity->getId()) ? Yii::$app->user->identity->getId() : 0;
 ?>
 
 <!-- Page content -->
@@ -36,7 +36,8 @@ $user_id = !empty(Yii::$app->user->identity->user_id) ? Yii::$app->user->identit
                 onclick="do_contest(this)"
                 data-url="<?php echo $url ?>"
                 data-user_id="<?php echo $user_id ?>"
-                data-quiz_id="<?php echo $quiz['id'] ?>">
+                data-quiz_id="<?php echo $quiz['id'] ?>"
+                data-user_ip="<?php echo Yii::$app->request->getUserIP() ?>">
                 <i class="fa fa-clock-o"></i> Bắt đầu
             </a>
         </p>
