@@ -60,7 +60,7 @@ Icon::map($this, Icon::FA);
                             $url = Url::toRoute(['/bai-giang/' . Utility::rewrite($lesson['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $lesson['id'])]);
                             $public_data  = Utility::formatDataTime($lesson['publish_date'], '-', '.', false);
                             ?>
-                        <a href="<?php echo $url ?>" target="_blank">
+                        <a href="javascript:void(0)" id="check_lesson" data-lesson_id="<?php echo $lesson['id'] ?>" data-url_lesson="<?php echo $url ?>">
                             <li>
                                 <p id="lesson_name"><?php echo 'Bài ' . ($k + 1) . ': ' . $lesson['name'] ?></p>
                                 <div class="lesson_info">
@@ -96,47 +96,33 @@ Icon::map($this, Icon::FA);
                     <p id="span"><?php echo Icon::show('calendar') ?> Hạn đăg ký: <?php echo $deadline ?></p>
                     <p id="span"><?php echo Icon::show('users') ?> Số học sinh đăng ký: <?php echo number_format($total_student) ?></p>
                     <?php if ($check_student_count) { ?>
-                        <p class="btn_reg"><a href="<?php echo Url::toRoute(['/course/detail']) ?>" role="button" class="btn btn-warning" id="btn_reg">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
+                        <p class="btn_reg"><a href="<?php echo Url::toRoute(['/detail/' . Utility::rewrite($course['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $course['id'])]) ?>" role="button" class="btn btn-warning">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
                     <?php } else { ?>
-                        <p class="btn_reg"><a href="" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
+                        <p class="btn_reg"><a href="javascript:void(0)" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
                     <?php } ?>
                 </div>
 
                 <div class="other_course">
                     <p id="title">Khóa học khác</p>
+                    <?php foreach ($other_course as $c) {
+                        $logo = AssetApp::getImageBaseUrl() . '/icons/img_course_default.jpg';
+                        $url = Yii::$app->params['assets_path']['img.course'] . $c['id'] . '.png';
+                        if (Utility::check_url_file_exists($url)) {
+                            $logo = $url;
+                        }
+                        ?>
                     <div class="w3-row item">
-                        <a href="#">
+                        <a href="<?php echo Url::toRoute(['/khoa-hoc/' . Utility::rewrite($c['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $c['id'])]) ?>">
                             <div class="w3-col l6 course_logo">
-                                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/course_logo.png' ?>">
+                                <img src="<?php echo $logo ?>">
                             </div>
                             <div class="w3-col l6 info">
-                                <div class="course_name">PEN-I VẬT LÍ (TB-TBK) - THẦY PHẠM VĂN TÙNG</div>
-                                <div class="course_free">Học phí: <b>500.000 đ</b> </div>
+                                <div class="course_name"><?php echo $c['name'] ?></div>
+                                <div class="course_free">Học phí: <b><?php echo number_format($c['price']) . ' VNĐ' ?></b> </div>
                             </div>
                         </a>
                     </div>
-                    <div class="w3-row item">
-                        <a href="#">
-                            <div class="w3-col l6 course_logo">
-                                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/course_logo.png' ?>">
-                            </div>
-                            <div class="w3-col l6 info">
-                                <div class="course_name">PEN-I VẬT LÍ (TB-TBK) - THẦY PHẠM VĂN TÙNG</div>
-                                <div class="course_free">Học phí: <b>500.000 đ</b> </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="w3-row item">
-                        <a href="#">
-                            <div class="w3-col l6 course_logo">
-                                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/course_logo.png' ?>">
-                            </div>
-                            <div class="w3-col l6 info">
-                                <div class="course_name">PEN-I VẬT LÍ (TB-TBK) - THẦY PHẠM VĂN TÙNG</div>
-                                <div class="course_free">Học phí: <b>500.000 đ</b> </div>
-                            </div>
-                        </a>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -147,5 +133,68 @@ Icon::map($this, Icon::FA);
 <script>
     $(document).ready(function () {
 //        $(".box_right").stick_in_parent();
+    });
+
+
+    // đăng ký khóa học
+    $(document).on('click', 'a#btn_reg', function () {
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+        var user_id = '<?php echo $user_id ?>';
+        var course_id = '<?php echo $course['id'] ?>';
+
+        if (user_id == '') {
+            BootstrapDialog.show({
+                title: 'Info!',
+                message: 'Bạn phải đăng nhập để đăng ký khóa học!'
+            });
+        } else {
+            $.ajax({
+                method: 'POST',
+                data: {'user_id' : user_id, 'course_id' : course_id, '_csrf' : _csrf},
+                url: '<?php echo Url::toRoute(['/course/register']) ?>',
+                success: function (data) {
+                    var res = JSON.parse(data);
+                    BootstrapDialog.show({
+                        title: res.code,
+                        message: res.message
+                    })
+                }
+            });
+        }
+    });
+
+    // học thử miễn phí
+    $(document).on('click', 'a#check_lesson', function () {
+        var url = $(this).data('url_lesson');
+        var user_id = '<?php echo $user_id ?>';
+        var course_id = '<?php echo $course['id'] ?>';
+        var lesson_id = $(this).data('lesson_id');
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+
+        if (user_id == '') {
+            BootstrapDialog.show({
+                title: 'Info!',
+                message: 'Bạn phải đăng nhập để xem bài giảng!'
+            });
+            return false;
+        } else {
+            $.ajax({
+                method: 'POST',
+                data: {'user_id' : user_id, 'course_id' : course_id, '_csrf' : _csrf, 'lesson_id' : lesson_id},
+                url: '<?php echo Url::toRoute(['/course/check-user-course']) ?>',
+                success: function (data) {
+                    var res = JSON.parse(data);
+                    if (res.status == 0) {
+                        BootstrapDialog.show({
+                            title: res.code,
+                            message: res.message
+                        });
+                        return false;
+                    } else {
+                        window.location = url;
+                    }
+                }
+            });
+        }
     });
 </script>

@@ -7,8 +7,10 @@
  */
 namespace frontend\controllers;
 
+use frontend\models\FreeStudentCourse;
 use frontend\models\StaticPage;
 use frontend\models\Student;
+use frontend\models\StudentCourse;
 use frontend\models\Transaction;
 use Yii;
 use yii\bootstrap\Html;
@@ -113,7 +115,12 @@ class UserController extends Controller
     public function actionStudentCourse()
     {
         $this->layout = 'student_layout';
-        return $this->render('student/my_course');
+        $list_course = StudentCourse::findAll(['student_id' => $this->_user['id']]);
+        $try_list_course = FreeStudentCourse::findAll(['student_id' => $this->_user['id']]);
+        return $this->render('student/my_course', [
+            'list_course' => $list_course,
+            'try_list_course' => $try_list_course
+        ]);
     }
 
     public function actionHistoryTransaction()

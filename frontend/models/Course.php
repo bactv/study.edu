@@ -34,4 +34,31 @@ class Course extends \common\models\CourseBase
     {
         return self::findOne(['id' => $id, 'status' => 1, 'deleted' => 0, 'approved' => 1]);
     }
+
+    public static function get_other_course($limit = 5, $course_id, $subject_id = '')
+    {
+        $data = Course::find()
+            ->where(['status' => 1, 'deleted' => 0, 'approved' => 1])
+            ->andWhere('id != "' . $course_id . '"');
+        $dt1 = clone $data;
+        if ($subject_id != '') {
+            $dt1 = $dt1->andWhere(['subject_id' => $subject_id]);
+        }
+        if ($dt1->count() >= $limit) {
+            return $dt1->orderBy('id DESC')->limit($limit)->all();
+        } else {
+            return $data->orderBy('id DESC')->limit($limit)->all();
+        }
+    }
+
+    public static function get_course_active($course_id)
+    {
+        $object = Course::findOne([
+            'id' => $course_id,
+            'approved' => 1,
+            'deleted' => 0,
+            'status' => 1,
+        ]);
+        return $object;
+    }
 }
