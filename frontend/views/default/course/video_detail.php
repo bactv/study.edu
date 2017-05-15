@@ -10,64 +10,83 @@ use yii\helpers\Url;
 use common\components\Utility;
 use kartik\icons\Icon;
 use common\components\AssetApp;
+use frontend\models\LessonDocument;
+use frontend\models\LessonQuiz;
 
 Icon::map($this, Icon::FA);
 
 ?>
-<link rel="stylesheet" type="text/css" href="/themes/default/css/course_detail.css">
 
-<div class="w3-container course_detail" style="margin-bottom: 400px">
-    <!-- Sidebar/menu -->
-    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left w3-border" style="z-index:1;width:300px;height: 430px" id="mySidebar"><br>
-        <div class="w3-container w3-row" style="font-size: 1.3em;text-align: left">
-            <b>Khóa H2 - Luyện thi THPT Quốc gia môn Ngữ văn năm 2018</b>
-        </div>
-        <hr>
-        <div class="w3-bar-block">
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-diamond fa-fw"></i>  Danh sách bài học</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  Bảng điểm của tôi</a>
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  Thảo luận</a>
-        </div>
-    </nav>
-
-
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
-    <!-- !PAGE CONTENT! -->
-    <div class="w3-main w3-border" style="margin-left:320px;">
-
-        <!-- Header -->
-        <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-dashboard"></i> Danh sách bài học</b></h5>
-        </header>
-
-
-        <!-- End page content -->
+<!-- Header -->
+<header id="portfolio">
+    <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+        <h3 class="w3-text-teal"><b><?php echo Icon::show('list') ?> DANH SÁCH BÀI GIẢNG</b></h3>
+        <div class="w3-section w3-bottombar"></div>
     </div>
+</header>
 
-    <script>
-        // Get the Sidebar
-        var mySidebar = document.getElementById("mySidebar");
-
-        // Get the DIV with overlay effect
-        var overlayBg = document.getElementById("myOverlay");
-
-        // Toggle between showing and hiding the sidebar, and add overlay effect
-        function w3_open() {
-            if (mySidebar.style.display === 'block') {
-                mySidebar.style.display = 'none';
-                overlayBg.style.display = "none";
-            } else {
-                mySidebar.style.display = 'block';
-                overlayBg.style.display = "block";
-            }
-        }
-
-        // Close the sidebar with the close button
-        function w3_close() {
-            mySidebar.style.display = "none";
-            overlayBg.style.display = "none";
-        }
-    </script>
+<div class="w3-container">
+    <div class="list_lessons">
+        <?php foreach ($lessons as $k => $lesson) {
+            // danh sách tài liệu
+            $documents = LessonDocument::findAll(['lesson_id' => $lesson['id']]);
+            // danh sách đề thi
+            $quiz = LessonQuiz::findAll(['lesson_id' => $lesson['id']]);
+            ?>
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="javascript:void(0)" data-lesson_id="<?php echo $lesson['id'] ?>" onclick="toggle_panel_body(this)"><span class="w3-text-green"><?php echo Icon::show('check') ?> </span><span style="text-transform: uppercase;font-weight: bold"><?php echo 'Bài: ' . ($k + 1) . ': ' . $lesson['name'] ?></span></a></div>
+                <div class="panel-body" style="display: none" id="pb_<?php echo $lesson['id'] ?>">
+                    <div class="w3-col l5" style="padding-right: 10px">
+                        <div><a href="#">Bài giảng</a></div>
+                        <div>
+                            <p>Tài liệu tham khảo</p>
+                            <ul>
+                                <li><a href="#">DC1</a></li>
+                                <li><a href="#">DC1</a></li>
+                                <li><a href="#">DC1</a></li>
+                                <li><a href="#">DC1</a></li>
+                                <li><a href="#">DC1</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w3-col l7" style="border-left: 1px solid #ccc;padding-left: 10px">
+                        <table  class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Danh sách bài kiểm tra</th>
+                                    <th>Điểm</th>
+                                    <th>Ngày làm bài</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="w3-text-teal"><?php echo Icon::show('star') ?></span> Quiz 1</td>
+                                    <td><span>100%</td>
+                                    <td><span>20.04.2015</td>
+                                </tr>
+                                <tr>
+                                    <td><span><?php echo Icon::show('star') ?></span> Quiz 2</td>
+                                    <td><span>5%</td>
+                                    <td><span>20.04.2015</td>
+                                </tr>
+                                <tr>
+                                    <td><span><?php echo Icon::show('star') ?></span> Quiz 3</td>
+                                    <td><span>40%</td>
+                                    <td><span>20.04.2015</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
 </div>
+
+<script>
+    function toggle_panel_body(element) {
+        var lesson_id = $(element).data('lesson_id');
+        $("div#pb_" + lesson_id).toggle(200);
+    }
+</script>

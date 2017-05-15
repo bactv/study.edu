@@ -56,11 +56,6 @@ class CourseController extends Controller
         ]);
     }
 
-    public function actionDetail()
-    {
-        return $this->render('video_detail');
-    }
-
     public function actionRegister()
     {
         if (!Yii::$app->request->isAjax || !Yii::$app->request->isPost) {
@@ -135,7 +130,6 @@ class CourseController extends Controller
 
         // check khóa học tồn tại
         $course_id = isset($request['course_id']) ? $request['course_id'] : '';
-        $lesson_id = isset($request['lesson_id']) ? $request['lesson_id'] : 0;
         $user_id = isset($request['user_id']) ? $request['user_id'] : 0;
         $course = Course::get_course_active($course_id);
         if (empty($course)) {
@@ -178,6 +172,43 @@ class CourseController extends Controller
             Yii::$app->end();
         }
     }
+
+
+
+    // trang chi tiết khóa học
+    public function actionDetail($str)
+    {
+        $this->layout = 'course_layout';
+        $course_id = $this->check_url($str);
+        $course = Course::get_course_by_id($course_id);
+        if ($course_id == '' || empty($course)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
+        }
+        $user = !empty(Yii::$app->user->identity) ? Yii::$app->user->identity : null;
+        if (empty($user)) {
+            throw new NotFoundHttpException("Bạn không có quyền truy cập vào trang này.");
+        }
+
+        Yii::$app->params['course'] = $course;
+
+        $lessons = Lesson::find()->where(['course_id' => $course_id])->orderBy('sort ASC, id ASC')->all();
+        return $this->render('video_detail', [
+            'course' => $course,
+            'lessons' => $lessons
+        ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private function check_url($str)
     {
