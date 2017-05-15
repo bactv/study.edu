@@ -7,6 +7,9 @@
  */
 namespace console\controllers;
 
+use backend\models\LessonQuiz;
+use backend\models\LessonQuizQuestion;
+use backend\models\LessonQuizQuestionAnswer;
 use backend\models\Student;
 use frontend\models\Lesson;
 use frontend\models\Teacher;
@@ -204,6 +207,48 @@ class TestDataController extends Controller
             $lesson->publish_date = date('Y-m-d', strtotime(date('Y-m-d') . ' +' . mt_rand(0, 5) . ' days'));
             $lesson->created_time = $lesson->updated_time = date('Y-m-d H:i:s');
             $lesson->save();
+        }
+        echo "DONE";
+    }
+
+    public static function actionTestLessonQuiz()
+    {
+        $faker = \Faker\Factory::create();
+
+        $allLesson = Lesson::findAll(['course_id' => 1]);
+        foreach ($allLesson as $lesson) {
+            $num_quiz = mt_rand(2, 4);
+            for ($i = 0; $i < $num_quiz; $i++) {
+                // bang lesson_quiz
+                $lesson_quiz = new LessonQuiz();
+                $lesson_quiz->course_id = 1;
+                $lesson_quiz->lesson_id = $lesson['id'];
+                $tmp =  mt_rand(5, 10);
+                $lesson_quiz->total_question = $tmp;
+                $lesson_quiz->pass_exam = $tmp - 2;
+                if ($lesson_quiz->save()) {
+                    // bang lesson_quiz_question
+                    for ($j = 0; $j < $tmp; $j++) {
+                        $ques = new LessonQuizQuestion();
+                        $ques->lesson_id = $lesson['id'];
+                        $ques->quiz_id = $lesson_quiz->id;
+                        $ques->question = $faker->unique()->sentence(17) . ' ?';
+                        if ($ques->save()) {
+                            $random_true = mt_rand(0, 3);
+                            for ($k = 0; $k < 4; $k++) {
+                                $object2 = new LessonQuizQuestionAnswer();
+                                $object2->lesson_id = $lesson['id'];
+                                $object2->question_id = $ques->id;
+                                $object2->ans_content = $faker->unique()->sentence(2);
+                                if ($k == $random_true) {
+                                    $object2->is_true = 1;
+                                }
+                                $object2->save();
+                            }
+                        }
+                    }
+                }
+            }
         }
         echo "DONE";
     }

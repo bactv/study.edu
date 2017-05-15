@@ -9,7 +9,7 @@ use Yii;
  *
  * @property integer $course_id
  * @property integer $student_id
- * @property integer $progress
+ * @property double $progress
  * @property string $signed_date
  */
 class StudentCourseDB extends \yii\db\ActiveRecord
@@ -29,7 +29,8 @@ class StudentCourseDB extends \yii\db\ActiveRecord
     {
         return [
             [['course_id', 'student_id'], 'required'],
-            [['course_id', 'student_id', 'progress'], 'integer'],
+            [['course_id', 'student_id'], 'integer'],
+            [['progress'], 'number'],
             [['signed_date'], 'safe']
         ];
     }

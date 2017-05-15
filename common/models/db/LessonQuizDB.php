@@ -8,9 +8,10 @@ use Yii;
  * This is the model class for table "lesson_quiz".
  *
  * @property integer $id
- * @property integer $quiz_id
+ * @property integer $course_id
  * @property integer $lesson_id
  * @property integer $pass_exam
+ * @property integer $total_question
  */
 class LessonQuizDB extends \yii\db\ActiveRecord
 {
@@ -28,8 +29,8 @@ class LessonQuizDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['quiz_id', 'lesson_id'], 'required'],
-            [['quiz_id', 'lesson_id', 'pass_exam'], 'integer']
+            [['course_id', 'lesson_id'], 'required'],
+            [['course_id', 'lesson_id', 'pass_exam', 'total_question'], 'integer']
         ];
     }
 
@@ -40,9 +41,10 @@ class LessonQuizDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
-            'quiz_id' => Yii::t('cms', 'Quiz ID'),
+            'course_id' => Yii::t('cms', 'Course ID'),
             'lesson_id' => Yii::t('cms', 'Lesson ID'),
             'pass_exam' => Yii::t('cms', 'Pass Exam'),
+            'total_question' => Yii::t('cms', 'Total Question'),
         ];
     }
 }

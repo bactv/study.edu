@@ -42,12 +42,16 @@ return [
         ],
         'img.course' => [
             'path' => 'img.course/',
+        ],
+        'assets.course' => [
+            'path' => 'assets.course/'
         ]
     ],
     'assets_path' => [
         'img.user' => 'http://static.study.edu.vn/img.user/',
         'img.slide' => 'http://static.study.edu.vn/img.slide/',
         'img.course' => 'http://static.study.edu.vn/img.course/',
+        'assets.course' => 'http://static.study.edu.vn/assets.course/',
     ],
     'banner_subject_course' => [
         'math' => '',

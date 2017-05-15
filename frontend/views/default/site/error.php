@@ -9,7 +9,7 @@ use yii\helpers\Html;
 
 $this->title = $name;
 ?>
-<div class="w3-container site-error">
+<div class="w3-container site-error" style="margin: 100px 100px 220px 100px">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

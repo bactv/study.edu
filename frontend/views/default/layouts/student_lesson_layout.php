@@ -72,25 +72,19 @@ AppAsset::register($this);
     $course = Yii::$app->params['course'];
     $lesson_quiz = Yii::$app->params['lesson_quiz'];
     $lesson_document = Yii::$app->params['lesson_document'];
+    $quiz_active = isset(Yii::$app->params['quiz']) ? Yii::$app->params['quiz'] : null;
     ?>
     <div class="w3-container main lesson_detail">
-        <div class="w3-container">
-            <div class="w3-row box_top">
-                <div class="w3-col l3 w3-left prev"><a href="#" ><?php echo Icon::show('angle-left') ?> Bài trước</a></div>
-                <div class="w3-col l6 w3-center"><a href="#" ><?php echo $course['name'] ?></a></div>
-                <div class="w3-col l3 w3-right next"><a href="#" >Bài tiếp theo <?php echo Icon::show('angle-right') ?></a></div>
-            </div>
-        </div>
         <div class="w3-container">
             <div class="w3-col l3 box_left">
                 <p id="lesson_title"><?php echo $lesson['name'] ?></p>
                 <ul class="lesson_assets">
-                    <li class="active"><a href="#"><span><?php echo Icon::show('play-circle', ['style' => 'color: #2ab573']) ?> Video</span></a></li>
+                    <li><a href="#"><span><?php echo Icon::show('play-circle', ['style' => 'color: #2ab573']) ?> Video</span></a></li>
                     <?php foreach ($lesson_document as $k => $doc) { ?>
                         <li><a href="#"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> <?php echo ($k + 1) . '. ' . $doc['document_name'] ?></span></a></li>
                     <?php } ?>
                     <?php foreach ($lesson_quiz as $k => $quiz) { ?>
-                        <li><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Quiz ' . ($k + 1) ?></span></a></li>
+                        <li class="<?php echo (!empty($quiz_active) && $quiz_active['id'] == $quiz['id']) ? 'active' : '' ?>"><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Quiz ' . ($k + 1) ?></span></a></li>
                     <?php } ?>
                 </ul>
             </div>

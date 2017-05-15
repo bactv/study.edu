@@ -19,6 +19,7 @@ use frontend\models\User;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class CourseController extends Controller
@@ -186,7 +187,12 @@ class CourseController extends Controller
         }
         $user = !empty(Yii::$app->user->identity) ? Yii::$app->user->identity : null;
         if (empty($user)) {
-            throw new NotFoundHttpException("Bạn không có quyền truy cập vào trang này.");
+            throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
+        }
+        // kiểm tra học sinh đăg ký khóa học hay chưa
+        $check = StudentCourse::findOne(['student_id' => $user->getId(), 'course_id' => $course_id]);
+        if (empty($check)) {
+            throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
         }
 
         Yii::$app->params['course'] = $course;
