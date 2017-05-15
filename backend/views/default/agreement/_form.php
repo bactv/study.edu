@@ -67,17 +67,6 @@ Icon::map($this, Icon::FA);
         ]
     ]) ?>
 
-    <?= $form->field($model, 'agreement_right_ids')->widget(Select2::className(), [
-        'data' => ArrayHelper::map(AgreementRight::find()->all(), 'agreement_right_id', 'agreement_right_name'),
-        'options' => [
-            'placeholder' => 'Quyền HĐ ...',
-            'multiple' => true,
-        ],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ])->label(Yii::t('cms', 'Agreement Rights')) ?>
-
     <?= $form->field($model, 'agreement_type_id')->widget(Select2::className(), [
         'data' => ArrayHelper::map(AgreementType::find()->all(), 'agreement_type_id', 'agreement_type_name'),
         'options' => [

@@ -98,10 +98,7 @@ class AgreementTypeController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 

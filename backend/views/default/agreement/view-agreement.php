@@ -7,7 +7,7 @@
  */
 
 use yii\helpers\Html;
-use kartik\detail\DetailView;
+use yii\widgets\DetailView;
 use kartik\icons\Icon;
 use common\components\Utility;
 use backend\models\Party;
@@ -83,12 +83,12 @@ Icon::map($this, Icon::FA);
             [
                 'attribute' => 'agreement_created_by',
                 'label' => Yii::t('cms', 'Created By'),
-                'value' => Admin::getAttributeValue(['ad_id' => $model['agreement_created_by']], 'ad_username')
+                'value' => Admin::getAttributeValue(['id' => $model['agreement_created_by']], 'username')
             ],
             [
                 'attribute' => 'agreement_updated_by',
                 'label' => Yii::t('cms', 'Updated By'),
-                'value' => Admin::getAttributeValue(['ad_id' => $model['agreement_updated_by']], 'ad_username')
+                'value' => Admin::getAttributeValue(['id' => $model['agreement_updated_by']], 'username')
             ]
         ],
     ]) ?>

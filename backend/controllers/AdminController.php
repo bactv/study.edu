@@ -115,7 +115,7 @@ class AdminController extends BackendController
             if ($model->save() && $model->uploadAvatar($model->id)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
-                return $this->render('create', [
+                return $this->render('update', [
                     'model' => $model,
                 ]);
             }

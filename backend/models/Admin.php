@@ -33,7 +33,7 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['username', 'password'], 'required', 'on' => 'create'],
             [['birthday', 'last_active_time', 'created_time', 'updated_time'], 'safe'],
             [['thumb', 'status', 'deleted', 'created_by', 'updated_by'], 'integer'],
             [['username'], 'string', 'max' => 50],
@@ -159,13 +159,15 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
         if ($this->avatar == null) {
             return true;
         }
-        $path =  Yii::$app->params['img_url']['admin_avatar']['folder'] . '/';
-        $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
-        if (!is_dir($path_admin)) {
-            mkdir($path_admin, 0777);
+
+        $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['img.admin']['path'];
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
-        $this->avatar->saveAs($path_admin . $id . '.png');
-        return Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['cms_url'] . 'storage/' . $path . $id . '.png');
+        if ($this->validate()) {
+            return $this->avatar->saveAs($path . $id . '.png');
+        }
+        return false;
     }
 
     public static function getAttributeValue($conditions, $attr_return)

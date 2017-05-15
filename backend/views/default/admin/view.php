@@ -41,18 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'email',
             'profession',
             [
-                'attribute' => 'birthday',
-                'value' => Utility::formatDataTime($model['birthday'], '-', '/', false),
-            ],
-            [
                 'attribute' => 'avatar',
                 'format' => ['image',['width'=>'70','height'=>'70']],
                 'value' => function ($model) {
                     $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-                    $path = Yii::$app->params['img_url']['admin_avatar']['folder'];
-                    $check = Utility::get_content_static($path, Yii::$app->user->identity->getId());
-                    if ($check != null) {
-                        $img = Yii::$app->params['storage_url'] . $check;
+                    $path = Yii::$app->params['assets_path']['img.admin'] . Yii::$app->user->identity->getId() . '.png';
+                    if (Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
                     }
                     return $img;
                 }
