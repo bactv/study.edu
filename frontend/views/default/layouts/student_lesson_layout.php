@@ -76,7 +76,7 @@ AppAsset::register($this);
     ?>
     <div class="w3-container main lesson_detail">
         <div class="w3-container">
-            <div class="w3-col l3 box_left">
+            <div class="w3-col l3 box_left w3-left">
                 <p id="lesson_title"><?php echo $lesson['name'] ?></p>
                 <ul class="lesson_assets">
                     <li><a href="#"><span><?php echo Icon::show('play-circle', ['style' => 'color: #2ab573']) ?> Video</span></a></li>
@@ -97,6 +97,12 @@ AppAsset::register($this);
 
     <?php echo $this->render('components/footer.php') ?>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $(".box_left").stick_in_parent();
+    });
+</script>
 
 <?php $this->endBody() ?>
 </body>

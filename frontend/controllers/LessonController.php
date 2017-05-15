@@ -12,6 +12,7 @@ use frontend\models\Course;
 use frontend\models\Lesson;
 use frontend\models\LessonDocument;
 use frontend\models\LessonQuiz;
+use frontend\models\LessonQuizQuestion;
 use Yii;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -116,8 +117,21 @@ class LessonController extends Controller
             }
         }
 
+        $questions = LessonQuizQuestion::findAll(['quiz_id' => $quiz['id']]);
+
+
+
+
         return $this->render('do_quiz', [
-            'quiz' => $quiz
+            'quiz' => $quiz,
+            'questions' => $questions
+        ]);
+    }
+
+    public function actionReviewQuiz($id)
+    {
+        return $this->render('review_quiz', [
+
         ]);
     }
 

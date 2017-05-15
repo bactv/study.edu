@@ -20,16 +20,13 @@ Icon::map($this, Icon::FA);
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <span id="avatar">
                     <?php
-                    $avatar = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-                    if (!empty(Yii::$app->user->identity)) {
-                        $path = Yii::$app->params['img_url']['admin_avatar']['folder'];
-                        $check = Utility::get_content_static($path, Yii::$app->user->identity->getId());
-                        if ($check != null) {
-                            $avatar = Yii::$app->params['storage_url'] . $check;
-                        }
+                    $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
+                    $path = Yii::$app->params['assets_path']['img.admin'] . Yii::$app->user->identity->getId() . '.png';
+                    if (Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
                     }
                     ?>
-                    <?php echo Html::img($avatar, ['alt' => 'admin']) ?>
+                    <?php echo Html::img($img, ['alt' => 'admin']) ?>
                 </span>
                 <span id="username"><?php echo Yii::$app->user->identity->getUsername() ?></span>
                 <span id="chevron_icon"><?php echo Icon::show('chevron-right') ?></span>

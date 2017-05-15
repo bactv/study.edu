@@ -45,6 +45,9 @@ return [
         ],
         'assets.course' => [
             'path' => 'assets.course/'
+        ],
+        'img.admin' => [
+            'path' => 'img.admin/',
         ]
     ],
     'assets_path' => [
@@ -52,6 +55,7 @@ return [
         'img.slide' => 'http://static.study.edu.vn/img.slide/',
         'img.course' => 'http://static.study.edu.vn/img.course/',
         'assets.course' => 'http://static.study.edu.vn/assets.course/',
+        'img.admin' => 'http://static.study.edu.vn/img.admin/',
     ],
     'banner_subject_course' => [
         'math' => '',
