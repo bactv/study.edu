@@ -106,3 +106,7 @@ td.text-center {
 td.text-right {
     text-align: right;
 }
+
+.empty {
+    text-align: center;
+}

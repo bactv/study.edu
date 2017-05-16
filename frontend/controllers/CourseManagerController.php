@@ -11,9 +11,13 @@ use frontend\components\TeacherManagerController;
 use frontend\models\Course;
 use frontend\models\CourseTeacher;
 use frontend\models\Lesson;
+use frontend\models\LessonDocument;
+use frontend\models\LessonQuiz;
 use frontend\models\Teacher;
 use Yii;
+use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
@@ -185,6 +189,98 @@ class CourseManagerController extends TeacherManagerController
         return $this->redirect(['lesson', 'course_id' => $course_id]);
     }
 
+    public function actionLessonDocument($course_id, $lesson_id)
+    {
+        $lesson = $this->findObject2($lesson_id, $course_id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => LessonDocument::find()->where(['lesson_id' => $lesson_id])
+        ]);
+        $arr_lesson = Lesson::find()->where(['course_id' => $course_id, 'deleted' => 0])->orderBy('publish_date ASC, id ASC')->asArray()->all();
+        return $this->render('lesson/document/index', [
+            'lesson' => $lesson,
+            'dataProvider' => $dataProvider,
+            'arr_lesson' => $arr_lesson
+        ]);
+    }
+
+    public function actionCreateLessonDocument($course_id, $lesson_id)
+    {
+        $lesson = $this->findObject2($lesson_id, $course_id);
+        $model = new LessonDocument();
+        $model->scenario = 'create';
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstances($model, 'file');
+            if ($model->upload_file($lesson->course_id, $lesson_id, 'document')) {
+                foreach ($model->file as $file) {
+                    $model2 = new LessonDocument();
+                    $model2->lesson_id = $lesson_id;
+                    $model2->document_name = Utility::rewrite($file->baseName) . '.' . $file->extension;
+
+                    if (!$model2->save()) {
+                        throw new Exception("Có lỗi xảy ra");
+                    }
+                }
+            }
+            return $this->redirect(['lesson-document', 'course_id' => $course_id, 'lesson_id' => $lesson_id]);
+        } else {
+            return $this->render('lesson/document/create', [
+                'model' => $model,
+                'lesson' => $lesson
+            ]);
+        }
+    }
+
+    public function actionUpdateLessonDocument($document_id, $course_id, $lesson_id)
+    {
+        $lesson = $this->findObject2($lesson_id, $course_id);
+        $model = LessonDocument::findOne(['id' => $document_id]);
+        $model->scenario = 'update';
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstances($model, 'file');
+            $model->document_name = Utility::rewrite($model->file[0]->baseName) . '.' . $model->file[0]->extension;
+            if ($model->save() && $model->upload_file($lesson->course_id, $model->lesson_id, 'document')) {
+                return $this->redirect(['lesson-document', 'course_id' => $course_id, 'lesson_id' => $lesson_id]);
+            } else {
+                return $this->render('lesson/document/update', [
+                    'model' => $model,
+                    'lesson' => $lesson
+                ]);
+            }
+        } else {
+            return $this->render('lesson/document/update', [
+                'model' => $model,
+                'lesson' => $lesson
+            ]);
+        }
+    }
+
+    public function actionDeleteLessonDocument($document_id, $course_id, $lesson_id)
+    {
+        $model = LessonDocument::findOne(['id' => $document_id]);
+        $session = Yii::$app->session;
+        if (!empty($model)) {
+            if ($model->delete()) {
+                $session->setFlash('success', 'Xóa thành công');
+            } else {
+                $session->setFlash('error', 'Có lỗi xảy ra. Vui lòng thử lại sau.');
+            }
+        }
+        return $this->redirect(['lesson-document', 'course_id' => $course_id, 'lesson_id' => $lesson_id]);
+    }
+
+    public function actionLessonQuiz($course_id, $lesson_id)
+    {
+        $lesson = $this->findObject2($lesson_id, $course_id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => LessonQuiz::find()->where(['lesson_id' => $lesson_id])
+        ]);
+
+        return $this->render('lesson/quiz/index', [
+            'lesson' => $lesson,
+            'dataProvider' => $dataProvider
+        ]);
+    }
 
 
     private function findObject($course_id)

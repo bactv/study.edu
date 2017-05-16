@@ -17,7 +17,7 @@ class LessonDocumentBase extends \common\models\db\LessonDocumentDB
             [['lesson_id'], 'integer'],
             [['created_time'], 'safe'],
             [['document_name'], 'string', 'max' => 255],
-            [['file'], 'required'],
+//            [['file'], 'required'],
             [['file'], 'file', 'extensions' => 'pdf, doc, docx, xlsx', 'maxFiles' => 4, 'on' => 'create'],
             [['file'], 'file', 'extensions' => 'pdf, doc, docx, xlsx', 'maxFiles' => 1, 'on' => 'update']
         ];
@@ -52,7 +52,7 @@ class LessonDocumentBase extends \common\models\db\LessonDocumentDB
     public function upload_file($course_id, $lesson_id, $type='document')
     {
         if ($this->file == null) {
-            return true;
+            return false;
         }
 
         $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['assets.course']['path'] . $course_id . '/' . $lesson_id . '/' . $type . '/';

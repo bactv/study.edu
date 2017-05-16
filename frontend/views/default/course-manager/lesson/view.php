@@ -55,8 +55,8 @@ Icon::map($this, Icon::FA);
         </p>
 
         <p style="margin-top: 20px">
-            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý tài liệu tham khảo'), Url::toRoute(['/lesson-document', 'lesson_id' => $model->id]) , ['class' => 'btn btn-info']) ?>
-            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý đề kiểm tra'), Url::toRoute(['/lesson-quiz', 'lesson_id' => $model->id]) , ['class' => 'btn btn-warning']) ?>
+            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý tài liệu tham khảo'), Url::toRoute(['/quan-ly-khoa-hoc/lesson-document', 'course_id' => $model['course_id'], 'lesson_id' => $model['id']]) , ['class' => 'btn btn-info']) ?>
+            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý đề kiểm tra'), Url::toRoute(['/quan-ly-khoa-hoc/lesson-quiz', 'course_id' => $model['course_id'], 'lesson_id' => $model['id']]) , ['class' => 'btn btn-warning']) ?>
         </p>
 
         <?= DetailView::widget([
