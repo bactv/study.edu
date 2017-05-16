@@ -8,5 +8,4 @@ use Yii;
 class LessonDocument extends \common\models\LessonDocumentBase
 {
 
-
 }

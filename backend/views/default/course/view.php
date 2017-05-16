@@ -5,6 +5,10 @@ use yii\widgets\DetailView;
 use kartik\icons\Icon;
 use backend\models\Teacher;
 use backend\models\Subject;
+use backend\models\CourseType;
+use common\components\AssetApp;
+use common\components\Utility;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
@@ -30,11 +34,27 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <p style="margin-top: 20px">
+        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý bài giảng'), Url::toRoute(['/lesson', 'course_id' => $model->id]), ['class' => 'btn btn-info', 'target' => '_blank']) ?>
+    </p>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
             'name',
+            [
+                'attribute' => 'logo',
+                'format' => ['image',['width'=>'180','height'=>'120']],
+                'value' => function ($model) {
+                    $img = AssetApp::getImageBaseUrl() . '/img_course_default.jpg';
+                    $path = Yii::$app->params['assets_path']['img.course'] . $model['id'] . '.png';
+                    if (Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
+                    }
+                    return $img;
+                }
+            ],
             [
                 'attribute' => 'teacher_ids',
                 'format' => 'raw',
@@ -92,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'course_type_id',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Subject::getAttributeValue(['id' => $model['course_type_id']], 'name');
+                    return CourseType::getAttributeValue(['id' => $model['course_type_id']], 'name');
                 }
             ],
             [

@@ -12,10 +12,12 @@ use Yii;
  * @property string $name
  * @property string $description
  * @property string $link_video
+ * @property string $video_name
  * @property integer $time_length
  * @property integer $sort
  * @property integer $number_view
  * @property integer $status
+ * @property integer $deleted
  * @property string $publish_date
  * @property string $created_time
  * @property string $updated_time
@@ -37,10 +39,10 @@ class LessonDB extends \yii\db\ActiveRecord
     {
         return [
             [['course_id', 'name', 'description'], 'required'],
-            [['course_id', 'time_length', 'sort', 'number_view', 'status'], 'integer'],
+            [['course_id', 'time_length', 'sort', 'number_view', 'status', 'deleted'], 'integer'],
             [['description'], 'string'],
             [['publish_date', 'created_time', 'updated_time'], 'safe'],
-            [['name', 'link_video'], 'string', 'max' => 255]
+            [['name', 'link_video', 'video_name'], 'string', 'max' => 255]
         ];
     }
 
@@ -55,10 +57,12 @@ class LessonDB extends \yii\db\ActiveRecord
             'name' => Yii::t('cms', 'Name'),
             'description' => Yii::t('cms', 'Description'),
             'link_video' => Yii::t('cms', 'Link Video'),
+            'video_name' => Yii::t('cms', 'Video Name'),
             'time_length' => Yii::t('cms', 'Time Length'),
             'sort' => Yii::t('cms', 'Sort'),
             'number_view' => Yii::t('cms', 'Number View'),
             'status' => Yii::t('cms', 'Status'),
+            'deleted' => Yii::t('cms', 'Deleted'),
             'publish_date' => Yii::t('cms', 'Publish Date'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),

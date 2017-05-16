@@ -8,12 +8,11 @@ use Yii;
 
 class Course extends \common\models\CourseBase
 {
-    public $outline_document;
-
+    public $logo;
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'outline_document' => 'Đề cương bài giảng'
+            'logo' => 'Logo khóa học'
         ]);
     }
 
@@ -26,8 +25,8 @@ class Course extends \common\models\CourseBase
             [['deadline_register', 'created_time', 'updated_time'], 'safe'],
             [['price'], 'number'],
             [['name'], 'string', 'max' => 255],
-            [['outline_document'], 'file', 'extensions' => 'xlsx'],
-            [['outline_document'], 'required', 'on' => 'create']
+            [['logo'], 'required', 'on' => 'create'],
+            [['logo'], 'file', 'extensions' => 'png, jpg, jpeg, gif']
         ];
     }
 
@@ -64,24 +63,30 @@ class Course extends \common\models\CourseBase
      * @param $type
      * @return bool
      */
-    public function upload_file($attribute, $course_id, $type)
+    public function upload_file($attribute, $course_id, $type = 'logo')
     {
         if ($this->{$attribute} == null) {
             return true;
         }
-        $path =  Yii::$app->params['asset_course']['folder'] . '/' . $course_id . '/';
-        $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
-        if (!is_dir($path_admin)) {
-            mkdir($path_admin, 0777, true);
-        }
 
-        if (true) {
-            $file_name = $type . '.' . $this->{$attribute}->extension;
-            $this->{$attribute}->saveAs($path_admin . $file_name);
-            $c = Utility::uploadFile($path, $path . $file_name, Yii::$app->params['cms_url'] . 'storage/' . $path . $file_name);
-            return $c;
+        if ($type == 'logo') {
+            $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['img.course']['path'];
         } else {
-            return false;
+            $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['assets.course']['path'] . $course_id . '/' . $type . '/';
         }
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        if ($type == 'logo') {
+            $extension = 'png';
+            $basename = $course_id;
+        } else {
+            $extension = $this->{$attribute}->extension;
+            $basename = $this->{$attribute}->baseName;
+        }
+        if ($this->validate()) {
+            return $this->{$attribute}->saveAs($path . $basename . '.' . $extension);
+        }
+        return false;
     }
 }

@@ -67,16 +67,16 @@ class CourseController extends BackendController
         $session = Yii::$app->session;
         if ($model->load(Yii::$app->request->post())) {
             $model->teacher_ids = json_encode($model->teacher_ids);
-            $model->outline_document = UploadedFile::getInstance($model, 'outline_document');
+            $model->logo = UploadedFile::getInstance($model, 'logo');
 
-            if ($model->outline_document == null) {
-                $session->setFlash('error', 'Bạn cần upload đề cương khóa học');
+            if ($model->logo == null) {
+                $session->setFlash('error', 'Bạn cần upload logo khóa học');
                 return $this->render('create', [
                     'model' => $model,
                 ]);
             }
 
-            if ($model->save() && $model->upload_file('outline_document', $model->id, 'outline_document')) {
+            if ($model->save() && $model->upload_file('logo', $model->id, 'logo')) {
                 $session->setFlash('success', 'Khóa học được tạo thành công.');
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -97,8 +97,16 @@ class CourseController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model->teacher_ids = json_decode($model->teacher_ids);
+        $session = Yii::$app->session;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->teacher_ids = json_encode($model->teacher_ids);
+            $model->logo = UploadedFile::getInstance($model, 'logo');
+
+            if ($model->save() && $model->upload_file('logo', $model->id, 'logo')) {
+                $session->setFlash('success', 'Cập nhật thành công.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

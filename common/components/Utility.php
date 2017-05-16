@@ -269,8 +269,28 @@ class Utility
         }
     }
 
-    public static function get_list_file_in_folder()
+    public static function get_embed_video_link($link)
     {
+        if (self::startsWith($link, 'https://www.youtube.com')) { // youtube
+            $link = str_replace('watch?', '', $link);
+            $link = str_replace('v=', 'v/', $link);
+        }
+        return $link;
+    }
 
+    public static function startsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
+    }
+
+    public static function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        if ($length == 0) {
+            return true;
+        }
+
+        return (substr($haystack, -$length) === $needle);
     }
 }

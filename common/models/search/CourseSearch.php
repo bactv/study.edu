@@ -71,6 +71,8 @@ class CourseSearch extends Course
             ->andFilterWhere(['like', 'teacher_ids', $this->teacher_ids])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        $query->orderBy('id DESC');
+
         return $dataProvider;
     }
 }

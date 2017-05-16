@@ -44,4 +44,13 @@ class CourseBase extends \common\models\db\CourseDB
             'updated_time' => Yii::t('cms', 'Ngày cập nhật'),
         ];
     }
+
+    public static function getAttributeValue($condition, $attribute)
+    {
+        $obj = self::findOne($condition);
+        if (!empty($obj) && isset($obj->{$attribute})) {
+            return $obj->{$attribute};
+        }
+        return "";
+    }
 }
