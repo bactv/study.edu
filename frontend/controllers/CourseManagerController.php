@@ -111,10 +111,12 @@ class CourseManagerController extends TeacherManagerController
         $dataProvider = new ActiveDataProvider([
            'query' =>  Lesson::find()->where(['course_id' => $course_id, 'deleted' => 0])->orderBy('publish_date ASC, id ASC')
         ]);
+        $arr_course = Teacher::get_list_course_by_teacher2($this->_user['id']);
 
         return $this->render('lesson/index', [
             'course' => $course,
             'dataProvider' => $dataProvider,
+            'arr_course' => $arr_course
         ]);
     }
 
@@ -126,6 +128,61 @@ class CourseManagerController extends TeacherManagerController
             'model' => $model,
             'all_lesson' => $all_lesson
         ]);
+    }
+
+    public function actionCreateLesson($course_id)
+    {
+        $model = new Lesson();
+        $session = Yii::$app->session;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->video = UploadedFile::getInstance($model, 'video');
+            $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            $model->course_id = $course_id;
+            $model->publish_date = Utility::formatDataTime($model->publish_date, '/', '-', false);
+
+            if ($model->save() && $model->upload_file('video', $model->course_id, $model->id, 'video')) {
+                $session->setFlash('success', 'Thành công.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            return $this->render('lesson/create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdateLesson($lesson_id, $course_id)
+    {
+        $model = $this->findObject2($lesson_id, $course_id);
+
+        $session = Yii::$app->session;
+        $model->publish_date = Utility::formatDataTime($model->publish_date, '-', '/', false);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->publish_date = Utility::formatDataTime($model->publish_date, '/', '-', false);
+            $model->video = UploadedFile::getInstance($model, 'video');
+            if ($model->video != '') {
+                $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            }
+
+            if ($model->save() && $model->upload_file('video', $model->course_id, $model->id, 'video')) {
+                $session->setFlash('success', 'Thành công.');
+                return $this->redirect(['view-lesson', 'lesson_id' => $model->id, 'course_id' => $model['course_id']]);
+            }
+        } else {
+            return $this->render('lesson/update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionDeleteLesson($lesson_id, $course_id)
+    {
+        $model = $this->findObject2($lesson_id, $course_id);
+        if ($model->approved != 1) {
+            $model->deleted = 1;
+            $model->save();
+        }
+        return $this->redirect(['lesson', 'course_id' => $course_id]);
     }
 
 

@@ -17,11 +17,25 @@ Icon::map($this, Icon::FA);
 /* @var $dataProvider yii\data\ActiveDataProvider */
 ?>
 
+<div class="w3-container">
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none;" id="mySidebar2">
+        <button onclick="w3_close2()" class="w3-bar-item w3-large">&times;</button>
+        <?php foreach ($arr_course as $k => $c) {
+            $class_active = '';
+            if ($c['id'] == $course['id']) {
+                $class_active = 'active';
+            } ?>
+            <a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc/lesson', 'course_id' => $c['id']]) ?>" class="w3-bar-item w3-border-bottom w3-button <?php echo $class_active ?>"><?php echo ($k + 1) . '. ' . Utility::truncateStringWords($c['name'], 70) ?></a>
+        <?php } ?>
+    </div>
+</div>
+
 <!-- Header -->
 <header id="portfolio">
     <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-        <h3 class="w3-text-teal"><b><?php echo Icon::show('list') ?> DANH SÁCH BÀI GIẢNG: <?php echo $course['name'] ?></b></h3>
+        <h4 class="w3-text-teal"><b><button class="w3-button w3-large" onclick="w3_open2()"><?php echo Icon::show('list') ?></button> DANH SÁCH BÀI GIẢNG KHÓA HỌC: <?php echo $course['name'] ?></b></h4>
         <div class="w3-section w3-bottombar"></div>
     </div>
 </header>
@@ -43,18 +57,9 @@ Icon::map($this, Icon::FA);
             ],
             [
                 'attribute' => 'id',
-                'options' => ['width' => '40px'],
+                'options' => ['width' => '70px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'course_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Course::getAttributeValue(['id' => $model['course_id']], 'name');
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
                 'attribute' => 'name',
@@ -119,3 +124,16 @@ Icon::map($this, Icon::FA);
     ]); ?>
     <?php Pjax::end();?>
 </div>
+<style>
+    a.active {
+        color: red;
+    }
+</style>
+<script>
+    function w3_open2() {
+        document.getElementById("mySidebar2").style.display = "block";
+    }
+    function w3_close2() {
+        document.getElementById("mySidebar2").style.display = "none";
+    }
+</script>

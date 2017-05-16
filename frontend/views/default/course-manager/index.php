@@ -26,7 +26,6 @@ Icon::map($this, Icon::FA);
 \common\components\AssetApp::regCssFile('course_manager.css');
 
 ?>
-
 <!-- Header -->
 <header id="portfolio">
     <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>

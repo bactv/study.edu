@@ -18,6 +18,16 @@ use frontend\models\CourseType;
 Icon::map($this, Icon::FA);
 
 ?>
+<!-- Header -->
+<header id="portfolio">
+    <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+        <h4 class="w3-text-teal"><b><?php echo Icon::show('list') ?>KHÓA HỌC: <?php echo $model['name'] ?></b></h4>
+        <div class="w3-section w3-bottombar"></div>
+    </div>
+</header>
+
+
 <div class="course-view" style="padding: 5px 30px 30px 30px;margin-bottom: 100px">
 
 <h1 style="margin-bottom: 10px"><?= Html::encode($this->title) ?></h1>

@@ -35,7 +35,7 @@ Icon::map($this, Icon::FA);
 </header>
 
 <div class="w3-container">
-    <?php echo Html::a(Icon::show('reply') . ' Quay lại', Url::toRoute(['/quan-ly-khoa-hoc/view-lesson', 'lesson_id' => $model['id'], 'course_id' => $model['course_id']]), ['class' => 'btn btn-warning']) ?>
+    <?php echo Html::a(Icon::show('reply') . ' Quay lại', Url::toRoute(['/quan-ly-khoa-hoc/lesson', 'course_id' => $model['course_id']]), ['class' => 'btn btn-warning']) ?>
 </div>
 
 <div class="w3-container">
@@ -44,8 +44,8 @@ Icon::map($this, Icon::FA);
         <h1 style="margin-bottom: 10px"><?= Html::encode($this->title) ?></h1>
 
         <p>
-            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->id], [
+            <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update-lesson', 'lesson_id' => $model->id, 'course_id' => $model['course_id']], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete-lesson', 'lesson_id' => $model->id, 'course_id' => $model['course_id']], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => Yii::t('cms', 'Are you sure you want to delete this item?'),

@@ -50,6 +50,17 @@ class Teacher extends \common\models\TeacherBase
         return $dataProvider;
     }
 
+    public static function get_list_course_by_teacher2($teacher_id)
+    {
+        $sql = "SELECT t2.*
+                FROM course_teacher as t1
+                INNER JOIN course as t2 ON t2.id=t1.course_id
+                WHERE t1.teacher_id='" . $teacher_id . "' 
+                AND deleted=0";
+        $data = Yii::$app->db->createCommand($sql)->queryAll();
+        return $data;
+    }
+
     public static function get_course_by_teacher($course_id, $teacher_id)
     {
         $result = null;
