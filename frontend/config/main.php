@@ -55,6 +55,12 @@ return [
 
                 'tai-khoan' => 'user/index',
                 'khoa-hoc-cua-toi' => 'user/student-course',
+                'quan-ly-khoa-hoc' => 'course-manager/index',
+                'quan-ly-khoa-hoc/create' => 'course-manager/create',
+                'quan-ly-khoa-hoc/update' => 'course-manager/update',
+                'quan-ly-khoa-hoc/view' => 'course-manager/view',
+                'quan-ly-khoa-hoc/lesson' => 'course-manager/lesson',
+                'quan-ly-khoa-hoc/view-lesson' => 'course-manager/view-lesson',
                 'lich-su-giao-dich' => 'user/history-transaction',
                 'thong-bao' => 'user/student-notification',
                 'nap-tien' => 'user/charging',

@@ -7,10 +7,13 @@
  */
 namespace frontend\controllers;
 
+use backend\controllers\TeacherController;
+use frontend\models\CourseTeacher;
 use frontend\models\FreeStudentCourse;
 use frontend\models\StaticPage;
 use frontend\models\Student;
 use frontend\models\StudentCourse;
+use frontend\models\Teacher;
 use frontend\models\Transaction;
 use Yii;
 use yii\bootstrap\Html;
@@ -81,7 +84,45 @@ class UserController extends Controller
             }
         } else {
             $this->layout = 'teacher_layout';
-            return $this->render('teacher/index');
+
+            $model = Teacher::findById($this->_user['id']);
+            $session = Yii::$app->session;
+
+            $request = Yii::$app->request->post();
+            if (isset($request['btn-info'])) {
+                $model->full_name = !empty($request['full_name']) ? Html::encode($request['full_name']) : $model->full_name;
+                $model->email = !empty($request['email']) ? Html::encode($request['email']) : $model->email;
+                $model->phone = !empty($request['phone']) ? Html::encode($request['phone']) : $model->phone;
+                $model->work_place = !empty($request['work_place']) ? Html::encode($request['work_place']) : $model->work_place;
+                $model->intro = !empty($request['intro']) ? Html::encode($request['intro']) : $model->intro;
+
+                if ($model->save()) {
+                    $session->setFlash('success', 'Đã cập nhật thông tin thành công!');
+                } else {
+                    $session->setFlash('error', 'Có lỗi xảy ra. Vui lòng thử lại!');
+                }
+                return $this->refresh();
+            } else if (isset($request['btn-login'])) {
+                $password = isset($request['password']) ? $request['password'] : '';
+                $new_password = isset($request['new_password']) ? $request['new_password'] : '';
+                $re_new_password = isset($request['re_new_password']) ? $request['re_new_password'] : '';
+                if ($password == '' || $new_password == '' || $re_new_password == '' || ($new_password != $re_new_password) || ($this->_user['password'] != md5($password))) {
+                    $session->setFlash('error', 'Mật khâu của bạn không đúng.');
+                } else {
+                    $this->_user['password'] = md5($new_password);
+                    if ($this->_user->save()) {
+                        return $this->redirect(['/dang-xuat']);
+                    } else {
+                        $session->setFlash('error', 'Có lỗi xảy ra. Vui lòng thử lại!');
+                    }
+                }
+                return $this->refresh();
+            } else {
+                return $this->render('teacher/index', [
+                    'model' => $model,
+                    'user' => $this->_user
+                ]);
+            }
         }
     }
 
@@ -120,6 +161,15 @@ class UserController extends Controller
         return $this->render('student/my_course', [
             'list_course' => $list_course,
             'try_list_course' => $try_list_course
+        ]);
+    }
+
+    public function actionTeacherCourse()
+    {
+        $this->layout = 'teacher_layout';
+        $list_course = CourseTeacher::findAll(['teacher_id' => $this->_user['id']]);
+        return $this->render('teacher/my_course', [
+            'list_course' => $list_course,
         ]);
     }
 
