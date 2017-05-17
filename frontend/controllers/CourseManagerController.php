@@ -275,10 +275,12 @@ class CourseManagerController extends TeacherManagerController
         $dataProvider = new ActiveDataProvider([
             'query' => LessonQuiz::find()->where(['lesson_id' => $lesson_id])
         ]);
+        $arr_lesson = Lesson::find()->where(['course_id' => $course_id, 'deleted' => 0])->orderBy('publish_date ASC, id ASC')->asArray()->all();
 
         return $this->render('lesson/quiz/index', [
             'lesson' => $lesson,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'arr_lesson' => $arr_lesson
         ]);
     }
 
