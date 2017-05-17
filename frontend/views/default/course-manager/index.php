@@ -36,7 +36,7 @@ Icon::map($this, Icon::FA);
 </header>
 
 <div class="w3-container" style="margin-bottom: 20px">
-    <a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc/khoa-hoc-moi'])?>" class="btn btn-info"><?php echo Icon::show('plus') ?> Tạo khóa học mới</a>
+    <a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc/create'])?>" class="btn btn-info"><?php echo Icon::show('plus') ?> Tạo khóa học mới</a>
 </div>
 
 <div class="w3-container">

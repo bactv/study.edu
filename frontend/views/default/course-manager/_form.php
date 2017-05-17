@@ -23,6 +23,14 @@ Icon::map($this, Icon::FA);
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<header id="portfolio">
+    <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+        <h3 class="w3-text-teal"><b><?php echo Icon::show('list') ?> TẠO KHÓA HỌC MỚI</b></h3>
+        <div class="w3-section w3-bottombar"></div>
+    </div>
+</header>
+
 
     <?php if (Yii::$app->session->hasFlash('error')) { ?>
         <div class="error" style="margin-bottom: 20px;padding: 20px">

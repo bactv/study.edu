@@ -17,7 +17,7 @@ Icon::map($this, Icon::FA);
 <header id="portfolio">
     <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-        <h3 class="w3-text-teal"><b><?php echo Icon::show('list') ?> CẬP NHẬT BÀI GIẢNG: <?php echo $model['name'] ?></b></h3>
+        <h3 class="w3-text-teal"><b><?php echo Icon::show('list') ?> <?php echo ($model->isNewRecord) ? 'TẠO BÀI GIẢNG MỚI' : 'CẬP NHẬT BÀI GIẢNG: ' ?> <?php echo $model['name'] ?></b></h3>
         <div class="w3-section w3-bottombar"></div>
     </div>
 </header>

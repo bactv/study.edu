@@ -130,7 +130,8 @@ $data = (array)json_decode($attempt['data']);
 
 <style>
     body {
-        background-color: #f7f7f7;
+        /*background-color: #cad9da !important;*/
+        background-image: url("/themes/default/images/bg/lg_bg.jpg");
     }
     .review_contest {
         font-family: 'Open Sans', sans-serif;

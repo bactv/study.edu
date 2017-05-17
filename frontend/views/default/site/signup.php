@@ -49,7 +49,7 @@ AssetApp::regCssFile('signup.css');
             </div>
             <hr class="colorgraph">
             <div class="w3-row w3-margin-bottom">
-                <button class="w3-col l5 btn btn-lg ft w3-left btn-primary" type="submit" name="btn-signup" id="btn-signup">Đăng ký</button>
+                <button class="w3-col l5 btn btn-lg ft w3-left w3-teal" type="submit" name="btn-signup" id="btn-signup">Đăng ký</button>
                 <button class="w3-col l5 btn btn-lg ft w3-right" type="reset">Reset</button>
             </div>
             <p class="text-center new-account">Bạn đã có tài khoản? <i><a href="<?php echo Url::toRoute(['/dang-nhap']) ?>" class="w3-text-blue">Đăng nhập</a></i> ngay </p>

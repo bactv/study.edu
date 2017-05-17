@@ -15,31 +15,18 @@ Icon::map($this, Icon::FA);
 ?>
 
 <div class="w3-container main_content prep-subject">
-    <p id="title" class="w3-center w3-text-teal">Ôn thi THPT Quốc Gia môn <?php echo $subject['short_name'] ?></p>
+    <p id="title" class="w3-center w3-text-teal">Luyện thi THPT Quốc Gia môn <?php echo $subject['short_name'] ?></p>
 
     <div class="w3-row-padding list_quiz">
         <p id="category">Thi trắc nghiệm online</p>
         <div class="box">
-<!--            --><?php //foreach ($list_quiz as $quiz) { ?>
-            <div class="w3-col l6 m6 s12">
-                <ul style=" border-right: 1px solid #ccc;">
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                </ul>
-            </div>
-<!--            --><?php //} ?>
+            <?php foreach ($list_quiz as $quiz) { ?>
             <div class="w3-col l6 m6 s12">
                 <ul>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
-                    <li><a href="#">Thi Online Đề thi thử môn Hóa lần 2 - THPT Chuyên Hạ Long - Quảng Ninh</a></li>
+                    <li><a href="#"><span style="color: <?php echo $subject['icon_color'] ?>"><?php echo Icon::show($subject['icon']) ?></span><?php echo $quiz['name'] ?></a></li>
                 </ul>
             </div>
+            <?php } ?>
         </div>
     </div>
 
@@ -99,6 +86,9 @@ Icon::map($this, Icon::FA);
 </div>
 
 <style>
+    body {
+        background-image: url("/themes/default/images/bg/lg_bg_2.jpg");
+    }
     .prep-subject {
         font-family: 'Taviraj', serif;
         max-width: 1150px;
@@ -123,22 +113,27 @@ Icon::map($this, Icon::FA);
         margin-bottom: 30px;
         font-size: 15px;
         border: 1px dotted #ccc;
-        background-color: #f3f3f3;
+        background-color: rgba(90, 189, 212, 0.54);
         padding-bottom: 20px;
     }
     .prep-subject .list_quiz p#category {
         font-size: 1.4em;
-        color: #009688;
         text-align: center;
         margin-bottom: 20px;
         padding-top: 20px;
     }
     .prep-subject .list_quiz .box {}
     .prep-subject .list_quiz .box ul {
-
+        list-style-type: none;
     }
-    .prep-subject .list_quiz .box ul li {}
-    .prep-subject .list_quiz .box ul li a {}
+    .prep-subject .list_quiz .box ul li {
+        padding: 5px;
+        padding-bottom: 10px;
+        border-bottom: 1px dotted #ccc;
+    }
+    .prep-subject .list_quiz .box ul li a {
+        color: rgb(62, 92, 208);
+    }
 
     .prep-subject .list_course {}
     .prep-subject .list_course p#category{

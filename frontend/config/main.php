@@ -60,6 +60,8 @@ return [
                 'quan-ly-khoa-hoc/update' => 'course-manager/update',
                 'quan-ly-khoa-hoc/view' => 'course-manager/view',
                 'quan-ly-khoa-hoc/lesson' => 'course-manager/lesson',
+                'quan-ly-khoa-hoc/create-lesson' => 'course-manager/create-lesson',
+                'quan-ly-khoa-hoc/update-lesson' => 'course-manager/update-lesson',
                 'quan-ly-khoa-hoc/view-lesson' => 'course-manager/view-lesson',
                 'quan-ly-khoa-hoc/lesson-document' => 'course-manager/lesson-document',
                 'quan-ly-khoa-hoc/create-lesson-document' => 'course-manager/create-lesson-document',

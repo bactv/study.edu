@@ -11,8 +11,11 @@ use kartik\icons\Icon;
 
 Icon::map($this, Icon::FA);
 
+AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
+
 ?>
 <link rel="stylesheet" type="text/css" href="/themes/default/css/site.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro" rel="stylesheet">
 
 <!-- SLIDE SHOW -->
 <?php if (isset($slides) && count($slides) > 0) { ?>
@@ -75,6 +78,19 @@ Icon::map($this, Icon::FA);
 
     <div class="w3-col l6 m6 s12 list_events">
         <p id="title"><span><?php echo Icon::show('leaf') ?></span>Sự kiện nổi bật</p>
+        <div class="list_item">
+            <?php $colors = ['yellow', 'blue', 'green', 'teal', 'red', 'brow']; ?>
+            <?php foreach ($list_event as $event) {
+                $ran = mt_rand(0, 5);
+                ?>
+                <div class="item">
+                    <a href="#">
+                        <div class="event_name"><span class="icon" style="color: <?php echo $colors[$ran] ?>"><?php echo Icon::show('briefcase') ?></span> <?php echo $event['name'] ?> </div>
+                    </a>
+                </div>
+                <div class="clear" style="clear: both"></div>
+            <?php } ?>
+        </div>
     </div>
 </div>
 
@@ -139,33 +155,57 @@ Icon::map($this, Icon::FA);
 
 
     <!-- Project Section -->
-    <div class="w3-container w3-padding-32" id="projects">
-        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16 w3-center w3-text-teal">Giáo viên</h3>
-    </div>
+<!--    <div class="w3-container w3-padding-32" id="projects">-->
+<!--        <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16 w3-center w3-text-teal">Giáo viên</h3>-->
+<!--    </div>-->
+<!---->
+<!--    <div class="w3-row-padding w3-grayscale owl-carousel" style="padding: 0 30px;">-->
+<!--        --><?php //foreach ($list_teacher as $teacher) {
+//            if ($teacher['gender'] == 1) {
+//                $avatar = AssetApp::getImageBaseUrl() . '/icons/male_teacher_icon.png';
+//            } else {
+//                $avatar = AssetApp::getImageBaseUrl() . '/icons/female_teacher_icon.png';
+//            }
+//            $url = Yii::$app->params['assets_path']['img.user'] . $teacher['user_id'] . '.png';
+//            if (Utility::check_url_file_exists($url)) {
+//                $avatar = $url;
+//            }
+//            $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($teacher['full_name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $teacher['user_id'])]);
+//            ?>
+<!--        <div class="w3-margin-bottom">-->
+<!--            <img src="--><?php //echo $avatar ?><!--" alt="--><?php //echo $teacher['full_name'] ?><!--" style="width:100%;border-radius: 50%;">-->
+<!--            <h3 class="w3-text-teal">--><?php //echo $teacher['degree'] . '. ' . $teacher['full_name'] ?><!--</h3>-->
+<!--            <p class="w3-opacity">CEO & Founder</p>-->
+<!--            <p>--><?php //echo Utility::truncateStringWords($teacher['intro'], 70) ?><!--</p>-->
+<!--            <p><a href="--><?php //echo $url_teacher ?><!--" ><a class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></a></p>-->
+<!--        </div>-->
+<!--        --><?php //} ?>
+<!--    </div>-->
+</div>
 
-    <div class="w3-row-padding w3-grayscale owl-carousel" style="padding: 0 30px;">
-        <?php foreach ($list_teacher as $teacher) {
-            if ($teacher['gender'] == 1) {
-                $avatar = AssetApp::getImageBaseUrl() . '/icons/male_teacher_icon.png';
-            } else {
-                $avatar = AssetApp::getImageBaseUrl() . '/icons/female_teacher_icon.png';
-            }
-            $url = Yii::$app->params['assets_path']['img.user'] . $teacher['user_id'] . '.png';
-            if (Utility::check_url_file_exists($url)) {
-                $avatar = $url;
-            }
-            $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($teacher['full_name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $teacher['user_id'])]);
-            ?>
-        <div class="w3-margin-bottom">
-            <img src="<?php echo $avatar ?>" alt="<?php echo $teacher['full_name'] ?>" style="width:100%;border-radius: 50%;">
-            <h3 class="w3-text-teal"><?php echo $teacher['degree'] . '. ' . $teacher['full_name'] ?></h3>
-            <p class="w3-opacity">CEO & Founder</p>
-            <p><?php echo Utility::truncateStringWords($teacher['intro'], 70) ?></p>
-            <p><a href="<?php echo $url_teacher ?>" ><a class="w3-button w3-light-grey w3-block w3-text-teal">Xem chi tiết >></button></a></p>
-        </div>
-        <?php } ?>
+<div class="w3-container w3-center intro">
+    <p id="tt1">Tại sao bạn nên chọn chúng tôi?</p>
+    <div class="w3-col l4 into-col-1">
+        <p id="tt2">Hiện đại nhất</p>
+        <p id="ct2">
+            Học sinh được tự chọn chương trình học phù hợp với năng lực và dễ dàng điều chỉnh chương trình học theo điểm số kỳ vọng. Hệ thống lưu lại toàn bộ lịch sử học tập, tự động phát hiện nhanh các lỗ hổng kiến thức, và đề xuất giải pháp khắc phục cho hiệu quả ngay lập tức.
+        </p>
+    </div>
+    <div class="w3-col l4 into-col-2">
+        <p id="tt2">Thuận tiện nhất</p>
+        <p id="ct2">
+            Hệ thống tối ưu trên nhiều loại màn hình khác nhau bao gồm cả laptop và các thiết bị smartphone.
+        </p>
+    </div>
+    <div class="w3-col l4 into-col-3">
+        <p id="tt2">Khoa học nhất</p>
+        <p id="ct2">
+            Hệ thống ứng dụng những thành tựu mới nhất của tâm lí học giáo dục và khoa học nghiên cứu về não bộ. Chương trình học được thiết kế để phù hợp nhất cho việc tự học, dành riêng cho từng đối tượng học sinh.
+        </p>
     </div>
 </div>
+
+
 <style>
     .carousel-inner>.item.active {
         height: 350px;
@@ -177,6 +217,43 @@ Icon::map($this, Icon::FA);
     .slideshow {
         margin-bottom: 50px;
     }
+    .intro {
+        /*background-color: #91e2de;*/
+        background-image: url("/themes/default/images/bg/lg_bg.jpg");
+        text-align: center;
+        min-height: 300px;
+        padding: 20px;
+    }
+    p#tt1 {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 50px;
+        color: teal;
+    }
+    p#tt2 {
+        font-size: 22px;
+        font-weight: bold;
+        color: teal;
+    }
+    p#ct2 {
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 18px;
+        padding: 0px 10px;
+    }
+    .list_events {}
+    .list_events .list_item {
+    }
+    .list_events .list_item .item {
+        border-bottom: 1px dashed #ccc;
+        color: #009688;
+        margin-left: 20px;
+        text-align: left;
+        padding: 15px;
+    }
+    .list_events .list_item .event_name {
+        font-size: 1.1em;
+    }
+    .list_events .list_item {}
 </style>
 
 <script>
@@ -192,5 +269,17 @@ Icon::map($this, Icon::FA);
                 }
             }
         });
+    });
+    $(document).ready(function () {
+        // Changing the defaults
+        window.sr = ScrollReveal({ reset: true });
+        sr.reveal('.into-col-1', { duration: 2500 });
+        sr.reveal('.into-col-2', { duration: 2500 });
+        sr.reveal('.into-col-3', { duration: 2500 });
+        sr.reveal('.list_quiz', { duration: 1500 });
+        sr.reveal('.list_events', { duration: 1500 });
+//        $('.into-col-1').addClass('animated bounceInLeft');
+//        $('.into-col-2').addClass('animated bounceInDown');
+//        $('.into-col-3').addClass('animated bounceInRight');
     });
 </script>

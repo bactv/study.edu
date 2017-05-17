@@ -27,6 +27,7 @@
     background-color: rgba(0,0,0,0.8);
     padding: 28px 0 2px;
     width: 100%;
+    text-align: center;
 }
 .lesson_detail .box_right .video_container video {
     height: 480px;

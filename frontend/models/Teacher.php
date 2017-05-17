@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use backend\models\Lesson;
+use frontend\models\Lesson;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;

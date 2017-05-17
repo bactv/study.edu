@@ -252,8 +252,7 @@ class QuizController extends Controller
         }
         $attempt->created_time = date('Y-m-d H:i:s');
         $attempt->save(false);
-
-        if ($student_id != 0 && $action = 'submit') {
+        if ($student_id != 0 && $action == 'submit') {
             $quiz_score = QuizScore::findOne(['quiz_id' => $quiz_id, 'user_id' => $student_id]);
             if (empty($quiz_score)) {
                 $quiz_score = new QuizScore();
@@ -264,12 +263,14 @@ class QuizController extends Controller
                 $quiz_score->save(false);
             }
         }
+
         if ($action == 'save') {
             $url_redirect = Url::toRoute(['/trac-nghiem-theo-chuyen-de']);
             return json_encode(['url_redirect' => $url_redirect, 'action' => 'save']);
+        } else {
+            $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $attempt->id)]);
+            return json_encode(['url_redirect' => $url_redirect, 'action' => 'submit']);
         }
-        $url_redirect = Url::toRoute(['/review/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $attempt->id)]);
-        return json_encode(['url_redirect' => $url_redirect, 'action' => 'submit']);
     }
 
     /**

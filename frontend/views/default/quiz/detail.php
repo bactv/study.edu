@@ -17,7 +17,7 @@ AssetApp::regJsFile('quiz.js');
 
 <?php
 $url = Url::toRoute(['/luyen-de/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]);
-$user_id = !empty(Yii::$app->user->identity->getId()) ? Yii::$app->user->identity->getId() : 0;
+$user_id = isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->getId() : 0;
 ?>
 
 <!-- Page content -->

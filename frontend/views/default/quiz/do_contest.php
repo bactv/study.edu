@@ -198,6 +198,7 @@ Icon::map($this, Icon::FA);
             url: '<?php echo Url::toRoute(['/quiz/check-contest']) ?>',
             success: function (data) {
                 var res = JSON.parse(data);
+                console.log(res);
                 if (res.action == 'save') {
                     BootstrapDialog.show({
                         title: 'Info!',
@@ -215,8 +216,8 @@ Icon::map($this, Icon::FA);
 
 <style>
     body {
-        background-color: #cad9da !important;
-
+        /*background-color: #cad9da !important;*/
+        background-image: url("/themes/default/images/bg/lg_bg.jpg");
     }
     .do_contest {
         font-family: 'Open Sans', sans-serif;
