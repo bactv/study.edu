@@ -1,5 +1,8 @@
+/*body {*/
+    /*background-color: #cad9da !important;*/
+/*}*/
 body {
-    background-color: #cad9da !important;
+    background-image: url(/themes/default/images/bg/lg_bg.jpg);
 }
 .ft {
     font-family: 'Oswald', sans-serif !important;
@@ -43,7 +46,7 @@ body {
     background-color: #f7f7f7;
     -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
 }
 .login-title {
     color: #555;

@@ -15,6 +15,7 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
 
 ?>
 <link rel="stylesheet" type="text/css" href="/themes/default/css/site.css">
+<link rel="stylesheet" type="text/css" href="/themes/default/css/mobile_index.css">
 <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro" rel="stylesheet">
 
 <!-- SLIDE SHOW -->
@@ -64,9 +65,11 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
         <p id="title"><span><?php echo Icon::show('th-list') ?></span>Thi trắc nghiệm online</p>
         <?php if (isset($list_quiz) && count($list_quiz) > 0) { ?>
             <div class="list_item">
-                <?php foreach ($list_quiz as $quiz) { ?>
+                <?php foreach ($list_quiz as $quiz) {
+                    $url = Url::toRoute(['/chi-tiet/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]);
+                    ?>
                     <div class="item">
-                        <a href="#">
+                        <a href="<?php echo $url ?>">
                             <div class="quiz_name"><span class="icon" style="color: <?php echo $quiz['icon_color'] ?>"><?php echo Icon::show($quiz['subject_icon']) ?></span> <?php echo $quiz['name'] ?> </div>
                         </a>
                     </div>
@@ -115,7 +118,7 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
             if (is_array($ex)) {
                 foreach ($ex as $item) {
                     $tch = Teacher::getAttributeValue(['user_id' => $item], 'full_name');
-                    $url_teacher = Url::toRoute(['/gioi-thieu-giao-vien/' . Utility::rewrite($tch) . '-cn' . Utility::encrypt_decrypt('encrypt', $item)]);
+                    $url_teacher = Url::toRoute(['/giao-vien/' . Utility::rewrite($tch) . '-cn' . Utility::encrypt_decrypt('encrypt', $item)]);
                     $teachers .= '<a href="' . $url_teacher . '" class="teacher_name w3-text-teal" target="_blank">' . $tch . '</a>' . ', ';
                 }
             }
@@ -129,12 +132,12 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
             ?>
         <div class="w3-quarter w3-container w3-margin-bottom w3-display-container">
             <?php if ($course['price'] == 0) { ?>
-                <div class="w3-display-topleft w3-teal w3-padding">Miễn phí</div>
+                <div class="w3-display-topleft w3-teal w3-padding flag">Miễn phí</div>
             <?php } ?>
             <div class="course_item">
                 <a href="<?php echo $url_course ?>" class="course_img"><img src="<?php echo $logo ?>" alt="<?php echo $course['name'] ?>" /></a>
                 <div class="w3-container w3-white course_desc" style="padding: 0">
-                    <p class="course_name"><a href="#" class="w3-text-teal"><?php echo $course['name'] ?> </a></p>
+                    <p class="course_name"><a href="<?php echo $url_course ?>" class="w3-text-teal"><?php echo $course['name'] ?> </a></p>
                     <p class="course_teacher">Giáo viên: <?php echo $teachers ?></p>
 
                     <div class="register_info">
@@ -205,57 +208,6 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
     </div>
 </div>
 
-
-<style>
-    .carousel-inner>.item.active {
-        height: 350px;
-    }
-    .carousel-inner>.item.active img {
-        width: 100%;
-        height: 100%;
-    }
-    .slideshow {
-        margin-bottom: 50px;
-    }
-    .intro {
-        /*background-color: #91e2de;*/
-        background-image: url("/themes/default/images/bg/lg_bg.jpg");
-        text-align: center;
-        min-height: 300px;
-        padding: 20px;
-    }
-    p#tt1 {
-        font-size: 30px;
-        font-weight: bold;
-        margin-bottom: 50px;
-        color: teal;
-    }
-    p#tt2 {
-        font-size: 22px;
-        font-weight: bold;
-        color: teal;
-    }
-    p#ct2 {
-        font-family: 'Source Sans Pro', sans-serif;
-        font-size: 18px;
-        padding: 0px 10px;
-    }
-    .list_events {}
-    .list_events .list_item {
-    }
-    .list_events .list_item .item {
-        border-bottom: 1px dashed #ccc;
-        color: #009688;
-        margin-left: 20px;
-        text-align: left;
-        padding: 15px;
-    }
-    .list_events .list_item .event_name {
-        font-size: 1.1em;
-    }
-    .list_events .list_item {}
-</style>
-
 <script>
     $(document).ready(function(){
         $('.owl-carousel').owlCarousel({
@@ -273,9 +225,9 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
     $(document).ready(function () {
         // Changing the defaults
         window.sr = ScrollReveal({ reset: true });
-        sr.reveal('.into-col-1', { duration: 2500 });
-        sr.reveal('.into-col-2', { duration: 2500 });
-        sr.reveal('.into-col-3', { duration: 2500 });
+        sr.reveal('.into-col-1', { duration: 2100 });
+        sr.reveal('.into-col-2', { duration: 2100 });
+        sr.reveal('.into-col-3', { duration: 2100 });
         sr.reveal('.list_quiz', { duration: 1500 });
         sr.reveal('.list_events', { duration: 1500 });
 //        $('.into-col-1').addClass('animated bounceInLeft');

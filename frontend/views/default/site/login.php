@@ -34,18 +34,20 @@ AssetApp::regCssFile('login.css');
                             <br>
                             <input type="password" name="password" class="form-control ft" placeholder="Mật khẩu ..." required>
                             <div class="w3-row user_type w3-margin-bottom">
-                                <div class="w3-col l6 ft">
+                                <div class="w3-col l6 m6 s6 ft">
                                     Học sinh: <input class="w3-radio" type="radio" name="user_type" value="1" <?php echo $model['type'] == 1 ? 'checked' : '' ?>>
                                 </div>
-                                <div class="w3-col l6 ft">
+                                <div class="w3-col l6 m6 s6 ft">
                                     Giáo viên: <input class="w3-radio" type="radio" name="user_type" value="2" <?php echo $model['type'] == 2 ? 'checked' : '' ?>>
                                 </div>
                             </div>
                             <button class="btn btn-lg btn-block w3-teal ft" type="submit" name="btn-login" id="btn-login">Đăng nhập</button>
-                            <label class="checkbox pull-left ft">
-                                <input type="checkbox" name="remember-me" <?php echo $model['rememberMe'] == 1 ? 'checked' : '' ?>> Ghi nhớ đăng nhập
-                            </label>
-                            <a href="#" class="pull-right need-help ft w3-text-blue" target="_blank">Quên mật khẩu? </a><span class="clearfix"></span>
+                            <div class="w3-container">
+                                <label class="checkbox pull-left ft">
+                                    <input type="checkbox" name="remember-me" <?php echo $model['rememberMe'] == 1 ? 'checked' : '' ?> /> Ghi nhớ đăng nhập
+                                </label>
+                                <a href="#" class="pull-right need-help ft w3-text-blue" target="_blank">Quên mật khẩu? </a><span class="clearfix"></span>
+                            </div>
                         </form>
                         <p class="text-center new-account">Bạn chưa có tài khoản? <i><a href="<?php echo Url::toRoute(['/dang-ky']) ?>" class="w3-text-blue">Đăng ký</a></i> ngay </p>
                     </div>

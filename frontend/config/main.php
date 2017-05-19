@@ -83,6 +83,10 @@ return [
                 'dang-nhap' => 'site/login',
                 'dang-ky' => 'site/signup',
                 'dang-xuat' => 'site/logout',
+
+                'giao-vien' => 'teacher/index',
+                'giao-vien/<slug:[0-9a-zA-Z\-]+>' => 'teacher/detail',
+
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -111,5 +115,6 @@ return [
             ]
         ],
     ],
+    'language' => 'en',
     'params' => $params,
 ];

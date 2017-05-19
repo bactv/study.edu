@@ -1,0 +1,26 @@
+@media screen and (max-width: 480px) {
+    .list_quiz {
+        border-right: none;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+    .list_quiz .list_item .item {
+        margin-left: 0;
+    }
+    .list_events {
+        padding: 0;
+    }
+    .list_events .list_item .item {
+        margin-left: 0;
+    }
+    .list_course .flag {
+        display: none;
+    }
+    .list_course .course_item {
+        width: 100%;
+    }
+    p#tt1 {
+        margin-bottom: 20px;
+        border-bottom: 1px solid teal;
+    }
+}

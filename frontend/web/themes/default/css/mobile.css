@@ -27,6 +27,20 @@
         padding: 0;
     }
     .main {
-        margin-top: 50px;
+        /*margin-top: 50px;*/
+    }
+
+    .course_video_detail .box_top {
+        max-height: 270px !important;
+        margin-bottom: 270px !important;
+    }
+    .course_video_detail .box_top img {
+        height: 270px !important;
+    }
+    .course_video_detail .box_top .info {
+        height: 270px !important;
+    }
+    .course_video_detail .box_top .info #course_name {
+        padding-top: 30px !important;
     }
 }
