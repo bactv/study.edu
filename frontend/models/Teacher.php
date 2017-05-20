@@ -83,4 +83,17 @@ class Teacher extends \common\models\TeacherBase
         }
         return $lesson;
     }
+
+    public static function get_list_teacher_by_subject($subject_id, $limit = 5)
+    {
+        $query = "SELECT t1.*
+                  FROM teacher as t1
+                  INNER JOIN course_teacher as t2 ON t2.teacher_id=t1.user_id
+                  INNER JOIN course as t3 ON t3.id=t2.course_id
+                  WHERE t3.deleted=0
+                  AND t3.subject_id='" . $subject_id . "'
+                  LIMIT " . $limit;
+        $data = Yii::$app->db->createCommand($query)->queryAll();
+        return $data;
+    }
 }

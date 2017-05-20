@@ -50,7 +50,6 @@ $user_id = isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->get
     .quiz_detail{
         width: 80%;
         margin: auto;
-        padding: 10px;
         border: 1px solid #ccc;
         background-color: #FFF;
         box-shadow: 0 0 20px #ccc;
@@ -68,7 +67,7 @@ $user_id = isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->get
     .quiz_detail .quiz_desc {
         margin-bottom: 10px;
         text-align: justify;
-        padding-bottom: 40px;
+        padding: 10px 10px 40px 10px;
         line-height: 30px;
     }
     .quiz_detail .quiz_info{

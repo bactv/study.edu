@@ -67,12 +67,28 @@ class QuizController extends Controller
         $arr_quiz = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
+        $leaderboard = Quiz::get_leaderboard_data('week', $quiz_type_id, $sj_id);
         return $this->render('index', [
             'arr_subjects' => $subjects,
             'arr_quiz' => $arr_quiz,
             'pages' => $pages,
             'sj_id' => $sj_id,
-            'uri' => $uri
+            'uri' => $uri,
+            'leaderboard' => $leaderboard
+        ]);
+    }
+
+    public function actionGetLeaderboard()
+    {
+        $request = Yii::$app->request->get();
+        $type = isset($request['type']) ? $request['type'] : 'week';
+        $quiz_type_id = isset($request['quiz_type_id']) ? $request['quiz_type_id'] : 2;
+        $subject_id = isset($request['subject_id']) ? $request['subject_id'] : '';
+
+        $leaderboard = Quiz::get_leaderboard_data($type, $quiz_type_id, $subject_id);
+
+        return $this->renderAjax('leaderboard', [
+            'leaderboard' => $leaderboard
         ]);
     }
 

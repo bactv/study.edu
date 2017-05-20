@@ -10,6 +10,7 @@ namespace console\controllers;
 use backend\models\LessonQuiz;
 use backend\models\LessonQuizQuestion;
 use backend\models\LessonQuizQuestionAnswer;
+use backend\models\QuizScore;
 use backend\models\Student;
 use frontend\models\Lesson;
 use frontend\models\Teacher;
@@ -251,5 +252,19 @@ class TestDataController extends Controller
             }
         }
         echo "DONE";
+    }
+
+    public function actionTestQuizScore($count = 20)
+    {
+        for ($i = 0; $i < $count; $i++) {
+            $model = new QuizScore();
+            $model->user_id = mt_rand(1, 4);
+            $model->quiz_id = mt_rand(1, 24);
+            $model->score = mt_rand(0, 50);
+            $model->time_complete = mt_rand(1, 60);
+            $day = mt_rand(0, 8);
+            $model->created_time = date('Y-m-d H:i:s', strtotime('-' . $day . ' days'));
+            $model->save();
+        }
     }
 }

@@ -17,6 +17,15 @@ use yii\widgets\LinkPager;
 Icon::map($this, Icon::FA);
 ?>
 
+<?php
+$quiz_type_id = 2;
+if ($uri == 'trac-nghiem-tong-hop') {
+    $quiz_type_id = 3;
+} else if ($uri == 'thi-thu-thpt') {
+    $quiz_type_id = 1;
+}
+?>
+
 <!-- Page content -->
 <div class="w3-container main_content">
     <p class="w3-text-teal w3-center" style="margin-bottom: 30px" id="title">Luyện thi trắc nghiệm online</p>
@@ -69,16 +78,17 @@ Icon::map($this, Icon::FA);
         <div class="">
             <p id="title" class="w3-text-teal">Bảng xếp hạng</p>
             <ul class="nav nav-pills">
-                <li class="active"><a data-toggle="pill" href="#home">Tuần</a></li>
-                <li><a data-toggle="pill" href="#menu1">Tháng</a></li>
+                <li class="active"><a data-toggle="pill" href="#week" data-div_id="week" onclick="leaderboard('week', this)">Tuần</a></li>
+                <li><a data-toggle="pill" href="#month" data-div_id="month" onclick="leaderboard('month', this)">Tháng</a></li>
             </ul>
 
             <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                    <?php echo $this->renderAjax('leaderboard.php') ?>
+                <div id="week" class="tab-pane fade in active">
+                    <?php echo $this->render('leaderboard.php', [
+                        'leaderboard' => $leaderboard
+                    ]) ?>
                 </div>
-                <div id="menu1" class="tab-pane fade">
-                    <?php echo $this->renderAjax('leaderboard.php') ?>
+                <div id="month" class="tab-pane fade">
                 </div>
             </div>
         </div>
@@ -121,7 +131,20 @@ Icon::map($this, Icon::FA);
 <script>
     $(document).ready(function () {
         $(".box_left, .leaderboard").stick_in_parent();
-
-
     });
+
+    function leaderboard(type = 'week', element) {
+        var quiz_type = '<?php echo $quiz_type_id ?>';
+        var subject_id = '<?php echo $sj_id ?>';
+        var div = $(element).data('div_id');
+        console.log(div);
+        $.ajax({
+            method: 'GET',
+            data: {'type' : type, 'quiz_type_id' : quiz_type, 'subject_id' : subject_id},
+            url: '<?php echo Url::toRoute(['/quiz/get-leaderboard']) ?>',
+            success: function (data) {
+                $("div#" + div).html(data);
+            }
+        });
+    }
 </script>

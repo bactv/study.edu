@@ -13,66 +13,47 @@ use common\components\AssetApp;
         <th>Học sinh</th>
         <th>Điểm</th>
     </tr>
-    <tr>
-        <td class="w3-center"><i class="fa fa-trophy" aria-hidden="true" style="color: #e6cd0a;font-size: 30px;"></i></td>
-        <td>
-            <div class="avatar">
-                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico' ?>">
-            </div>
-            <div class="std_name">
-                Trần Văn Nam
-            </div>
-        </td>
-        <td style="color: #e6cd0a">50</td>
-    </tr>
-    <tr>
-        <td><i class="fa fa-trophy" aria-hidden="true" style="color: rgba(152, 149, 149, 0.7);font-size: 30px;"></i></td>
-        <td>
-            <div class="avatar">
-                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico' ?>">
-            </div>
-            <div class="std_name">
-                Trần Văn Nam
-            </div>
-        </td>
-        <td style="color: rgba(152, 149, 149, 0.7)">50</td>
-    </tr>
-    <tr>
-        <td><i class="fa fa-trophy" aria-hidden="true" style="color: #5b4411;font-size: 30px;"></i></td>
-        <td>
-            <div class="avatar">
-                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico' ?>">
-            </div>
-            <div class="std_name">
-                Trần Văn Nam
-            </div>
-        </td>
-        <td style="color: #5b4411">50</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>
-            <div class="avatar">
-                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico' ?>">
-            </div>
-            <div class="std_name">
-                Trần Văn Nam
-            </div>
-        </td>
-        <td>50</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>
-            <div class="avatar">
-                <img src="<?php echo AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico' ?>">
-            </div>
-            <div class="std_name">
-                Trần Văn Nam
-            </div>
-        </td>
-        <td>50</td>
-    </tr>
+    <?php foreach ($leaderboard as $k => $item) {
+        if ($k > 10) {
+            break;
+        }
+        $icon = '';
+        $color = '';
+        if ($k < 3) {
+            $icon = 'fa fa-trophy';
+            if ($k == 0) {
+                $color = 'color: #e6cd0a;font-size: 30px;';
+            }
+            if ($k == 1) {
+                $color = 'color: rgba(152, 149, 149, 0.7);font-size: 30px;';
+            }
+            if ($k == 2) {
+                $color = 'color: #5b4411;font-size: 30px;';
+            }
+        }
+
+        $student = \frontend\models\Student::findOne(['user_id' => $item['user_id']]);
+        $url = Yii::$app->params['assets_path']['img.user'] . $item['user_id'] . '.png';
+        $avatar = AssetApp::getImageBaseUrl() . '/icons/avatar_student_icon.ico';
+        if (\common\components\Utility::check_url_file_exists($url)) {
+            $avatar = $url;
+        }
+        ?>
+
+        <tr>
+            <td class="w3-center"><i class="<?php echo $icon ?>" aria-hidden="true" style="<?php echo $color ?>"></i><?php echo ($k >= 3) ? ($k + 1) : '' ?></td>
+            <td>
+                <div class="avatar">
+                    <img src="<?php echo $avatar ?>">
+                </div>
+                <div class="std_name">
+                    <?php echo $student['full_name'] ?>
+                </div>
+            </td>
+            <td><?php echo $item['score'] ?></td>
+        </tr>
+
+    <?php } ?>
 </table>
 
 <style>
@@ -87,8 +68,10 @@ use common\components\AssetApp;
         float: left;
     }
     .main_content .leaderboard .avatar img {
-        width: 100%;
+        width: 40px;
+        height: 40px;
         margin: 0;
+        border-radius: 50%;
     }
     .main_content .leaderboard .std_name {
         line-height: 40px;
