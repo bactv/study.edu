@@ -51,6 +51,9 @@ return [
         ],
         'assets_common' => [
             'path' => 'assets_common/'
+        ],
+        'img.common' => [
+            'path' => 'img.common/'
         ]
     ],
     'assets_path' => [
@@ -60,6 +63,7 @@ return [
         'assets.course' => 'http://static.study.edu.vn/assets.course/',
         'img.admin' => 'http://static.study.edu.vn/img.admin/',
         'assets_common' => 'http://static.study.edu.vn/assets_common/',
+        'img.common' => 'http://static.study.edu.vn/img.common/',
     ],
     'banner_subject_course' => [
         'math' => '',

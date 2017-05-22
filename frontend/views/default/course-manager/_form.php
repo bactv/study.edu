@@ -23,6 +23,8 @@ Icon::map($this, Icon::FA);
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<script src="/themes/default/plugins/ckeditor/ckeditor.js"></script>
+
 <header id="portfolio">
     <span class="w3-button w3-hide-large w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
@@ -31,23 +33,22 @@ Icon::map($this, Icon::FA);
     </div>
 </header>
 
-
-    <?php if (Yii::$app->session->hasFlash('error')) { ?>
-        <div class="error" style="margin-bottom: 20px;padding: 20px">
-            <?php echo Alert::widget([
-                'options' => ['class' => 'alert-danger'],
-                'body' => Yii::$app->session->getFlash('error'),
-            ]); ?>
-        </div>
-    <?php } ?>
-    <?php if (Yii::$app->session->hasFlash('success')) { ?>
-        <div class="error" style="margin-bottom: 20px;padding: 20px">
+<?php if (Yii::$app->session->hasFlash('error')) { ?>
+    <div class="error" style="margin-bottom: 20px;padding: 20px">
+        <?php echo Alert::widget([
+            'options' => ['class' => 'alert-danger'],
+            'body' => Yii::$app->session->getFlash('error'),
+        ]); ?>
+    </div>
+<?php } ?>
+<?php if (Yii::$app->session->hasFlash('success')) { ?>
+    <div class="error" style="margin-bottom: 20px;padding: 20px">
         <?php echo Alert::widget([
             'options' => ['class' => 'alert-success'],
             'body' => Yii::$app->session->getFlash('success'),
         ]); ?>
-        </div>
-    <?php } ?>
+    </div>
+<?php } ?>
 
 <div class="course-form" style="padding: 20px">
     <fieldset>
@@ -63,9 +64,8 @@ Icon::map($this, Icon::FA);
 
         <?= $form->field($model, 'name')->textInput() ?>
 
-        <?= $form->field($model, 'logo')->widget(FileInput::className(), [
+        <?= $form->field($model, 'logo')->widget(FileInput::className(), []) ?>
 
-        ]) ?>
         <div class="form-group">
             <div class="control-label col-sm-3"></div>
             <div class="control-label col-sm-9">
@@ -85,6 +85,15 @@ Icon::map($this, Icon::FA);
             </div>
         </div>
 
+        <?= $form->field($model, 'outline')->widget(FileInput::className(), []) ?>
+        <div class="form-group" style="margin-bottom: 20px">
+            <div class="control-label col-sm-3"></div>
+            <div class="control-label col-sm-9">
+                <p><i>( Mẫu đề cương: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_de_cuong.xlsx' ?>" style="color: #00aa00">mau_de_cuong.xlsx</a> )</i></p>
+            </div>
+        </div>
+
+
         <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
             'data' => ArrayHelper::map(CourseType::find()->all(), 'id', 'name'),
         ]) ?>
@@ -103,12 +112,14 @@ Icon::map($this, Icon::FA);
             ]
         ]) ?>
 
-        <?= $form->field($model, 'description')->widget(CKEditor::className(),[
+        <?php echo  $form->field($model, 'description')->widget(CKEditor::className(), [
             'editorOptions' => [
-                'preset' => 'basic',
+                'preset' => 'full',
                 'inline' => false,
             ],
-        ]); ?>
+        ]) ?>
+
+
 
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
@@ -130,4 +141,12 @@ Icon::map($this, Icon::FA);
     .form-horizontal .form-group {
         margin: 0;
     }
+    .form-horizontal .control-label {
+        text-align: left !important;
+    }
 </style>
+<script>
+    CKEDITOR.replace( 'editor1', {
+        extraPlugins: 'imageuploader'
+    });
+</script>

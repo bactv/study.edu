@@ -8,10 +8,13 @@ use Yii;
 class Course extends \common\models\CourseBase
 {
     public $logo;
+    public $outline;
+
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
-            'logo' => 'Logo khóa học'
+            'logo' => 'Logo khóa học',
+            'outline' => 'Đề cương khóa học'
         ]);
     }
 
@@ -24,8 +27,9 @@ class Course extends \common\models\CourseBase
             [['deadline_register', 'created_time', 'updated_time'], 'safe'],
             [['price'], 'number'],
             [['name'], 'string', 'max' => 255],
-            [['logo'], 'required', 'on' => 'create'],
-            [['logo'], 'file', 'extensions' => 'png, jpg, jpeg, gif']
+            [['logo'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
+            [['outline'], 'file', 'extensions' => 'doc, docx, pdf, xlsx'],
+            [['outline'], 'required', 'on' => 'create']
         ];
     }
 

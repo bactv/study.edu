@@ -60,7 +60,7 @@ $user_id = isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->get
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 20px;
-        border-bottom: 1px solid teal;
+        border-bottom: 1px solid #009688;
         background: #009688;
         padding: 10px;
     }

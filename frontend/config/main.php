@@ -115,6 +115,5 @@ return [
             ]
         ],
     ],
-    'language' => 'en',
     'params' => $params,
 ];
