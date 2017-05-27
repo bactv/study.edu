@@ -32,28 +32,28 @@ $this->params['menu'] = [
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
-                'attribute' => 'party_type_id',
+                'attribute' => 'id',
                 'options' => ['width' => '50px'],
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
-                'attribute' => 'party_type_name',
+                'attribute' => 'name',
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
-                'attribute' => 'party_type_description',
+                'attribute' => 'description',
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
-                'attribute' => 'party_type_created_time',
+                'attribute' => 'created_time',
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
-                'attribute' => 'party_type_updated_time',
+                'attribute' => 'updated_time',
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],

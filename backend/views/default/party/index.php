@@ -23,23 +23,27 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'yii\grid\CheckboxColumn',
-                'options' => ['width' => '50px'],
+                'options' => ['width' => '40px'],
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
                 'attribute' => 'party_id',
-                'options' => ['width' => '50px'],
+                'options' => ['width' => '40px'],
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],
             [
                 'attribute' => 'party_type_id',
                 'label' => Yii::t('cms', 'Party Types'),
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\PartyType::findOne(['id' => $model['party_type_id']])['name'];
+                },
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             ],

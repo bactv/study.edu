@@ -8,7 +8,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Topic */
 
-$this->title = Yii::t('cms', 'Create {modelClass}', [
+$this->title = Yii::t('cms', 'Create', [
     'modelClass' => 'Topic',
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Topics'), 'url' => ['index']];

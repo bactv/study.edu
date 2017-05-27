@@ -6,6 +6,8 @@ use kartik\icons\Icon;
 use backend\models\Subject;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -26,11 +28,21 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'description')->widget(
+        TinyMce::className(),
+        [
+            'fileManager' => [
+                'class' => TinyMceElFinder::className(),
+                'connectorRoute' => 'el-finder/connector',
+            ],
+        ]
+    ) ?>
 
     <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
         'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
     ]) ?>
+
+    <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

@@ -25,10 +25,18 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
+    <?= $form->field($model, 'file_name')->textInput()->label('Tên import') ?>
 
     <?= $form->field($model, 'type')->dropDownList(Yii::$app->params['type_file_import'])->label(Yii::t('cms', 'Type File Import')) ?>
 
-    <?php echo $form->field($model, 'file')->widget(FileInput::className()) ?>
+    <?= $form->field($model, 'file')->widget(FileInput::className()) ?>
+
+    <div class="form-group item_file">
+        <p><b>Mẫu file import: </b></p>
+        <p>1. Hợp đồng: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_hop_dong.xlsx' ?>">mau_import_hop_dong.xlsx</a> </p>
+        <p>2. Phụ lục Hợp đồng: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_hop_dong.xlsx' ?>">mau_import_hop_dong.xlsx</a> </p>
+        <p>3. Chuyên đề môn học: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_chuyen_de_mon_hoc.xlsx' ?>">mau_import_chuyen_de_mon_hoc.xlsx</a> </p>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
@@ -38,3 +46,13 @@ Icon::map($this, Icon::FA);
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<style>
+    .item_file {
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 4px;
+        background: #ccc;
+        font-size: 12px;
+    }
+</style>

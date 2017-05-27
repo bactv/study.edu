@@ -26,10 +26,11 @@ $this->params['menu'] = [
 //        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
-
             'id',
             'name',
             'short_name',
+            'icon',
+            'icon_color',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

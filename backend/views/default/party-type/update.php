@@ -8,9 +8,9 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\PartyType */
 
-$this->title = Yii::t('cms', 'Update {modelClass}: ', [
+$this->title = Yii::t('cms', 'Update ', [
     'modelClass' => 'Party Type',
-]) . ' ' . $model->party_type_id;
+]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Party Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('cms', 'Update');
 $this->params['title'] = Yii::t('cms', 'Update');

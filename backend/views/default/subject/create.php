@@ -8,7 +8,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Subject */
 
-$this->title = Yii::t('cms', 'Create {modelClass}', [
+$this->title = Yii::t('cms', 'Create', [
     'modelClass' => 'Subject',
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Subjects'), 'url' => ['index']];
@@ -20,7 +20,7 @@ $this->params['menu'] = [
 ?>
 <div class="subject-update">
     <?= $this->render('_form', [
-    'model' => $model,
+        'model' => $model,
     ]) ?>
 </div>
 

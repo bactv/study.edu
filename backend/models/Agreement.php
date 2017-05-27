@@ -15,14 +15,14 @@ class Agreement extends \common\models\AgreementBase
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('agreement_created_time', 'agreement_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('agreement_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('created_time', 'updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
             array(
                 'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'agreement_created_by',
-                'updatedByAttribute' => 'agreement_updated_by',
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
             ),
         );
     }

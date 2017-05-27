@@ -58,10 +58,6 @@ Icon::map($this, Icon::FA);
                 'value' => Utility::formatDataTime($model['agreement_effective_date'], '-', '/', false)
             ],
             [
-                'attribute' => 'agreement_right_ids',
-                'label' => Yii::t('cms', 'Agreement Rights')
-            ],
-            [
                 'attribute' => 'agreement_type_id',
                 'label' => Yii::t('cms', 'Agreement Types'),
                 'value' => AgreementType::getAttributeValue(['agreement_type_id' => $model['agreement_type_id']], 'agreement_type_name')
@@ -71,24 +67,24 @@ Icon::map($this, Icon::FA);
                 'value' => $model['mg'] != '' ? number_format($model['mg'], 2) : $model['mg']
             ],
             [
-                'attribute' => 'agreement_created_time',
+                'attribute' => 'created_time',
                 'label' => Yii::t('cms', 'Created Time'),
-                'value' => Utility::formatDataTime($model['agreement_created_time'], '-', '/', true)
+                'value' => Utility::formatDataTime($model['created_time'], '-', '/', true)
             ],
             [
-                'attribute' => 'agreement_updated_time',
+                'attribute' => 'updated_time',
                 'label' => Yii::t('cms', 'Updated Time'),
-                'value' => Utility::formatDataTime($model['agreement_updated_time'], '-', '/', true)
+                'value' => Utility::formatDataTime($model['updated_time'], '-', '/', true)
             ],
             [
-                'attribute' => 'agreement_created_by',
+                'attribute' => 'created_by',
                 'label' => Yii::t('cms', 'Created By'),
-                'value' => Admin::getAttributeValue(['id' => $model['agreement_created_by']], 'username')
+                'value' => Admin::getAttributeValue(['id' => $model['created_by']], 'username')
             ],
             [
-                'attribute' => 'agreement_updated_by',
+                'attribute' => 'updated_by',
                 'label' => Yii::t('cms', 'Updated By'),
-                'value' => Admin::getAttributeValue(['id' => $model['agreement_updated_by']], 'username')
+                'value' => Admin::getAttributeValue(['id' => $model['updated_by']], 'username')
             ]
         ],
     ]) ?>

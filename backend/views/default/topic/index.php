@@ -5,6 +5,7 @@ use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
 use backend\models\Subject;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
@@ -15,6 +16,7 @@ $this->title = $this->params['title'] = Yii::t('cms', 'Topics');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import chủ đề'), 'url' => Url::toRoute(['/import-file/create', 'type' => 'topic_subject']), 'options' => ['class' => 'btn btn-info']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -26,11 +28,34 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'id',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'id',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             'name',
-            'description',
+            [
+                'attribute' => 'description',
+                'format' => 'html',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'status',
+                'options' => ['width' => '100px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             [
                 'attribute' => 'subject_id',
                 'format' => 'raw',

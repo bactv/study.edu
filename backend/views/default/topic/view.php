@@ -33,8 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
-            'subject_id',
+            [
+                'attribute' => 'description',
+                'format' => 'html'
+            ],
+            [
+                'attribute' => 'subject_id',
+                'value' => function ($model) {
+                    return \backend\models\Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
+                }
+            ],
             'created_time',
             'updated_time',
         ],

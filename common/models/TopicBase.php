@@ -31,6 +31,7 @@ class TopicBase extends \common\models\db\TopicDB
             'name' => Yii::t('cms', 'Tên chuyên đề'),
             'description' => Yii::t('cms', 'Mô tả chuyên đề'),
             'subject_id' => Yii::t('cms', 'Môn học'),
+            'status' => Yii::t('cms', 'Status'),
             'created_time' => Yii::t('cms', 'Ngày tạo'),
             'updated_time' => Yii::t('cms', 'Ngày cập nhật'),
         ];

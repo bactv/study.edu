@@ -11,6 +11,8 @@ use Yii;
  * @property string $name
  * @property string $description
  * @property integer $subject_id
+ * @property integer $status
+ * @property integer $deleted
  * @property string $created_time
  * @property string $updated_time
  */
@@ -31,9 +33,10 @@ class TopicDB extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['subject_id'], 'integer'],
+            [['subject_id', 'status', 'deleted'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['name', 'description'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            [['description'], 'string', 'max' => 700]
         ];
     }
 
@@ -47,6 +50,8 @@ class TopicDB extends \yii\db\ActiveRecord
             'name' => Yii::t('cms', 'Name'),
             'description' => Yii::t('cms', 'Description'),
             'subject_id' => Yii::t('cms', 'Subject ID'),
+            'status' => Yii::t('cms', 'Status'),
+            'deleted' => Yii::t('cms', 'Deleted'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
         ];

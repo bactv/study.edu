@@ -25,16 +25,43 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'id',
-            'file_name',
-            'status',
-            'type',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'id',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'file_name',
+                'headerOptions' => ['style'=>'vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'type',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return (isset(Yii::$app->params['type_file_import'][$model['type']])) ? Yii::$app->params['type_file_import'][$model['type']] : '';
+                },
+                'headerOptions' => ['style'=>'vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'status',
+                'options' => ['width' => '100px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ($model['status'] == 1) ? '<span class="txt_active">Đã xử lý</span>' : '<span class="txt_deactive">Chưa xử lý</span>';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             'created_time',
-            // 'updated_time',
-            // 'created_by',
-            // 'updated_by',
+            'updated_time',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

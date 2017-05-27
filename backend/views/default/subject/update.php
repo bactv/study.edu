@@ -8,7 +8,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Subject */
 
-$this->title = Yii::t('cms', 'Update {modelClass}: ', [
+$this->title = Yii::t('cms', 'Update', [
     'modelClass' => 'Subject',
 ]) . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Subjects'), 'url' => ['index']];

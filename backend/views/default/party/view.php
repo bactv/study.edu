@@ -9,7 +9,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Party */
 
-$this->title = $model->party_id;
+$this->title = $model->party_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Parties'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -32,16 +32,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'party_id',
-            'party_type_id',
+            [
+                'attribute' => 'party_type_id',
+                'value' => function ($model) {
+                    return \backend\models\PartyType::findOne(['id' => $model['party_type_id']])['name'];
+                }
+            ],
             'party_name',
             'party_rep_title',
             'party_address',
             'party_tax_code',
             'party_phone',
-            'party_created_time',
-            'party_updated_time',
-            'party_created_by',
-            'party_updated_by',
+            [
+                'attribute' => 'party_created_time',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['party_created_time'], '-', '/', true);
+                }
+            ],
+            [
+                'attribute' => 'party_updated_time',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['party_updated_time'], '-', '/', true);
+                }
+            ],
+            [
+                'attribute' => 'party_created_by',
+                'value' => function ($model) {
+                    return \backend\models\Admin::getAttributeValue(['id' => $model['party_created_by']], 'full_name');
+                }
+            ],
+            [
+                'attribute' => 'party_updated_by',
+                'value' => function ($model) {
+                    return \backend\models\Admin::getAttributeValue(['id' => $model['party_updated_by']], 'full_name');
+                }
+            ],
         ],
     ]) ?>
 

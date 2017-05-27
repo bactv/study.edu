@@ -5,24 +5,25 @@ namespace common\models\db;
 use Yii;
 
 /**
- * This is the model class for table "party_type".
+ * This is the model class for table "import_file".
  *
  * @property integer $id
- * @property string $name
- * @property string $description
+ * @property string $file_name
+ * @property integer $status
+ * @property string $type
  * @property string $created_time
  * @property string $updated_time
  * @property integer $created_by
  * @property integer $updated_by
  */
-class PartyTypeDB extends \yii\db\ActiveRecord
+class ImportFileDB extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'party_type';
+        return 'import_file';
     }
 
     /**
@@ -31,10 +32,9 @@ class PartyTypeDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['status', 'created_by', 'updated_by'], 'integer'],
             [['created_time', 'updated_time'], 'safe'],
-            [['created_by', 'updated_by'], 'integer'],
-            [['name', 'description'], 'string', 'max' => 255]
+            [['file_name', 'type'], 'string', 'max' => 255]
         ];
     }
 
@@ -45,8 +45,9 @@ class PartyTypeDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
-            'name' => Yii::t('cms', 'Name'),
-            'description' => Yii::t('cms', 'Description'),
+            'file_name' => Yii::t('cms', 'File Name'),
+            'status' => Yii::t('cms', 'Status'),
+            'type' => Yii::t('cms', 'Type'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
             'created_by' => Yii::t('cms', 'Created By'),

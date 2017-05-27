@@ -13,6 +13,8 @@ use Yii;
  * @property string $name_n
  * @property string $icon
  * @property string $icon_color
+ * @property integer $status
+ * @property integer $deleted
  */
 class SubjectDB extends \yii\db\ActiveRecord
 {
@@ -31,6 +33,7 @@ class SubjectDB extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'short_name', 'name_n'], 'required'],
+            [['status', 'deleted'], 'integer'],
             [['name'], 'string', 'max' => 30],
             [['short_name', 'icon', 'icon_color'], 'string', 'max' => 20],
             [['name_n'], 'string', 'max' => 40]
@@ -49,6 +52,8 @@ class SubjectDB extends \yii\db\ActiveRecord
             'name_n' => Yii::t('cms', 'Name N'),
             'icon' => Yii::t('cms', 'Icon'),
             'icon_color' => Yii::t('cms', 'Icon Color'),
+            'status' => Yii::t('cms', 'Status'),
+            'deleted' => Yii::t('cms', 'Deleted'),
         ];
     }
 }

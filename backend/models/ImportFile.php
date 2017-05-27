@@ -12,6 +12,37 @@ class ImportFile extends \common\models\ImportFileBase
     public $file;
 
     /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['created_time', 'updated_time'], 'safe'],
+            [['file_name', 'type'], 'string', 'max' => 255],
+            [['file'], 'required'],
+            [['file'], 'file', 'extensions' => 'xlsx']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('cms', 'ID'),
+            'file_name' => Yii::t('cms', 'Tên Import'),
+            'status' => Yii::t('cms', 'Status'),
+            'type' => Yii::t('cms', 'Type'),
+            'created_time' => Yii::t('cms', 'Created Time'),
+            'updated_time' => Yii::t('cms', 'Updated Time'),
+            'created_by' => Yii::t('cms', 'Created By'),
+            'updated_by' => Yii::t('cms', 'Updated By'),
+        ];
+    }
+
+    /**
      * @return array
      */
     public function behaviors()
@@ -35,20 +66,17 @@ class ImportFile extends \common\models\ImportFileBase
 
     /**
      * @param $id
-     * @param $type_file
      * @return bool
      */
-    public function uploadFile($id, $type_file)
+    public function uploadFile($id)
     {
-        $path = Yii::getAlias('@webroot') . Yii::$app->params['storage_url'] . $type_file . '/';
+        $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['file_import']['path'];
         if (!is_dir($path)) {
-            mkdir($path, 0777);
+            mkdir($path, 0777, true);
         }
         if ($this->validate()) {
-            $this->file->saveAs($path . $id . '.' . $this->file->extension);
-            return true;
-        } else {
-            return false;
+            return $this->file->saveAs($path . $id . '.xlsx');
         }
+        return false;
     }
 }

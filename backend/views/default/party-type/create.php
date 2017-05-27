@@ -8,7 +8,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\PartyType */
 
-$this->title = Yii::t('cms', 'Create {modelClass}', [
+$this->title = Yii::t('cms', 'Create', [
     'modelClass' => 'Party Type',
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Party Types'), 'url' => ['index']];

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Party;
 use Yii;
 use backend\models\PartyType;
 use common\models\search\PartyTypeSearch;
@@ -63,7 +64,7 @@ class PartyTypeController extends BackendController
         $model = new PartyType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->party_type_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -82,7 +83,7 @@ class PartyTypeController extends BackendController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->party_type_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -98,10 +99,14 @@ class PartyTypeController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+        $this->findModel($id)->delete();
+        $parties = Party::findAll(['party_type_id' => $id]);
+        foreach ($parties as $model) {
+            $model->delete_party($model->party_id);
+        }
+//        $model = $this->findModel($id);
+//        $model->deleted = 1;
+//        $model->save();
         return $this->redirect(['index']);
     }
 

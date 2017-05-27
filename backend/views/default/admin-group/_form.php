@@ -7,7 +7,6 @@ use backend\models\AdminAction;
 use backend\models\AdminController;
 use yii\helpers\Url;
 use zxbodya\yii2\tinymce\TinyMce;
-use zxbodya\yii2\elfinder\ElFinderInput;
 use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);

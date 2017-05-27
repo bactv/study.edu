@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Agreement;
 use Yii;
 use backend\models\Party;
 use common\models\search\PartySearch;
@@ -98,10 +99,11 @@ class PartyController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+        $this->findModel($id)->delete();
+        Agreement::deleteAll(['party_id_b' => $id]);
+//        $model = $this->findModel($id);
+//        $model->deleted = 1;
+//        $model->save();
         return $this->redirect(['index']);
     }
 

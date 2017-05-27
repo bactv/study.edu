@@ -18,7 +18,7 @@ class TopicSearch extends Topic
     public function rules()
     {
         return [
-            [['id', 'subject_id'], 'integer'],
+            [['id', 'subject_id', 'status', 'deleted'], 'integer'],
             [['name', 'description', 'created_time', 'updated_time'], 'safe'],
         ];
     }
@@ -41,7 +41,7 @@ class TopicSearch extends Topic
      */
     public function search($params)
     {
-        $query = Topic::find();
+        $query = Topic::find()->where(['deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -54,6 +54,8 @@ class TopicSearch extends Topic
         $query->andFilterWhere([
             'id' => $this->id,
             'subject_id' => $this->subject_id,
+            'status' => $this->status,
+            'deleted' => $this->deleted,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
         ]);

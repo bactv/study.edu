@@ -15,14 +15,14 @@ class PartyType extends \common\models\PartyTypeBase
             array(
                 'class' => TimestampBehavior::class,
                 'attributes' => array(
-                    self::EVENT_BEFORE_INSERT => array('party_type_created_time', 'party_type_updated_time'),
-                    self::EVENT_BEFORE_UPDATE => array('party_type_updated_time')
+                    self::EVENT_BEFORE_INSERT => array('created_time', 'updated_time'),
+                    self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
             ),
             array(
                 'class' => BlameableBehavior::class,
-                'createdByAttribute' => 'party_type_created_by',
-                'updatedByAttribute' => 'party_type_updated_by',
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
             )
         );
     }

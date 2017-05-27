@@ -99,9 +99,10 @@ class TopicController extends BackendController
     public function actionDelete($id)
     {
         //$this->findModel($id)->delete();
-        $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
+//        $model = $this->findModel($id);
+//        $model->deleted = 1;
+//        $model->save();
+        Topic::delete_topic($id);
         return $this->redirect(['index']);
     }
 

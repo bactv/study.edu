@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -21,9 +23,17 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'party_type_name')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'party_type_description')->textarea(['maxlength' => 255, 'rows' => 6]) ?>
+    <?= $form->field($model, 'description')->widget(
+        TinyMce::className(),
+        [
+            'fileManager' => [
+                'class' => TinyMceElFinder::className(),
+                'connectorRoute' => 'el-finder/connector',
+            ],
+        ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

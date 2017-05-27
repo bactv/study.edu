@@ -54,6 +54,9 @@ return [
         ],
         'img.common' => [
             'path' => 'img.common/'
+        ],
+        'file_import' => [
+            'path' => 'file_import/'
         ]
     ],
     'assets_path' => [
@@ -64,6 +67,7 @@ return [
         'img.admin' => 'http://static.study.edu.vn/img.admin/',
         'assets_common' => 'http://static.study.edu.vn/assets_common/',
         'img.common' => 'http://static.study.edu.vn/img.common/',
+        'file_import' => 'http://static.study.edu.vn/file_import/',
     ],
     'banner_subject_course' => [
         'math' => '',
@@ -73,5 +77,10 @@ return [
         'geography' => '',
         'literature' => '',
         'english' => '',
+    ],
+    'type_file_import' => [
+        'agreement' => 'Hợp đồng',
+        'addendum' => 'Phụ lục hợp đồng',
+        'topic_subject' => 'Chuyên đề môn học',
     ]
 ];

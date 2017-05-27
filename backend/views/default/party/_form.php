@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use backend\models\PartyType;
 
 Icon::map($this, Icon::FA);
 
@@ -22,6 +25,10 @@ Icon::map($this, Icon::FA);
     ]); ?>
 
     <?= $form->field($model, 'party_name')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'party_type_id')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(PartyType::find()->all(), 'id', 'name'),
+    ])->label(Yii::t('cms', 'Party Types')) ?>
 
     <?= $form->field($model, 'party_rep_title')->textInput(['maxlength' => 255]) ?>
 

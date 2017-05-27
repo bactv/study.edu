@@ -18,8 +18,8 @@ class PartyTypeSearch extends PartyType
     public function rules()
     {
         return [
-            [['party_type_id', 'party_type_created_by', 'party_type_updated_by'], 'integer'],
-            [['party_type_name', 'party_type_description', 'party_type_created_time', 'party_type_updated_time'], 'safe'],
+            [['id', 'created_by', 'updated_by'], 'integer'],
+            [['name', 'description', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -52,15 +52,15 @@ class PartyTypeSearch extends PartyType
         }
 
         $query->andFilterWhere([
-            'party_type_id' => $this->party_type_id,
-            'party_type_created_time' => $this->party_type_created_time,
-            'party_type_updated_time' => $this->party_type_updated_time,
-            'party_type_created_by' => $this->party_type_created_by,
-            'party_type_updated_by' => $this->party_type_updated_by,
+            'id' => $this->id,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'party_type_name', $this->party_type_name])
-            ->andFilterWhere(['like', 'party_type_description', $this->party_type_description]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

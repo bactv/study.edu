@@ -20,4 +20,13 @@ class Party extends \common\models\PartyBase
         }
         return '';
     }
+
+    public function delete_party($id)
+    {
+        $model = Party::findOne(['party_id' => $id]);
+        if (!empty($model)) {
+            $model->delete();
+            Agreement::deleteAll(['party_id_b' => $id]);
+        }
+    }
 }

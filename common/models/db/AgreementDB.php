@@ -13,13 +13,12 @@ use Yii;
  * @property integer $party_id_b
  * @property string $agreement_signed_date
  * @property string $agreement_effective_date
- * @property string $agreement_right_ids
  * @property integer $agreement_type_id
  * @property double $mg
- * @property string $agreement_created_time
- * @property string $agreement_updated_time
- * @property integer $agreement_created_by
- * @property integer $agreement_updated_by
+ * @property string $created_time
+ * @property string $updated_time
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property integer $deleted
  */
 class AgreementDB extends \yii\db\ActiveRecord
@@ -39,10 +38,10 @@ class AgreementDB extends \yii\db\ActiveRecord
     {
         return [
             [['agreement_code', 'party_id_a', 'party_id_b', 'agreement_signed_date', 'agreement_effective_date', 'agreement_type_id'], 'required'],
-            [['party_id_a', 'party_id_b', 'agreement_type_id', 'agreement_created_by', 'agreement_updated_by', 'deleted'], 'integer'],
-            [['agreement_signed_date', 'agreement_effective_date', 'agreement_created_time', 'agreement_updated_time'], 'safe'],
+            [['party_id_a', 'party_id_b', 'agreement_type_id', 'created_by', 'updated_by', 'deleted'], 'integer'],
+            [['agreement_signed_date', 'agreement_effective_date', 'created_time', 'updated_time'], 'safe'],
             [['mg'], 'number'],
-            [['agreement_code'], 'string', 'max' => 255],
+            [['agreement_code'], 'string', 'max' => 255]
         ];
     }
 
@@ -58,13 +57,12 @@ class AgreementDB extends \yii\db\ActiveRecord
             'party_id_b' => Yii::t('cms', 'Party Id B'),
             'agreement_signed_date' => Yii::t('cms', 'Agreement Signed Date'),
             'agreement_effective_date' => Yii::t('cms', 'Agreement Effective Date'),
-            'agreement_right_ids' => Yii::t('cms', 'Agreement Right Ids'),
             'agreement_type_id' => Yii::t('cms', 'Agreement Type ID'),
             'mg' => Yii::t('cms', 'Mg'),
-            'agreement_created_time' => Yii::t('cms', 'Agreement Created Time'),
-            'agreement_updated_time' => Yii::t('cms', 'Agreement Updated Time'),
-            'agreement_created_by' => Yii::t('cms', 'Agreement Created By'),
-            'agreement_updated_by' => Yii::t('cms', 'Agreement Updated By'),
+            'created_time' => Yii::t('cms', 'Created Time'),
+            'updated_time' => Yii::t('cms', 'Updated Time'),
+            'created_by' => Yii::t('cms', 'Created By'),
+            'updated_by' => Yii::t('cms', 'Updated By'),
             'deleted' => Yii::t('cms', 'Deleted'),
         ];
     }

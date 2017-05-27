@@ -18,8 +18,8 @@ class AgreementSearch extends Agreement
     public function rules()
     {
         return [
-            [['agreement_id', 'party_id_a', 'party_id_b', 'agreement_right_ids', 'agreement_type_id', 'agreement_created_by', 'agreement_updated_by'], 'integer'],
-            [['agreement_code', 'agreement_signed_date', 'agreement_effective_date', 'agreement_created_time', 'agreement_updated_time'], 'safe'],
+            [['agreement_id', 'party_id_a', 'party_id_b', 'agreement_type_id', 'created_by', 'updated_by', 'deleted'], 'integer'],
+            [['agreement_code', 'agreement_signed_date', 'agreement_effective_date', 'created_time', 'updated_time'], 'safe'],
             [['mg'], 'number'],
         ];
     }
@@ -42,7 +42,7 @@ class AgreementSearch extends Agreement
      */
     public function search($params)
     {
-        $query = Agreement::find()->where(['deleted' => 0]);
+        $query = Agreement::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,10 +60,11 @@ class AgreementSearch extends Agreement
             'agreement_effective_date' => $this->agreement_effective_date,
             'agreement_type_id' => $this->agreement_type_id,
             'mg' => $this->mg,
-            'agreement_created_time' => $this->agreement_created_time,
-            'agreement_updated_time' => $this->agreement_updated_time,
-            'agreement_created_by' => $this->agreement_created_by,
-            'agreement_updated_by' => $this->agreement_updated_by,
+            'created_time' => $this->created_time,
+            'updated_time' => $this->updated_time,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'deleted' => $this->deleted,
         ]);
 
         $query->andFilterWhere(['like', 'agreement_code', $this->agreement_code]);
