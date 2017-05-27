@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "43c21e0e647ee2f9273bc9907c0fa1f0",
+    "content-hash": "8dec3f0a4f329118adce31e82e20796e",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -2422,6 +2422,99 @@
                 "yii2"
             ],
             "time": "2017-05-01T08:29:00+00:00"
+        },
+        {
+            "name": "zxbodya/yii2-elfinder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zxbodya/yii2-elfinder.git",
+                "reference": "32213d543c7d760fb075bb7f706ab73b71999c4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zxbodya/yii2-elfinder/zipball/32213d543c7d760fb075bb7f706ab73b71999c4a",
+                "reference": "32213d543c7d760fb075bb7f706ab73b71999c4a",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-jui": "*"
+            },
+            "suggest": {
+                "zxbodya/yii2-tinymce": "Extension with TinyMce WYSIWYG editor, that can be used with elFinder"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "zxbodya\\yii2\\elfinder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bogdan Savluk",
+                    "email": "savluk.bogdan@gmail.com"
+                }
+            ],
+            "description": "Extension to use elFinder 1.x file manager in Yii2 application",
+            "keywords": [
+                "elfinder",
+                "extension",
+                "file manager",
+                "tinymce",
+                "widget",
+                "yii2"
+            ],
+            "time": "2017-03-24T17:32:35+00:00"
+        },
+        {
+            "name": "zxbodya/yii2-tinymce",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zxbodya/yii2-tinymce.git",
+                "reference": "0c1dfeb16ba421bd2d2e8e6b8540788b1af3efce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zxbodya/yii2-tinymce/zipball/0c1dfeb16ba421bd2d2e8e6b8540788b1af3efce",
+                "reference": "0c1dfeb16ba421bd2d2e8e6b8540788b1af3efce",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "suggest": {
+                "zxbodya/yii2-elfinder": "To add elFinder file manager"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "zxbodya\\yii2\\tinymce\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bogdan Savluk",
+                    "email": "savluk.bogdan@gmail.com"
+                }
+            ],
+            "description": "Yii2 extension to use TinyMce with Compressor and FileManager",
+            "keywords": [
+                "extension",
+                "tinymce",
+                "wysiwyg",
+                "yii2"
+            ],
+            "time": "2015-11-29T16:06:03+00:00"
         }
     ],
     "packages-dev": [
@@ -4755,7 +4848,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-icons": 20,
-        "kartik-v/yii2-widget-select2": 20
+        "kartik-v/yii2-widget-select2": 20,
+        "zxbodya/yii2-tinymce": 20,
+        "zxbodya/yii2-elfinder": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

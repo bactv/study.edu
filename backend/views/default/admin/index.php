@@ -25,7 +25,7 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             [
                 'class' => 'yii\grid\CheckboxColumn',
@@ -50,7 +50,8 @@ $this->params['menu'] = [
                     }
                     return Html::img($img, [
                         'width' => '70px',
-                        'height' => '70px'
+                        'height' => '70px',
+                        'style' => 'border-radius: 50%'
                     ]);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
@@ -68,6 +69,21 @@ $this->params['menu'] = [
             ],
             [
                 'attribute' => 'email',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'group_ids',
+                'label' => 'Nhóm quản trị',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $str =  '';
+                    $ex = (!empty($model['group_ids'])) ? json_decode($model['group_ids']) : [];
+                    foreach ($ex as $item) {
+                        $str .= '<div>' . \backend\models\AdminGroup::getAttributeValue(['id' => $item], 'name') . '</div>';
+                    }
+                    return $str;
+                },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],

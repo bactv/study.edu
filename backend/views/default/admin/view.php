@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['image',['width'=>'70','height'=>'70']],
                 'value' => function ($model) {
                     $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-                    $path = Yii::$app->params['assets_path']['img.admin'] . Yii::$app->user->identity->getId() . '.png';
+                    $path = Yii::$app->params['assets_path']['img.admin'] . $model['id'] . '.png';
                     if (Utility::check_url_file_exists($path) !== false) {
                         $img = $path;
                     }
@@ -83,13 +83,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'group_ids',
-                'label' => Yii::t('cms','Admin Groups' ),
+                'label' => Yii::t('cms','Nhóm quản trị' ),
                 'format' => ['html'],
                 'value' => function ($model) {
                     $str_ids = ($model['group_ids'] != '') ? json_decode($model['group_ids']) : [];
                     $str = '';
                     foreach ($str_ids as $gr_id) {
-                        $str .= '<p>' . AdminGroup::getAttributeValue(['id' => $gr_id], 'name') . '</p>';
+                        $str .= '<div>' . AdminGroup::getAttributeValue(['id' => $gr_id], 'name') . '</div>';
                     }
                     return $str;
                 }

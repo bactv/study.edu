@@ -38,13 +38,16 @@ $this->params['menu'] = [
             ],
             [
                 'attribute' => 'name',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+                'label' => 'Tên nhóm',
+                'headerOptions' => ['style'=>'vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
                 'attribute' => 'description',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+                'format' => 'html',
+                'label' => 'Mô tả',
+                'headerOptions' => ['style'=>' vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
                 'attribute' => 'status',
@@ -56,8 +59,24 @@ $this->params['menu'] = [
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
-            // 'ad_group_created_time',
-            // 'ad_group_updated_time',
+            [
+                'attribute' => 'created_time',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['created_time'], '-', '/', true);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'updated_time',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['updated_time'], '-', '/', true);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

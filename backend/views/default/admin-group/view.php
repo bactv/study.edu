@@ -33,12 +33,35 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
-            'action_ids',
-            'status',
-            'created_time',
-            'updated_time',
+            [
+                'attribute' => 'description',
+                'format' => 'html'
+            ],
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return ($model['status'] == 1) ? 'Active' : 'Inactive';
+                }
+            ],
+            [
+                'attribute' => 'created_time',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['created_time'], '-', '/', true);
+                }
+            ],
+            [
+                'attribute' => 'updated_time',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['updated_time'], '-', '/', true);
+                }
+            ]
         ],
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

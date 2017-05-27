@@ -28,7 +28,7 @@ Icon::map($this, Icon::FA);
                 <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item">Tiếng Anh</a>
                 <a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>" class="w3-bar-item">Luyện đề</a>
 <!--                <a href="--><?php //echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?><!--" class="w3-bar-item">Khóa Học</a>-->
-                <a href="<?php echo Url::toRoute(['/su-kien']) ?>" class="w3-bar-item w3-text-red">Sự kiện</a>
+                <!-- <a href="<?php echo Url::toRoute(['/su-kien']) ?>" class="w3-bar-item w3-text-red">Sự kiện</a> -->
             </div>
             <?php if (!empty(Yii::$app->user->identity)) { ?>
                 <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 10px;">
@@ -61,7 +61,7 @@ Icon::map($this, Icon::FA);
         <a href="<?php echo Url::toRoute(['/on-thi-tieng-anh']) ?>" class="w3-bar-item"><?php echo Icon::show('users') ?> Tiếng Anh</a>
         <a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>" class="w3-bar-item"><?php echo Icon::show('book') ?> Luyện đề</a>
 <!--        <a href="--><?php //echo Url::toRoute(['/khoa-hoc-truc-tuyen']) ?><!--" class="w3-bar-item">--><?php //echo Icon::show('graduation-cap') ?><!-- Khóa Học</a>-->
-        <a href="<?php echo Url::toRoute(['/su-kien']) ?>" class="w3-bar-item">Sự kiện</a>
+        <!-- <a href="<?php echo Url::toRoute(['/su-kien']) ?>" class="w3-bar-item">Sự kiện</a> -->
         <?php if (!empty(Yii::$app->user->identity)) { ?>
             <a href="<?php echo Url::toRoute(['/tai-khoan']) ?>" class="w3-bar-item"><i class="fa fa-user" aria-hidden="true"></i> Thông tin cá nhân</a>
             <a href="<?php echo Url::toRoute(['/dang-xuat']) ?>" class="w3-bar-item"><i class="fa fa-circle-o-notch" aria-hidden="true"></i> Đăng xuất</a>

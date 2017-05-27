@@ -90,6 +90,7 @@ class UpdatePermissionController extends BackendController
                         $model->action_name = $at;
                         $model->controller_id = $controller['controller_id'];
                         $model->controller_name = $controller['controller_name'];
+                        $model->description = $at;
                         $model->save();
                     }
                     // Delete

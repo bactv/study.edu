@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\components\CheckPermission;
+use common\components\Utility;
 use yii\web\UploadedFile;
 use Yii;
 use backend\models\Admin;
@@ -67,6 +68,7 @@ class AdminController extends BackendController
         $model->scenario = 'create';
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->birthday = Utility::formatDataTime($model->birthday, '/', '-');
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($model->avatar)) {
                 $model->thumb = 1;
@@ -98,6 +100,7 @@ class AdminController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->birthday = Utility::formatDataTime($model->birthday, '-', '/');
 
         if (!empty($model->group_ids)) {
             $model->group_ids = json_decode($model->group_ids);
@@ -105,6 +108,7 @@ class AdminController extends BackendController
 
         $request = Yii::$app->request->post();
         if ($model->load($request) && $model->validate()) {
+            $model->birthday = Utility::formatDataTime($model->birthday, '/', '-');
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($request['Admin']['group_ids'])) {
                 $model->group_ids = json_encode($request['Admin']['group_ids']);

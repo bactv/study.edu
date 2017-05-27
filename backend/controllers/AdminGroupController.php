@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\AdminAction;
+use common\models\AdminControllerBase;
 use Yii;
 use backend\models\AdminGroup;
 use common\models\search\AdminGroupSearch;
@@ -138,5 +140,39 @@ class AdminGroupController extends BackendController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionUpdateController()
+    {
+        if (!Yii::$app->request->post() || !Yii::$app->request->isAjax) {
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+        $controller_id = isset($request['controller_id']) ? $request['controller_id'] : '';
+        $desc = isset($request['desc']) ? $request['desc'] : '';
+        if ($controller_id != '' && $desc != '') {
+            $model = AdminControllerBase::findOne(['controller_id' => $controller_id]);
+            $model->description = $desc;
+            $model->save();
+        }
+        echo "OK";
+        Yii::$app->end();
+    }
+
+    public function actionUpdateAction()
+    {
+        if (!Yii::$app->request->post() || !Yii::$app->request->isAjax) {
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+        $action_id = isset($request['action_id']) ? $request['action_id'] : '';
+        $desc = isset($request['desc']) ? $request['desc'] : '';
+        if ($action_id != '' && $desc != '') {
+            $model = AdminAction::findOne(['action_id' => $action_id]);
+            $model->description = $desc;
+            $model->save();
+        }
+        echo "OK";
+        Yii::$app->end();
     }
 }

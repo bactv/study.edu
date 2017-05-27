@@ -5,6 +5,7 @@ namespace backend\models;
 use common\behaviors\TimestampBehavior;
 use common\components\Utility;
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -26,6 +27,11 @@ class Admin extends \common\models\AdminBase implements IdentityInterface
                     self::EVENT_BEFORE_INSERT => array('created_time', 'updated_time'),
                     self::EVENT_BEFORE_UPDATE => array('updated_time')
                 )
+            ),
+            array(
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
             ),
         );
     }

@@ -11,6 +11,7 @@ use Yii;
  * @property integer $controller_id
  * @property string $controller_name
  * @property string $action_name
+ * @property string $description
  * @property string $updated_time
  */
 class AdminActionDB extends \yii\db\ActiveRecord
@@ -33,7 +34,8 @@ class AdminActionDB extends \yii\db\ActiveRecord
             [['controller_id'], 'integer'],
             [['updated_time'], 'safe'],
             [['controller_name'], 'string', 'max' => 30],
-            [['action_name'], 'string', 'max' => 50]
+            [['action_name'], 'string', 'max' => 50],
+            [['description'], 'string', 'max' => 255]
         ];
     }
 
@@ -47,6 +49,7 @@ class AdminActionDB extends \yii\db\ActiveRecord
             'controller_id' => Yii::t('cms', 'Controller ID'),
             'controller_name' => Yii::t('cms', 'Controller Name'),
             'action_name' => Yii::t('cms', 'Action Name'),
+            'description' => Yii::t('cms', 'Description'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
         ];
     }

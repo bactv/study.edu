@@ -149,12 +149,48 @@ class Menu extends \common\models\MenuBase
         if ($user_id == 1) {
             return true;
         }
-        $ex = explode('/', $menu['url']);
-        $controller_name = isset($ex[0]) ? trim(str_replace('-', '', $ex[0])) : '';
-        $action_name = isset($ex[1]) ? trim(str_replace('-', '', $ex[1])) : '';
-        if (CheckPermission::checkPermission($user_id, $controller_name, $action_name)) {
-            return true;
+        if ($menu['parent_id'] == 0) {
+            $childs = self::fetch_recursive(Menu::findAll(['parent_id' => $menu['id'], 'status' => 1]), $menu['id']);
+            foreach ($childs as $c) {
+                $ex = explode('/', $c['url']);
+                $controller_name = isset($ex[0]) ? trim(str_replace('-', '', $ex[0])) : '';
+                $action_name = isset($ex[1]) ? trim(str_replace('-', '', $ex[1])) : '';
+                if (CheckPermission::checkPermission($user_id, $controller_name, $action_name)) {
+                    return true;
+                }
+            }
+        } else {
+            $ex = explode('/', $menu['url']);
+            $controller_name = isset($ex[0]) ? trim(str_replace('-', '', $ex[0])) : '';
+            $action_name = isset($ex[1]) ? trim(str_replace('-', '', $ex[1])) : '';
+            if (CheckPermission::checkPermission($user_id, $controller_name, $action_name)) {
+                return true;
+            }
+            return false;
         }
-        return false;
+    }
+
+    private static function fetch_recursive($src_arr, $currentid, $parentfound = false, $cats = array())
+    {
+        foreach($src_arr as $row) {
+            if((!$parentfound && $row['id'] == $currentid) || $row['parent_id'] == $currentid) {
+                $rowdata = array();
+                foreach($row as $k => $v)
+                    $rowdata[$k] = $v;
+                $cats[] = $rowdata;
+                if($row['parent_id'] == $currentid)
+                    $cats = array_merge($cats, self::fetch_recursive($src_arr, $row['id'], true));
+            }
+        }
+        return $cats;
+    }
+
+    private static function get_root_node($menu)
+    {
+        if ($menu['parent_id'] == 0) {
+            return $menu;
+        }
+        $parent = Menu::findOne(['id' => $menu['parent_id'], 'status' => 1]);
+        return self::get_root_node($parent);
     }
 }

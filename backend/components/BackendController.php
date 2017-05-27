@@ -23,6 +23,11 @@ class BackendController extends Controller
             return true;
         }
 
+        $request = Yii::$app->request->get();
+        if ($controller_name == 'Admin' && $action_name == 'Update' && isset($request['id']) && !Yii::$app->user->isGuest && $request['id'] == Yii::$app->user->identity->getId()) {
+            return true;
+        }
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Yii::$app->urlManager->createUrl(['default/login']));
         } else if (CheckPermission::checkPermission(Yii::$app->user->getId(), $controller_name, $action_name)) {

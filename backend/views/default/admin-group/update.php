@@ -8,7 +8,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\AdminGroup */
 
-$this->title = Yii::t('cms', 'Update {modelClass}: ', [
+$this->title = Yii::t('cms', 'Update', [
     'modelClass' => 'Admin Group',
 ]) . ' ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Admin Groups'), 'url' => ['index']];

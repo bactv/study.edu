@@ -20,6 +20,8 @@ Icon::map($this, Icon::FA);
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<script type="text/javascript" src="/themes/default/plugins/ckeditor/ckeditor.js"></script>
+
 <div class="course-form">
     <fieldset>
         <legend><?php echo ($model->isNewRecord)  ? 'Tạo khóa học mới' : 'Chỉnh sửa khóa học' ?></legend>
@@ -76,7 +78,7 @@ Icon::map($this, Icon::FA);
 
         <?= $form->field($model, 'description')->widget(CKEditor::className(),[
             'editorOptions' => [
-                'preset' => 'basic',
+                'preset' => 'full',
                 'inline' => false,
             ],
         ]); ?>

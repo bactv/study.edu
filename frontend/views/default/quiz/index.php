@@ -43,7 +43,7 @@ if ($uri == 'trac-nghiem-tong-hop') {
             <ul>
                 <li class="<?php echo ($uri == 'trac-nghiem-theo-chuyen-de') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>">Luyện theo chuyên đề</a></li>
                 <li class="<?php echo ($uri == 'trac-nghiem-tong-hop') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/trac-nghiem-tong-hop']) ?>">Trắc nghiệm tổng hợp</a></li>
-                <li class="<?php echo ($uri == 'thi-thu-thpt') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/thi-thu-thpt']) ?>">Đề thi thử THPT QG</a></li>
+                <li class="<?php echo ($uri == 'thi-thu-thpt') ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/thi-thu-thpt']) ?>">Đề thi thử THPT</a></li>
             </ul>
         </div>
         <div class="list_quiz">
@@ -53,7 +53,7 @@ if ($uri == 'trac-nghiem-tong-hop') {
                 $total_attempts = QuizAttempt::get_total_attempts($quiz['id']);
                 ?>
                 <div class="w3-row w3-card box-item">
-                    <p id="quiz-title"><span><i class="fa fa-<?php echo $subject['icon'] ?>" aria-hidden="true"></i> <?php echo $subject['name'] ?></span> | <?php echo $topic['name'] ?> | <?php echo $quiz['time_length'] ?> phút</p>
+                    <p id="quiz-title"><span><i class="fa fa-<?php echo $subject['icon'] ?>" aria-hidden="true"></i> <?php echo $subject['name'] ?></span> | <?php echo $quiz['time_length'] ?> phút</p>
                     <p id="quiz-name"><a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($quiz['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>" class="w3-text-teal"><?php echo $quiz['name'] ?></a></p>
                     <div class="w3-col l6 m6 s6 w3-left" id="quiz-info">
                         <p>

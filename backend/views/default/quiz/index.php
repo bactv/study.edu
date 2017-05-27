@@ -18,7 +18,7 @@ $this->title = $this->params['title'] = Yii::t('cms', 'Quizzes');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
-    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import đề thi'), 'url' => ['create'], 'options' => ['class' => 'btn btn-warning']],
+//    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import đề thi'), 'url' => ['create'], 'options' => ['class' => 'btn btn-warning']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -33,6 +33,7 @@ $this->params['menu'] = [
             ['class' => 'yii\grid\CheckboxColumn'],
             [
                 'attribute' => 'id',
+                'options' => ['width: 40px']
             ],
             'name',
             [
@@ -49,13 +50,13 @@ $this->params['menu'] = [
                     return Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
                 }
             ],
-            [
-                'attribute' => 'topic_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Topic::getAttributeValue(['id' => $model['topic_id']], 'name');
-                }
-            ],
+//            [
+//                'attribute' => 'topic_id',
+//                'format' => 'raw',
+//                'value' => function ($model) {
+//                    return Topic::getAttributeValue(['id' => $model['topic_id']], 'name');
+//                }
+//            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',

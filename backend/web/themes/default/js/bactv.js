@@ -33,8 +33,10 @@ $(document).ready(function () {
  * update danh sách controller và action
  */
 function updatePermission(url) {
+    var _csrf = $("meta[name='csrf-param']").attr('content');
     $.ajax({
         method: 'POST',
+        data: {'_csrf' : _csrf},
         url: url,
         success: function () {
             location.reload();
