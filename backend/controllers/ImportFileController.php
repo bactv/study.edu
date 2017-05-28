@@ -68,7 +68,6 @@ class ImportFileController extends BackendController
 
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
-            $model->type = $type;
 
             if ($model->save() && $model->uploadFile($model->id)) {
                 return $this->redirect(['view', 'id' => $model->id]);

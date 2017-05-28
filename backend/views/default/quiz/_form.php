@@ -7,6 +7,8 @@ use kartik\select2\Select2;
 use backend\models\QuizType;
 use backend\models\Topic;
 use yii\helpers\ArrayHelper;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -29,7 +31,15 @@ Icon::map($this, Icon::FA);
 
         <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-        <?= $form->field($model, 'description')->textInput(['maxlength' => 255]) ?>
+        <?= $form->field($model, 'description')->widget(
+            TinyMce::className(),
+            [
+                'fileManager' => [
+                    'class' => TinyMceElFinder::className(),
+                    'connectorRoute' => 'el-finder/connector',
+                ],
+            ]
+        ) ?>
 
         <?= $form->field($model, 'quiz_type_id')->widget(Select2::className(), [
             'data' => ArrayHelper::map(QuizType::find()->all(), 'id', 'name')

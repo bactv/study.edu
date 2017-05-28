@@ -13,8 +13,9 @@ Icon::map($this, Icon::FA);
 
 ?>
 
+<p>
 <?php echo Html::a(Icon::show('plus') . ' Thêm mới', Url::toRoute(['/question-answer/create', 'question_id' => $question_id]), ['class' => 'btn btn-primary', 'target' => '_blank']) ?>
-
+</p>
 <?php if (isset($lists) && count($lists) > 0) { ?>
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
         <thead>
@@ -35,7 +36,10 @@ Icon::map($this, Icon::FA);
                 <td><?php echo Html::tag('input', $item['is_true'], [
                         'type' => 'radio',
                         'name' => 'ques_' . $item['question_id'],
-                        ($item['is_true'] == 1) ? 'checked' : '' => ''
+                        ($item['is_true'] == 1) ? 'checked' : '' => '',
+                        'id' => 'ans_true',
+                        'data-ans_id' => $item['ans_id'],
+                        'data-ques_id' => $item['question_id']
                     ]) ?>
                 </td>
                 <th>
@@ -58,3 +62,19 @@ Icon::map($this, Icon::FA);
         </tbody>
     </table>
 <?php } ?>
+
+<script>
+    $(document).on('click', '#ans_true', function () {
+        var ques_id = $(this).data('ques_id');
+        var ans_id = $(this).data('ans_id');
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+
+        $.ajax({
+            method: 'POST',
+            data: {'_csrf' : _csrf, 'ques_id' : ques_id, 'ans_id' : ans_id},
+            url: '<?php echo Url::toRoute(['/question-answer/update-ans-true']) ?>',
+            success: function () {},
+            error: function () {},
+        });
+    });
+</script>

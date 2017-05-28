@@ -15,6 +15,7 @@ $this->title = $this->params['title'] = Yii::t('cms', 'Questions');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import câu hỏi'), 'url' => Url::toRoute(['/import-file/create', 'type' => 'question_quiz']), 'options' => ['class' => 'btn btn-info']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -26,10 +27,21 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'id',
-            'content',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'id',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'content',
+                'format' => 'html'
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',

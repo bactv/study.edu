@@ -34,15 +34,54 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
-            'quiz_type_id',
-            'subject_id',
-            'topic_id',
-            'time_length:datetime',
+            [
+                'attribute' => 'description',
+                'format' => 'html'
+            ],
+            [
+                'attribute' => 'quiz_type_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\QuizType::getAttributeValue(['id' => $model['quiz_type_id']], 'name');
+                }
+            ],
+            [
+                'attribute' => 'subject_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
+                }
+            ],
+            [
+                'attribute' => 'topic_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Topic::getAttributeValue(['id' => $model['topic_id']], 'name');
+                }
+            ],
+            [
+                'attribute' => 'time_length',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model['time_length'] . ' phút';
+                }
+            ],
             'level',
             'total_question',
-            'status',
-            'privacy',
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model['status'] == 1 ? 'Active' : 'Inactive';
+                }
+            ],
+            [
+                'attribute' => 'privacy',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model['privacy'] == 1 ? 'Yêu cầu đăng nhập' : 'Tự do';
+                }
+            ],
             'created_time',
             'updated_time',
         ],

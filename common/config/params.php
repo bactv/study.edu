@@ -82,5 +82,7 @@ return [
         'agreement' => 'Hợp đồng',
         'addendum' => 'Phụ lục hợp đồng',
         'topic_subject' => 'Chuyên đề môn học',
+        'quiz' => 'Đề thi trắc nghiệm online',
+        'question_quiz' => 'Câu hỏi đề thi'
     ]
 ];

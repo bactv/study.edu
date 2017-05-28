@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\Question */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Questions'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Questions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="question-view">
@@ -32,8 +32,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'content',
-            'solution',
+            [
+                'attribute' => 'content',
+                'format' => 'html'
+            ],
+            [
+                'attribute' => 'solution',
+                'format' => 'html'
+            ],
+            [
+                'attribute' => 'id',
+                'label' => 'Đáp án',
+                'format' => 'html',
+                'value' => function ($model) {
+                    $str = '';
+                    $answers = \backend\models\QuestionAnswer::findAll(['question_id' => $model['id']]);
+                    $arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+                    foreach ($answers as $k => $ans) {
+                        $c = ($ans->is_true == 1) ? 'c_true' : 'c_false';
+                        $str .= '<p class="' . $c . '">' . $arr[$k] . '. ' . $ans->content . '</p>';
+                    }
+                    return $str;
+                }
+            ],
             [
                 'attribute' => 'status',
                 'format' => 'raw',
@@ -49,5 +70,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <style>
     .table > tbody > tr > th {
         width: 20%;
+    }
+    p.c_true {
+        color: #00aa00;
+        font-weight: bold;
     }
 </style>

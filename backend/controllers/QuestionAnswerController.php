@@ -132,4 +132,16 @@ class QuestionAnswerController extends BackendController
             'question_id' => $question_id
         ]);
     }
+    public function actionUpdateAnsTrue()
+    {
+        if (!Yii::$app->request->isPost || !Yii::$app->request->isAjax) {
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+        $ques_id = isset($request['ques_id']) ? $request['ques_id'] : '';
+        $ans_id = isset($request['ans_id']) ? $request['ans_id'] : '';
+
+        Yii::$app->db->createCommand()->update('question_answer', ['is_true' => 0], ['question_id' => $ques_id])->execute();
+        Yii::$app->db->createCommand()->update('question_answer', ['is_true' => 1], ['ans_id' => $ans_id])->execute();
+    }
 }

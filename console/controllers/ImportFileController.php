@@ -9,11 +9,11 @@ namespace console\controllers;
 
 use console\components\ImportFileHelper;
 use Yii;
-use yii\base\Controller;
+use yii\console\Controller;
 
 class ImportFileController extends Controller
 {
-    public function actionProcess($type = 'topic_subject')
+    public function actionProcess($type = 'agreement')
     {
         ImportFileHelper::getInstance()->process($type);
     }

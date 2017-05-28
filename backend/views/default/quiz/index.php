@@ -18,7 +18,7 @@ $this->title = $this->params['title'] = Yii::t('cms', 'Quizzes');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
-//    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import đề thi'), 'url' => ['create'], 'options' => ['class' => 'btn btn-warning']],
+    ['label'=>Icon::show('file-excel-o') . " " . Yii::t('cms', 'Import đề thi'), 'url' => Url::toRoute(['/import-file/create', 'type' => 'quiz']), 'options' => ['class' => 'btn btn-info']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -30,10 +30,17 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             [
                 'attribute' => 'id',
-                'options' => ['width: 40px']
+                'label' => 'ID',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             'name',
             [
@@ -48,24 +55,19 @@ $this->params['menu'] = [
                 'format' => 'raw',
                 'value' => function ($model) {
                     return Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
-                }
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
-//            [
-//                'attribute' => 'topic_id',
-//                'format' => 'raw',
-//                'value' => function ($model) {
-//                    return Topic::getAttributeValue(['id' => $model['topic_id']], 'name');
-//                }
-//            ],
             [
                 'attribute' => 'status',
+                'options' => ['width' => '100px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    if ($model['status'] == 0) {
-                        return 'Deactive';
-                    }
-                    return 'Active';
-                }
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">InActive</span>';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

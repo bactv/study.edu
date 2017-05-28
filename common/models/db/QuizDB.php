@@ -38,7 +38,7 @@ class QuizDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'subject_id', 'topic_id'], 'required'],
+            [['name', 'subject_id'], 'required'],
             [['quiz_type_id', 'subject_id', 'topic_id', 'time_length', 'total_question', 'status', 'privacy', 'deleted'], 'integer'],
             [['level'], 'string'],
             [['created_time', 'updated_time'], 'safe'],

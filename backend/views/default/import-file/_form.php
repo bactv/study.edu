@@ -36,6 +36,8 @@ Icon::map($this, Icon::FA);
         <p>1. Hợp đồng: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_hop_dong.xlsx' ?>">mau_import_hop_dong.xlsx</a> </p>
         <p>2. Phụ lục Hợp đồng: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_hop_dong.xlsx' ?>">mau_import_hop_dong.xlsx</a> </p>
         <p>3. Chuyên đề môn học: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_chuyen_de_mon_hoc.xlsx' ?>">mau_import_chuyen_de_mon_hoc.xlsx</a> </p>
+        <p>3. Đề thi trắc nghiệm: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_de_thi_trac_nghiem.xlsx' ?>">mau_import_de_thi_trac_nghiem.xlsx</a> </p>
+        <p>3. Danh sách câu hỏi của đề thi: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_import_cau_hoi_de_thi.xlsx' ?>">mau_import_cau_hoi_de_thi.xlsx</a> </p>
     </div>
 
     <div class="form-group">

@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
 use yii\helpers\Url;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -23,9 +25,25 @@ Icon::map($this, Icon::FA);
             ]
         ]); ?>
 
-        <?= $form->field($model, 'content')->textInput(['maxlength' => 500]) ?>
+        <?= $form->field($model, 'content')->widget(
+            TinyMce::className(),
+            [
+                'fileManager' => [
+                    'class' => TinyMceElFinder::className(),
+                    'connectorRoute' => 'el-finder/connector',
+                ],
+            ]
+        ) ?>
 
-        <?= $form->field($model, 'solution')->textInput(['maxlength' => 500]) ?>
+        <?= $form->field($model, 'solution')->widget(
+            TinyMce::className(),
+            [
+                'fileManager' => [
+                    'class' => TinyMceElFinder::className(),
+                    'connectorRoute' => 'el-finder/connector',
+                ],
+            ]
+        ) ?>
 
         <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
@@ -45,6 +63,8 @@ Icon::map($this, Icon::FA);
     </fieldset>
 
 </div>
+
+<script src="/themes/default/js/jquery.min.js"></script>
 
 <script>
     $(window).on('load', function () {
