@@ -46,12 +46,14 @@ class Teacher extends \common\models\TeacherBase
         if ($this->avatar == null) {
             return true;
         }
-        $path =  Yii::$app->params['img_url']['user_avatar']['folder'] . '/';
-        $path_admin = Yii::getAlias('@webroot') . '/storage/' . $path;
-        if (!is_dir($path_admin)) {
-            mkdir($path_admin, 0777);
+
+        $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['img.user']['path'];
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
-        $this->avatar->saveAs($path_admin . $id . '.png');
-        return Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['cms_url'] . 'storage/' . $path . $id . '.png');
+        if ($this->validate()) {
+            return $this->avatar->saveAs($path . $id . '.png');
+        }
+        return false;
     }
 }

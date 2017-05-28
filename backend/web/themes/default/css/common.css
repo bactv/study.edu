@@ -5,10 +5,16 @@
 
 .txt_active {
     color: #00aa00;
+    font-weight: bold;
 }
 
 .txt_deactive {
     color: maroon;
+    font-weight: bold;
+}
+.txt_considering {
+    color: #8bc34a;
+    font-weight: bold;
 }
 
 

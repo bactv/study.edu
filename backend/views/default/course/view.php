@@ -81,6 +81,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html'
             ],
             [
+                'attribute' => 'limit',
+                'label' => 'Giới hạn đăng ký',
+                'value' => function ($model) {
+                    if ($model['limit'] == 0) {
+                        return "Không giới hạn đăng ký";
+                    } else {
+                        return number_format($model['limit']);
+                    }
+                }
+            ],
+            [
                 'attribute' => 'deadline_register',
                 'format' => 'raw',
                 'value' => function ($model) {

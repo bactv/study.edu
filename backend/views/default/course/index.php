@@ -36,6 +36,7 @@ $this->params['menu'] = [
             ],
             [
                 'attribute' => 'id',
+                'label' => 'ID',
                 'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
@@ -61,51 +62,20 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
+                'attribute' => 'party_id',
+                'label' => 'Đối tác cung cấp',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Party::getAttributeValue(['party_id' => $model['party_id']], 'party_name');
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
                 'attribute' => 'deadline_register',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return Utility::formatDataTime($model['deadline_register'], '-', '/', false);
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'status',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return ($model['status'] == 1) ? 'Công khai' : 'Riêng tư';
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'approved',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    if($model['approved'] == 1) {
-                        return "Đã phê duyệt";
-                    } else if ($model['approved'] == 0) {
-                        return "Đang xem xét";
-                    }
-                    return "Đã từ chối phê duyệt";
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'deleted',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return ($model['deleted'] == 1) ? 'Đã xóa' : 'Chưa xóa';
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'price',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return number_format($model['price']);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'vertical-align: middle;']
@@ -120,21 +90,44 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
-                'attribute' => 'subject_id',
+                'attribute' => 'price',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Subject::getAttributeValue(['id' => $model['subject_id']], 'name');
+                    return number_format($model['price']);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ($model['status'] == 1) ? '<span class="txt_active">Công khai</span>' : '<span class="txt_deactive">Riêng tư</span>';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'approved',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if($model['approved'] == 1) {
+                        return "<span class=\"txt_active\">Đã phê duyệt</span>";
+                    } else if ($model['approved'] == 0) {
+                        return "<span class=\"txt_considering\">Đang xem xét</span>";
+                    }
+                    return "<span class=\"txt_deactive\">Đã từ chối phê duyệt</span>";
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {update} {delete} {approved}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
-                'options' => ['width' => '120px'],
+                'options' => ['width' => '150px'],
                 'buttons' => [
                     'view' => function ($url) {
                         return Html::a(Icon::show('info-circle'), $url, [
@@ -155,6 +148,16 @@ $this->params['menu'] = [
                             'title' => Yii::t('cms', 'Delete'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => 'w0'
+                        ]);
+                    },
+                    'approved' => function ($url, $model) {
+                        $url = \yii\helpers\Url::toRoute(['/course/approved-course', 'id' => $model['id']]);
+                        return Html::a(Icon::show('check'), $url, [
+                            'title' => Yii::t('cms', 'Approved'),
+                            'class'=>'btn btn-primary btn-xs btn-app',
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to approve this item?'),
                             'data-method' => 'post',
                             'data-pjax' => 'w0'
                         ]);

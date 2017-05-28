@@ -11,7 +11,9 @@ use backend\models\Party;
 use backend\models\Subject;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
-use mihaildev\ckeditor\CKEditor;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
+use kartik\date\DatePicker;
 
 Icon::map($this, Icon::FA);
 
@@ -63,6 +65,29 @@ Icon::map($this, Icon::FA);
         ]) ?>
         <?= $form->field($model, 'price')->textInput(['maxlength' => 10, 'type' => 'number', 'min' => 10000]) ?>
 
+        <?= $form->field($model, 'deadline_register')->widget(DatePicker::className(), [
+            'type' => DatePicker::TYPE_COMPONENT_PREPEND,
+            'options' => [
+                'placeholder' => 'dd/mm/yyyy',
+            ],
+            'pluginOptions' => [
+                'autoclose'=>true,
+                'format' => 'dd/mm/yyyy'
+            ]
+        ]) ?>
+
+        <?= $form->field($model, 'description')->widget(
+            TinyMce::className(),
+            [
+                'fileManager' => [
+                    'class' => TinyMceElFinder::className(),
+                    'connectorRoute' => 'el-finder/connector',
+                ],
+            ]
+        ) ?>
+
+        <?= $form->field($model, 'limit')->textInput(['maxlength' => 10, 'type' => 'number', 'min' => 10000])->label('Giới hạn đăng ký') ?>
+
         <?php if (!$model->isNewRecord) { ?>
             <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
@@ -75,13 +100,6 @@ Icon::map($this, Icon::FA);
             ]) ?>
 
         <?php } ?>
-
-        <?= $form->field($model, 'description')->widget(CKEditor::className(),[
-            'editorOptions' => [
-                'preset' => 'full',
-                'inline' => false,
-            ],
-        ]); ?>
 
         <div class="form-group">
             <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

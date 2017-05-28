@@ -35,18 +35,10 @@ $this->params['menu'] = [
             ],
             [
                 'attribute' => 'id',
+                'label' => 'ID',
                 'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'course_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return Course::getAttributeValue(['id' => $model['course_id']], 'name');
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
                 'attribute' => 'name',
@@ -60,7 +52,7 @@ $this->params['menu'] = [
                     return ($model['status'] == 1) ? 'Active' : 'Inactive';
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'attribute' => 'publish_date',
@@ -69,7 +61,7 @@ $this->params['menu'] = [
                     return Utility::formatDataTime($model['publish_date'], '-', '/', false);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'vertical-align: middle;']
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

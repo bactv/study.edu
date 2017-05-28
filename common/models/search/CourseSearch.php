@@ -42,7 +42,7 @@ class CourseSearch extends Course
      */
     public function search($params)
     {
-        $query = Course::find();
+        $query = Course::find()->where(['deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

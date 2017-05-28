@@ -29,28 +29,58 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'user_id',
-            'full_name',
-            'birthday',
-            'school',
-            'email',
-            'phone',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'user_id',
+                'label' => 'ID',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'full_name',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'birthday',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'school',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'email',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'phone',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             [
                 'attribute' => 'balance',
                 'format' => 'raw',
                 'value' => function ($model) {
                     return number_format($model['balance']);
-                }
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
                 'label' => Yii::t('cms', 'Status'),
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $user = User::findOne(['id' => $model['user_id']]);
-                    return $user['status'] == 1 ? 'Active' : 'Inactive';
-                }
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                },
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -60,7 +90,8 @@ $this->params['menu'] = [
                 'contentOptions'=>['style'=>'text-align: center;'],
                 'options' => ['width' => '120px'],
                 'buttons' => [
-                    'view' => function ($url) {
+                    'view' => function ($url, $model) {
+                        $url = Url::toRoute(['/student/view', 'id' => $model['user_id']]);
                         return Html::a(Icon::show('info-circle'), $url, [
                             'title' => Yii::t('cms', 'View'),
                             'class'=>'btn btn-primary btn-xs btn-app',

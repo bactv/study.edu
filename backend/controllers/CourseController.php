@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\Utility;
 use Yii;
 use backend\models\Course;
 use common\models\search\CourseSearch;
@@ -68,6 +69,7 @@ class CourseController extends BackendController
         if ($model->load(Yii::$app->request->post())) {
             $model->teacher_ids = json_encode($model->teacher_ids);
             $model->logo = UploadedFile::getInstance($model, 'logo');
+            $model->deadline_register = Utility::formatDataTime($model->deadline_register, '/', '-', false);
 
             if ($model->logo == null) {
                 $session->setFlash('error', 'Bạn cần upload logo khóa học');
@@ -96,12 +98,14 @@ class CourseController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->deadline_register = Utility::formatDataTime($model->deadline_register, '-', '/', false);
 
         $model->teacher_ids = json_decode($model->teacher_ids);
         $session = Yii::$app->session;
         if ($model->load(Yii::$app->request->post())) {
             $model->teacher_ids = json_encode($model->teacher_ids);
             $model->logo = UploadedFile::getInstance($model, 'logo');
+            $model->deadline_register = Utility::formatDataTime($model->deadline_register, '/', '-', false);
 
             if ($model->save() && $model->upload_file('logo', $model->id, 'logo')) {
                 $session->setFlash('success', 'Cập nhật thành công.');

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Teacher;
+use yii\db\Query;
 
 /**
  * TeacherSearch represents the model behind the search form about `backend\models\Teacher`.
@@ -41,7 +42,7 @@ class TeacherSearch extends Teacher
      */
     public function search($params)
     {
-        $query = Teacher::find()->innerJoin('user', 'user.id=teacher.user_id')->where(['user.deleted' => 0]);
+        $query = (new Query())->select('*')->from('teacher')->innerJoin('user', 'user.id=teacher.user_id')->where(['user.deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\Student;
+use yii\db\Query;
 
 /**
  * StudentSearch represents the model behind the search form about `backend\models\Student`.
@@ -42,7 +43,7 @@ class StudentSearch extends Student
      */
     public function search($params)
     {
-        $query = Student::find()->innerJoin('user', 'user.id=student.user_id')->where(['user.deleted' => 0]);
+        $query = (new Query())->select('*')->from('student')->innerJoin('user', 'user.id=student.user_id')->where(['user.deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

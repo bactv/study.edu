@@ -30,10 +30,9 @@ class LessonController extends BackendController
 
     /**
      * Lists all Lesson models.
-     * @param $course_id
      * @return mixed
      */
-    public function actionIndex($course_id)
+    public function actionIndex()
     {
         $searchModel = new LessonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

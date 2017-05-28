@@ -48,9 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'name',
-            'description:ntext',
+            [
+                'attribute' => 'description',
+                'format' => 'html'
+            ],
             [
                 'attribute' => 'link_video',
+                'label' => 'Video',
                 'format' => 'raw',
                 'value' => function ($model) {
                     // ưu tiên video upload lên trước

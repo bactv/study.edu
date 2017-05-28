@@ -32,20 +32,17 @@ class Course extends \common\models\CourseBase
 
     public function getStatus()
     {
-        if ($this->status == 1) {
-            return 'Đang active';
-        }
-        return 'Chưa active';
+        return ($this->status == 1) ? '<span class="txt_active">Công khai</span>' : '<span class="txt_deactive">Riêng tư</span>';
     }
 
     public function getApprovedStatus()
     {
-        if ($this->approved == 1) {
-            return 'Đã phê duyệt';
+        if($this->approved == 1) {
+            return "<span class=\"txt_active\">Đã phê duyệt</span>";
         } else if ($this->approved == 0) {
-            return 'Đang chờ phê duyệt';
+            return "<span class=\"txt_considering\">Đang xem xét</span>";
         }
-        return 'Đã từ chối phê duyệt';
+        return "<span class=\"txt_deactive\">Đã từ chối phê duyệt</span>";
     }
 
     public function getTimeFormat($attribute, $orgin_symbol = '-', $new_symbol = '/', $time = true)

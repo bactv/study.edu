@@ -20,6 +20,7 @@ use Yii;
  * @property string $price
  * @property integer $course_type_id
  * @property integer $subject_id
+ * @property integer $limit
  * @property string $created_time
  * @property string $updated_time
  */
@@ -40,7 +41,7 @@ class CourseDB extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description', 'course_type_id', 'subject_id'], 'required'],
-            [['party_id', 'status', 'deleted', 'approved', 'approver', 'course_type_id', 'subject_id'], 'integer'],
+            [['party_id', 'status', 'deleted', 'approved', 'approver', 'course_type_id', 'subject_id', 'limit'], 'integer'],
             [['description'], 'string'],
             [['deadline_register', 'created_time', 'updated_time'], 'safe'],
             [['price'], 'number'],
@@ -68,6 +69,7 @@ class CourseDB extends \yii\db\ActiveRecord
             'price' => Yii::t('cms', 'Price'),
             'course_type_id' => Yii::t('cms', 'Course Type ID'),
             'subject_id' => Yii::t('cms', 'Subject ID'),
+            'limit' => Yii::t('cms', 'Limit'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
         ];

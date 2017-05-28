@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
-use mihaildev\ckeditor\CKEditor;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 use kartik\file\FileInput;
 use kartik\date\DatePicker;
 
@@ -27,12 +28,16 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'description')->widget(CKEditor::className(),[
-        'editorOptions' => [
-            'preset' => 'basic',
-            'inline' => false,
-        ],
-    ]); ?>
+
+    <?= $form->field($model, 'description')->widget(
+        TinyMce::className(),
+        [
+            'fileManager' => [
+                'class' => TinyMceElFinder::className(),
+                'connectorRoute' => 'el-finder/connector',
+            ],
+        ]
+    ) ?>
 
 
     <?= $form->field($model, 'link_video')->textInput(['maxlength' => 255]) ?>

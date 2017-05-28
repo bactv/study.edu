@@ -45,14 +45,14 @@ $this->params['menu'] = [
                 'format' => 'raw',
                 'value' => function ($model) {
                     $img = AssetApp::getImageBaseUrl() . '/avatar_icon_backend_3.png';
-                    $path = Yii::$app->params['img_url']['user_avatar']['folder'];
-                    $check = Utility::get_content_static($path, $model['user_id']);
-                    if ($check != null) {
-                        $img = Yii::$app->params['storage_url'] . $check;
+                    $path = Yii::$app->params['assets_path']['img.user'] . $model['user_id'] . '.png';
+                    if (Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
                     }
                     return Html::img($img, [
                         'width' => '70px',
-                        'height' => '70px'
+                        'height' => '70px',
+                        'style' => 'border-radius: 50%'
                     ]);
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
@@ -74,6 +74,16 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
             [
+                'attribute' => 'status',
+                'options' => ['width' => '100px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
                 'header' => Yii::t('cms', 'Actions'),
@@ -81,21 +91,24 @@ $this->params['menu'] = [
                 'contentOptions'=>['style'=>'text-align: center;'],
                 'options' => ['width' => '120px'],
                 'buttons' => [
-                    'view' => function ($url) {
+                    'view' => function ($url, $model) {
+                        $url = \yii\helpers\Url::toRoute(['/teacher/view', 'id' => $model['user_id']]);
                         return Html::a(Icon::show('info-circle'), $url, [
                             'title' => Yii::t('cms', 'View'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-pjax' => '0',
                         ]);
                     },
-                    'update' => function ($url) {
+                    'update' => function ($url, $model) {
+                        $url = \yii\helpers\Url::toRoute(['/teacher/update', 'id' => $model['user_id']]);
                         return Html::a(Icon::show('pencil-square-o'), $url, [
                             'title' => Yii::t('cms', 'Update'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-pjax' => '0',
                         ]);
                     },
-                    'delete' => function ($url) {
+                    'delete' => function ($url, $model) {
+                        $url = \yii\helpers\Url::toRoute(['/teacher/delete', 'id' => $model['user_id']]);
                         return Html::a(Icon::show('trash-o'), $url, [
                             'title' => Yii::t('cms', 'Delete'),
                             'class'=>'btn btn-primary btn-xs btn-app',

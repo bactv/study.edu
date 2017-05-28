@@ -5,6 +5,8 @@ use kartik\form\ActiveForm;
 use kartik\icons\Icon;
 use mihaildev\ckeditor\CKEditor;
 use kartik\file\FileInput;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -33,11 +35,19 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'full_name')->textInput(['maxlength' => 60]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => 60]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => 60, 'type' => 'email']) ?>
 
-    <?= $form->field($model, 'gender')->textInput() ?>
+    <?= $form->field($model, 'gender')->dropDownList([1 => 'Nam', 2 => 'Nữ']) ?>
 
-    <?= $form->field($model, 'intro')->textarea(['rows' => 10]) ?>
+    <?= $form->field($model, 'intro')->widget(
+        TinyMce::className(),
+        [
+            'fileManager' => [
+                'class' => TinyMceElFinder::className(),
+                'connectorRoute' => 'el-finder/connector',
+            ],
+        ]
+    ) ?>
 
     <?= $form->field($model, 'work_place')->textInput(['maxlength' => 255]) ?>
 
