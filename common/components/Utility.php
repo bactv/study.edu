@@ -293,4 +293,10 @@ class Utility
 
         return (substr($haystack, -$length) === $needle);
     }
+    public static function delete_file($path)
+    {
+        if (file_exists($path)) {
+            unlink($path);
+        }
+    }
 }

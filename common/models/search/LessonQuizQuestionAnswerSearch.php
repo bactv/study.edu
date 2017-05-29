@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\LessonQuiz;
+use backend\models\LessonQuizQuestionAnswer;
 
 /**
- * LessonQuizSearch represents the model behind the search form about `backend\models\LessonQuiz`.
+ * LessonQuizQuestionAnswerSearch represents the model behind the search form about `backend\models\LessonQuizQuestionAnswer`.
  */
-class LessonQuizSearch extends LessonQuiz
+class LessonQuizQuestionAnswerSearch extends LessonQuizQuestionAnswer
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class LessonQuizSearch extends LessonQuiz
     public function rules()
     {
         return [
-            [['id', 'course_id', 'lesson_id', 'pass_exam', 'total_question', 'time_length'], 'integer'],
+            [['ans_id', 'lesson_id', 'question_id', 'is_true'], 'integer'],
+            [['ans_content'], 'safe'],
         ];
     }
 
@@ -40,10 +41,11 @@ class LessonQuizSearch extends LessonQuiz
      */
     public function search($params)
     {
-        $query = LessonQuiz::find();
-        if (isset($params['lesson_id'])) {
-            $query->where(['lesson_id' => $params['lesson_id']]);
+        $query = LessonQuizQuestionAnswer::find();
+        if (!empty($params['question_id'])) {
+            $query->where(['question_id' => $params['question_id']]);
         }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -53,13 +55,13 @@ class LessonQuizSearch extends LessonQuiz
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'course_id' => $this->course_id,
+            'ans_id' => $this->ans_id,
             'lesson_id' => $this->lesson_id,
-            'pass_exam' => $this->pass_exam,
-            'total_question' => $this->total_question,
-            'time_length' => $this->time_length,
+            'question_id' => $this->question_id,
+            'is_true' => $this->is_true,
         ]);
+
+        $query->andFilterWhere(['like', 'ans_content', $this->ans_content]);
 
         return $dataProvider;
     }

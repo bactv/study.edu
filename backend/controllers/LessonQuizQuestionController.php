@@ -2,18 +2,18 @@
 
 namespace backend\controllers;
 
-use backend\models\Lesson;
-use Yii;
 use backend\models\LessonQuiz;
-use common\models\search\LessonQuizSearch;
+use Yii;
+use backend\models\LessonQuizQuestion;
+use common\models\search\LessonQuizQuestionSearch;
 use backend\components\BackendController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * LessonQuizController implements the CRUD actions for LessonQuiz model.
+ * LessonQuizQuestionController implements the CRUD actions for LessonQuizQuestion model.
  */
-class LessonQuizController extends BackendController
+class LessonQuizQuestionController extends BackendController
 {
     public function behaviors()
     {
@@ -28,12 +28,12 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * Lists all LessonQuiz models.
+     * Lists all LessonQuizQuestion models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new LessonQuizSearch();
+        $searchModel = new LessonQuizQuestionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,7 +43,7 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * Displays a single LessonQuiz model.
+     * Displays a single LessonQuizQuestion model.
      * @param integer $id
      * @return mixed
      */
@@ -55,22 +55,22 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * @param $lesson_id
+     * @param $lesson_quiz_id
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException
      */
-    public function actionCreate($lesson_id)
+    public function actionCreate($lesson_quiz_id)
     {
-        $model = new LessonQuiz();
+        $model = new LessonQuizQuestion();
 
-        $lesson = Lesson::findOne(['id' => $lesson_id]);
-        if (empty($lesson)) {
+        $lesson_quiz = LessonQuiz::findOne(['id' => $lesson_quiz_id]);
+        if (empty($lesson_quiz)) {
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->lesson_id = $lesson_id;
-            $model->course_id = $lesson['course_id'];
+            $model->lesson_id = $lesson_quiz->lesson_id;
+            $model->quiz_id = $lesson_quiz->id;
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -85,7 +85,7 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * Updates an existing LessonQuiz model.
+     * Updates an existing LessonQuizQuestion model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -104,7 +104,7 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * Deletes an existing LessonQuiz model.
+     * Deletes an existing LessonQuizQuestion model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,15 +119,15 @@ class LessonQuizController extends BackendController
     }
 
     /**
-     * Finds the LessonQuiz model based on its primary key value.
+     * Finds the LessonQuizQuestion model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return LessonQuiz the loaded model
+     * @return LessonQuizQuestion the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = LessonQuiz::findOne($id)) !== null) {
+        if (($model = LessonQuizQuestion::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

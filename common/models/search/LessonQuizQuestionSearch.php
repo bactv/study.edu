@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\LessonQuiz;
+use backend\models\LessonQuizQuestion;
 
 /**
- * LessonQuizSearch represents the model behind the search form about `backend\models\LessonQuiz`.
+ * LessonQuizQuestionSearch represents the model behind the search form about `backend\models\LessonQuizQuestion`.
  */
-class LessonQuizSearch extends LessonQuiz
+class LessonQuizQuestionSearch extends LessonQuizQuestion
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class LessonQuizSearch extends LessonQuiz
     public function rules()
     {
         return [
-            [['id', 'course_id', 'lesson_id', 'pass_exam', 'total_question', 'time_length'], 'integer'],
+            [['id', 'lesson_id', 'quiz_id'], 'integer'],
+            [['question'], 'safe'],
         ];
     }
 
@@ -40,10 +41,11 @@ class LessonQuizSearch extends LessonQuiz
      */
     public function search($params)
     {
-        $query = LessonQuiz::find();
-        if (isset($params['lesson_id'])) {
-            $query->where(['lesson_id' => $params['lesson_id']]);
+        $query = LessonQuizQuestion::find();
+        if (isset($params['lesson_quiz_id'])) {
+            $query->where(['quiz_id' => $params['lesson_quiz_id']]);
         }
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -54,12 +56,11 @@ class LessonQuizSearch extends LessonQuiz
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'course_id' => $this->course_id,
             'lesson_id' => $this->lesson_id,
-            'pass_exam' => $this->pass_exam,
-            'total_question' => $this->total_question,
-            'time_length' => $this->time_length,
+            'quiz_id' => $this->quiz_id,
         ]);
+
+        $query->andFilterWhere(['like', 'question', $this->question]);
 
         return $dataProvider;
     }

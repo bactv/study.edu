@@ -12,6 +12,7 @@ use Yii;
  * @property integer $lesson_id
  * @property integer $pass_exam
  * @property integer $total_question
+ * @property integer $time_length
  */
 class LessonQuizDB extends \yii\db\ActiveRecord
 {
@@ -30,7 +31,7 @@ class LessonQuizDB extends \yii\db\ActiveRecord
     {
         return [
             [['course_id', 'lesson_id'], 'required'],
-            [['course_id', 'lesson_id', 'pass_exam', 'total_question'], 'integer']
+            [['course_id', 'lesson_id', 'pass_exam', 'total_question', 'time_length'], 'integer']
         ];
     }
 
@@ -45,6 +46,7 @@ class LessonQuizDB extends \yii\db\ActiveRecord
             'lesson_id' => Yii::t('cms', 'Lesson ID'),
             'pass_exam' => Yii::t('cms', 'Pass Exam'),
             'total_question' => Yii::t('cms', 'Total Question'),
+            'time_length' => Yii::t('cms', 'Time Length'),
         ];
     }
 }

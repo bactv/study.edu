@@ -8,12 +8,12 @@ use yii\grid\GridView;
 Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\search\LessonQuizSearch */
+/* @var $searchModel common\models\search\LessonQuizQuestionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $this->params['title'] = Yii::t('cms', 'Lesson Quizzes');
+$this->title = $this->params['title'] = Yii::t('cms', 'Lesson Quiz Questions');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
-    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create', 'lesson_id' => Yii::$app->request->get('lesson_id')], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create', 'lesson_quiz_id' => Yii::$app->request->get('lesson_quiz_id')], 'options' => ['class' => 'btn btn-primary']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -38,38 +38,29 @@ $this->params['menu'] = [
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'id',
+                'attribute' => 'lesson_id',
+                'label' => 'Bài giảng',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Lesson::getAttributeValue(['id' => $model['lesson_id']], 'name');
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'quiz_id',
                 'label' => 'Bài kiểm tra',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return "Bài kiểm tra số " . $model['id'];
+                    return "Bài kiểm tra số " . $model['quiz_id'];
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
             [
-                'attribute' => 'pass_exam',
-                'label' => 'Điều kiện vượt qua',
+                'attribute' => 'question',
                 'format' => 'raw',
-                'value' => function ($model) {
-                    return $model['pass_exam'] . '/' . $model['total_question'];
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'total_question',
-                'label' => 'Tổng số câu hỏi',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'time_length',
-                'label' => 'Thời gian làm bài',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return $model['time_length'] . ' phút';
-                },
+                'label' => 'Câu hỏi',
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],

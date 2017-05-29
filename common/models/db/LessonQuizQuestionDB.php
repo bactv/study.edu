@@ -30,7 +30,7 @@ class LessonQuizQuestionDB extends \yii\db\ActiveRecord
         return [
             [['lesson_id', 'quiz_id', 'question'], 'required'],
             [['lesson_id', 'quiz_id'], 'integer'],
-            [['question'], 'string', 'max' => 255]
+            [['question'], 'string']
         ];
     }
 

@@ -7,19 +7,19 @@ use kartik\icons\Icon;
 Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\LessonDocument */
+/* @var $model backend\models\LessonQuizQuestionAnswer */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Lesson Documents'), 'url' => ['index', 'lesson_id' => $model['lesson_id']]];
+$this->title = $model->ans_id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Lesson Quiz Question Answers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="lesson-document-view">
+<div class="lesson-quiz-question-answer-view">
 
     <h1 style="margin-bottom: 10px"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->id], [
+        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->ans_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->ans_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('cms', 'Are you sure you want to delete this item?'),
@@ -31,10 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            'ans_id',
             'lesson_id',
-            'document_name',
-            'created_time',
+            'question_id',
+            'ans_content',
+            'is_true',
         ],
     ]) ?>
 

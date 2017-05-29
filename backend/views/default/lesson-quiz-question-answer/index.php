@@ -8,12 +8,12 @@ use yii\grid\GridView;
 Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\search\LessonDocumentSearch */
+/* @var $searchModel common\models\search\LessonQuizQuestionAnswerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $this->params['title'] = Yii::t('cms', 'Lesson Documents');
+$this->title = $this->params['title'] = Yii::t('cms', 'Lesson Quiz Question Answers');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
-    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create', 'lesson_id' => Yii::$app->request->get('lesson_id', 0)], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -23,36 +23,15 @@ $this->params['menu'] = [
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
-            [
-                'class' => 'yii\grid\CheckboxColumn',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'id',
-                'label' => 'ID',
-                'options' => ['width' => '40px'],
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'document_name',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    $lesson = \backend\models\Lesson::findOne(['id' => $model['lesson_id']]);
-                    $url = Yii::$app->params['assets_path']['assets.course'] . $lesson['course_id'] . '/' . $model['lesson_id'] . '/document/' . $model['document_name'];
-                    return Html::a($model['document_name'], $url, ['target' => '_blank']);
-                },
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
-            [
-                'attribute' => 'created_time',
-                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
-                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
-            ],
+            ['class' => 'yii\grid\CheckboxColumn'],
+
+            'ans_id',
+            'lesson_id',
+            'question_id',
+            'ans_content',
+            'is_true',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

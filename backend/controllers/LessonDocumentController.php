@@ -60,9 +60,10 @@ class LessonDocumentController extends BackendController
     }
 
     /**
-     * Creates a new LessonDocument model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @param $lesson_id
+     * @return string|\yii\web\Response
+     * @throws Exception
+     * @throws NotFoundHttpException
      */
     public function actionCreate($lesson_id)
     {
@@ -95,10 +96,9 @@ class LessonDocumentController extends BackendController
     }
 
     /**
-     * Updates an existing LessonDocument model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -109,11 +109,19 @@ class LessonDocumentController extends BackendController
             throw  new NotFoundHttpException("Trang bạn yêu cầu không tồn tại");
         }
         if ($model->load(Yii::$app->request->post())) {
-            $model->file = UploadedFile::getInstances($model, 'file');
-            $model->document_name = Utility::rewrite($model->file[0]->baseName) . '.' . $model->file[0]->extension;
-            if ($model->save() && $model->upload_file($lesson->course_id, $model->lesson_id, 'document')) {
+            $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['assets.course']['path'] . $lesson['course_id'] . '/' . $model['lesson_id'] . '/document/' . $model['document_name'];
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->document_name = Utility::rewrite($model->file->baseName) . '.' . $model->file->extension;
+            $chk = ($model->file != null) ? true : false;
+            if ($model->save() && $model->upload_file2($lesson->course_id, $model->lesson_id, 'document')) {
+                if ($chk) {
+                    Utility::delete_file($path);
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
 
         } else {
             return $this->render('update', [

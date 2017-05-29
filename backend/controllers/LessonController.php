@@ -56,10 +56,9 @@ class LessonController extends BackendController
     }
 
     /**
-     * Creates a new Lesson model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
      * @param $course_id
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionCreate($course_id)
     {
@@ -70,7 +69,9 @@ class LessonController extends BackendController
         $session = Yii::$app->session;
         if ($model->load(Yii::$app->request->post())) {
             $model->video = UploadedFile::getInstance($model, 'video');
-            $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            if ($model->video != null) {
+                $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            }
             $model->course_id = $course_id;
             $model->publish_date = Utility::formatDataTime($model->publish_date, '/', '-', false);
 
@@ -81,6 +82,7 @@ class LessonController extends BackendController
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'course_id' => $course_id
             ]);
         }
     }

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\icons\Icon;
+use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
@@ -10,7 +11,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\LessonQuiz */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Lesson Quizzes'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Lesson Quizzes'), 'url' => ['index', 'lesson_id' => $model->lesson_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lesson-quiz-view">
@@ -26,18 +27,51 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Icon::show('question-circle') . " " .Yii::t('cms', 'Quản lý câu hỏi'), Url::toRoute(['lesson-quiz-question/index', 'lesson_quiz_id' => $model->id]), ['class' => 'btn btn-info']) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'course_id',
-            'lesson_id',
-            'pass_exam',
-            'total_question',
-            'time_length:datetime',
+            [
+                'attribute' => 'course_id',
+                'label' => 'Khóa học',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Course::getAttributeValue(['id' => $model['course_id']], 'name');
+                }
+            ],
+            [
+                'attribute' => 'lesson_id',
+                'label' => 'Bài giảng',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Lesson::getAttributeValue(['id' => $model['lesson_id']], 'name');
+                }
+            ],
+            [
+                'attribute' => 'pass_exam',
+                'label' => 'Điều kiện qua',
+                'value' => function ($model) {
+                    return $model['pass_exam'] . '/' . $model['total_question'];
+                }
+            ],
+            [
+                'attribute' => 'total_question',
+                'label' => 'Tổng số câu hỏi',
+            ],
+            [
+                'attribute' => 'time_length',
+                'label' => 'Thời gian trả lời',
+            ],
         ],
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

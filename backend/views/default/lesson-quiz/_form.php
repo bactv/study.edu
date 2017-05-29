@@ -21,13 +21,14 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'course_id')->textInput() ?>
+    <?= $form->field($model, 'pass_exam')->textInput([
+            'type' => 'number',
+            'placeholder' => 'Số câu đúng / Tổng số câu'
+    ])->label('Điều kiện vượt qua') ?>
 
-    <?= $form->field($model, 'lesson_id')->textInput() ?>
+    <?= $form->field($model, 'total_question')->textInput(['type' => 'number'])->label('Tổng số câu hỏi') ?>
 
-    <?= $form->field($model, 'pass_exam')->textInput() ?>
-
-    <?= $form->field($model, 'total_question')->textInput() ?>
+    <?= $form->field($model, 'time_length')->textInput(['type' => 'number'])->label('Thời gian trả lời') ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
