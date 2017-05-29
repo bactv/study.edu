@@ -15,6 +15,8 @@ use common\components\AssetApp;
 use kartik\date\DatePicker;
 use yii\bootstrap\Alert;
 use common\components\Utility;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -112,12 +114,15 @@ Icon::map($this, Icon::FA);
             ]
         ]) ?>
 
-        <?php echo  $form->field($model, 'description')->widget(CKEditor::className(), [
-            'editorOptions' => [
-                'preset' => 'full',
-                'inline' => false,
-            ],
-        ]) ?>
+        <?= $form->field($model, 'description')->widget(
+            TinyMce::className(),
+            [
+                'fileManager' => [
+                    'class' => TinyMceElFinder::className(),
+                    'connectorRoute' => 'el-finder/connector',
+                ],
+            ]
+        ) ?>
 
 
 

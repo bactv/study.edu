@@ -11,6 +11,8 @@ use common\components\Utility;
 use kartik\icons\Icon;
 use kartik\date\DatePicker;
 use yii\bootstrap\Alert;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -79,7 +81,14 @@ Icon::map($this, Icon::FA);
                 <div class="form-group">
                     <label class="control-label col-sm-3 w3-left" for="intro">Giới thiệu bản thân:</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" id="intro" name="intro" placeholder="Giới thiệu bản thân ..." rows="10"><?php echo $model['intro'] ?></textarea>
+                        <?= TinyMce::widget([
+                            'fileManager' => [
+                                'class' => TinyMceElFinder::className(),
+                                'connectorRoute' => 'el-finder/connector',
+                            ],
+                            'name' => 'intro',
+                            'value' => $model['intro']
+                        ]) ?>
                     </div>
                 </div>
 

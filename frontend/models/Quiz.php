@@ -19,7 +19,7 @@ class Quiz extends \common\models\QuizBase
             ->select(['quiz.*', 'subject.name as subject_name', 'subject.icon as subject_icon', 'subject.icon_color as icon_color'])
             ->from('quiz')
             ->innerJoin('subject', 'subject.id=quiz.subject_id')
-            ->where(['status' => 1]);
+            ->where(['quiz.status' => 1]);
 
         if (isset($params['subject_id']) && $params['subject_id'] > 0) {
             $query->andWhere(['subject_id' => $params['subject_id']]);
