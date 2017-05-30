@@ -12,7 +12,7 @@ class Lesson extends \common\models\LessonBase
     public function rules()
     {
         return [
-            [['course_id', 'name', 'description'], 'required'],
+            [['course_id', 'name', 'description', 'publish_date'], 'required'],
             [['course_id', 'time_length', 'sort', 'number_view', 'status', 'deleted'], 'integer'],
             [['description'], 'string'],
             [['publish_date', 'created_time', 'updated_time'], 'safe'],

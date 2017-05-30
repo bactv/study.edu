@@ -57,7 +57,8 @@ Icon::map($this, Icon::FA);
             ],
             [
                 'attribute' => 'id',
-                'options' => ['width' => '70px'],
+                'label' => 'ID',
+                'options' => ['width' => '40px'],
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],

@@ -97,7 +97,7 @@ AppAsset::register($this);
         </div>
         <div class="w3-bar-block">
             <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>DANH SÁCH BÀI GIẢNG</a>
-            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>TIẾN TRÌNH CỦA TÔI</a>
+<!--            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>TIẾN TRÌNH CỦA TÔI</a>-->
 <!--            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>THẢO LUẬN</a>-->
         </div>
     </nav>

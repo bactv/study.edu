@@ -39,6 +39,13 @@ Icon::map($this, Icon::FA);
     <a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc/create'])?>" class="btn btn-info"><?php echo Icon::show('plus') ?> Tạo khóa học mới</a>
 </div>
 
+<div class="w3-container" style="margin-bottom: 20px">
+    <a href="javascript:void(0)" onclick="toggle_create_course_tutorial()" style="color: brown;"><u><i>Hướng dẫn tạo khóa học</i></u></a>
+    <div class="box_tutorial" style="margin-top: 10px;background: #fff;padding: 10px;display: none">
+    <?php  echo \frontend\models\StaticPage::get_content('CREATE_COURSE_TUTORIAL') ?>
+    </div>
+</div>
+
 <div class="w3-container">
     <?php Pjax::begin(['id' => 'admin-grid-view']);?>
     <?= GridView::widget([
@@ -53,6 +60,13 @@ Icon::map($this, Icon::FA);
             [
                 'attribute' => 'name',
                 'label' => 'Khóa học',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model['approved'] == 1) {
+                        return Html::a($model['name'], Url::toRoute(['/detail/' . Utility::rewrite($model['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $model['id'])]), ['target' => '_blank', 'style' => 'color: blue']);
+                    }
+                    return $model['name'];
+                },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'vertical-align: middle;']
             ],
@@ -123,7 +137,7 @@ Icon::map($this, Icon::FA);
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update}',
+                'template' => '{view} {update} {request}',
                 'header' => Yii::t('cms', '#'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
@@ -145,9 +159,66 @@ Icon::map($this, Icon::FA);
                             'data-pjax' => '0',
                         ]);
                     },
+                    'request' => function ($url, $model) {
+                        if ($model['approved'] != 1) {
+                            return Html::a(Icon::show('send-o'), 'javascript:void(0)', [
+                                'title' => Yii::t('cms', 'Gửi yêu cầu xét duyệt'),
+                                'class'=>'btn btn-primary btn-xs btn-app',
+                                'data-pjax' => '0',
+                                'onclick' => 'send_request(this)',
+                                'data-course_id' => $model['id']
+                            ]);
+                        }
+                        return '';
+                    }
                 ]
             ],
         ],
     ]); ?>
     <?php Pjax::end();?>
 </div>
+
+<script>
+    function toggle_create_course_tutorial() {
+        $(".box_tutorial").toggle();
+    }
+    function send_request(element) {
+        BootstrapDialog.show({
+            title: 'Gửi yêu cầu xét duyệt',
+            message: 'Bạn có muốn gửi yêu cầu xét duyệt về khóa học này hay không?',
+            buttons: [{
+                label: '<?php echo Icon::show('send-o') ?> Gửi yêu cầu',
+                cssClass: 'btn-success',
+                action: function(dialog) {
+                    var _csrf = $("meta[name='csrf-param']").attr('content');
+                    var course_id = $(element).data('course_id');
+                    $.ajax({
+                        method: 'POST',
+                        data: {'_csrf' : _csrf, 'sender_id' : '<?php echo Yii::$app->user->identity->getId() ?>', 'course_id': course_id},
+                        url: '<?php echo Url::toRoute(['/notification/send-request-course']) ?>',
+                        success: function () {
+                            BootstrapDialog.show({
+                                title: 'Thông báo',
+                                message: 'Bạn đã gửi yêu cầu thành công. Chúng tôi sẽ xem xét và trả lời sớm cho bạn. Xin cảm ơn.'
+                            });
+                        },
+                        error: function () {
+                            BootstrapDialog.show({
+                                title: 'Thông báo',
+                                message: 'Hệ thống đang có lỗi. Vui lòng thử lại sau. Xin cảm ơn.'
+                            });
+                        }
+                    });
+                    dialog.close();
+                }
+            }, {
+                label: '<?php echo Icon::show('close') ?> Hủy',
+                cssClass: 'btn-warning',
+                action: function(dialog) {
+                    dialog.close();
+                }
+            }]
+        });
+        return false;
+    }
+</script>

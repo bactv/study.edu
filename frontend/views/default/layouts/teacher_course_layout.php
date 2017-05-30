@@ -89,7 +89,6 @@ AppAsset::register($this);
             <a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc']) ?>" onclick="w3_close()" class="w3-bar-item w3-button w3-padding c_active"><i class="fa fa-th-large fa-fw w3-margin-right"></i>KHÓA HỌC CỦA TÔI</a>
         </div>
     </nav>
-
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 

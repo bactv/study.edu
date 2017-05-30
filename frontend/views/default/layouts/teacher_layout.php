@@ -103,7 +103,6 @@ AppAsset::register($this);
                         <ul class="w3-ul">
                             <li class="active_tk"><a href="<?php echo Url::toRoute(['/tai-khoan']) ?>"><i class="fa fa-info fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông tin cá nhân</a></li>
                             <li class="active_mc"><a href="<?php echo Url::toRoute(['/quan-ly-khoa-hoc']) ?>" target="_blank"><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Quản lý khóa học</a></li>
-                            <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo</a></li>
                         </ul>
                     </div>
                 </div>

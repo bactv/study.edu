@@ -26,7 +26,7 @@ class LessonBase extends \common\models\db\LessonDB
         return [
             'id' => Yii::t('cms', 'Mã bài học'),
             'course_id' => Yii::t('cms', 'Khóa học'),
-            'name' => Yii::t('cms', 'Tên bài học'),
+            'name' => Yii::t('cms', 'Tên bài giảng'),
             'description' => Yii::t('cms', 'Mô tả'),
             'link_video' => Yii::t('cms', 'Link Video'),
             'time_length' => Yii::t('cms', 'Thời lượng'),

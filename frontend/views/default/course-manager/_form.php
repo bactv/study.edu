@@ -87,15 +87,6 @@ Icon::map($this, Icon::FA);
             </div>
         </div>
 
-        <?= $form->field($model, 'outline')->widget(FileInput::className(), []) ?>
-        <div class="form-group" style="margin-bottom: 20px">
-            <div class="control-label col-sm-3"></div>
-            <div class="control-label col-sm-9">
-                <p><i>( Mẫu đề cương: <a href="<?php echo Yii::$app->params['assets_path']['assets_common'] . 'mau_de_cuong.xlsx' ?>" style="color: #00aa00">mau_de_cuong.xlsx</a> )</i></p>
-            </div>
-        </div>
-
-
         <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
             'data' => ArrayHelper::map(CourseType::find()->all(), 'id', 'name'),
         ]) ?>

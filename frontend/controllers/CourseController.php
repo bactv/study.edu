@@ -9,6 +9,7 @@ namespace frontend\controllers;
 
 use common\components\Utility;
 use frontend\models\Course;
+use frontend\models\CourseTeacher;
 use frontend\models\FreeStudentCourse;
 use frontend\models\Lesson;
 use frontend\models\LessonQuiz;
@@ -190,31 +191,34 @@ class CourseController extends Controller
             throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
         }
         // kiểm tra học sinh đăg ký khóa học hay chưa
-        $check = StudentCourse::findOne(['student_id' => $user->getId(), 'course_id' => $course_id]);
-        if (empty($check)) {
-            throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
+        if ($user->type == 1) {
+            $check = StudentCourse::findOne(['student_id' => $user->getId(), 'course_id' => $course_id]);
+            if (empty($check)) {
+                throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
+            }
         }
+
 
         Yii::$app->params['course'] = $course;
 
         $lessons = Lesson::find()->where(['course_id' => $course_id])->orderBy('sort ASC, id ASC')->all();
+
+        if ($user->type == 2 ) {
+            $check = CourseTeacher::findOne(['course_id' => $course_id, 'teacher_id' => $user->getId()]);
+            if (!$check) {
+                throw new ForbiddenHttpException("Bạn không có quyền truy cập vào trang này.");
+            }
+            return $this->render('video_detail_teacher', [
+                'course' => $course,
+                'lessons' => $lessons
+            ]);
+        }
+
         return $this->render('video_detail', [
             'course' => $course,
             'lessons' => $lessons
         ]);
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     private function check_url($str)
     {
@@ -229,5 +233,11 @@ class CourseController extends Controller
             }
         }
         return $id;
+    }
+
+    public function actionLiveStreaming()
+    {
+        $this->layout = false;
+        return $this->render('live_streaming');
     }
 }

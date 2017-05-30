@@ -71,7 +71,10 @@ Icon::map($this, Icon::FA);
                     }
                 ],
                 'name',
-                'description:ntext',
+                [
+                    'attribute' => 'description',
+                    'format' => 'raw'
+                ],
                 [
                     'attribute' => 'link_video',
                     'format' => 'raw',

@@ -27,9 +27,7 @@ class Course extends \common\models\CourseBase
             [['deadline_register', 'created_time', 'updated_time'], 'safe'],
             [['price'], 'number'],
             [['name'], 'string', 'max' => 255],
-            [['logo'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
-            [['outline'], 'file', 'extensions' => 'doc, docx, pdf, xlsx'],
-            [['outline'], 'required', 'on' => 'create']
+            [['logo'], 'file', 'extensions' => 'png, jpg, jpeg, gif']
         ];
     }
 

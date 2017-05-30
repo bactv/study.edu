@@ -84,5 +84,11 @@ return [
         'topic_subject' => 'Chuyên đề môn học',
         'quiz' => 'Đề thi trắc nghiệm online',
         'question_quiz' => 'Câu hỏi đề thi'
+    ],
+    'type_notification' => [
+        'student_feedback' => 'student_feedback',
+        'teacher_feedback' => 'teacher_feedback',
+        'send_request_course' => 'send_request_course',
+        'system_feedback' => 'system_feedback',
     ]
 ];

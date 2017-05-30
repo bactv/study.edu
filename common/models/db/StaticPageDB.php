@@ -43,8 +43,8 @@ class StaticPageDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
-            'type' => Yii::t('cms', 'Type'),
-            'content' => Yii::t('cms', 'Content'),
+            'type' => Yii::t('cms', 'Loại'),
+            'content' => Yii::t('cms', 'Nội dung'),
             'created_time' => Yii::t('cms', 'Created Time'),
             'updated_time' => Yii::t('cms', 'Updated Time'),
         ];

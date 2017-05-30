@@ -51,14 +51,14 @@ class CourseManagerController extends TeacherManagerController
     {
         $model = new Course();
 
-        $model->scenario = 'create';
-
         $session = Yii::$app->session;
 
         if ($model->load(Yii::$app->request->post())) {
             $model->logo = UploadedFile::getInstance($model, 'logo');
             $model->teacher_ids = json_encode(array($this->_user['id']));
-            $model->deadline_register = Utility::formatDataTime($model->deadline_register, '/', '-', false);
+            if ($model->deadline_register != '') {
+                $model->deadline_register = Utility::formatDataTime($model->deadline_register, '/', '-', false);
+            }
             if ($model->save() && $model->upload_file('logo', $model->id, 'logo')) {
                 $course_teacher = new CourseTeacher();
                 $course_teacher->course_id = $model->id;
@@ -145,19 +145,23 @@ class CourseManagerController extends TeacherManagerController
     {
         $model = new Lesson();
         $session = Yii::$app->session;
+        $course = Course::findOne(['id' => $course_id]);
         if ($model->load(Yii::$app->request->post())) {
             $model->video = UploadedFile::getInstance($model, 'video');
-            $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            if ($model->video != null) {
+                $model->video_name = Utility::rewrite($model->video->baseName) . '.' . $model->video->extension;
+            }
             $model->course_id = $course_id;
             $model->publish_date = Utility::formatDataTime($model->publish_date, '/', '-', false);
 
             if ($model->save() && $model->upload_file('video', $model->course_id, $model->id, 'video')) {
                 $session->setFlash('success', 'Thành công.');
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view-lesson', 'lesson_id' => $model->id, 'course_id' => $model->course_id]);
             }
         } else {
             return $this->render('lesson/create', [
                 'model' => $model,
+                'course' => $course
             ]);
         }
     }

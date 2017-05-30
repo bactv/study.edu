@@ -91,11 +91,18 @@ Icon::map($this, Icon::FA);
                                 $check_student_count = true;
                             }
                         }
+                        $check_teacher = false;
+                        if ($user_id > 0) {
+                            $c = \frontend\models\CourseTeacher::findOne(['course_id' => $course['id'], 'teacher_id' => $user_id]);
+                            if (!empty($c)) {
+                                $check_teacher = true;
+                            }
+                        }
                     ?>
                     <p class="w3-text-red" id="course_fee"><?php echo $price ?></p>
                     <p id="span"><?php echo Icon::show('calendar') ?> Hạn đăg ký: <?php echo $deadline ?></p>
                     <p id="span"><?php echo Icon::show('users') ?> Số học sinh đăng ký: <?php echo number_format($total_student) ?></p>
-                    <?php if ($check_student_count) { ?>
+                    <?php if ($check_student_count || $check_teacher) { ?>
                         <p class="btn_reg"><a href="<?php echo Url::toRoute(['/detail/' . Utility::rewrite($course['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $course['id'])]) ?>" role="button" class="btn btn-warning">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
                     <?php } else { ?>
                         <p class="btn_reg"><a href="javascript:void(0)" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
