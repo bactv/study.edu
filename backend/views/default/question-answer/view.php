@@ -32,9 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ans_id',
             'question_id',
-            'content',
+            [
+                'attribute' => 'content',
+                'format' => 'raw'
+            ],
             'is_true',
         ],
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

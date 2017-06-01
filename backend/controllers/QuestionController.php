@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\QuestionAnswer;
+use backend\models\Quiz;
 use Yii;
 use backend\models\Question;
 use common\models\search\QuestionSearch;
@@ -54,21 +56,88 @@ class QuestionController extends BackendController
     }
 
     /**
-     * Creates a new Question model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @param $quiz_id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
-    public function actionCreate()
+    public function actionCreate($quiz_id)
     {
         $model = new Question();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $quiz = Quiz::findOne(['id' => $quiz_id]);
+        if (empty($quiz)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại");
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->subject_id = $quiz->subject_id;
+            $model->topic_id = $quiz->topic_id;
+            $model->quiz_id = $quiz_id;
+            $model->is_true = Yii::$app->request->post('is_true', 'ans_1');
+            if ($model->save()) {
+                Yii::$app->db->createCommand()->update('quiz', ['total_question' => count(Question::findAll(['quiz_id' => $quiz_id]))], [
+                    'id' => $quiz_id
+                ])->execute();
+                if ($model->ans_1 != '') {
+                    if ($model->is_true == 'ans_1') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_1, $true);
+                }
+                if ($model->ans_2 != '') {
+                    if ($model->is_true == 'ans_2') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_2, $true);
+                }
+                if ($model->ans_3 != '') {
+                    if ($model->is_true == 'ans_3') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_3, $true);
+                }
+                if ($model->ans_4 != '') {
+                    if ($model->is_true == 'ans_4') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_4, $true);
+                }
+                if ($model->ans_5 != '') {
+                    if ($model->is_true == 'ans_5') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_5, $true);
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    private function save_answer($question_id, $content, $is_true = 0)
+    {
+        $model = new QuestionAnswer();
+        $model->question_id = $question_id;
+        $model->content = $content;
+        $model->is_true = $is_true;
+        $model->save();
     }
 
     /**
@@ -80,9 +149,64 @@ class QuestionController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $answers = QuestionAnswer::findAll(['question_id' => $id]);
+        for ($i = 0; $i < count($answers); $i++) {
+            $model->{'ans_' . ($i + 1)} = $answers[$i]->{'content'};
+            if ($answers[$i]->{'is_true'} == 1) {
+                $model->is_true = 'ans_' . ($i + 1);
+            }
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->is_true = Yii::$app->request->post('is_true', 'ans_1');
+            if ($model->save()) {
+                QuestionAnswer::deleteAll(['question_id' => $id]);
+                if ($model->ans_1 != '') {
+                    if ($model->is_true == 'ans_1') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_1, $true);
+                }
+                if ($model->ans_2 != '') {
+                    if ($model->is_true == 'ans_2') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_2, $true);
+                }
+                if ($model->ans_3 != '') {
+                    if ($model->is_true == 'ans_3') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_3, $true);
+                }
+                if ($model->ans_4 != '') {
+                    if ($model->is_true == 'ans_4') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_4, $true);
+                }
+                if ($model->ans_5 != '') {
+                    if ($model->is_true == 'ans_5') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_5, $true);
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -98,11 +222,14 @@ class QuestionController extends BackendController
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
         $model = $this->findModel($id);
-        $model->deleted = 1;
-        $model->save();
-        return $this->redirect(['index']);
+        $quiz_id = $model->quiz_id;
+        if (!empty($model)) {
+            QuestionAnswer::deleteAll(['question_id' => $id]);
+            Yii::$app->db->createCommand()->update('quiz', ['total_question' => count(Question::findAll(['quiz_id' => $model->quiz_id]))], ['id' => $quiz_id])->execute();
+            $model->delete();
+        }
+        return $this->redirect(['/quiz/question', 'quiz_id' => $quiz_id]);
     }
 
     /**

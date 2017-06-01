@@ -32,9 +32,10 @@ Icon::map($this, Icon::FA);
                     <ul class="box_answer">
                         <?php foreach ($arr_ans as $k2 => $ans) {
                             $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                            $html = preg_replace("/<\\/?" . 'p' . "(.|\\s)*?>/",'',$ans->content);
                             ?>
                             <li>
-                                <input type="radio" name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                                <input type="radio" name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $html ?></span>
                             </li>
                         <?php } ?>
                     </ul>

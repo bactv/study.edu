@@ -45,8 +45,8 @@ Icon::map($this, Icon::FA);
             'data' => ArrayHelper::map(QuizType::find()->all(), 'id', 'name')
         ]) ?>
 
-        <?= $form->field($model, 'topic_id')->widget(Select2::className(), [
-            'data' => ArrayHelper::map(Topic::find()->all(), 'id', 'name')
+        <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(\backend\models\Subject::find()->all(), 'id', 'name'),
         ]) ?>
 
         <?= $form->field($model, 'time_length')->textInput([

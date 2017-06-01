@@ -32,9 +32,8 @@ class QuestionDB extends \yii\db\ActiveRecord
     {
         return [
             [['content', 'quiz_id'], 'required'],
-            [['status', 'subject_id', 'topic_id', 'quiz_id'], 'integer'],
-            [['solution'], 'string'],
-            [['content'], 'string', 'max' => 700]
+            [['content', 'solution'], 'string'],
+            [['status', 'subject_id', 'topic_id', 'quiz_id'], 'integer']
         ];
     }
 

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-05-30 02:38:00
+Date: 2017-06-01 19:46:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -425,12 +425,13 @@ CREATE TABLE `course` (
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of course
 -- ----------------------------
 INSERT INTO `course` VALUES ('1', 'Khoá T1 - Luyện thi THPT Quốc gia môn Toán năm 2017 - Thầy Phạm Sỹ Nam', '[\"7\"]', '2', '<p>Study.EDU thiết kế v&agrave; cung cấp chương tr&igrave;nh <strong>luyện thi to&agrave;n diện</strong> THPT Quốc gia m&ocirc;n To&aacute;n năm 2018 theo <strong>cấu tr&uacute;c MỚI&nbsp;</strong>m&agrave; Bộ Gi&aacute;o Dục v&agrave; Đ&agrave;o Tạo vừa ban h&agrave;nh. Một trong những kh&oacute;a học quan trọng nhất l&agrave; <strong>Kh&oacute;a nền tảng H2</strong> được giảng dạy bởi <strong><em>TS. Phạm Sỹ Nam</em></strong> - Gi&aacute;o vi&ecirc;n To&aacute;n <strong><em>trường THPT Chuy&ecirc;n L&ecirc; Hồng Phong &ndash; TP.HCM</em></strong>; Cựu <strong><em>GV trường THPT Chuy&ecirc;n Phan Bội Ch&acirc;u &ndash; TP.Vinh</em></strong>; Giảng vi&ecirc;n trường <strong><em>Đại Học S&agrave;i G&ograve;n.</em></strong></p>\r\n<p>Kh&oacute;a học n&agrave;y sẽ cung cấp cho c&aacute;c em đầy đủ kiến thức cơ bản, kiến thức trọng t&acirc;m v&agrave; bao qu&aacute;t to&agrave;n diện <strong><strong>chương tr&igrave;nh lớp 12</strong></strong>&nbsp;v&agrave; <strong><strong>nội dung trọng t&acirc;m chương tr&igrave;nh lớp 11 </strong></strong>nhằm chuẩn bị cho k&igrave; thi <strong><strong>THPT Quốc gia m&ocirc;n To&aacute;n năm 2018</strong></strong>&nbsp;đạt kết quả tốt nhất. Phương ph&aacute;p giải to&aacute;n được tr&igrave;nh b&agrave;y một c&aacute;ch hệ thống, dễ hiểu, dễ nhớ th&ocirc;ng qua c&aacute;c v&iacute; dụ minh họa từ cơ bản đến n&acirc;ng cao.</p>\r\n<p>Sau mỗi b&agrave;i giảng c&aacute;c em được luyện tập qua b&agrave;i thi<strong><strong> Trắc nghiệm </strong></strong>với c&aacute;c c&acirc;u hỏi được chọn lọc kĩ lu&otilde;c&oacute; đ&aacute;p &aacute;n v&agrave; lời giải <strong><strong>chi </strong></strong><strong><strong>tiết&nbsp;</strong></strong>nhằm hiểu s&acirc;u l&yacute; thuyết, &aacute;p dụng phương ph&aacute;p giải thuần thục v&agrave; ho&agrave;n thiện kỹ năng l&agrave;m b&agrave;i.</p>\r\n<p>Kết th&uacute;c một số b&agrave;i học quan trọng c&aacute;c em được l&agrave;m c&aacute;c&nbsp;<strong><strong>b&agrave;i kiểm tra trắc nghiệm Online</strong></strong>&nbsp;nhằm đ&aacute;nh gi&aacute; ch&iacute;nh x&aacute;c năng lực tiếp thu kiến thức trong từng phần cụ thể. Cuối c&aacute;c chuy&ecirc;n đề c&aacute;c em được bổ sung th&ecirc;m c&aacute;c b&agrave;i to&aacute;n n&acirc;ng cao v&agrave; tham gia đề <strong><strong>thi trắc nghiệm Online</strong></strong> nhằm đ&aacute;nh gi&aacute; chất lượng m&agrave; c&aacute;c em học chuy&ecirc;n đề đ&oacute; v&agrave; gi&uacute;p c&aacute;c em l&agrave;m quen với loại h&igrave;nh thi trắc nghiệm mới của Bộ GD&amp;ĐT.</p>\r\n<p>Hệ thống phần mềm<strong><strong> ưu</strong></strong> <strong><strong>việt</strong></strong> của <strong><strong>Study.EDU</strong></strong>sẽ theo s&aacute;t qu&aacute; tr&igrave;nh học tập của c&aacute;c em, <strong><strong>chấm điểm</strong></strong>, đưa ra <strong><strong>đ&aacute;nh gi&aacute; năng lực</strong></strong> v&agrave; tư vấn gi&uacute;p c&aacute;c em ho&agrave;n th&agrave;nh việc học của m&igrave;nh một c&aacute;ch hiệu quả nhất.</p>\r\n<p><strong><strong>NỘI DUNG KH&Oacute;A HỌC</strong></strong></p>\r\n<ul>\r\n<li>9 chuy&ecirc;n đề bao qu&aacute;t to&agrave;n bộ chương tr&igrave;nh lớp 12 m&ocirc;n To&aacute;n</li>\r\n<li>1 chuy&ecirc;n đề &ocirc;n tập chương tr&igrave;nh lớp 11 m&ocirc;n To&aacute;n.</li>\r\n<li>89 video b&agrave;i giảng b&agrave;i giảng gi&uacute;p c&aacute;c em nắm vững kiến thức m&ocirc;n To&aacute;n.</li>\r\n<li>23 đề trắc nghiệm kiểm tra online c&oacute; video hướng dẫn sửa.</li>\r\n<li>Hơn 500 b&agrave;i tập tự luận v&agrave; trắc nghiệm c&oacute; lời giải chi tiết.</li>\r\n</ul>\r\n<p>Ch&uacute;c c&aacute;c em c&oacute; những giờ học th&uacute; vị, bổ &iacute;ch v&agrave; hiệu quả qua sự dẫn dắt của Thầy&nbsp;<strong><strong>TS.</strong></strong>&nbsp;<strong><strong><em>Phạm Sỹ Nam</em></strong></strong>!</p>', '2017-06-10', '0', '0', '0', null, '300000', '1', '1', '0', '2017-05-28 15:47:02', '2017-05-28 16:04:20');
+INSERT INTO `course` VALUES ('2', 'Khoá V1 - Luyện thi THPT Quốc gia môn Vật Lý năm 2017 - Thầy Nguyễn Phạm Phúc', '[17]', null, '<p>Study.EDU thiết kế v&agrave; cung cấp chương tr&igrave;nh&nbsp;<strong>luyện thi to&agrave;n diện</strong>&nbsp;THPT Quốc gia m&ocirc;n Vật L&yacute; năm 2018 theo&nbsp;<strong>cấu tr&uacute;c MỚI&nbsp;</strong>m&agrave; Bộ Gi&aacute;o Dục v&agrave; Đ&agrave;o Tạo vừa ban h&agrave;nh. Một trong những kh&oacute;a học quan trọng nhất l&agrave;&nbsp;<strong>Kh&oacute;a nền tảng H2</strong>&nbsp;được giảng dạy bởi&nbsp;Thầy <em><strong>Nguyễn Phạm Ph&uacute;c</strong></em> - Gi&aacute;o vi&ecirc;n chuy&ecirc;n Vật L&yacute; <em><strong>trường THPT Nguyễn Ch&iacute; Thanh.</strong></em></p>\r\n<p>Kh&oacute;a học n&agrave;y sẽ cung cấp cho c&aacute;c em đầy đủ kiến thức cơ bản, kiến thức trọng t&acirc;m v&agrave; bao qu&aacute;t to&agrave;n diện&nbsp;<strong>chương tr&igrave;nh lớp 12</strong>&nbsp;v&agrave;&nbsp;<strong>nội dung trọng t&acirc;m chương tr&igrave;nh lớp 11&nbsp;</strong>nhằm chuẩn bị cho k&igrave; thi&nbsp;<strong>THPT Quốc gia m&ocirc;n Vật L&yacute; năm 2018</strong>&nbsp;đạt kết quả tốt nhất. Phương ph&aacute;p giải to&aacute;n được tr&igrave;nh b&agrave;y một c&aacute;ch hệ thống, dễ hiểu, dễ nhớ th&ocirc;ng qua c&aacute;c v&iacute; dụ minh họa từ cơ bản đến n&acirc;ng cao.</p>\r\n<p>Sau mỗi b&agrave;i giảng c&aacute;c em được luyện tập qua c&aacute;c b&agrave;i tập&nbsp;<strong>tự luận v&agrave; trắc nghiệm</strong>&nbsp;chọn lọc c&oacute; đ&aacute;p &aacute;n v&agrave; lời giải&nbsp;<strong>chi&nbsp;</strong><strong>tiết&nbsp;</strong>nhằm hiểu s&acirc;u l&yacute; thuyết, &aacute;p dụng phương ph&aacute;p giải thuần thục v&agrave; ho&agrave;n thiện kỹ năng l&agrave;m b&agrave;i.</p>\r\n<p>Kết th&uacute;c một số b&agrave;i học quan trọng c&aacute;c em được l&agrave;m c&aacute;c&nbsp;<strong>b&agrave;i kiểm tra trắc nghiệm Online</strong>&nbsp;nhằm đ&aacute;nh gi&aacute; ch&iacute;nh x&aacute;c năng lực tiếp thu kiến thức trong từng phần cụ thể. Cuối c&aacute;c chuy&ecirc;n đề c&aacute;c em được bổ sung th&ecirc;m c&aacute;c b&agrave;i to&aacute;n n&acirc;ng cao v&agrave; tham gia đề&nbsp;<strong>thi trắc nghiệm Online</strong>&nbsp;nhằm đ&aacute;nh gi&aacute; chất lượng m&agrave; c&aacute;c em học chuy&ecirc;n đề đ&oacute; v&agrave; gi&uacute;p c&aacute;c em l&agrave;m quen với loại h&igrave;nh thi trắc nghiệm của Bộ GD&amp;ĐT.</p>\r\n<p>Hệ thống phần mềm<strong>&nbsp;ưu</strong>&nbsp;<strong>việt</strong>&nbsp;của Study.EDUsẽ theo s&aacute;t qu&aacute; tr&igrave;nh học tập của c&aacute;c em,&nbsp;<strong>chấm điểm</strong>, đưa ra&nbsp;<strong>đ&aacute;nh gi&aacute; năng lực</strong>&nbsp;v&agrave; tư vấn gi&uacute;p c&aacute;c em ho&agrave;n th&agrave;nh việc học của m&igrave;nh một c&aacute;ch hiệu quả nhất.</p>\r\n<p><strong>NỘI DUNG KH&Oacute;A HỌC</strong></p>\r\n<ul>\r\n<li>7 chuy&ecirc;n đề bao qu&aacute;t to&agrave;n bộ chương tr&igrave;nh lớp 12 m&ocirc;n&nbsp;Vật L&yacute;.</li>\r\n<li>1 chuy&ecirc;n đề &ocirc;n tập chương tr&igrave;nh lớp 11 m&ocirc;n Vật L&yacute;..</li>\r\n<li>101 video b&agrave;i giảng gi&uacute;p c&aacute;c em nắm vững kiến thức m&ocirc;n&nbsp;Vật L&yacute;.</li>\r\n<li>18 đề trắc nghiệm kiểm tra online c&oacute; video hướng dẫn sửa.</li>\r\n<li>Hơn 1000 b&agrave;i tập tự luận v&agrave; trắc nghiệm c&oacute; lời giải chi tiết.</li>\r\n</ul>\r\n<p>Ch&uacute;c c&aacute;c em c&oacute; những giờ học th&uacute; vị, bổ &iacute;ch v&agrave; hiệu quả qua sự dẫn dắt của Thầy <em><strong>Nguyễn Phạm Ph&uacute;c</strong></em> !</p>', '2017-08-17', '1', '0', '1', null, '300000', '2', '2', '0', '2017-05-30 23:28:13', '2017-05-30 23:34:54');
 
 -- ----------------------------
 -- Table structure for course_news
@@ -466,6 +467,7 @@ CREATE TABLE `course_teacher` (
 -- ----------------------------
 -- Records of course_teacher
 -- ----------------------------
+INSERT INTO `course_teacher` VALUES ('2', '17', 'Khoá T1 - Luyện thi THPT Quốc gia môn Toán năm 2017 - Thầy Phạm Sỹ Nam', 'Nguyễn Phạm Phúc');
 
 -- ----------------------------
 -- Table structure for course_type
@@ -674,7 +676,7 @@ CREATE TABLE `lesson` (
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1009 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of lesson
@@ -683,6 +685,11 @@ INSERT INTO `lesson` VALUES ('15', '1', 'Tìm Khoảng Đơn Điệu Của Hàm 
 INSERT INTO `lesson` VALUES ('144', '1', 'Tìm Tham Số Để Hàm Số Đơn Điệu Trên Một Miền', '<p style=\"box-sizing: border-box; margin: 0px 0px 5px; padding: 0px; color: #333333; font-family: \'Roboto Condensed\', Roboto, Tahoma, Helvetica, Verdana, Arial; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial;\">B&agrave;i giảng sẽ gi&uacute;p c&aacute;c em nắm được kiến thức cơ bản về c&aacute;ch t&igrave;m tham số để h&agrave;m số đơn điệu tr&ecirc;n một miền như:</p>\r\n<ul>\r\n<li><span style=\"box-sizing: border-box; margin: 0px; padding: 0px; line-height: 1.6;\">C&ocirc;ng thức t&iacute;nh.</span></li>\r\n<li><span style=\"box-sizing: border-box; margin: 0px; padding: 0px; line-height: 1.6;\">Điều kiện đủ để h&agrave;m số đơn điệu tr&ecirc;n một miền.</span></li>\r\n</ul>', 'https://www.youtube.com/watch?v=SAvJwbilrcI', null, '16', '2', '0', '1', '0', '2017-05-29', '2017-05-14 04:17:07', '2017-05-28 16:19:27');
 INSERT INTO `lesson` VALUES ('1002', '1', 'Ứng dụng tính đơn điệu giải phương trình', '<p><span style=\"color: #333333; font-family: \'Roboto Condensed\', Roboto, Tahoma, Helvetica, Verdana, Arial; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">B&agrave;i giảng sẽ gi&uacute;p c&aacute;c em nắm kỹ hơn về l&yacute; thuyết v&agrave; một số v&iacute; dụ cụ thể về ứng dụng t&iacute;nh đơn điệu giải phương tr&igrave;nh.</span></p>', 'https://www.youtube.com/watch?v=-FDA6Wga574', null, null, null, '0', '1', '0', null, '2017-05-29 21:51:40', '2017-05-29 21:51:40');
 INSERT INTO `lesson` VALUES ('1003', '1', 'Ứng dụng tính đơn điệu giải bất phương trình', '<p><span style=\"color: #333333; font-family: \'Roboto Condensed\', Roboto, Tahoma, Helvetica, Verdana, Arial; font-size: 15px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">B&agrave;i giảng Ứng dụng t&iacute;nh đơn điệu giải bất phương tr&igrave;nh sẽ gi&uacute;p c&aacute;c em nắm được l&yacute; thuyết v&agrave; b&agrave;i tập để c&aacute;c em củng cố kiến thức.</span></p>', '', null, null, null, '0', '0', '0', '2017-05-31', '2017-05-29 21:53:53', '2017-05-29 21:53:53');
+INSERT INTO `lesson` VALUES ('1004', '2', 'Dao động điều hòa', '<p>B&agrave;i học gi&uacute;p c&aacute;c em nắm được những kiến thức cơ bản về:</p>\r\n<p>1. C&aacute;c phương tr&igrave;nh dao động điều h&ograve;a:</p>\r\n<ul>\r\n<li>Phương tr&igrave;nh li độ.</li>\r\n<li>Phương tr&igrave;nh vận tốc.</li>\r\n<li>Phương tr&igrave;nh gia tốc.</li>\r\n</ul>\r\n<p>2.&nbsp;Mối li&ecirc;n hệ về pha - C&ocirc;ng thức độc lập với thời gian</p>\r\n<ul>\r\n<li>Mối li&ecirc;n hệ về pha.</li>\r\n<li>C&ocirc;ng thức độc lập thời gian.</li>\r\n</ul>\r\n<p>3. Li&ecirc;n hệ giữa chuyển động tr&ograve;n đều v&agrave; dao động điều h&ograve;a.</p>', '', null, '0', null, '0', '1', '0', '2017-05-31', '2017-05-30 23:34:02', '2017-05-30 23:34:02');
+INSERT INTO `lesson` VALUES ('1005', '2', 'Xác định các đại lượng và trạng thái của vật dao động điều hoà', '<p>B&agrave;i giảng cung cấp cho học sinh t&igrave;m hiểu mối li&ecirc;n hệ giữa c&aacute;c đại lượng v&agrave; trạng th&aacute;i của vật trong qu&aacute; tr&igrave;nh dao động. Ngo&agrave;i ra nắm được c&aacute;c nội dung ch&iacute;nh của b&agrave;i:</p>\r\n<ul>\r\n<li>C&ocirc;ng thức t&iacute;nh tần số g&oacute;c.</li>\r\n<li>Kh&aacute;i niệm chu kỳ (T).</li>\r\n<li>Kh&aacute;i niệm tần số (f).</li>\r\n<li>X&aacute;c định vị tr&iacute;, vận tốc, gia tốc tại thời điểm ban đầu.</li>\r\n<li>X&aacute;c định trạng th&aacute;i của vật tại thời điểm ban đầu.</li>\r\n</ul>', '', null, '0', null, '0', '1', '0', '2017-06-07', '2017-05-30 23:38:53', '2017-05-30 23:38:53');
+INSERT INTO `lesson` VALUES ('1006', '2', 'Áp dụng công thức độc lập với thời gian', '<p><span style=\"font-family: Arial, Helvetica, sans-serif; line-height: 16px;\">Th&ocirc;ng qua b&agrave;i học c&aacute;c em sử dụng c&aacute;c c&ocirc;ng thức độc lập thời gian để giải c&aacute;c b&agrave;i to&aacute;n li&ecirc;n quan v&agrave; t&igrave;m c&aacute;c đại lượng.</span></p>', '', null, '0', null, '0', '1', '0', '2017-06-09', '2017-05-30 23:40:19', '2017-05-30 23:40:19');
+INSERT INTO `lesson` VALUES ('1007', '2', 'Viết phương trình dao động của vật', '<p>B&agrave;i học hướng dẫn học sinh th&agrave;nh lập phương tr&igrave;nh dao động điều h&ograve;a của vật. Qua đ&oacute; &aacute;p dụng phương tr&igrave;nh dao động điều h&ograve;a t&igrave;m c&aacute;c đại lượng A,&nbsp;<span style=\"color: #333333; font-family: \'Cambria Math\', serif; font-size: 14pt; line-height: 115%;\">⍵,...</span></p>', '', null, '0', null, '0', '1', '0', '2017-06-14', '2017-05-30 23:40:58', '2017-05-30 23:40:58');
+INSERT INTO `lesson` VALUES ('1008', '2', 'Xác định ly độ của vật sau thời gian ∆t', '<p>Với b&agrave;i học n&agrave;y, học sinh sẽ được củng cố c&aacute;c kiến thức về:</p>\r\n<ul>\r\n<li>X&aacute;c định ly độ của vật.</li>\r\n<li>Nắm v&agrave; vận dụng c&aacute;c c&ocirc;ng thức x&aacute;c định vị tr&iacute;.</li>\r\n<li>Biết được c&aacute;c trường hợp đặc biệt khi x&aacute;c định vị tr&iacute; của vật tại thời điểm ∆t.</li>\r\n<li>X<span style=\"font-family: Arial, Helvetica, sans-serif; line-height: 16px;\">&aacute;c định vị tr&iacute; của vật dao động điều h&ograve;a tại một thời điểm cho trước.</span></li>\r\n</ul>', '', null, '0', null, '0', '1', '0', '2017-06-16', '2017-05-30 23:44:46', '2017-05-30 23:44:46');
 
 -- ----------------------------
 -- Table structure for lesson_comment
@@ -3615,6 +3622,26 @@ INSERT INTO `menu` VALUES ('39', '37', 'Sự kiện', '1', 'event/index', 'book'
 INSERT INTO `menu` VALUES ('40', '37', 'Log người dùng', '1', 'event/log', 'book', '1', '1', '3', null, null);
 
 -- ----------------------------
+-- Table structure for notification
+-- ----------------------------
+DROP TABLE IF EXISTS `notification`;
+CREATE TABLE `notification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender_id` int(11) NOT NULL DEFAULT '0' COMMENT '0: hệ thống, ngược lại là user',
+  `receiver_id` int(11) NOT NULL DEFAULT '0' COMMENT '0: hệ thống, ngược lại là user',
+  `type` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `status` tinyint(1) DEFAULT '0' COMMENT '1 : da xem, 0: chua xem',
+  `created_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`,`receiver_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of notification
+-- ----------------------------
+INSERT INTO `notification` VALUES ('1', '17', '0', 'send_request_course', 'Xét duyệt khóa học: ID = 2###Khoá V1 - Luyện thi THPT Quốc gia môn Vật Lý năm 2017 - Thầy Nguyễn Phạm Phúc', '0', '2017-05-31 00:11:19');
+
+-- ----------------------------
 -- Table structure for party
 -- ----------------------------
 DROP TABLE IF EXISTS `party`;
@@ -3676,14 +3703,14 @@ INSERT INTO `party_type` VALUES ('2', 'Đơn vị phân phối ND', 'Đơn vị 
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content` varchar(700) NOT NULL,
+  `content` text NOT NULL,
   `status` tinyint(1) DEFAULT '1' COMMENT '1: active',
   `subject_id` int(11) DEFAULT NULL,
   `topic_id` int(11) DEFAULT NULL,
   `quiz_id` int(11) NOT NULL,
   `solution` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question
@@ -3692,6 +3719,11 @@ INSERT INTO `question` VALUES ('1', '<p>Hội nghị <em><strong>Ianta</strong> 
 INSERT INTO `question` VALUES ('2', 'Ngày 24-10-1945, sau khi Quốc hội các nước thành viên phê chuẩn, bản Hiến chương của Liên hợp quốc\n', '1', '8', null, '4', '');
 INSERT INTO `question` VALUES ('3', 'Những năm đầu sau khi Liên Xô tan rã, Liên bang Nga thực hiện chính sách đối ngoại ngả về phương Tây với hi vọng\n', '1', '8', null, '4', '');
 INSERT INTO `question` VALUES ('4', 'Tại Quốc hội Mĩ (12-3-1947), Tổng thống Truman đề nghị?', '1', '8', null, '4', '');
+INSERT INTO `question` VALUES ('5', '<p>H&agrave;m số <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><msup><mi>x</mi><mrow><mn>3</mn><mo>&#160;</mo></mrow></msup><mo>-</mo><mo>&#160;</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>&#160;</mo><mo>+</mo><mo>&#160;</mo><mn>3</mn><mi>x</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mn>4</mn></math>&nbsp;c&oacute; bao nhi&ecirc;u cực trị ?</p>', '1', '1', null, '1', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>\'</mo><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mn>6</mn><mi>x</mi><mo>&#160;</mo><mo>+</mo><mo>&#160;</mo><mn>3</mn><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mn>3</mn><mo>&#160;</mo><mo>(</mo><mi>x</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup><mo>&#160;</mo><mo>&#8805;</mo><mn>0</mn><mo>,</mo><mo>&#160;</mo><mo>&#8704;</mo><mi>x</mi><mo>&#160;</mo><mo>&#8712;</mo><mi>R</mi></math></p>\r\n<p>Do đ&oacute; h&agrave;m số lu&ocirc;n đồng biến tr&ecirc;n tập x&aacute;c định dẫn tới kh&ocirc;ng c&oacute; cực trị.</p>');
+INSERT INTO `question` VALUES ('6', '<p>Đồ thị h&agrave;m số &nbsp;<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>1</mn></math> cắt đồ thị h&agrave;m số <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></math>&nbsp;tại hai điểm ph&acirc;n biệt A, B. Khi đ&oacute; độ d&agrave;i AB l&agrave; bao nhi&ecirc;u ?</p>', '1', '1', null, '1', '');
+INSERT INTO `question` VALUES ('7', '<p>Cho h&agrave;m số <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mfrac><mrow><mo>-</mo><mn>4</mn></mrow><mn>3</mn></mfrac><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>-</mo><mn>3</mn></math> . Khẳng định n&agrave;o sau đ&acirc;y l&agrave; đ&uacute;ng?</p>', '1', '1', null, '1', '');
+INSERT INTO `question` VALUES ('10', '<p>H&agrave;m số n&agrave;o sau đ&acirc;y đồng biến tr&ecirc;n R ?</p>', '1', '1', null, '1', '');
+INSERT INTO `question` VALUES ('11', '<p>Trong c&aacute;c h&agrave;m số sau, h&agrave;m số n&agrave;o đồng biến tr&ecirc;n R ?</p>', '1', '1', null, '1', '');
 
 -- ----------------------------
 -- Table structure for question_answer
@@ -3700,10 +3732,10 @@ DROP TABLE IF EXISTS `question_answer`;
 CREATE TABLE `question_answer` (
   `ans_id` int(11) NOT NULL AUTO_INCREMENT,
   `question_id` int(11) NOT NULL,
-  `content` varchar(255) DEFAULT NULL,
+  `content` text,
   `is_true` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1: true, 0:false',
   PRIMARY KEY (`ans_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of question_answer
@@ -3724,6 +3756,26 @@ INSERT INTO `question_answer` VALUES ('13', '4', ' tăng cường hợp tác kho
 INSERT INTO `question_answer` VALUES ('14', '4', ' tăng cường hợp tác khoa học-kĩ thuật với các nước châu Âu', '1');
 INSERT INTO `question_answer` VALUES ('15', '4', 'thực hiện Kế hoạch Mácsan, giúp Tây Âu phục hồi kinh tế.', '0');
 INSERT INTO `question_answer` VALUES ('16', '4', 'viện trợ khẩn cấp 400 triệu USD cho Hi Lạp và Thổ Nhĩ Kì', '0');
+INSERT INTO `question_answer` VALUES ('17', '5', '<p>0</p>', '1');
+INSERT INTO `question_answer` VALUES ('18', '5', '<p>1</p>', '0');
+INSERT INTO `question_answer` VALUES ('19', '5', '<p>2</p>', '0');
+INSERT INTO `question_answer` VALUES ('20', '5', '<p>3</p>', '0');
+INSERT INTO `question_answer` VALUES ('41', '6', '<p>AB = 3</p>', '0');
+INSERT INTO `question_answer` VALUES ('42', '6', '<p>AB = <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn><msqrt><mn>2</mn></msqrt></math></p>', '1');
+INSERT INTO `question_answer` VALUES ('43', '6', '<p>AB = 2</p>', '0');
+INSERT INTO `question_answer` VALUES ('44', '6', '<p>1</p>', '0');
+INSERT INTO `question_answer` VALUES ('45', '7', '<p>H&agrave;m số đ&atilde; cho nghịch biến tr&ecirc;n <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfenced><mrow><mo>-</mo><mo>&#8734;</mo><mo>;</mo><mo>&#160;</mo><mfrac><mrow><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac></mrow></mfenced></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('46', '7', '<p>H&agrave;m số đ&atilde; cho nghịch biến tr&ecirc;n <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfenced><mrow><mfrac><mrow><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>;</mo><mo>&#160;</mo><mo>+</mo><mo>&#8734;</mo></mrow></mfenced></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('47', '7', '<p>H&agrave;m số đ&atilde; cho nghịch biến tr&ecirc;n <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mfenced><mrow><mo>-</mo><mo>&#8734;</mo><mo>;</mo><mo>&#160;</mo><mfrac><mrow><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac></mrow></mfenced><mo>&#8746;</mo><mfenced><mrow><mfrac><mrow><mo>-</mo><mn>1</mn></mrow><mn>2</mn></mfrac><mo>;</mo><mo>&#160;</mo><mo>+</mo><mo>&#8734;</mo></mrow></mfenced></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('48', '7', '<p>H&agrave;m số đ&atilde; cho nghịch biến tr&ecirc;n <math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi mathvariant=\"normal\">&#8477;</mi></math></p>', '1');
+INSERT INTO `question_answer` VALUES ('49', '10', '<p>y = tan x</p>', '0');
+INSERT INTO `question_answer` VALUES ('50', '10', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mn>2</mn><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><msup><mi>x</mi><mn>2</mn></msup></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('51', '10', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn></math></p>', '1');
+INSERT INTO `question_answer` VALUES ('52', '10', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('53', '11', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mn>4</mn><mi>x</mi><mo>-</mo><mfrac><mn>3</mn><mi>x</mi></mfrac></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('54', '11', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mn>4</mn><mi>x</mi><mo>-</mo><mn>3</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mi>cos</mi><mi>x</mi></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('55', '11', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>7</mn></math></p>', '0');
+INSERT INTO `question_answer` VALUES ('56', '11', '<p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mi>x</mi></math></p>', '1');
 
 -- ----------------------------
 -- Table structure for quiz
@@ -3735,7 +3787,7 @@ CREATE TABLE `quiz` (
   `description` varchar(255) DEFAULT NULL,
   `quiz_type_id` int(11) NOT NULL DEFAULT '0',
   `subject_id` int(11) NOT NULL,
-  `topic_id` int(11) DEFAULT NULL,
+  `topic_id` int(11) DEFAULT '0',
   `time_length` int(11) NOT NULL DEFAULT '30',
   `level` enum('easy','normal','hard') DEFAULT 'normal',
   `total_question` int(11) DEFAULT '10',
@@ -3750,7 +3802,7 @@ CREATE TABLE `quiz` (
 -- ----------------------------
 -- Records of quiz
 -- ----------------------------
-INSERT INTO `quiz` VALUES ('1', 'Đề số 1: Đề thi thử THPT Quốc Gia năm 2017 môn Toán', 'Đề thi thử THPT Quốc Gia năm 2017 môn Toán -Sở Giáo Dục và Đào Tạo Bắc Ninh - Phòng Khảo Thi và Kiểm Định', '1', '1', null, '90', 'normal', '50', '0', '1', '0', '2017-05-28 10:32:05', '2017-05-28 10:32:05');
+INSERT INTO `quiz` VALUES ('1', 'Đề số 1: Đề thi thử THPT Quốc Gia năm 2017 môn Toán  - Trường THPT Lam Kinh', '<p>Đề thi thử THPT Quốc Gia năm 2017 m&ocirc;n To&aacute;n &nbsp;- Trường THPT Lam Kinh</p>', '1', '1', null, '90', 'normal', '5', '1', '0', '0', '2017-05-28 10:32:05', '2017-06-01 19:41:50');
 INSERT INTO `quiz` VALUES ('2', 'Đề số 2: Đề thi thử THPT Quốc Gia năm 2017 môn Toán', 'Đề thi thử THPT Quốc Gia năm 2017 môn Toán -Sở Giáo Dục và Đào Tạo Thanh Hóa - Trường THPT Quảng Xương 1', '1', '1', null, '90', 'normal', '50', '0', '1', '0', '2017-05-28 10:32:05', '2017-05-28 10:32:05');
 INSERT INTO `quiz` VALUES ('3', 'Đề số 3: Đề thi thử THPT Quốc Gia năm 2017 môn Toán', 'Đề thi thử THPT Quốc Gia năm 2017 môn Toán -Trường Đại Học Vinh - Trường THPT Chuyên', '1', '1', null, '90', 'normal', '50', '0', '1', '0', '2017-05-28 10:32:05', '2017-05-28 10:32:05');
 INSERT INTO `quiz` VALUES ('4', 'Đề số 1: Đề thi thử THPT Quốc Gia năm 2017 môn Lịch sử', 'Đề thi thử THPT Quốc Gia năm 2017 môn Lịch sử - BỘ GIÁO DỤC VÀ ĐÀO TẠO', '1', '8', null, '50', 'normal', '40', '0', '1', '0', '2017-05-28 11:20:13', '2017-05-28 11:20:13');
@@ -3991,13 +4043,14 @@ CREATE TABLE `static_page` (
   `created_time` datetime DEFAULT NULL,
   `updated_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of static_page
 -- ----------------------------
-INSERT INTO `static_page` VALUES ('1', 'CHARGING_BANK_HELP', '<p class=\"tb1 fs16 \">Bạn sẽ được tặng <b>thêm 10% giá trị</b> nạp tiền thành công.</p>\r\n					<p class=\"tb1 fs16 fw600\">Hướng dẫn nạp tiền bằng chuyển khoản ngân hàng</p>\r\n					<p class=\"tb1\">- Bạn có thể đến bất kỳ ngân hàng nào ở Việt Nam hoặc bạn có thể sử dụng dịch vụ Internet Banking để chuyển tiền cho chúng tôi theo thông tin:</p>	\r\n\r\n					<ul class=\"cknh\">\r\n						\r\n						<li>\r\n							<div class=\"t-item\">\r\n								+  Tài khoản ngân hàng Á Châu (ACB):\r\n							</div>\r\n							\r\n							<div class=\"c-item\">\r\n								Số tài khoản: 223620179<br/>\r\n								Chủ tài khoản: Nguyễn Phương Hà Linh<br/>\r\n								Ngân hàng ACB, chi nhánh Phan Đăng Lưu, TPHCM\r\n							</div>\r\n						</li>\r\n						\r\n						<li>\r\n							<div class=\"t-item\">\r\n								+  Tài khoản ngân hàng Agribank:\r\n							</div>\r\n							\r\n							<div class=\"c-item\">\r\n								Số tài khoản: 6380205472535<br/>\r\n								Chủ tài khoản: Nguyễn Phương Hà Linh<br/>\r\n								Ngân hàng Agribank, chi nhánh quận Bình Thạnh, TPHCM\r\n							</div>\r\n						</li>\r\n						\r\n\r\n						<li>\r\n							<div class=\"t-item cpink	\">*	Ghi chú khi chuyển khoản:</div>\r\n							<div class=\"c-item\">\r\n								<p class=\"padbot5\">Tại mục \"Ghi chú\" khi chuyển khoản, bạn ghi rõ:</p>\r\n								<p class=\" padbot5 fw600\">Họ Tên - Email tài khoản - Số điện thoại</p>\r\n								<p class=\"padbot5\">Ví dụ: Nguyen Hoang Hai - hoanghai1989@gmail.com - 0902786182</p>	\r\n							</div>\r\n						</li>\r\n					</ul>\r\n					\r\n					<p class=\"tb1\">- Ngay sau khi chúng tôi nhận được thông tin chuyển khoản, chúng tôi sẽ tiến hành kích hoạt khóa học cho bạn.</p>', '2017-05-07 09:48:30', '2017-05-07 09:48:32');
+INSERT INTO `static_page` VALUES ('1', 'CHARGING_BANK_HELP', '<p class=\"tb1 fs16 \">Bạn sẽ được tặng <strong>th&ecirc;m 10% gi&aacute; trị</strong> nạp tiền th&agrave;nh c&ocirc;ng.</p>\r\n<p class=\"tb1 fs16 fw600\">Hướng dẫn nạp tiền bằng chuyển khoản ng&acirc;n h&agrave;ng</p>\r\n<p class=\"tb1\">- Bạn c&oacute; thể đến bất kỳ ng&acirc;n h&agrave;ng n&agrave;o ở Việt Nam hoặc bạn c&oacute; thể sử dụng dịch vụ Internet Banking để chuyển tiền cho ch&uacute;ng t&ocirc;i theo th&ocirc;ng tin:</p>\r\n<ul class=\"cknh\">\r\n<li>\r\n<div class=\"t-item\">+ T&agrave;i khoản ng&acirc;n h&agrave;ng &Aacute; Ch&acirc;u (ACB):</div>\r\n<div class=\"c-item\">Số t&agrave;i khoản: 223620179<br /> Chủ t&agrave;i khoản: Nguyễn Phương H&agrave; Linh<br /> Ng&acirc;n h&agrave;ng ACB, chi nh&aacute;nh Phan Đăng Lưu, TPHCM</div>\r\n</li>\r\n<li>\r\n<div class=\"t-item\">+ T&agrave;i khoản ng&acirc;n h&agrave;ng Agribank:</div>\r\n<div class=\"c-item\">Số t&agrave;i khoản: 6380205472535<br /> Chủ t&agrave;i khoản: Nguyễn Phương H&agrave; Linh<br /> Ng&acirc;n h&agrave;ng Agribank, chi nh&aacute;nh quận B&igrave;nh Thạnh, TPHCM</div>\r\n</li>\r\n<li>\r\n<div class=\"t-item cpink	\">* Ghi ch&uacute; khi chuyển khoản:</div>\r\n<div class=\"c-item\">\r\n<p class=\"padbot5\">Tại mục \"Ghi ch&uacute;\" khi chuyển khoản, bạn ghi r&otilde;:</p>\r\n<p class=\" padbot5 fw600\">Họ T&ecirc;n - Email t&agrave;i khoản - Số điện thoại</p>\r\n<p class=\"padbot5\">V&iacute; dụ: Nguyen Hoang Hai - hoanghai1989@gmail.com - 0902786182</p>\r\n</div>\r\n</li>\r\n</ul>\r\n<p class=\"tb1\">- Ngay sau khi ch&uacute;ng t&ocirc;i nhận được th&ocirc;ng tin chuyển khoản, ch&uacute;ng t&ocirc;i sẽ tiến h&agrave;nh k&iacute;ch hoạt kh&oacute;a học cho bạn.</p>', '2017-05-07 09:48:30', '2017-05-30 23:02:56');
 INSERT INTO `static_page` VALUES ('2', 'CHARGING_PHONE_CARD_HELP', '<div class=\"ndttkh\">\r\n					<p class=\"tbmsg\">Nạp tiền bằng thẻ cào điện thoại</p>\r\n					<!-- <p class=\"tb1\"><span class=\"cpink\">Tài khoản Alaxu của bạn hiện có <b> vnd</b></span></p> -->\r\n					<p class=\"tb1 martop10 fw600\">Hướng dẫn nạp tiền qua thẻ cào điện thoại (chỉ áp dụng thẻ Mobifone, Vinaphone và Viettel):</p>\r\n					<p class=\"tb1 marbot10\">Bạn có thể mua thẻ cào di động được bán ở hầu hết các đại lý, tiệm tạp hóa, cửa hàng điện thoại di động trên toàn quốc và làm theo các bước hướng dẫn bên dưới để nạp tiền vào tài khoản</p>\r\n					<p class=\"tb1\"><b>Bước 1:</b> Cào lớp tráng bạc để biết mã thẻ.</p>\r\n					<p class=\"tb1\"><b>Bước 2:</b> Chọn loại thẻ, nhập mã thẻ cào và số seri thẻ cào. (Các số viết liền không khoảng trắng hoặc dấu -)</p>\r\n					<p class=\"tb1\"><b>Bước 3:</b> Nhập mã Captcha và bấm nút \"Thanh Toán\" để hoàn tất quá trình nạp tiền.</p>\r\n									<p class=\"tb1 marbot10\">Để nạp thẻ tiếp theo, vui lòng làm theo trình tự như trên.</p>\r\n<p class=\"tb1 marbot10\"><b>(Lưu ý: Nạp sai 5 lần liên tiếp tài khoản của Bạn sẽ bị khóa và được mở lại sau 24 Giờ)</b></p>	', '2017-05-07 09:55:07', '2017-05-07 09:55:09');
+INSERT INTO `static_page` VALUES ('3', 'CREATE_COURSE_TUTORIAL', '<p>Hướng dẫn tạo kh&oacute;a học mới:</p>\r\n<p>- Click n&uacute;t \"<strong>Tạo kh&oacute;a học mới</strong>\".</p>\r\n<p>- Nhập c&aacute;c th&ocirc;ng tin cần thiết về kh&oacute;a học của bạn.</p>\r\n<p>- Sau khi kh&oacute;a học được tạo th&agrave;nh c&ocirc;ng, click button \"View\" để xem chi tiết kh&oacute;a học. Ở đ&acirc;y bạn h&atilde;y tọa ra danh s&aacute;ch c&aacute;c b&agrave;i giảng trong kh&oacute;a học của m&igrave;nh để ch&uacute;ng t&ocirc;i xem x&eacute;t x&eacute;t duyệt kh&oacute;a học của bạn. (chỉ cần ti&ecirc;u đề v&agrave; mổ tả của b&agrave;i giảng, kh&ocirc;ng cần upload link_video hoặc upload video b&agrave;i giảng của bạn l&ecirc;n ngay.)</p>\r\n<p>Lưu &yacute;: C&aacute;c bạn cần đưa ra ng&agrave;y dự kiến xuất bản b&agrave;i giảng một c&aacute;ch r&otilde; r&agrave;ng nhất.</p>\r\n<p>- Sau khi cập nhật danh s&aacute;ch tất cả c&aacute;c b&agrave;i giảng trong kh&oacute;a học, c&aacute;c bạn c&oacute; thể cập nhật th&ocirc;ng tin t&agrave;i liệu tham khảo hoặc danh s&aacute;ch c&aacute;c b&agrave;i kiểm tra cho từng b&agrave;i giảng.</p>\r\n<p>- Sau đ&oacute; quay trở lại danh s&aacute;ch kh&oacute;a học của bạn, h&atilde;y chọn n&uacute;t \"Đề nghị x&eacute;t duyệt\" để gửi th&ocirc;ng tin về cho ch&uacute;ng t&ocirc;i xem x&eacute;t kh&oacute;a học của bạn.</p>\r\n<p>Lưu &yacute;: h&atilde;y cập nhật kh&oacute;a học kỹ c&agrave;ng trước khi gửi y&ecirc;u cầu xem x&eacute;t. Nếu qu&aacute; 3 lần y&ecirc;u cầu của bạn kh&ocirc;ng được x&eacute;t duyệ, kh&oacute;a học sẽ bị tự động x&oacute;a.</p>', '2017-05-30 23:12:58', '2017-05-30 23:12:58');
 
 -- ----------------------------
 -- Table structure for student
@@ -4094,7 +4147,7 @@ CREATE TABLE `subject` (
   `status` tinyint(1) DEFAULT '1',
   `deleted` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of subject
@@ -4107,6 +4160,7 @@ INSERT INTO `subject` VALUES ('5', 'Địa Lý', 'Địa Lý', 'dia-ly', 'flag',
 INSERT INTO `subject` VALUES ('6', 'Ngữ Văn', 'Ngữ Văn', 'ngu-van', 'pencil-square-o', '#631187', '1', '0');
 INSERT INTO `subject` VALUES ('7', 'Tiếng Anh', 'Tiếng Anh', 'tieng-anh', 'users', '#03aa49', '1', '0');
 INSERT INTO `subject` VALUES ('8', 'Lịch sử', 'Sử', 'lich-su', 'book', '#008080', '1', '0');
+INSERT INTO `subject` VALUES ('9', 'Giáo dục công dân', 'Giáo dục công dân', 'giao-duc-cong-dan', 'gavel', '#008080', '1', '0');
 
 -- ----------------------------
 -- Table structure for teacher

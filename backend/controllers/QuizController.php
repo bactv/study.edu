@@ -66,7 +66,7 @@ class QuizController extends BackendController
         $model = new Quiz();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->subject_id = Topic::findOne(['id' => $model->topic_id])['subject_id'];
+            var_dump($model);die();
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
@@ -92,7 +92,6 @@ class QuizController extends BackendController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->subject_id = Topic::findOne(['id' => $model->topic_id])['subject_id'];
             $model->total_question = count(Question::findAll(['quiz_id' => $model->id]));
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);

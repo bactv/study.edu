@@ -30,7 +30,7 @@ class QuestionAnswerDB extends \yii\db\ActiveRecord
         return [
             [['question_id'], 'required'],
             [['question_id', 'is_true'], 'integer'],
-            [['content'], 'string', 'max' => 255]
+            [['content'], 'string']
         ];
     }
 
