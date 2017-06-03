@@ -59,7 +59,7 @@ $this->params['menu'] = [
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {update}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
                 'contentOptions' => ['style' => 'text-align: center; vertical-align: middle'],
@@ -79,15 +79,15 @@ $this->params['menu'] = [
                             'data-pjax' => '0',
                         ]);
                     },
-                    'delete' => function ($url) {
-                        return Html::a(Icon::show('trash-o'), $url, [
-                            'title' => Yii::t('cms', 'Delete'),
-                            'class'=>'btn btn-primary btn-xs btn-app',
-                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                            'data-method' => 'post',
-                            'data-pjax' => 'w0'
-                        ]);
-                    },
+//                    'delete' => function ($url) {
+//                        return Html::a(Icon::show('trash-o'), $url, [
+//                            'title' => Yii::t('cms', 'Delete'),
+//                            'class'=>'btn btn-primary btn-xs btn-app',
+//                            'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+//                            'data-method' => 'post',
+//                            'data-pjax' => 'w0'
+//                        ]);
+//                    },
                 ]
             ],
         ],

@@ -13,9 +13,6 @@ Icon::map($this, Icon::FA);
 
 ?>
 
-<p>
-<?php echo Html::a(Icon::show('plus') . ' Thêm mới', Url::toRoute(['/question-answer/create', 'question_id' => $question_id]), ['class' => 'btn btn-primary', 'target' => '_blank']) ?>
-</p>
 <?php if (isset($lists) && count($lists) > 0) { ?>
     <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
         <thead>

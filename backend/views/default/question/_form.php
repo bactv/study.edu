@@ -53,7 +53,7 @@ Icon::map($this, Icon::FA);
                     'connectorRoute' => 'el-finder/connector',
                 ],
             ]
-        )->label('Đáp án 1 <input type="radio"' . ($model->isNewRecord ? 'checked' : '') . ' name="is_true[]" value="ans_1"' . ($model['is_true'] == 'ans_1' ? 'checked' : '') . '>' ) ?>
+        )->label('Đáp án 1 <input type="radio"' . ($model->isNewRecord ? 'checked' : '') . ' name="is_true" value="ans_1"' . ($model['is_true'] == 'ans_1' ? 'checked' : '') . '>' ) ?>
         <?= $form->field($model, 'ans_2')->widget(
             TinyMce::className(),
             [

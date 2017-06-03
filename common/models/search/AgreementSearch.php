@@ -42,7 +42,7 @@ class AgreementSearch extends Agreement
      */
     public function search($params)
     {
-        $query = Agreement::find();
+        $query = Agreement::find()->where(['deleted' => 0]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

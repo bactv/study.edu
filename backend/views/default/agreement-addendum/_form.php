@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
+use zxbodya\yii2\tinymce\TinyMce;
+use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
@@ -21,19 +23,21 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'agreement_id')->textInput() ?>
+    <?= $form->field($model, 'agreement_id')->hiddenInput([
+        'value' => $agreement_id
+    ])->label(false) ?>
 
     <?= $form->field($model, 'addendum_number')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'addendum_content')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'addendum_created_time')->textInput() ?>
-
-    <?= $form->field($model, 'addendum_updated_time')->textInput() ?>
-
-    <?= $form->field($model, 'addendum_created_by')->textInput() ?>
-
-    <?= $form->field($model, 'addendum_updated_by')->textInput() ?>
+    <?= $form->field($model, 'addendum_content')->widget(
+        TinyMce::className(),
+        [
+            'fileManager' => [
+                'class' => TinyMceElFinder::className(),
+                'connectorRoute' => 'el-finder/connector',
+            ],
+        ]
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

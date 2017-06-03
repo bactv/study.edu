@@ -71,3 +71,9 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

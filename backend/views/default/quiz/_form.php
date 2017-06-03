@@ -49,6 +49,13 @@ Icon::map($this, Icon::FA);
             'data' => ArrayHelper::map(\backend\models\Subject::find()->all(), 'id', 'name'),
         ]) ?>
 
+        <?= $form->field($model, 'topic_id')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(\backend\models\Topic::find()->all(), 'id', 'name'),
+            'options' => [
+                'prompt' => 'Chuyên đề ...'
+            ]
+        ]) ?>
+
         <?= $form->field($model, 'time_length')->textInput([
             'type' => 'number',
             'max' => 200,

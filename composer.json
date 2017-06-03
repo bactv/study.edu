@@ -29,7 +29,9 @@
         "kartik-v/yii2-date-range": "*",
         "zxbodya/yii2-tinymce": "*@dev",
         "zxbodya/yii2-elfinder": "*@dev",
-        "arogachev/yii2-excel": "^0.1.1"
+        "arogachev/yii2-excel": "^0.1.1",
+        "opentok/opentok": "2.3.x",
+        "mobiledetect/mobiledetectlib": "^2.8"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

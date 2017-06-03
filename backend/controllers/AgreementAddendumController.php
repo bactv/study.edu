@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Agreement;
 use Yii;
 use backend\models\AgreementAddendum;
 use common\models\search\AgreementAddendumSearch;
@@ -54,19 +55,25 @@ class AgreementAddendumController extends BackendController
     }
 
     /**
-     * Creates a new AgreementAddendum model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @param $agreement_id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
-    public function actionCreate()
+    public function actionCreate($agreement_id)
     {
         $model = new AgreementAddendum();
 
+        $agreement = Agreement::findOne(['agreement_id' => $agreement_id]);
+        if (empty($agreement)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->addendum_id]);
+            return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'agreement_id' => $agreement_id
             ]);
         }
     }
@@ -82,10 +89,11 @@ class AgreementAddendumController extends BackendController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->addendum_id]);
+            return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'agreement_id' => $model->agreement_id
             ]);
         }
     }

@@ -67,15 +67,16 @@ class AdminController extends BackendController
 
         $model->scenario = 'create';
 
-        if ($model->load(Yii::$app->request->post())) {
+        $request = Yii::$app->request->post();
+        if ($model->load($request)) {
             $model->birthday = Utility::formatDataTime($model->birthday, '/', '-');
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($model->avatar)) {
                 $model->thumb = 1;
             }
             $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            if (!empty($model->group_ids)) {
-                $model->group_ids = json_encode($model->group_ids);
+            if (!empty($request['Admin']['group_ids'])) {
+                $model->group_ids = json_encode($request['Admin']['group_ids']);
             }
             if ($model->validate() && $model->save() && $model->uploadAvatar($model->id)) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -108,6 +109,9 @@ class AdminController extends BackendController
 
         $request = Yii::$app->request->post();
         if ($model->load($request) && $model->validate()) {
+            var_dump($model);
+            var_dump($request);die();
+            die();
             $model->birthday = Utility::formatDataTime($model->birthday, '/', '-');
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($request['Admin']['group_ids'])) {

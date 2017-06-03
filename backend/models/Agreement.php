@@ -26,6 +26,20 @@ class Agreement extends \common\models\AgreementBase
             ),
         );
     }
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['agreement_code', 'party_id_a', 'party_id_b', 'agreement_signed_date', 'agreement_effective_date', 'agreement_type_id'], 'required'],
+            [['party_id_a', 'party_id_b', 'agreement_type_id', 'created_by', 'updated_by', 'deleted'], 'integer'],
+            [['agreement_signed_date', 'agreement_effective_date', 'created_time', 'updated_time'], 'safe'],
+            [['mg'], 'number'],
+            [['agreement_code'], 'string', 'max' => 255],
+            ['agreement_code', 'validateAgreementCode', 'on' => 'create']
+        ];
+    }
 
     public static function findByIdentify($condition)
     {
@@ -39,5 +53,13 @@ class Agreement extends \common\models\AgreementBase
             return $object->{$attr_return};
         }
         return '';
+    }
+
+    public function validateAgreementCode()
+    {
+        $check = Agreement::findOne(['agreement_code' => $this->agreement_code]);
+        if (!empty($check)) {
+            $this->addError('agreement_code', 'Số HĐ đã tồn tại');
+        }
     }
 }

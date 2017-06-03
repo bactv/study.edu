@@ -48,6 +48,7 @@ Icon::map($this, Icon::FA);
             'allowClear' => true
         ],
     ]) ?>
+    <p><?php echo Html::a('Thêm mới', \yii\helpers\Url::toRoute(['/party/create']), ['target' => '_blank']) ?></p>
 
     <?= $form->field($model, 'agreement_signed_date')->widget(DatePicker::className(), [
         'type' => DatePicker::TYPE_COMPONENT_PREPEND,

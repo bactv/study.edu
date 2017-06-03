@@ -92,7 +92,11 @@ $this->params['menu'] = [
                 'options' => ['width' => '100px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ($model['status'] == 1) ? '<span class="txt_active">Active</span>' : '<span class="txt_deactive">DeActive</span>';
+                    if ($model['status'] == 1) {
+                        return '<div id="item-status-'.$model['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = "changeStatusItems('.$model['id'].', 1, \''.\yii\helpers\Url::toRoute(['menu/change-status']).'\')"><i class="fa fa-check" style="color: green;"></i></a></div>';
+                    } else {
+                        return '<div id="item-status-'.$model['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = "changeStatusItems('.$model['id'].', 0, \''.\yii\helpers\Url::toRoute(['menu/change-status']).'\')"><i class="fa fa-dot-circle-o" style="color: red"></i></a></div>';
+                    }
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']

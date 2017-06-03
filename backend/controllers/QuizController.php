@@ -66,7 +66,6 @@ class QuizController extends BackendController
         $model = new Quiz();
 
         if ($model->load(Yii::$app->request->post())) {
-            var_dump($model);die();
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

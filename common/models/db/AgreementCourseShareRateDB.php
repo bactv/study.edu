@@ -38,9 +38,9 @@ class AgreementCourseShareRateDB extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'agreement_id' => Yii::t('cms', 'Agreement ID'),
-            'course_id' => Yii::t('cms', 'Course ID'),
-            'share_rate' => Yii::t('cms', 'Share Rate'),
+            'agreement_id' => Yii::t('cms', 'Số HĐ'),
+            'course_id' => Yii::t('cms', 'Khóa học'),
+            'share_rate' => Yii::t('cms', 'Tỷ lệ chia sẻ'),
         ];
     }
 }

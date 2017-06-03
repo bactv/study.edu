@@ -8,6 +8,7 @@
 namespace frontend\controllers;
 
 use common\components\Utility;
+use frontend\components\BaseController;
 use frontend\models\Course;
 use frontend\models\CourseTeacher;
 use frontend\models\FreeStudentCourse;
@@ -23,7 +24,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
-class CourseController extends Controller
+class CourseController extends BaseController
 {
     public function actionIndex($category = '')
     {
@@ -237,7 +238,15 @@ class CourseController extends Controller
 
     public function actionLiveStreaming()
     {
-        $this->layout = false;
         return $this->render('live_streaming');
+    }
+
+    public function actionVietName()
+    {
+        $request = Yii::$app->request->get();
+        if (!Yii::$app->request->isPost || Yii::$app->request->isAjax) {
+            Yii::$app->end();
+        }
+        echo json_encode("VietName");
     }
 }

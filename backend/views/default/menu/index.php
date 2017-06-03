@@ -61,20 +61,6 @@ $this->params['menu'] = [
                 'contentOptions'=>['style'=>'text-align: center;'],
             ],
             [
-                'attribute' => 'visible',
-                'format' => 'raw',
-                'options' => ['width' => '90px'],
-                'value' => function ($data) {
-                    if ($data['visible'] == 1) {
-                        return '<div id="item-status-'.$data['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = ""><i class="fa fa-check" style="color: red;"></i></a></div>';
-                    } else {
-                        return '<div id="item-status-'.$data['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = ""><i class="fa fa-dot-circle-o" style="color: green;"></i></a></div>';
-                    }
-                },
-                'headerOptions' => ['style'=>'text-align: center;'],
-                'contentOptions'=>['style'=>'text-align: center;'],
-            ],
-            [
                 'format' => 'raw',
                 'header' => Yii::t('cms', 'Actions'),
                 'value' => function ($model) {

@@ -30,11 +30,8 @@ $this->params['menu'] = [
             'addendum_id',
             'agreement_id',
             'addendum_number',
-            'addendum_content:ntext',
             'addendum_created_time',
-            // 'addendum_updated_time',
-            // 'addendum_created_by',
-            // 'addendum_updated_by',
+            'addendum_updated_time',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

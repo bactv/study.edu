@@ -9,8 +9,8 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\AgreementAddendum */
 
-$this->title = $model->addendum_id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Agreement Addendums'), 'url' => ['index']];
+$this->title = $model->addendum_number;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Phụ lục'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agreement-addendum-view">
@@ -19,26 +19,42 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Update'), ['update', 'id' => $model->addendum_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Icon::show('trash-o') . " " .Yii::t('cms', 'Delete'), ['delete', 'id' => $model->addendum_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('cms', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'addendum_id',
-            'agreement_id',
+            [
+                'attribute' => 'agreement_id',
+                'label' => Yii::t('cms', 'Số HĐ'),
+                'value' => \backend\models\Agreement::getAttributeValue(['agreement_id' => $model['agreement_id']], 'agreement_code')
+            ],
             'addendum_number',
-            'addendum_content:ntext',
-            'addendum_created_time',
-            'addendum_updated_time',
-            'addendum_created_by',
-            'addendum_updated_by',
+            [
+                'attribute' => 'addendum_content',
+                'format' => 'raw'
+            ],
+            [
+                'attribute' => 'addendum_created_time',
+                'label' => Yii::t('cms', 'Created Time'),
+                'value' => \common\components\Utility::formatDataTime($model['addendum_created_time'], '-', '/', true)
+            ],
+            [
+                'attribute' => 'addendum_updated_time',
+                'label' => Yii::t('cms', 'Updated Time'),
+                'value' => \common\components\Utility::formatDataTime($model['addendum_updated_time'], '-', '/', true)
+            ],
+            [
+                'attribute' => 'addendum_created_by',
+                'label' => Yii::t('cms', 'Created By'),
+                'value' => \backend\models\Admin::getAttributeValue(['id' => $model['addendum_created_by']], 'username')
+            ],
+            [
+                'attribute' => 'addendum_updated_by',
+                'label' => Yii::t('cms', 'Updated By'),
+                'value' => \backend\models\Admin::getAttributeValue(['id' => $model['addendum_updated_by']], 'username')
+            ]
         ],
     ]) ?>
 

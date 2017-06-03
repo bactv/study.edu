@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#view-agreement" onclick="view_agreement(<?php echo $model->agreement_id ?>)">Chi tiết HĐ</a></li>
     <li><a data-toggle="tab" href="#agreement-addendum" onclick="agreement_addendum(<?php echo $model->agreement_id ?>)">Phụ lục HĐ</a></li>
+    <li><a data-toggle="tab" href="#agreement-course" onclick="agreement_course(<?php echo $model->agreement_id ?>)">Doanh thu chia sẻ</a></li>
 </ul>
 
 <div class="tab-content" style="padding-top: 20px">
@@ -23,5 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php echo $this->render('view-agreement', ['model' => $model]) ?>
     </div>
     <div id="agreement-addendum" class="tab-pane fade">
+    </div>
+    <div id="agreement-course" class="tab-pane fade">
     </div>
 </div>

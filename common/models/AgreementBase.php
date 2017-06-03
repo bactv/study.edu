@@ -20,7 +20,7 @@ class AgreementBase extends \common\models\db\AgreementDB
             'agreement_signed_date' => Yii::t('cms', 'Agreement Signed Date'),
             'agreement_effective_date' => Yii::t('cms', 'Agreement Effective Date'),
             'agreement_right_ids' => Yii::t('cms', 'Agreement Right Ids'),
-            'agreement_type_id' => Yii::t('cms', 'Agreement Type ID'),
+            'agreement_type_id' => Yii::t('cms', 'Loại hợp đồng'),
             'mg' => Yii::t('cms', 'Mg'),
             'agreement_created_time' => Yii::t('cms', 'Agreement Created Time'),
             'agreement_updated_time' => Yii::t('cms', 'Agreement Updated Time'),

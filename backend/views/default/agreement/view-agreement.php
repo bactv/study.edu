@@ -90,3 +90,9 @@ Icon::map($this, Icon::FA);
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

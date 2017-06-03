@@ -32,7 +32,7 @@ class NotificationDB extends \yii\db\ActiveRecord
     {
         return [
             [['sender_id', 'receiver_id', 'status'], 'integer'],
-            [['receiver_id', 'type', 'content'], 'required'],
+            [['type', 'content'], 'required'],
             [['content'], 'string'],
             [['created_time'], 'safe'],
             [['type'], 'string', 'max' => 255]
@@ -46,12 +46,12 @@ class NotificationDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
-            'sender_id' => Yii::t('cms', 'Sender ID'),
-            'receiver_id' => Yii::t('cms', 'Receiver ID'),
-            'type' => Yii::t('cms', 'Type'),
-            'content' => Yii::t('cms', 'Content'),
-            'status' => Yii::t('cms', 'Status'),
-            'created_time' => Yii::t('cms', 'Created Time'),
+            'sender_id' => Yii::t('cms', 'Người gửi'),
+            'receiver_id' => Yii::t('cms', 'Người nhận'),
+            'type' => Yii::t('cms', 'Loại thông báo'),
+            'content' => Yii::t('cms', 'Nội dung'),
+            'status' => Yii::t('cms', 'Trạng thái'),
+            'created_time' => Yii::t('cms', 'Ngày phản hồi'),
         ];
     }
 }

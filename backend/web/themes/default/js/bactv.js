@@ -114,6 +114,23 @@ function agreement_addendum(agreement_id) {
     });
 }
 
+function agreement_course(agreement_id) {
+    if (agreement_id == '' || agreement_id == 'undefined') {
+        return '';
+    }
+    $.ajax({
+        method: 'GET',
+        data: {'agreement_id' : agreement_id},
+        url: '/agreement/agreement-course.html',
+        success: function (data) {
+            $("div#agreement-course").html(data);
+        },
+        error: function () {
+            alert("Có lỗi xảy ra.");
+        }
+    });
+}
+
 
 
 

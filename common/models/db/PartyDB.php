@@ -35,7 +35,7 @@ class PartyDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['party_type_id', 'party_name'], 'required'],
+            [['party_type_id', 'party_name', 'party_rep_title', 'party_address'], 'required'],
             [['party_type_id', 'party_created_by', 'party_updated_by'], 'integer'],
             [['party_created_time', 'party_updated_time'], 'safe'],
             [['party_name', 'party_rep_title', 'party_address', 'party_tax_code', 'party_phone'], 'string', 'max' => 255]
