@@ -3,19 +3,15 @@
 use yii\helpers\Html;
 use kartik\form\ActiveForm;
 use kartik\icons\Icon;
-use kartik\select2\Select2;
-use yii\helpers\ArrayHelper;
-use zxbodya\yii2\tinymce\TinyMce;
-use zxbodya\yii2\elfinder\TinyMceElFinder;
 
 Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Notification */
+/* @var $model backend\models\EventLog */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="notification-form">
+<div class="event-log-form">
 
     <?php $form = ActiveForm::begin([
         'type' => ActiveForm::TYPE_HORIZONTAL,
@@ -25,23 +21,13 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'receiver_id')->widget(Select2::className(), [
-        'data' => \backend\models\Notification::get_all_receiver(),
-        'options' => [
-            'prompt' => 'Người nhận ...',
-            'multiple' => true,
-        ]
-    ]) ?>
+    <?= $form->field($model, 'user_id')->textInput() ?>
 
-    <?= $form->field($model, 'content')->widget(
-        TinyMce::className(),
-        [
-            'fileManager' => [
-                'class' => TinyMceElFinder::className(),
-                'connectorRoute' => 'el-finder/connector',
-            ],
-        ]
-    ) ?>
+    <?= $form->field($model, 'event_id')->textInput() ?>
+
+    <?= $form->field($model, 'experience')->textInput() ?>
+
+    <?= $form->field($model, 'created_time')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

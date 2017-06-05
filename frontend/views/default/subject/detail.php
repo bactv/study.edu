@@ -21,6 +21,7 @@ Icon::map($this, Icon::FA);
         <div class="w3-row">
             <div class="w3-col l8 m8 s12">
                 <div class="list_course">
+                    <?php if (count($courses) > 0) { ?>
                     <?php foreach ($courses as $course) {
                         $logo = AssetApp::getImageBaseUrl() . '/icons/img_course_default.jpg';
                         $url = Yii::$app->params['assets_path']['img.course'] . $course['id'] . '.png';
@@ -67,9 +68,14 @@ Icon::map($this, Icon::FA);
                             </div>
                         </div>
                     <?php } ?>
+                    <?php } else {
+                        echo "<p id='null_course'>Chưa có khóa học nào</p>";
+                    }?>
                 </div>
             </div>
+
             <div class="w3-col l4 m4 s12">
+                <?php if (count($list_quiz) > 0) { ?>
                 <div class="box">
                     <p id="tt_box">Luyện thi trắc nghiệm</p>
                     <div class="list_quiz">
@@ -85,6 +91,8 @@ Icon::map($this, Icon::FA);
                         <?php } ?>
                     </div>
                 </div>
+                <?php } ?>
+                <?php if (count($list_teacher) > 0) { ?>
                 <div class="box">
                     <p id="tt_box">Giáo viên</p>
                     <div class="list_teacher">
@@ -115,6 +123,7 @@ Icon::map($this, Icon::FA);
                         <?php } ?>
                     </div>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -223,5 +232,11 @@ Icon::map($this, Icon::FA);
         line-height: 50px;
         margin-left: 10px;
     }
-
+    #null_course {
+        text-align: center;
+        padding-top: 30px;
+        font-size: 30px;
+        color: #ccc;
+        font-style: italic;
+    }
 </style>

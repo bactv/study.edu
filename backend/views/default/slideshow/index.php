@@ -43,7 +43,12 @@ $this->params['menu'] = [
                 'options' => ['width' => '220px', 'height' => '70px'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::img(Yii::$app->params['storage_url'] . Yii::$app->params['img_url']['slideshow']['folder'] . '/' . $model['id'] . '.png', [
+                    $img = '';
+                    $path = Yii::$app->params['assets_path']['img.slide'] . $model['id'] . '.png';
+                    if (\common\components\Utility::check_url_file_exists($path) !== false) {
+                        $img = $path;
+                    }
+                    return Html::img($img, [
                         'style' => 'width: 100%',
                         'width' => '220px',
                         'height' => '70px',

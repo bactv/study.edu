@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use kartik\icons\Icon;
 use yii\grid\GridView;
+use kartik\form\ActiveForm;
 
 Icon::map($this, Icon::FA);
 
@@ -18,7 +19,109 @@ $this->params['menu'] = [
 ];
 ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<style>
+    .item {
+        padding-right: 15px;
+    }
+</style>
+
+<div class="filter-content">
+    <fieldset>
+        <legend>Lọc thông báo</legend>
+        <?php $form = ActiveForm::begin([
+            'type' => ActiveForm::TYPE_HORIZONTAL,
+            'formConfig' => [
+                'labelSpan' => 2,
+                'deviceSize' => ActiveForm::SIZE_SMALL
+            ],
+            'method' => 'GET',
+            'action' => \yii\helpers\Url::toRoute(['index'])
+        ]) ?>
+
+        <div class="row">
+            <div class="col-md-3 item">
+                <?php
+                echo '<label class="control-label">Khoảng thời gian</label>';
+                echo '<div class="drp-container" id="form_time">';
+                echo \kartik\daterange\DateRangePicker::widget([
+                    'name' => 'notification_daterange',
+                    'value' => $notification_daterange,
+                    'presetDropdown' => true,
+                    'hideInput' => true,
+                    'pluginOptions' => [
+                        'locale' => ['format' => 'D/M/YYYY'],
+                        'allowClear' => true
+                    ],
+                    'options' => [
+                        'placeholder' => 'Khoảng thời gian ...',
+                        'id' => 'notification_daterange'
+                    ]
+                ]);
+                echo '</div>';
+                ?>
+
+            </div>
+            <div class="col-md-3 item">
+                <?php
+                echo '<label class="control-label">Loại phản hồi</label>';
+                echo \kartik\select2\Select2::widget([
+                    'name' => 'notification_type',
+                    'value' => $notification_type,
+                    'data' => Yii::$app->params['type_notification_name'],
+                    'options' => [
+                        'prompt' => 'Loại phản hồi',
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-3 item">
+                <?php
+                echo '<label class="control-label">Trạng thái</label>';
+                echo \kartik\select2\Select2::widget([
+                    'name' => 'notification_status',
+                    'value' => $notification_status,
+                    'data' => [1 => 'Đã xem', 0 => 'Chưa xem'],
+                    'options' => [
+                        'prompt' => 'Trạng thái'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-3 item">
+                <?php
+                echo '<label class="control-label">Hình thức</label>';
+                echo \kartik\select2\Select2::widget([
+                    'name' => 'notification_role',
+                    'value' => $notification_role,
+                    'data' => [1 => 'Gửi', 2 => 'Nhận'],
+                    'options' => [
+                        'prompt' => 'Hình thức'
+                    ],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;text-align: center">
+            <div class="form-group">
+                <?= Html::submitButton(Icon::show('search') . " " .  Yii::t('cms', 'search'), ['class' => 'btn btn-primary', 'name' => 'search']) ?>
+                <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>
+            </div>
+        </div>
+
+        <?php ActiveForm::end(); ?>
+    </fieldset>
+</div>
+
 
 <?php Pjax::begin(['id' => 'admin-grid-view']);?> 
     <?= GridView::widget([
@@ -58,12 +161,24 @@ $this->params['menu'] = [
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
                 'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
             ],
-            'content:ntext',
-            // 'status',
+            [
+                'attribute' => 'content',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return strip_tags($model['content']);
+                }
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model['status'] == 1 ? 'Đã xem' : 'Chưa xem';
+                }
+            ],
              'created_time',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete}',
+                'template' => '{view} {delete}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
@@ -72,13 +187,6 @@ $this->params['menu'] = [
                     'view' => function ($url) {
                         return Html::a(Icon::show('info-circle'), $url, [
                             'title' => Yii::t('cms', 'View'),
-                            'class'=>'btn btn-primary btn-xs btn-app',
-                            'data-pjax' => '0',
-                        ]);
-                    },
-                    'update' => function ($url) {
-                        return Html::a(Icon::show('pencil-square-o'), $url, [
-                            'title' => Yii::t('cms', 'Update'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-pjax' => '0',
                         ]);

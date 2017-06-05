@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\components\BaseController;
 use frontend\models\Course;
 use frontend\models\Event;
 use frontend\models\Quiz;
@@ -15,7 +16,7 @@ use yii\web\Controller;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * @inheritdoc

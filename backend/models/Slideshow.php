@@ -31,16 +31,14 @@ class Slideshow extends \common\models\SlideshowBase
         if ($this->img == null) {
             return true;
         }
-        $path =  Yii::$app->params['img_url']['slideshow']['folder'] . '/';
-        $path2 = Yii::getAlias('@webroot') . '/storage/' . $path;
-        if (!is_dir($path2)) {
-            mkdir($path2, 0777);
+
+        $path = Yii::$app->params['storage']['path'] . Yii::$app->params['storage']['img.slide']['path'];
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
         }
         if ($this->validate()) {
-            $this->img->saveAs($path2 . $id . '.png');
-            return Utility::uploadFile($path, $path . $id . '.png', Yii::$app->params['cms_url'] . 'storage/' . $path . $id . '.png');
-        } else {
-            return false;
+            return $this->img->saveAs($path . $id . '.png');
         }
+        return false;
     }
 }

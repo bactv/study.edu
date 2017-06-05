@@ -31,8 +31,8 @@ class NotificationDB extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sender_id', 'receiver_id', 'status'], 'integer'],
-            [['type', 'content'], 'required'],
+            [['sender_id', 'status'], 'integer'],
+            [['type', 'content', 'receiver_id'], 'required'],
             [['content'], 'string'],
             [['created_time'], 'safe'],
             [['type'], 'string', 'max' => 255]

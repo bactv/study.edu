@@ -57,6 +57,9 @@ return [
         ],
         'file_import' => [
             'path' => 'file_import/'
+        ],
+        'img.slideshow' => [
+            'path' => 'img.slideshow'
         ]
     ],
     'assets_path' => [
@@ -68,6 +71,7 @@ return [
         'assets_common' => 'http://static.study.edu.vn/assets_common/',
         'img.common' => 'http://static.study.edu.vn/img.common/',
         'file_import' => 'http://static.study.edu.vn/file_import/',
+        'img.slideshow' => 'http://static.study.edu.vn/img.slideshow/',
     ],
     'banner_subject_course' => [
         'math' => '',

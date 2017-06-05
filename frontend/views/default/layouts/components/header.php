@@ -32,7 +32,12 @@ Icon::map($this, Icon::FA);
             </div>
             <?php if (!empty(Yii::$app->user->identity)) { ?>
                 <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 10px;">
-                    <a href="#projects" class="w3-bar-item" id="btn-notification"></a>
+                    <div class="w3-dropdown-click">
+                        <a href="javascript:void(0)" onclick="myFunction2()" class="w3-bar-item" id="btn-notification"></a> <span class="label label-danger total_notification"><?php echo count(\frontend\models\Notification::findAll(['receiver_id' => Yii::$app->user->identity->getId(), 'status' => 0])) ?></span>
+                        <ul id="dropdown-menu-notification" class="w3-dropdown-content w3-bar-block w3-border w3-ul">
+
+                        </ul>
+                    </div>
                     <div class="w3-dropdown-click">
                         <a onclick="myFunction()" class="w3-bar-item w3-text-teal"><?php echo Yii::$app->user->identity->getUsername() ?> <i class="fa fa-angle-down w3-text-teal" aria-hidden="true"></i></a>
                         <ul id="dropdown-menu-profile" class="w3-dropdown-content w3-bar-block w3-border w3-ul">
@@ -101,4 +106,53 @@ Icon::map($this, Icon::FA);
         -o-animation: my 700ms infinite;
         animation: my 400ms infinite;
     }
+    .total_notification {
+        border-radius: 50%;
+        width: 30px !important;
+        height: 30px !important;
+    }
+    #dropdown-menu-notification {
+        width: 400px;
+        margin-top: 38px;
+        right: 0;
+    }
 </style>
+
+<script>
+    $(document).ready(function () {
+        var user_id = '<?php echo !empty(Yii::$app->user->identity) ? Yii::$app->user->identity->getId() : 0 ?>';
+        if (user_id != '') {
+//            setInterval(function(){
+//                $.ajax({
+//                    method: 'GET',
+//                    data: {'user_id' : user_id},
+//                    url: '<?php //echo Url::toRoute(['/user/get-new-notification']) ?>//',
+//                    success: function (data) {
+//                        $(".total_notification").html(data);
+//                    }
+//                });
+//            }, 2000);
+        }
+    });
+
+    function myFunction2() {
+        var x = document.getElementById("dropdown-menu-notification");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            var user_id = '<?php echo !empty(Yii::$app->user->identity) ? Yii::$app->user->identity->getId() : 0 ?>';
+            if (user_id != '') {
+                $.ajax({
+                    method: 'GET',
+                    data: {'user_id' : user_id},
+                    url: '<?php echo Url::toRoute(['/user/get-list-notification']) ?>',
+                    success: function (data) {
+                        $("#dropdown-menu-notification").html(data);
+                    }
+                });
+            }
+        }
+        else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+</script>

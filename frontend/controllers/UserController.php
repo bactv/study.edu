@@ -10,6 +10,7 @@ namespace frontend\controllers;
 use backend\controllers\TeacherController;
 use frontend\models\CourseTeacher;
 use frontend\models\FreeStudentCourse;
+use frontend\models\Notification;
 use frontend\models\StaticPage;
 use frontend\models\Student;
 use frontend\models\StudentCourse;
@@ -194,5 +195,27 @@ class UserController extends Controller
     {
         $this->layout = 'student_layout';
         return $this->render('student/notification');
+    }
+
+    public function actionGetNewNotification()
+    {
+        $request = Yii::$app->request->get();
+        $user_id = isset($request['user_id']) ? $request['user_id'] :  0;
+        if ($user_id != 0) {
+            $list_notification = Notification::findAll(['receiver_id' => $user_id, 'status' => 0]);
+            return count($list_notification);
+        }
+        return 0;
+    }
+
+    public function actionGetListNotification()
+    {
+        $request = Yii::$app->request->get();
+        $user_id = isset($request['user_id']) ? $request['user_id'] :  0;
+        $list_notification = Notification::find()->where(['receiver_id' => $user_id])->limit(7)->all();
+        return $this->renderAjax('list_notification', [
+            'list_notification' => $list_notification,
+            'user_id' => $user_id
+        ]);
     }
 }

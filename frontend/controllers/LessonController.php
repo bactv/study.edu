@@ -36,6 +36,9 @@ class LessonController extends Controller
         Yii::$app->params['course'] = $course;
         Yii::$app->params['lesson_quiz'] = $lesson_quiz;
         Yii::$app->params['lesson_document'] = $lesson_document;
+
+        Yii::$app->db->createCommand("UPDATE lesson SET number_view=number_view+1 WHERE id=$id")->execute();
+
         return $this->render('video_detail', [
             'lesson' => $lesson,
             'course' => $course

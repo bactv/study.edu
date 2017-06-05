@@ -38,7 +38,6 @@ class StudentDB extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['balance'], 'number'],
             [['created_time', 'updated_time'], 'safe'],
-            [['experience'], 'string'],
             [['full_name', 'birthday', 'school'], 'string', 'max' => 60],
             [['email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30]

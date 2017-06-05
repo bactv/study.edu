@@ -36,12 +36,34 @@ class NotificationSearch extends Notification
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param array $params_filter
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $params_filter)
     {
-        $query = Notification::find()->where(['status' => 0, 'receiver_id' => 0]);
+        $query = Notification::find()->where(true);
+        if (isset($params_filter['from_date']) && isset($params_filter['to_date'])) {
+            $query->andWhere('created_time >= "' . trim($params_filter['from_date']) . '" AND created_time <= "' . trim($params_filter['to_date']) . '"');
+        }
+        if (isset($params_filter['notification_status']) && trim($params_filter['notification_status']) != null ) {
+            $query->andWhere(['status' => $params_filter['notification_status']]);
+        } else {
+            $query->andWhere(['status' => 0]);
+        }
+        if (isset($params_filter['notification_type'])) {
+            $query->andWhere(['type' => $params_filter['notification_type']]);
+        }
+        if (isset($params_filter['sender_id'])) {
+            $query->andWhere(['sender_id' => $params_filter['sender_id']]);
+        }
+        if (isset($params_filter['receiver_id'])) {
+            $query->andWhere(['receiver_id' => $params_filter['receiver_id']]);
+        }
+
+        if (!isset($params_filter['sender_id']) && !isset($params_filter['receiver_id'])) {
+            $query->andWhere(['receiver_id' => 0]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

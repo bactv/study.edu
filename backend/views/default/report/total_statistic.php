@@ -85,9 +85,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <thead>
         <tr>
             <th class="txt_center">Thời gian</th>
-            <th class="txt_center">Tổng số lượt truy cập</th>
-            <th class="txt_center">Tổng số user truy cập</th>
-            <th class="txt_center">Tổng số khách truy cập</th>
+            <th class="txt_center">Tổng số lượt đăng ký</th>
+            <th class="txt_center">Tổng số lượt nạp tiền</th>
+            <th class="txt_center">Doanh thu nạp tiền</th>
         </tr>
         </thead>
         <tbody>

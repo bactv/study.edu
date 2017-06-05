@@ -151,7 +151,7 @@ Icon::map($this, Icon::FA);
 
         if (user_id == '') {
             BootstrapDialog.show({
-                title: 'Info!',
+                title: 'Thông báo!',
                 message: 'Bạn phải đăng nhập để đăng ký khóa học!'
             });
         } else {
@@ -180,7 +180,7 @@ Icon::map($this, Icon::FA);
 
         if (user_id == '') {
             BootstrapDialog.show({
-                title: 'Info!',
+                title: 'Thông báo!',
                 message: 'Bạn phải đăng nhập để xem bài giảng!'
             });
             return false;
