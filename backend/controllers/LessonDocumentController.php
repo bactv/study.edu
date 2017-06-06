@@ -77,11 +77,11 @@ class LessonDocumentController extends BackendController
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstances($model, 'file');
             if ($model->upload_file($lesson->course_id, $lesson_id, 'document')) {
-                foreach ($model->file as $file) {
+                foreach ($model->file as $k => $file) {
                     $model2 = new LessonDocument();
                     $model2->lesson_id = $lesson_id;
                     $model2->document_name = Utility::rewrite($file->baseName) . '.' . $file->extension;
-
+                    $model2->file = $file;
                     if (!$model2->save()) {
                         throw new Exception("Có lỗi xảy ra");
                     }

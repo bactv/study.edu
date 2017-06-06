@@ -100,12 +100,15 @@ AppAsset::register($this);
                         <div class="w3-text-black w3-center w3-text-teal" style="margin-bottom: 20px">
                             <h2><?php echo Yii::$app->user->identity->getUsername(); ?></h2>
                         </div>
+                        <?php
+                        $total_notification = count(\frontend\models\Notification::findAll(['receiver_id' => Yii::$app->user->identity->getId(), 'status' => 0]));
+                        ?>
                         <ul class="w3-ul">
                             <li class="active_ba"><a href="javascript:void(0)"><i class="fa fa-money fa-fw w3-margin-right w3-large w3-text-teal"></i>Số dư TK: <span class="w3-text-red"><b><?php echo number_format(Yii::$app->view->params['student']['balance']) ?> đ</b></span></a></li>
                             <li class="active_tk"><a href="<?php echo Url::toRoute(['/tai-khoan']) ?>"><i class="fa fa-info fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông tin cá nhân</a></li>
                             <li class="active_mc"><a href="<?php echo Url::toRoute(['/khoa-hoc-cua-toi']) ?>"><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Khóa học của tôi</a></li>
                             <li class="active_ht"><a href="<?php echo Url::toRoute(['/lich-su-giao-dich']) ?>"><i class="fa fa-history fa-fw w3-margin-right w3-large w3-text-teal"></i>Lịch sử giao dịch</a></li>
-                            <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo</a></li>
+                            <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo <span class="label label-danger"><?php echo ($total_notification > 0) ? $total_notification : '' ?></span></a></li>
                             <li class="active_chr"><a href="<?php echo Url::toRoute(['/nap-tien']) ?>"><i class="fa fa-eur fa-fw w3-margin-right w3-large w3-text-teal"></i>Nạp tiền</a></li>
                         </ul>
                     </div>

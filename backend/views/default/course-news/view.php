@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\CourseNews */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Course News'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Thông báo khóa học'), 'url' => ['index', 'course_id' => $model->course_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="course-news-view">
@@ -32,10 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'course_id',
+            [
+                'attribute' => 'course_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Course::getAttributeValue(['id' => $model['course_id']], 'name');
+                }
+            ],
             'title',
-            'content:ntext',
-            'status',
+            [
+                'attribute' => 'content',
+                'format' => 'html'
+            ],
+            'user_id',
             'created_time',
             'updated_time',
         ],

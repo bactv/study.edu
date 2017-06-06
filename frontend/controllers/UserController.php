@@ -191,11 +191,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function actionStudentNotification()
-    {
-        $this->layout = 'student_layout';
-        return $this->render('student/notification');
-    }
 
     public function actionGetNewNotification()
     {
@@ -217,5 +212,19 @@ class UserController extends Controller
             'list_notification' => $list_notification,
             'user_id' => $user_id
         ]);
+    }
+
+    public function actionListNotification()
+    {
+        $this->layout = 'student_layout';
+        $list_notification = Notification::find()->where(['receiver_id' => $this->_user->id])->all();
+        return $this->render('student/notification', [
+            'list_notification' => $list_notification
+        ]);
+    }
+
+    public function actionNotificationDetail($id)
+    {
+
     }
 }

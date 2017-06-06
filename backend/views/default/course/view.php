@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p style="margin-top: 20px">
         <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý bài giảng'), Url::toRoute(['/lesson', 'course_id' => $model->id]), ['class' => 'btn btn-info', 'target' => '_blank']) ?>
+        <?= Html::a(Icon::show('pencil-square-o') . " " .Yii::t('cms', 'Quản lý thông báo'), Url::toRoute(['/course-news', 'course_id' => $model->id]), ['class' => 'btn btn-warning', 'target' => '_blank']) ?>
     </p>
 
     <?= DetailView::widget([

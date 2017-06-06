@@ -40,6 +40,8 @@ class AgreementAddendum extends \common\models\AgreementAddendumBase
             'addendum_updated_time' => Yii::t('cms', 'Updated Time'),
             'addendum_created_by' => Yii::t('cms', 'Created By'),
             'addendum_updated_by' => Yii::t('cms', 'Updated By'),
+            'from_date' => Yii::t('cms', 'Ngày hiệu lực'),
+            'to_date' => Yii::t('cms', 'Ngày hết hạn'),
         ];
     }
 }

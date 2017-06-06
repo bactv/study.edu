@@ -56,6 +56,7 @@ class User extends \common\models\UserBase implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         // TODO: Implement findIdentityByAccessToken() method.
+        return self::findOne(['access_token' => $token]);
     }
 
     /**
@@ -93,6 +94,7 @@ class User extends \common\models\UserBase implements IdentityInterface
     public function getAuthKey()
     {
         // TODO: Implement getAuthKey() method.
+        return $this->auth_key;
     }
 
     /**
@@ -106,6 +108,7 @@ class User extends \common\models\UserBase implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         // TODO: Implement validateAuthKey() method.
+        return $this->auth_key == $authKey;
     }
 
     /**

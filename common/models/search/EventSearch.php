@@ -18,8 +18,8 @@ class EventSearch extends Event
     public function rules()
     {
         return [
-            [['id', 'event_group', 'point', 'status'], 'integer'],
-            [['name', 'description', 'created_time', 'updated_time'], 'safe'],
+            [['id', 'event_group', 'point', 'money', 'status'], 'integer'],
+            [['name', 'description', 'from_date', 'to_date', 'created_time', 'updated_time'], 'safe'],
         ];
     }
 
@@ -55,7 +55,10 @@ class EventSearch extends Event
             'id' => $this->id,
             'event_group' => $this->event_group,
             'point' => $this->point,
+            'money' => $this->money,
             'status' => $this->status,
+            'from_date' => $this->from_date,
+            'to_date' => $this->to_date,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
         ]);

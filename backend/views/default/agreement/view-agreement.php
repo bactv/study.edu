@@ -58,6 +58,10 @@ Icon::map($this, Icon::FA);
                 'value' => Utility::formatDataTime($model['agreement_effective_date'], '-', '/', false)
             ],
             [
+                'attribute' => 'to_date',
+                'value' => Utility::formatDataTime($model['to_date'], '-', '/', false)
+            ],
+            [
                 'attribute' => 'agreement_type_id',
                 'label' => Yii::t('cms', 'Agreement Types'),
                 'value' => AgreementType::getAttributeValue(['agreement_type_id' => $model['agreement_type_id']], 'agreement_type_name')

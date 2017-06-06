@@ -45,7 +45,7 @@ Icon::map($this, Icon::FA);
             'attribute' => 'course_id',
             'format' => 'raw',
             'value' => function ($model) {
-                return \backend\models\Course::getAttributeValue(['id' => $model['id']], 'name');
+                return \backend\models\Course::getAttributeValue(['id' => $model['course_id']], 'name');
             },
             'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
             'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
@@ -64,7 +64,7 @@ Icon::map($this, Icon::FA);
             'options' => ['width' => '120px'],
             'buttons' => [
                 'view' => function ($url, $model) {
-                    $url = \yii\helpers\Url::toRoute(['/agreement-addendum/view', 'id' => $model['addendum_id']]);
+                    $url = \yii\helpers\Url::toRoute(['/agreement-course-share-rate/view', 'agreement_id' => $model['agreement_id'], 'course_id' => $model['course_id']]);
                     return Html::a(Icon::show('info-circle'), $url, [
                         'title' => Yii::t('cms', 'View'),
                         'class'=>'btn btn-primary btn-xs btn-app',
@@ -73,7 +73,7 @@ Icon::map($this, Icon::FA);
                     ]);
                 },
                 'update' => function ($url, $model) {
-                    $url = \yii\helpers\Url::toRoute(['/agreement-addendum/update', 'id' => $model['addendum_id']]);
+                    $url = \yii\helpers\Url::toRoute(['/agreement-course-share-rate/update', 'agreement_id' => $model['agreement_id'], 'course_id' => $model['course_id']]);
                     return Html::a(Icon::show('pencil-square-o'), $url, [
                         'title' => Yii::t('cms', 'Update'),
                         'class'=>'btn btn-primary btn-xs btn-app',

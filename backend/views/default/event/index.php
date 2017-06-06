@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $this->params['title'] = Yii::t('cms', 'Events');
+$this->title = $this->params['title'] = Yii::t('cms', 'Sự kiện');
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
@@ -25,16 +25,91 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'id',
-            'name',
-            'event_group',
-            'description',
-            'point',
-            // 'status',
-            // 'created_time',
-            // 'updated_time',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'id',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'name',
+                'headerOptions' => ['style'=>'vertical-align: middle;'],
+                'contentOptions' => ['style'=>' vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'description',
+                'format' => 'raw',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'event_group',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $event_group =  \backend\models\EventGroup::findOne(['id' => $model['event_group']]);
+                    if (!empty($event_group)) {
+                        return $event_group->name;
+                    }
+                    return '';
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'point',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return number_format($model['point']);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'money',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return number_format($model['money']);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'status',
+                'options' => ['width' => '100px'],
+                'format' => 'raw',
+                'value' => function ($model) {
+                    if ($model['status'] == 1) {
+                        return '<div id="item-status-'.$model['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = "changeStatusItems('.$model['id'].', 1, \''.\yii\helpers\Url::toRoute(['menu/change-status']).'\')"><i class="fa fa-check" style="color: green;"></i></a></div>';
+                    } else {
+                        return '<div id="item-status-'.$model['id'].'"><a href="javascript:void(0);" class="f-s-18" onclick = "changeStatusItems('.$model['id'].', 0, \''.\yii\helpers\Url::toRoute(['menu/change-status']).'\')"><i class="fa fa-dot-circle-o" style="color: red"></i></a></div>';
+                    }
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'from_date',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['from_date'], '-', '/', false);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'to_date',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['to_date'], '-', '/', false);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

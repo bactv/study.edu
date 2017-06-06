@@ -8,6 +8,7 @@
 namespace frontend\controllers;
 
 use common\components\Utility;
+use frontend\components\EventProcess;
 use frontend\models\Student;
 use frontend\models\Transaction;
 use frontend\models\TransactionError;
@@ -76,6 +77,8 @@ class ChargingController extends Controller
             $std = Student::findOne(['user_id' => Yii::$app->user->identity->getId()]);
             // lưu vào transaction
             Transaction::logTransaction(Yii::$app->user->identity->getId(), 'CHARGE_MONEY', $money, json_encode($request), json_encode($str), $std['balance']);
+
+            EventProcess::user_charge_money_gift_promotion(Yii::$app->user->identity->getId(), $money);
 
             $return_json['message'] = sprintf(Yii::$app->params['charge_code_status']['viettel'][200], number_format($money));
             echo json_encode($return_json);

@@ -13,7 +13,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\LessonSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $this->params['title'] = Yii::t('cms', 'Lessons');
+$this->title = $this->params['title'] = Yii::t('cms', 'Bài giảng - ' . $course['name']);
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
     ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create', 'course_id' => Yii::$app->request->get('course_id', '')], 'options' => ['class' => 'btn btn-primary']],

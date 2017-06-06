@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="filter-content">
     <fieldset>
-        <legend>Lọc thông báo</legend>
+        <legend>Lọc thống kê</legend>
         <?php $form = ActiveForm::begin([
             'type' => ActiveForm::TYPE_HORIZONTAL,
             'formConfig' => [
@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'deviceSize' => ActiveForm::SIZE_SMALL
             ],
             'method' => 'GET',
-            'action' => \yii\helpers\Url::toRoute(['/report/access-statistic'])
+            'action' => \yii\helpers\Url::toRoute(['/report/total-statistic'])
         ]) ?>
 
         <div class="row">
@@ -91,24 +91,24 @@ $this->params['breadcrumbs'][] = $this->title;
         </tr>
         </thead>
         <tbody>
-        <?php $total_visits = 0; $total_user_visits = 0; $total_guest_visits = 0;?>
+        <?php $total_subscribe = 0; $total_charge = 0; $total_revenue_charge = 0;?>
         <?php foreach ($results as $k => $item) {
-            $total_visits += $item['total_visits'];
-            $total_user_visits += $item['total_user_visits'];
-            $total_guest_visits += $item['total_guest_visits'];
+            $total_subscribe += $item['total_subscribe'];
+            $total_charge += $item['total_charge'];
+            $total_revenue_charge += $item['total_revenue_charge'];
             ?>
             <tr>
                 <td class="txt_center"><b><?php echo $k ?></b></td>
-                <td class="txt_center"><?php echo number_format($item['total_visits']) ?></td>
-                <td class="txt_center"><?php echo number_format($item['total_user_visits']) ?></td>
-                <td class="txt_center"><?php echo number_format($item['total_guest_visits']) ?></td>
+                <td class="txt_center"><?php echo number_format($item['total_subscribe']) ?></td>
+                <td class="txt_center"><?php echo number_format($item['total_charge']) ?></td>
+                <td class="txt_center"><?php echo number_format($item['total_revenue_charge']) ?></td>
             </tr>
         <?php } ?>
         <tr>
             <th class="txt_center">Tổng</th>
-            <th class="txt_center"><?php echo number_format($total_visits) ?></th>
-            <th class="txt_center"><?php echo number_format($total_user_visits) ?></th>
-            <th class="txt_center"><?php echo number_format($total_guest_visits) ?></th>
+            <th class="txt_center"><?php echo number_format($total_subscribe) ?></th>
+            <th class="txt_center"><?php echo number_format($total_charge) ?></th>
+            <th class="txt_center"><?php echo number_format($total_revenue_charge) ?></th>
         </tr>
         </tbody>
     </table>

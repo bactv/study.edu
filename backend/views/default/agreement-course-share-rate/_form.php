@@ -5,6 +5,7 @@ use kartik\form\ActiveForm;
 use kartik\icons\Icon;
 use backend\models\Agreement;
 use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 Icon::map($this, Icon::FA);
 
@@ -23,14 +24,12 @@ Icon::map($this, Icon::FA);
         ]
     ]); ?>
 
-    <?= $form->field($model, 'agreement_id')->textInput([
-        'disabled' => 'true',
-        'value' => ''
+
+    <?= $form->field($model, 'course_id')->widget(Select2::className(), [
+        'data' => ArrayHelper::map(\backend\models\Course::findAll(['deleted' => 0, 'approved' => 1]), 'id', 'name')
     ]) ?>
 
-    <?= $form->field($model, 'course_id')->textInput() ?>
-
-    <?= $form->field($model, 'share_rate')->textInput() ?>
+    <?= $form->field($model, 'share_rate')->textInput(['type' => 'number', 'min' => 0]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>

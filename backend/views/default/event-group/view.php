@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\EventGroup */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Event Groups'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Nhóm sự kiện'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-group-view">
@@ -33,7 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
+            [
+                'attribute' => 'description',
+                'format' => 'raw',
+            ],
         ],
     ]) ?>
 

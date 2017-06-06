@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\Agreement;
+use common\components\Utility;
 use Yii;
 use backend\models\AgreementAddendum;
 use common\models\search\AgreementAddendumSearch;
@@ -68,8 +69,17 @@ class AgreementAddendumController extends BackendController
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
+            if ($model->save()) {
+                return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'agreement_id' => $agreement_id
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,8 +98,19 @@ class AgreementAddendumController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+        $model->from_date = Utility::formatDataTime($model->from_date, '-', '/', false);
+        $model->to_date = Utility::formatDataTime($model->to_date, '-', '/', false);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
+            if ($model->save()) {
+                return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                    'agreement_id' => $model->agreement_id
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

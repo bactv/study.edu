@@ -51,6 +51,24 @@ Icon::map($this, Icon::FA);
             'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
         ],
         [
+            'attribute' => 'from_date',
+            'format' => 'raw',
+            'value' => function ($model) {
+                return Utility::formatDataTime($model['from_date'], '-', '/', false);
+            },
+            'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
+            'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+        ],
+        [
+            'attribute' => 'to_date',
+            'format' => 'raw',
+            'value' => function ($model) {
+                return Utility::formatDataTime($model['to_date'], '-', '/', false);
+            },
+            'headerOptions' => ['style' => 'text-align: center; vertical-align: middle'],
+            'contentOptions' => ['style' => 'text-align: left; vertical-align: middle'],
+        ],
+        [
             'attribute' => 'addendum_created_time',
             'label' => Yii::t('cms', 'Created Time'),
             'format' => 'raw',

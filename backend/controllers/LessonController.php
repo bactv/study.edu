@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Course;
 use common\components\Utility;
 use Yii;
 use backend\models\Lesson;
@@ -29,17 +30,22 @@ class LessonController extends BackendController
     }
 
     /**
-     * Lists all Lesson models.
-     * @return mixed
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionIndex()
     {
+        if (!isset($_GET['course_id'])) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+        }
+        $course = Course::findOne(['id' => $_GET['course_id']]);
         $searchModel = new LessonSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'course' => $course
         ]);
     }
 

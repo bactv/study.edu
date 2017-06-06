@@ -18,7 +18,7 @@ class EventLogSearch extends EventLog
     public function rules()
     {
         return [
-            [['id', 'user_id', 'event_id', 'experience'], 'integer'],
+            [['id', 'user_id', 'event_id', 'point', 'money'], 'integer'],
             [['created_time'], 'safe'],
         ];
     }
@@ -55,7 +55,8 @@ class EventLogSearch extends EventLog
             'id' => $this->id,
             'user_id' => $this->user_id,
             'event_id' => $this->event_id,
-            'experience' => $this->experience,
+            'point' => $this->point,
+            'money' => $this->money,
             'created_time' => $this->created_time,
         ]);
 

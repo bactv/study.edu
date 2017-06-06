@@ -26,6 +26,7 @@ class AgreementBase extends \common\models\db\AgreementDB
             'agreement_updated_time' => Yii::t('cms', 'Agreement Updated Time'),
             'agreement_created_by' => Yii::t('cms', 'Agreement Created By'),
             'agreement_updated_by' => Yii::t('cms', 'Agreement Updated By'),
+            'to_date' => Yii::t('cms', 'Ngày hết hạn'),
             'deleted' => Yii::t('cms', 'Deleted'),
         ];
     }

@@ -30,10 +30,12 @@ Icon::map($this, Icon::FA);
                 <a href="<?php echo Url::toRoute(['/on-thi-giao-duc-cong-dan']) ?>" class="w3-bar-item">GDCD</a>
                 <a href="<?php echo Url::toRoute(['/trac-nghiem-theo-chuyen-de']) ?>" class="w3-bar-item">Luyện đề</a>
             </div>
-            <?php if (!empty(Yii::$app->user->identity)) { ?>
+            <?php if (!empty(Yii::$app->user->identity)) {
+                $total_notification = count(\frontend\models\Notification::findAll(['receiver_id' => Yii::$app->user->identity->getId(), 'status' => 0]));
+                ?>
                 <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 10px;">
                     <div class="w3-dropdown-click">
-                        <a href="javascript:void(0)" onclick="myFunction2()" class="w3-bar-item" id="btn-notification"></a> <span class="label label-danger total_notification"><?php echo count(\frontend\models\Notification::findAll(['receiver_id' => Yii::$app->user->identity->getId(), 'status' => 0])) ?></span>
+                        <a href="javascript:void(0)" onclick="myFunction2()" class="w3-bar-item" id="btn-notification"></a> <span class="label label-danger total_notification"><?php echo ($total_notification > 0) ? $total_notification : '' ?></span>
                         <ul id="dropdown-menu-notification" class="w3-dropdown-content w3-bar-block w3-border w3-ul">
 
                         </ul>

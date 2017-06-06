@@ -8,10 +8,10 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\Event */
 
-$this->title = Yii::t('cms', 'Create {modelClass}', [
+$this->title = Yii::t('cms', 'Thêm mới', [
     'modelClass' => 'Event',
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Events'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Sự kiện'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = Yii::t('cms', 'Create');
 $this->params['menu'] = [

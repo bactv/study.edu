@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\components\Utility;
 use Yii;
 use backend\models\Event;
 use common\models\search\EventSearch;
@@ -62,8 +63,16 @@ class EventController extends BackendController
     {
         $model = new Event();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +90,18 @@ class EventController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model->from_date = Utility::formatDataTime($model->from_date, '-', '/', false);
+        $model->to_date = Utility::formatDataTime($model->to_date, '-', '/', false);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

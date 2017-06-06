@@ -101,4 +101,5 @@ return [
         'send_request_course' => 'Yêu cầu duyệt khóa học',
         'system_feedback' => 'Hệ thống phản hồi',
     ],
+    'number_try_lesson' => 3,
 ];

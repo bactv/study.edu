@@ -15,6 +15,8 @@ use Yii;
  * @property string $addendum_updated_time
  * @property integer $addendum_created_by
  * @property integer $addendum_updated_by
+ * @property string $from_date
+ * @property string $to_date
  */
 class AgreementAddendumDB extends \yii\db\ActiveRecord
 {
@@ -35,7 +37,7 @@ class AgreementAddendumDB extends \yii\db\ActiveRecord
             [['agreement_id', 'addendum_number'], 'required'],
             [['agreement_id', 'addendum_created_by', 'addendum_updated_by'], 'integer'],
             [['addendum_content'], 'string'],
-            [['addendum_created_time', 'addendum_updated_time'], 'safe'],
+            [['addendum_created_time', 'addendum_updated_time', 'from_date', 'to_date'], 'safe'],
             [['addendum_number'], 'string', 'max' => 255]
         ];
     }
@@ -54,6 +56,8 @@ class AgreementAddendumDB extends \yii\db\ActiveRecord
             'addendum_updated_time' => Yii::t('cms', 'Addendum Updated Time'),
             'addendum_created_by' => Yii::t('cms', 'Addendum Created By'),
             'addendum_updated_by' => Yii::t('cms', 'Addendum Updated By'),
+            'from_date' => Yii::t('cms', 'From Date'),
+            'to_date' => Yii::t('cms', 'To Date'),
         ];
     }
 }

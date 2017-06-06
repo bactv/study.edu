@@ -20,6 +20,7 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  * @property integer $deleted
+ * @property string $to_date
  */
 class AgreementDB extends \yii\db\ActiveRecord
 {
@@ -39,7 +40,7 @@ class AgreementDB extends \yii\db\ActiveRecord
         return [
             [['agreement_code', 'party_id_a', 'party_id_b', 'agreement_signed_date', 'agreement_effective_date', 'agreement_type_id'], 'required'],
             [['party_id_a', 'party_id_b', 'agreement_type_id', 'created_by', 'updated_by', 'deleted'], 'integer'],
-            [['agreement_signed_date', 'agreement_effective_date', 'created_time', 'updated_time'], 'safe'],
+            [['agreement_signed_date', 'agreement_effective_date', 'created_time', 'updated_time', 'to_date'], 'safe'],
             [['mg'], 'number'],
             [['agreement_code'], 'string', 'max' => 255]
         ];
@@ -64,6 +65,7 @@ class AgreementDB extends \yii\db\ActiveRecord
             'created_by' => Yii::t('cms', 'Created By'),
             'updated_by' => Yii::t('cms', 'Updated By'),
             'deleted' => Yii::t('cms', 'Deleted'),
+            'to_date' => Yii::t('cms', 'To Date'),
         ];
     }
 }

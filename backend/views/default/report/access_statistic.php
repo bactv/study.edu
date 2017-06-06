@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="filter-content">
     <fieldset>
-        <legend>Lọc thông báo</legend>
+        <legend>Lọc thống kê</legend>
         <?php $form = ActiveForm::begin([
             'type' => ActiveForm::TYPE_HORIZONTAL,
             'formConfig' => [

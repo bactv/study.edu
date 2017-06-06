@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\LessonQuiz;
+use backend\models\LessonQuizQuestionAnswer;
 use Yii;
 use backend\models\LessonQuizQuestion;
 use common\models\search\LessonQuizQuestionSearch;
@@ -63,25 +64,79 @@ class LessonQuizQuestionController extends BackendController
     {
         $model = new LessonQuizQuestion();
 
-        $lesson_quiz = LessonQuiz::findOne(['id' => $lesson_quiz_id]);
-        if (empty($lesson_quiz)) {
-            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+        $quiz = LessonQuiz::findOne(['id' => $lesson_quiz_id]);
+        if (empty($quiz)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại");
         }
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->lesson_id = $lesson_quiz->lesson_id;
-            $model->quiz_id = $lesson_quiz->id;
+            $model->lesson_id = $quiz->lesson_id;
+            $model->quiz_id = $quiz->id;
+            $model->is_true = Yii::$app->request->post('is_true', 'ans_1');
             if ($model->save()) {
+                Yii::$app->db->createCommand()->update('quiz', ['total_question' => count(LessonQuizQuestion::findAll(['quiz_id' => $quiz->id]))], [
+                    'id' => $quiz->id
+                ])->execute();
+                if ($model->ans_1 != '') {
+                    if ($model->is_true == 'ans_1') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_1, $true);
+                }
+                if ($model->ans_2 != '') {
+                    if ($model->is_true == 'ans_2') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_2, $true);
+                }
+                if ($model->ans_3 != '') {
+                    if ($model->is_true == 'ans_3') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_3, $true);
+                }
+                if ($model->ans_4 != '') {
+                    if ($model->is_true == 'ans_4') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_4, $true);
+                }
+                if ($model->ans_5 != '') {
+                    if ($model->is_true == 'ans_5') {
+                        $true = 1;
+                    } else {
+                        $true = 0;
+                    }
+                    $this->save_answer($model->id, $model->ans_5, $true);
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+    }
+
+    private function save_answer($question_id, $content, $is_true = 0)
+    {
+        $model = new LessonQuizQuestionAnswer();
+        $model->question_id = $question_id;
+        $model->ans_content = $content;
+        $model->is_true = $is_true;
+        $model->save();
     }
 
     /**

@@ -69,8 +69,16 @@ class AgreementCourseShareRateController extends BackendController
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'agreement_id' => $model->agreement_id, 'course_id' => $model->course_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->agreement_id = $agreement_id;
+            if ($model->save()) {
+                return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'agreement_id' => $agreement_id
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -91,10 +99,11 @@ class AgreementCourseShareRateController extends BackendController
         $model = $this->findModel($agreement_id, $course_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'agreement_id' => $model->agreement_id, 'course_id' => $model->course_id]);
+            return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'agreement_id' => $model->agreement_id
             ]);
         }
     }

@@ -73,7 +73,8 @@ return [
                 'quan-ly-khoa-hoc/delete-lesson-quiz' => 'course-manager/delete-lesson-quiz',
 
                 'lich-su-giao-dich' => 'user/history-transaction',
-                'thong-bao' => 'user/student-notification',
+                'thong-bao' => 'user/list-notification',
+                'thong-bao/<str:[0-9a-zA-Z\-]+>' => 'user/notification-detail',
                 'nap-tien' => 'user/charging',
                 'khoa-hoc-truc-tuyen' => 'course/index',
                 'khoa-hoc-truc-tuyen/<category:\D+>' => 'course/index',

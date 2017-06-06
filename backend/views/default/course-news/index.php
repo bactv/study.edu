@@ -10,10 +10,10 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\CourseNewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = $this->params['title'] = Yii::t('cms', 'Course News');
+$this->title = $this->params['title'] = Yii::t('cms', 'Quản lý Thông báo - ' . $course['name']);
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['menu'] = [
-    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create'], 'options' => ['class' => 'btn btn-primary']],
+    ['label'=>Icon::show('plus') . " " . Yii::t('cms', 'Create'), 'url' => ['create', 'course_id' => $course['id']], 'options' => ['class' => 'btn btn-primary']],
     ['label'=>Icon::show('trash-o') . " " . Yii::t('cms', 'Delete'), 'url' => 'javascript:void(0)', 'options' => ['class' => 'btn btn-danger', 'onclick' => 'deleteAllItems()']]
 ];
 ?>
@@ -25,15 +25,41 @@ $this->params['menu'] = [
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
-
-            'id',
-            'course_id',
-            'title',
-            'content:ntext',
-            'status',
-            // 'created_time',
-            // 'updated_time',
+            [
+                'class' => 'yii\grid\CheckboxColumn',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'id',
+                'label' => 'ID',
+                'options' => ['width' => '40px'],
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'text-align: center; vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'title',
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'content',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::truncateStringWords(strip_tags($model['content']), 200);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
+            [
+                'attribute' => 'created_time',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['created_time'], '-', '/', true);
+                },
+                'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],
+                'contentOptions' => ['style'=>'vertical-align: middle;']
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',

@@ -68,6 +68,15 @@ Icon::map($this, Icon::FA);
         ]
     ]) ?>
 
+    <?= $form->field($model, 'to_date')->widget(DatePicker::className(), [
+        'type' => DatePicker::TYPE_COMPONENT_PREPEND,
+        'value' => date('d/m/Y'),
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy'
+        ]
+    ]) ?>
+
     <?= $form->field($model, 'agreement_type_id')->widget(Select2::className(), [
         'data' => ArrayHelper::map(AgreementType::find()->all(), 'agreement_type_id', 'agreement_type_name'),
         'options' => [

@@ -46,10 +46,6 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'time_length')->textInput() ?>
 
-    <?= $form->field($model, 'sort')->textInput(['type' => 'number']) ?>
-
-    <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
-
     <?= $form->field($model, 'publish_date')->widget(DatePicker::className(), [
         'type' => DatePicker::TYPE_COMPONENT_PREPEND,
         'value' => date('d/m/Y'),

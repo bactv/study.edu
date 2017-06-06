@@ -39,6 +39,24 @@ Icon::map($this, Icon::FA);
         ]
     ) ?>
 
+    <?= $form->field($model, 'from_date')->widget(\kartik\date\DatePicker::className(), [
+        'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+        'value' => date('d/m/Y'),
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy'
+        ]
+    ]) ?>
+
+    <?= $form->field($model, 'to_date')->widget(\kartik\date\DatePicker::className(), [
+        'type' => \kartik\date\DatePicker::TYPE_COMPONENT_PREPEND,
+        'value' => date('d/m/Y'),
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd/mm/yyyy'
+        ]
+    ]) ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Icon::show('floppy-o') . " " .  Yii::t('cms', 'Create') : Yii::t('cms', 'Update'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Icon::show('undo') . " " .  Yii::t('cms', 'Reset'), ['class' => 'btn btn-default']); ?>

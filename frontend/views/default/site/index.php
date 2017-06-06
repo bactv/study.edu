@@ -85,10 +85,12 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
             <?php $colors = ['yellow', 'blue', 'green', 'teal', 'red', 'brow']; ?>
             <?php foreach ($list_event as $event) {
                 $ran = mt_rand(0, 5);
+                $from_date = Utility::formatDataTime($event['from_date'], '-', '/', false);
+                $to_date = Utility::formatDataTime($event['to_date'], '-', '/', false);
                 ?>
                 <div class="item">
                     <a href="#">
-                        <div class="event_name"><span class="icon" style="color: <?php echo $colors[$ran] ?>"><?php echo Icon::show('briefcase') ?></span> <?php echo $event['name'] ?> </div>
+                        <div class="event_name"><span class="icon" style="color: <?php echo $colors[$ran] ?>"><?php echo Icon::show('briefcase') ?></span> <?php echo $event['name'] . '<i id="date_event">( ' . $from_date  . ' - ' . $to_date . ' )</i>' ?> </div>
                     </a>
                 </div>
                 <div class="clear" style="clear: both"></div>
@@ -235,3 +237,10 @@ AssetApp::regJsFilePlugin('dist/scrollreveal.js', 'scrollreveal')
 //        $('.into-col-3').addClass('animated bounceInRight');
     });
 </script>
+
+<style>
+    #date_event {
+        color: brown;
+        font-size: 11px;
+    }
+</style>

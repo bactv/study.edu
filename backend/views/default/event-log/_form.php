@@ -25,7 +25,9 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'event_id')->textInput() ?>
 
-    <?= $form->field($model, 'experience')->textInput() ?>
+    <?= $form->field($model, 'point')->textInput() ?>
+
+    <?= $form->field($model, 'money')->textInput() ?>
 
     <?= $form->field($model, 'created_time')->textInput() ?>
 

@@ -39,8 +39,8 @@ class EventGroupDB extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('cms', 'ID'),
-            'name' => Yii::t('cms', 'Name'),
-            'description' => Yii::t('cms', 'Description'),
+            'name' => Yii::t('cms', 'Nhóm sự kiện'),
+            'description' => Yii::t('cms', 'Mô tả'),
         ];
     }
 }

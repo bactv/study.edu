@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'event_id') ?>
 
-    <?= $form->field($model, 'experience') ?>
+    <?= $form->field($model, 'point') ?>
 
-    <?= $form->field($model, 'created_time') ?>
+    <?= $form->field($model, 'money') ?>
+
+    <?php // echo $form->field($model, 'created_time') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('cms', 'Search'), ['class' => 'btn btn-primary']) ?>

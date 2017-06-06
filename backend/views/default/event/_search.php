@@ -25,7 +25,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'point') ?>
 
+    <?php // echo $form->field($model, 'money') ?>
+
     <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'from_date') ?>
+
+    <?php // echo $form->field($model, 'to_date') ?>
 
     <?php // echo $form->field($model, 'created_time') ?>
 

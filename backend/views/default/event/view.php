@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\Event */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Events'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Sự kiện'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-view">
@@ -33,12 +33,70 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'event_group',
-            'description',
-            'point',
-            'status',
-            'created_time',
-            'updated_time',
+            [
+                'attribute' => 'event_group',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    $event_group = \backend\models\EventGroup::findOne(['id' => $model['event_group']]);
+                    if (!empty($event_group)) {
+                        return $event_group->name;
+                    }
+                    return '';
+                }
+            ],
+            [
+                'attribute' => 'description',
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'point',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return number_format($model['point']);
+                }
+            ],
+            [
+                'attribute' => 'money',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return number_format($model['money'] * 1000 ) . ' VNĐ';
+                }
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model['status'] == 1 ? 'Active' : 'Deactive';
+                }
+            ],
+            [
+                'attribute' => 'from_date',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['from_date'], '-', '/', false);
+                }
+            ],
+            [
+                'attribute' => 'to_date',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['to_date'], '-', '/', false);
+                }
+            ],
+            [
+                'attribute' => 'created_time',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['created_time'], '-', '/', true);
+                }
+            ],
+            [
+                'attribute' => 'updated_time',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \common\components\Utility::formatDataTime($model['updated_time'], '-', '/', true);
+                }
+            ],
         ],
     ]) ?>
 

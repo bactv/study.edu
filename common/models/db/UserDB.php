@@ -17,6 +17,8 @@ use Yii;
  * @property string $updated_time
  * @property string $deactive_time
  * @property string $active_time
+ * @property string $auth_key
+ * @property string $access_token
  */
 class UserDB extends \yii\db\ActiveRecord
 {
@@ -38,7 +40,7 @@ class UserDB extends \yii\db\ActiveRecord
             [['type', 'status', 'deleted'], 'integer'],
             [['created_time', 'updated_time', 'deactive_time', 'active_time'], 'safe'],
             [['username'], 'string', 'max' => 60],
-            [['password'], 'string', 'max' => 255]
+            [['password', 'auth_key', 'access_token'], 'string', 'max' => 255]
         ];
     }
 
@@ -58,6 +60,8 @@ class UserDB extends \yii\db\ActiveRecord
             'updated_time' => Yii::t('cms', 'Updated Time'),
             'deactive_time' => Yii::t('cms', 'Deactive Time'),
             'active_time' => Yii::t('cms', 'Active Time'),
+            'auth_key' => Yii::t('cms', 'Auth Key'),
+            'access_token' => Yii::t('cms', 'Access Token'),
         ];
     }
 }

@@ -72,6 +72,7 @@ class AgreementController extends BackendController
         if ($model->load($request)) {
             $model->agreement_signed_date = Utility::formatDataTime($model->agreement_signed_date, '/', '-', false);
             $model->agreement_effective_date = Utility::formatDataTime($model->agreement_effective_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
             $model->party_id_a = (isset($model->party_id_a)) ? $model->party_id_a : 1;
 
             if ($model->save()) {
@@ -102,11 +103,13 @@ class AgreementController extends BackendController
 
         $model->agreement_signed_date = Utility::formatDataTime($model->agreement_signed_date, '-', '/', false);
         $model->agreement_effective_date = Utility::formatDataTime($model->agreement_effective_date, '-', '/', false);
+        $model->to_date = Utility::formatDataTime($model->to_date, '-', '/', false);
 
         if ($model->load($request)) {
 
             $model->agreement_signed_date = Utility::formatDataTime($model->agreement_signed_date, '/', '-', false);
             $model->agreement_effective_date = Utility::formatDataTime($model->agreement_effective_date, '/', '-', false);
+            $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
 
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->agreement_id]);

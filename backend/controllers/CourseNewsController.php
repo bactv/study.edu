@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\components\Notification;
+use backend\models\Course;
 use Yii;
 use backend\models\CourseNews;
 use common\models\search\CourseNewsSearch;
@@ -27,17 +29,22 @@ class CourseNewsController extends BackendController
     }
 
     /**
-     * Lists all CourseNews models.
-     * @return mixed
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionIndex()
     {
+        if (!isset($_GET['course_id'])) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại.");
+        }
+        $course = Course::findOne(['id' => $_GET['course_id']]);
         $searchModel = new CourseNewsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'course' => $course
         ]);
     }
 
@@ -54,19 +61,32 @@ class CourseNewsController extends BackendController
     }
 
     /**
-     * Creates a new CourseNews model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @param $course_id
+     * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($course_id)
     {
         $model = new CourseNews();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->course_id = $course_id;
+            $model->user_id = 0;
+            if ($model->save()) {
+
+                // thông báo notification đến học sinh trong khóa học
+                Notification::create_notification($course_id, $model->id);
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'course_id' => $course_id
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'course_id' => $course_id
             ]);
         }
     }
@@ -81,8 +101,14 @@ class CourseNewsController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

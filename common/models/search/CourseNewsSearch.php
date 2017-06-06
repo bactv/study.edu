@@ -18,7 +18,7 @@ class CourseNewsSearch extends CourseNews
     public function rules()
     {
         return [
-            [['id', 'course_id', 'status'], 'integer'],
+            [['id', 'course_id', 'user_id'], 'integer'],
             [['title', 'content', 'created_time', 'updated_time'], 'safe'],
         ];
     }
@@ -54,7 +54,7 @@ class CourseNewsSearch extends CourseNews
         $query->andFilterWhere([
             'id' => $this->id,
             'course_id' => $this->course_id,
-            'status' => $this->status,
+            'user_id' => $this->user_id,
             'created_time' => $this->created_time,
             'updated_time' => $this->updated_time,
         ]);

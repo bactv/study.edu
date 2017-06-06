@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\components\BaseController;
+use frontend\components\EventProcess;
 use frontend\models\Course;
 use frontend\models\Event;
 use frontend\models\Quiz;
@@ -86,6 +87,10 @@ class SiteController extends BaseController
             $model->full_name = $full_name;
 
             if ($model->signup()) {
+                $obj = User::findOne(['username' => $username, 'type' => 1]);
+                if (!empty($obj)) {
+                    EventProcess::user_register_gift_promotion($obj->id);
+                }
                 return $this->redirect(Url::toRoute(['/dang-nhap']));
             } else {
                 $session->setFlash('error', 'Tài khoản không hợp lệ hoặc có lỗi xả ra. Vui lòng thử lại.');
