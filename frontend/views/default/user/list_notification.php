@@ -36,7 +36,7 @@
                 </div>
             <?php } ?>
         </div>
-        <div id="notificationFooter"><a href="#">Xem tất cả</a></div>
+        <div id="notificationFooter"><a href="<?php echo \yii\helpers\Url::toRoute(['/thong-bao']) ?>" target="_blank">Xem tất cả</a></div>
     </div>
 </li>
 
@@ -119,11 +119,10 @@
         min-height:250px;
     }
     #notificationsBody .new_no {
-        background: #ececec;
+        /*background: #ececec;*/
     }
     #notificationsBody .item {
         border-bottom: 1px solid #ccc;
-        margin-bottom: 5px;
         height: 70px;
         padding: 5px 3px;
     }

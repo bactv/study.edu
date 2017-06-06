@@ -33,7 +33,7 @@ Icon::map($this, Icon::FA);
             <?php if (!empty(Yii::$app->user->identity)) {
                 $total_notification = count(\frontend\models\Notification::findAll(['receiver_id' => Yii::$app->user->identity->getId(), 'status' => 0]));
                 ?>
-                <div class="w3-right w3-hide-small w3-bar-item" style="padding: 13px 10px;">
+                <div class="w3-right w3-hide-small w3-bar-item txt" style="padding: 13px 10px;">
                     <div class="w3-dropdown-click">
                         <a href="javascript:void(0)" onclick="myFunction2()" class="w3-bar-item" id="btn-notification"></a> <span class="label label-danger total_notification"><?php echo ($total_notification > 0) ? $total_notification : '' ?></span>
                         <ul id="dropdown-menu-notification" class="w3-dropdown-content w3-bar-block w3-border w3-ul">
@@ -118,22 +118,25 @@ Icon::map($this, Icon::FA);
         margin-top: 38px;
         right: 0;
     }
+    .w3-dropdown-click:hover {
+        background: none !important;
+    }
 </style>
 
 <script>
     $(document).ready(function () {
         var user_id = '<?php echo !empty(Yii::$app->user->identity) ? Yii::$app->user->identity->getId() : 0 ?>';
         if (user_id != '') {
-//            setInterval(function(){
-//                $.ajax({
-//                    method: 'GET',
-//                    data: {'user_id' : user_id},
-//                    url: '<?php //echo Url::toRoute(['/user/get-new-notification']) ?>//',
-//                    success: function (data) {
-//                        $(".total_notification").html(data);
-//                    }
-//                });
-//            }, 2000);
+            setInterval(function(){
+                $.ajax({
+                    method: 'GET',
+                    data: {'user_id' : user_id},
+                    url: '<?php echo Url::toRoute(['/user/get-new-notification']) ?>',
+                    success: function (data) {
+                        $(".total_notification").html(data);
+                    }
+                });
+            }, 2000);
         }
     });
 

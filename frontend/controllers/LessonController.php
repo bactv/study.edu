@@ -8,12 +8,17 @@
 namespace frontend\controllers;
 
 use common\components\Utility;
+use common\models\FreeStudentCourseBase;
+use common\models\StudentCourseBase;
+use frontend\components\Notification;
 use frontend\models\Course;
+use frontend\models\CourseTeacher;
 use frontend\models\Lesson;
 use frontend\models\LessonDocument;
 use frontend\models\LessonQuiz;
 use frontend\models\LessonQuizQuestion;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -151,5 +156,48 @@ class LessonController extends Controller
             }
         }
         return $id;
+    }
+
+    public function actionLiveStreaming($lesson_id, $session_id)
+    {
+        $lesson_id = Utility::encrypt_decrypt('decrypt', $lesson_id);
+        $session_id = Utility::encrypt_decrypt('decrypt', $session_id);
+        if (empty($lesson_id) && empty($session_id)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
+        }
+
+        if (time() > intval($session_id) + 3*60*60) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+        }
+        $lesson = Lesson::findOne(['id' => $lesson_id]);
+
+        $user = (!empty(Yii::$app->user->identity)) ? Yii::$app->user->identity : '';
+        if (empty($user)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+        }
+        if ($user->type == 1) {
+            // check hoc sinh
+            $student_course = StudentCourseBase::findAll(['course_id' => $lesson->course_id, 'student_id' => $user->getId()]);
+            $student_try_course = FreeStudentCourseBase::find()->where(['course_id' => $lesson->course_id])
+                ->andWhere('number_lesson_learning < "' . Yii::$app->params['number_try_lesson'] . '"')
+                ->all();
+            if (empty($student_try_course) && empty($student_course)) {
+                throw new NotFoundHttpException("Bạn không có quyền truy cập vào trang này.");
+            }
+        } else {
+            $teacher = CourseTeacher::findOne(['teacher_id' => $user->getId(), 'course_id' => $lesson->course_id]);
+            if (empty($teacher)) {
+                throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+            } else {
+                $link = Url::toRoute(['/lesson/live-streaming', 'lesson_id' => Utility::encrypt_decrypt('encrypt', $lesson_id), 'session_id' => Utility::encrypt_decrypt('encrypt', $session_id)]);
+                $link2 = '<a href="' . $link . '">' . $link . '</a>';
+                Notification::create_notification($lesson->course_id, $link2, $teacher->teacher_id);
+            }
+        }
+
+        return $this->render('live_streaming', [
+            'lesson' => $lesson,
+            'user' => $user
+        ]);
     }
 }

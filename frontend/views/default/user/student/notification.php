@@ -14,7 +14,7 @@ use common\components\Utility;
     <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-bell fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Thông báo</h2>
     <div class="w3-container">
         <?php foreach ($list_notification as $item) { ?>
-        <div class="w3-row item">
+        <div class="w3-row item <?php echo ($item['status'] == 0) ? 'new_no' : '' ?>">
             <div class="w3-col l1">
                 <div class="avatar">
                     <?php
@@ -32,10 +32,12 @@ use common\components\Utility;
                 </div>
             </div>
             <div class="w3-col l11">
-                <div class="content">
-                    <?php echo Utility::truncateStringWords($item['content'], 200) ?><br>
-                    <?php echo $item['created_time'] ?>
-                </div>
+                <a href="<?php echo Url::toRoute(['/thong-bao/' . $item['id']]) ?>">
+                    <div class="content">
+                        <?php echo Utility::truncateStringWords($item['content'], 200) ?><br>
+                        <?php echo '<i style="font-size: 12px">' . $item['created_time'] . '</i>' ?>
+                    </div>
+                </a>
             </div>
         </div>
         <?php } ?>
@@ -55,9 +57,17 @@ use common\components\Utility;
         width: 40px;
     }
     .item .avatar img {}
-    .item .content {}
+    .item .content {
+        border-bottom: 1px solid #ccc;
+    }
+    .item .content:hover {
+        color: #00AA88;
+    }
     .item {}
     .item {}
     .item {}
+    .new_no {
+        color: firebrick;
+    }
 </style>
 

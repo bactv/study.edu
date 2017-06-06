@@ -207,7 +207,7 @@ class UserController extends Controller
     {
         $request = Yii::$app->request->get();
         $user_id = isset($request['user_id']) ? $request['user_id'] :  0;
-        $list_notification = Notification::find()->where(['receiver_id' => $user_id])->limit(7)->all();
+        $list_notification = Notification::find()->where(['receiver_id' => $user_id])->limit(7)->orderBy('created_time DESC')->all();
         return $this->renderAjax('list_notification', [
             'list_notification' => $list_notification,
             'user_id' => $user_id
@@ -217,7 +217,7 @@ class UserController extends Controller
     public function actionListNotification()
     {
         $this->layout = 'student_layout';
-        $list_notification = Notification::find()->where(['receiver_id' => $this->_user->id])->all();
+        $list_notification = Notification::find()->where(['receiver_id' => $this->_user->id])->orderBy('created_time DESC')->all();
         return $this->render('student/notification', [
             'list_notification' => $list_notification
         ]);
@@ -225,6 +225,16 @@ class UserController extends Controller
 
     public function actionNotificationDetail($id)
     {
-
+        $this->layout = 'student_layout';
+        $user_id = !empty(Yii::$app->user->identity)? Yii::$app->user->identity->getId() : '';
+        if (empty($user_id)) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy");
+        }
+        $notification = Notification::findOne(['id' => $id, 'receiver_id' => $user_id]);
+        $notification->status = 1;
+        $notification->save();
+        return $this->render('notification_detail', [
+            'notification' => $notification
+        ]);
     }
 }

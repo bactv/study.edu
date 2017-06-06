@@ -36,29 +36,9 @@ Icon::map($this, Icon::FA);
             // danh sách đề thi
             $arr_quiz = LessonQuiz::findAll(['lesson_id' => $lesson['id']]);
 
-            if ($k == 0) {
-                $panel = 'success';
-                $icon = 'check';
-                $color = 'w3-text-green';
-                $complete = true;
-            } else {
-                // kiểm tra bài học trước đó
-                $complete = Lesson::check_user_complete_lesson($lessons[$k - 1]['id'], Yii::$app->user->identity->getId());
-                if ($k == 0 || $complete) {
-                    $panel = 'success';
-                    $icon = 'check';
-                    $color = 'w3-text-green';
-                    $complete = 1;
-                } else {
-                    $panel = 'warning';
-                    $icon = 'close';
-                    $color = 'w3-text-red';
-                }
-            }
-
             ?>
-            <div class="panel panel-<?php echo $panel ?>">
-                <div class="panel-heading"><a href="javascript:void(0)"  data-complete_lesson="<?php echo (($complete) ? 1 : 0) ?>" data-lesson_id="<?php echo $lesson['id'] ?>" onclick="toggle_panel_body(this)"><span class="<?php echo $color ?>"><?php echo Icon::show($icon) ?> </span><span style="text-transform: uppercase;"><?php echo 'Bài: ' . ($k + 1) . ': ' . $lesson['name'] ?></span></a></div>
+            <div class="panel panel-success">
+                <div class="panel-heading"><a href="javascript:void(0)"  data-complete_lesson="" data-lesson_id="<?php echo $lesson['id'] ?>" onclick="toggle_panel_body(this)"><span class=""> </span><span style="text-transform: uppercase;"><?php echo 'Bài: ' . ($k + 1) . ': ' . $lesson['name'] ?></span></a></div>
                 <div class="panel-body" style="display: none" id="pb_<?php echo $lesson['id'] ?>">
                     <div class="w3-col l5" style="padding-right: 10px">
                         <div><a href="<?php echo Url::toRoute(['/bai-giang/' . Utility::rewrite($lesson['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $lesson['id'])]) ?>" target="_blank" style="font-size: 1.2em;">1. BÀI GIẢNG</a></div>
@@ -66,7 +46,7 @@ Icon::map($this, Icon::FA);
                             <p style="font-size: 1.2em;">2. TÀI LIỆU THAM KHẢO</p>
                             <ul>
                                 <?php foreach ($documents as $doc) {
-                                    $path = Yii::$app->params['assets.course'] . $lesson['course_id'] . '/' . $lesson['id'] . '/documents/' . $doc['document_name'];
+                                    $path = Yii::$app->params['assets_path']['assets.course'] . $lesson['course_id'] . '/' . $lesson['id'] . '/documents/' . $doc['document_name'];
                                     ?>
                                     <li><a href="<?php echo $path ?>"><?php echo $doc['document_name'] ?></a></li>
                                 <?php } ?>
@@ -110,14 +90,6 @@ Icon::map($this, Icon::FA);
 <script>
     function toggle_panel_body(element) {
         var lesson_id = $(element).data('lesson_id');
-        var complete_lesson = $(element).data('complete_lesson');
-        if (complete_lesson == 1) {
-            $("div#pb_" + lesson_id).toggle(200);
-        } else {
-            BootstrapDialog.show({
-                title: 'Info!',
-                message: 'Bạn chưa hoàn thành bài học trước đó. Hãy hoàn thiện để chuyển sang bài kế tiếp.'
-            })
-        }
+        $("div#pb_" + lesson_id).toggle(200);
     }
 </script>

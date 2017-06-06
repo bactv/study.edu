@@ -234,7 +234,8 @@ class CourseController extends BaseController
             }
             return $this->render('video_detail_teacher', [
                 'course' => $course,
-                'lessons' => $lessons
+                'lessons' => $lessons,
+                'teacher' => $user
             ]);
         }
 
@@ -257,19 +258,5 @@ class CourseController extends BaseController
             }
         }
         return $id;
-    }
-
-    public function actionLiveStreaming()
-    {
-        return $this->render('live_streaming');
-    }
-
-    public function actionVietName()
-    {
-        $request = Yii::$app->request->get();
-        if (!Yii::$app->request->isPost || Yii::$app->request->isAjax) {
-            Yii::$app->end();
-        }
-        echo json_encode("VietName");
     }
 }

@@ -94,12 +94,14 @@ return [
         'teacher_feedback' => 'teacher_feedback',
         'send_request_course' => 'send_request_course',
         'system_feedback' => 'system_feedback',
+        'teacher_notification' => 'teacher_notification'
     ],
     'type_notification_name' => [
         'student_feedback' => 'Học sinh phản hồi',
         'teacher_feedback' => 'Giáo viên phản hồi',
         'send_request_course' => 'Yêu cầu duyệt khóa học',
         'system_feedback' => 'Hệ thống phản hồi',
+        'teacher_notification' => 'Giáo viên livestream'
     ],
     'number_try_lesson' => 3,
 ];

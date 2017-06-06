@@ -40,7 +40,7 @@ Icon::map($this, Icon::FA);
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <span style="text-transform: uppercase;"><?php echo 'Bài: ' . ($k + 1) . ': ' . $lesson['name'] ?></span>
-                    <span><a href="<?php echo Url::toRoute(['/course/live-streaming']) ?>" type="button" class="btn btn-danger"><?php echo Icon::show('video-camera') ?> Live Stream Now</a></span>
+                    <span><a href="<?php echo Url::toRoute(['/lesson/live-streaming', 'lesson_id' => Utility::encrypt_decrypt('encrypt', $lesson['id']), 'session_id' => Utility::encrypt_decrypt('encrypt', time())]) ?>" type="button" class="btn btn-danger"><?php echo Icon::show('video-camera') ?> Live Stream Now</a></span>
                 </div>
             </div>
         <?php } ?>

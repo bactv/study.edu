@@ -84,7 +84,7 @@ AppAsset::register($this);
                         <li><a href="#"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> <?php echo ($k + 1) . '. ' . $doc['document_name'] ?></span></a></li>
                     <?php } ?>
                     <?php foreach ($lesson_quiz as $k => $quiz) { ?>
-                        <li class="<?php echo (!empty($quiz_active) && $quiz_active['id'] == $quiz['id']) ? 'active' : '' ?>"><a href="#"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Quiz ' . ($k + 1) ?></span></a></li>
+                        <li class="<?php echo (!empty($quiz_active) && $quiz_active['id'] == $quiz['id']) ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/lesson/quiz-detail', 'id' => Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Bài kiểm tra số ' . ($k + 1) ?></span></a></li>
                     <?php } ?>
                 </ul>
             </div>

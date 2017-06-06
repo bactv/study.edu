@@ -48,11 +48,6 @@ use frontend\models\Course;
                         <p class="course_name"><a href="<?php echo $url_course ?>" class="w3-text-teal"><?php echo $course['name'] ?></a></p>
                         <p class="course_teacher">Giáo viên: <?php echo $teachers ?></p>
                     </div>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="<?php echo $student_course['progress'] ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $student_course['progress'] . '%' ?>;">
-                            <span class="show"><?php echo $student_course['progress'] . '%' ?></span>
-                        </div>
-                    </div>
                 </div>
             </div>
             <?php } ?>
