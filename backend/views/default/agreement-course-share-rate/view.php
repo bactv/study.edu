@@ -9,8 +9,8 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $model backend\models\AgreementCourseShareRate */
 
-$this->title = $model->agreement_id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Agreement Course Share Rates'), 'url' => ['index']];
+$this->title = \backend\models\Agreement::getAttributeValue(['agreement_id' => $model->agreement_id], 'agreement_code');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Tỷ lệ chia sẻ khóa học'), 'url' => ['/agreement/view', 'id' => $model->agreement_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agreement-course-share-rate-view">
@@ -32,9 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'agreement_id',
-            'course_id',
+            [
+                'attribute' => 'course_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return \backend\models\Course::getAttributeValue(['id' => $model['course_id']], 'name');
+                }
+            ],
             'share_rate',
         ],
     ]) ?>
 
 </div>
+
+<style>
+    .table > tbody > tr > th {
+        width: 20%;
+    }
+</style>

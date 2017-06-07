@@ -80,7 +80,7 @@ class CourseController extends BaseController
         $student = Student::findOne(['user_id' => $user_id]);
         $user = User::findOne(['id' => $user_id]);
         if (empty($user_id)) {
-            echo json_encode(['status' => 0, 'message' => 'Bạn phải đăng nhập để xem bài giảng', 'code' => 'Thông báo']);
+            echo json_encode(['status' => 0, 'message' => 'Bạn phải đăng nhập để đăng ký khóa học', 'code' => 'Thông báo']);
             Yii::$app->end();
         }
         if ($user->type != 1) {
@@ -132,6 +132,53 @@ class CourseController extends BaseController
                 echo json_encode(['status' => 0, 'message' => 'Có lỗi xảy ra trong quá trình đăng ký, vui lòng thử lại sau.', 'code' => 'Thông báo']);
                 Yii::$app->end();
             }
+        }
+    }
+
+    public function actionTryRegister()
+    {
+        if (!Yii::$app->request->isAjax || !Yii::$app->request->isPost) {
+            echo json_encode(['status' => 0, 'message' => 'Bạn không có quyền', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        }
+        $request = Yii::$app->request->post();
+
+        // check khóa học tồn tại
+        $course_id = isset($request['course_id']) ? $request['course_id'] : '';
+        $user_id = isset($request['user_id']) ? $request['user_id'] : 0;
+        $course = Course::get_course_active($course_id);
+        if (empty($course)) {
+            echo json_encode(['status' => 0, 'message' => 'Khóa học không tồn tại', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        }
+
+        // check user đăng nhập
+        $student = Student::findOne(['user_id' => $user_id]);
+        $user = User::findOne(['id' => $user_id]);
+        if (empty($user_id)) {
+            echo json_encode(['status' => 0, 'message' => 'Bạn phải đăng nhập để đăng ký khóa học', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        }
+        if ($user->type != 1) {
+            echo json_encode(['status' => 0, 'message' => 'Tài khoản của bạn không có quyền truy cập', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        }
+
+        $free_try_course = FreeStudentCourse::findOne(['student_id' => $user->id, 'course_id' => $course_id]);
+        if (!empty($free_try_course)) {
+            echo json_encode(['status' => 0, 'message' => 'Bạn đã đăng ký học thử khóa học này, số buổi còn lại: ' . (Yii::$app->params['number_try_lesson'] - $free_try_course->number_lesson_learning) . ' buổi', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        }
+        $free_try_course = new FreeStudentCourse();
+        $free_try_course->student_id = $user_id;
+        $free_try_course->course_id = $course_id;
+        $free_try_course->number_lesson_learning = 0;
+        if ($free_try_course->save()) {
+            echo json_encode(['status' => 1, 'message' => 'Bạn đã đăng ký học thử khóa học thành công, bạn có ' . Yii::$app->params['number_try_lesson'] . ' buổi học miễn phí. Xin cảm ơn.', 'code' => 'Thông báo']);
+            Yii::$app->end();
+        } else {
+            echo json_encode(['status' => 0, 'message' => 'Có lỗi xảy ra. Vui lòng thử lại sau', 'code' => 'Thông báo']);
+            Yii::$app->end();
         }
     }
 

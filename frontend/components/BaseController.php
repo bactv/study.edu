@@ -16,7 +16,7 @@ class BaseController extends Controller
 {
     public function init()
     {
-        $this->log_to_session();
+//        $this->log_to_session();
     }
 
     private function log_to_session()

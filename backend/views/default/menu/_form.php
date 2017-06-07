@@ -35,8 +35,6 @@ Icon::map($this, Icon::FA);
 
     <?= $form->field($model, 'icon')->textInput(['maxlength' => 30]) ?>
 
-    <?= $form->field($model, 'visible')->checkbox(['label' => false])->label(Yii::t('cms', 'Visible') . ' (Hiện | Ẩn)') ?>
-
     <?= $form->field($model, 'status')->checkbox(['label' => false])->label(Yii::t('cms', 'Status')) ?>
 
     <div class="form-group">

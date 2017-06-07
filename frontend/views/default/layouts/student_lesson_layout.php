@@ -80,8 +80,10 @@ AppAsset::register($this);
                 <p id="lesson_title"><?php echo $lesson['name'] ?></p>
                 <ul class="lesson_assets">
                     <li><a href="#"><span><?php echo Icon::show('play-circle', ['style' => 'color: #2ab573']) ?> Video</span></a></li>
-                    <?php foreach ($lesson_document as $k => $doc) { ?>
-                        <li><a href="#"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> <?php echo ($k + 1) . '. ' . $doc['document_name'] ?></span></a></li>
+                    <?php foreach ($lesson_document as $k => $doc) {
+                        $path = Yii::$app->params['assets_path']['assets.course'] . $lesson['course_id'] . '/' . $lesson['id'] . '/document/' . $doc['document_name'];
+                        ?>
+                        <li><a href="<?php echo $path ?>"><span><?php echo Icon::show('file-text', ['style' => 'color: #c39322']) ?> <?php echo ($k + 1) . '. ' . $doc['document_name'] ?></span></a></li>
                     <?php } ?>
                     <?php foreach ($lesson_quiz as $k => $quiz) { ?>
                         <li class="<?php echo (!empty($quiz_active) && $quiz_active['id'] == $quiz['id']) ? 'active' : '' ?>"><a href="<?php echo Url::toRoute(['/lesson/quiz-detail', 'id' => Utility::encrypt_decrypt('encrypt', $quiz['id'])]) ?>"><span><?php echo Icon::show('star-o', ['style' => 'color: #0d3ae6']) ?> <?php echo 'Bài kiểm tra số ' . ($k + 1) ?></span></a></li>

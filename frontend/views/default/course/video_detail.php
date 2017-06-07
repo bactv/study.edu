@@ -46,7 +46,7 @@ Icon::map($this, Icon::FA);
                             <p style="font-size: 1.2em;">2. TÀI LIỆU THAM KHẢO</p>
                             <ul>
                                 <?php foreach ($documents as $doc) {
-                                    $path = Yii::$app->params['assets_path']['assets.course'] . $lesson['course_id'] . '/' . $lesson['id'] . '/documents/' . $doc['document_name'];
+                                    $path = Yii::$app->params['assets_path']['assets.course'] . $lesson['course_id'] . '/' . $lesson['id'] . '/document/' . $doc['document_name'];
                                     ?>
                                     <li><a href="<?php echo $path ?>"><?php echo $doc['document_name'] ?></a></li>
                                 <?php } ?>

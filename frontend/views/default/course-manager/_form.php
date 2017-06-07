@@ -87,14 +87,16 @@ Icon::map($this, Icon::FA);
             </div>
         </div>
 
-        <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
-            'data' => ArrayHelper::map(CourseType::find()->all(), 'id', 'name'),
-        ]) ?>
+        <?php if (!$model->isNewRecord && $model->approved != 1) { ?>
+            <?= $form->field($model, 'course_type_id')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(CourseType::find()->all(), 'id', 'name'),
+            ]) ?>
 
-        <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
-            'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
-        ]) ?>
-        <?= $form->field($model, 'price')->textInput(['maxlength' => 10, 'type' => 'number', 'min' => 10000]) ?>
+            <?= $form->field($model, 'subject_id')->widget(Select2::className(), [
+                'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+            ]) ?>
+            <?= $form->field($model, 'price')->textInput(['maxlength' => 10, 'type' => 'number', 'min' => 10000]) ?>
+        <?php } ?>
 
         <?= $form->field($model, 'deadline_register')->widget(DatePicker::className(), [
             'type' => DatePicker::TYPE_COMPONENT_PREPEND,

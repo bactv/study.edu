@@ -31,7 +31,7 @@ class AdminController extends \common\models\AdminControllerBase
      */
     public static function getAllAdminControllers()
     {
-        return self::find()->asArray()->all();
+        return self::find()->all();
     }
 
     /**

@@ -109,6 +109,7 @@ AppAsset::register($this);
                             <li class="active_mc"><a href="<?php echo Url::toRoute(['/khoa-hoc-cua-toi']) ?>"><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Khóa học của tôi</a></li>
                             <li class="active_ht"><a href="<?php echo Url::toRoute(['/lich-su-giao-dich']) ?>"><i class="fa fa-history fa-fw w3-margin-right w3-large w3-text-teal"></i>Lịch sử giao dịch</a></li>
                             <li class="active_nt"><a href="<?php echo Url::toRoute(['/thong-bao']) ?>"><i class="fa fa-bell fa-fw w3-margin-right w3-large w3-text-teal"></i>Thông báo <span class="label label-danger"><?php echo ($total_notification > 0) ? $total_notification : '' ?></span></a></li>
+                            <li class="active_fb"><a href="<?php echo Url::toRoute(['/phan-hoi']) ?>"><i class="fa fa-quora fa-fw w3-margin-right w3-large w3-text-teal"></i>Phản hồi hệ thống</a></li>
                             <li class="active_chr"><a href="<?php echo Url::toRoute(['/nap-tien']) ?>"><i class="fa fa-eur fa-fw w3-margin-right w3-large w3-text-teal"></i>Nạp tiền</a></li>
                         </ul>
                     </div>

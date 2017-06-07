@@ -123,7 +123,7 @@ $this->params['menu'] = [
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view} {update} {delete} {approved}',
+                'template' => '{view} {update} {delete} {approved} {refuse}',
                 'header' => Yii::t('cms', 'Actions'),
                 'headerOptions' => ['style'=>'text-align: center;'],
                 'contentOptions'=>['style'=>'text-align: center;'],
@@ -156,6 +156,17 @@ $this->params['menu'] = [
                         $url = \yii\helpers\Url::toRoute(['/course/approved-course', 'id' => $model['id']]);
                         return Html::a(Icon::show('check'), $url, [
                             'title' => Yii::t('cms', 'Approved'),
+                            'class'=>'btn btn-primary btn-xs btn-app',
+                            'data-confirm' => Yii::t('yii', 'Are you sure you want to approve this item?'),
+                            'data-method' => 'post',
+                            'data-pjax' => 'w0'
+                        ]);
+                    },
+
+                    'refuse' => function ($url, $model) {
+                        $url = \yii\helpers\Url::toRoute(['/course/refuse-course', 'id' => $model['id']]);
+                        return Html::a(Icon::show('close'), $url, [
+                            'title' => Yii::t('cms', 'Từ chối phê duyệt'),
                             'class'=>'btn btn-primary btn-xs btn-app',
                             'data-confirm' => Yii::t('yii', 'Are you sure you want to approve this item?'),
                             'data-method' => 'post',

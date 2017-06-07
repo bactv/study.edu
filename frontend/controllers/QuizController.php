@@ -307,14 +307,15 @@ class QuizController extends Controller
         if (empty($attempt) || empty($quiz) || empty($questions)) {
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy.");
         }
-        $other_quiz = Quiz::find()->where(['topic_id' => $quiz['topic_id'], 'status' => 1])->andWhere('id <> ' . $quiz['id'])->limit(5);
-        if ($other_quiz->count() < 5) {
-            $other_quiz->orWhere(['subject_id' => $quiz['subject_id']]);
-            if ($other_quiz->count() < 5) {
-                $other_quiz->orWhere(['quiz_type_id' => $quiz['quiz_type_id']]);
-            }
-        }
-        $other_quiz = $other_quiz->orderBy('updated_time DESC')->all();
+//        $other_quiz = Quiz::find()->where(['topic_id' => $quiz['topic_id'], 'status' => 1])->andWhere('id <> ' . $quiz['id'])->limit(5);
+//        if ($other_quiz->count() < 5) {
+//            $other_quiz->orWhere(['subject_id' => $quiz['subject_id']]);
+//            if ($other_quiz->count() < 5) {
+//                $other_quiz->orWhere(['quiz_type_id' => $quiz['quiz_type_id']]);
+//            }
+//        }
+//        $other_quiz = $other_quiz->orderBy('updated_time DESC')->all();
+        $other_quiz = Quiz::find()->where('id <> "' . $quiz['id'] . '"')->limit(5)->orderBy('updated_time DESC')->all();
         $quiz_rating = QuizRating::get_quiz_rating_info($quiz['id']);
 
         return $this->render('review_contest', [

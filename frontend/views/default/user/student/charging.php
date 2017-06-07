@@ -91,12 +91,6 @@ AssetApp::regCssFile('tabs.css');
                 </div>
             </div>
 
-            <div class="tab-pane fade in" id="tab2">
-                <h4 class="w3-center w3-margin-bottom"><b>Nạp tiền bằng chuyển khoản ngân hàng</b></h4>
-                <div class="w3-margin-bottom">
-                    <?php echo isset($bank_help['content']) ? $bank_help['content'] : '' ?>
-                </div>
-            </div>
         </div>
     </div>
 </div>

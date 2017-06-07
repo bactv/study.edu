@@ -15,7 +15,7 @@ class ActiveAccountController extends Controller
 {
     public function actionProcessActive()
     {
-        $now = date('Y-m-d H:i:00');
+        $now = date('Y-m-d H:i:00', strtotime('+1 days'));
         $all_accounts = User::find()
             ->where(['status' => 0])
             ->andWhere(['deleted' => 0])

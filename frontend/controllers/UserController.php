@@ -237,4 +237,47 @@ class UserController extends Controller
             'notification' => $notification
         ]);
     }
+
+    public function actionCreateFeedback()
+    {
+        $model = new Notification();
+        $request = Yii::$app->request->post();
+        $session = Yii::$app->session;
+
+        if ($this->_user['type'] == 1) {
+            $this->layout = 'student_layout';
+            if (isset($request['btn-info'])) {
+                $model->sender_id = $this->_user['id'];
+                $model->receiver_id = 0;
+                $model->type = 'student_feedback';
+                $model->content = $request['content'];
+
+                if ($model->save()) {
+                    $session->setFlash("success", "Cảm ơn bạn đã phản hồi về hệ thống.");
+                    return $this->redirect(['/tai-khoan']);
+                }
+            }
+
+            return $this->render('create_feedback', [
+                'model' => $model
+            ]);
+        } else {
+            $this->layout = 'teacher_layout';
+            if (isset($request['btn-info'])) {
+                $model->sender_id = $this->_user['id'];
+                $model->receiver_id = 0;
+                $model->type = 'teacher_feedback';
+                $model->content = $request['content'];
+
+                if ($model->save()) {
+                    $session->setFlash("success", "Cảm ơn bạn đã phản hồi về hệ thống.");
+                    return $this->redirect(['/tai-khoan']);
+                }
+            }
+
+            return $this->render('create_feedback', [
+                'model' => $model
+            ]);
+        }
+    }
 }

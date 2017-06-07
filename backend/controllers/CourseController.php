@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\components\Notification;
+use backend\models\CourseTeacher;
 use common\components\Utility;
 use Yii;
 use backend\models\Course;
@@ -147,5 +149,44 @@ class CourseController extends BackendController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionApprovedCourse($id)
+    {
+        $course = Course::findOne(['id' => $id]);
+        if (!empty($course)) {
+            $course->approved = 1;
+            $course->status = 1;
+            $course->save();
+
+            $teacher = CourseTeacher::findAll(['course_id' => $id]);
+            foreach ($teacher as $tch) {
+                $no = new \backend\models\Notification();
+                $no->sender_id = 0;
+                $no->receiver_id = $tch->teacher_id;
+                $no->type = 'system_feedback';
+                $no->content = "Chúc mừng, Khóa học: " . $course->name . " của bạn đã được xét duyệt. Vui lòng kiểm tra lại. Xin cảm ơn";
+                $no->status = 0;
+                $no->created_time = date('Y-m-d H:i:s');
+                $no->save();
+            }
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionRefuseCourse($id)
+    {
+        $teacher = CourseTeacher::findAll(['course_id' => $id]);
+        foreach ($teacher as $tch) {
+            $no = new \backend\models\Notification();
+            $no->sender_id = 0;
+            $no->receiver_id = $tch->teacher_id;
+            $no->type = 'system_feedback';
+            $no->content = "Xin lỗi chúng tôi chưa thể phê duyệt khóa học của bạn vì chưa đủ tiêu chuẩn để mở. Vui lòng chỉnh sửa và gửi lại yêu cầu cho chúng tôi.";
+            $no->status = 0;
+            $no->created_time = date('Y-m-d H:i:s');
+            $no->save();
+        }
+        return $this->redirect(['index']);
     }
 }

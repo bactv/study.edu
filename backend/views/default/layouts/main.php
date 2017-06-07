@@ -22,6 +22,10 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <noscript>
+        <p style="text-align: center;margin-top: 100px;color: brown;font-size: 1.5em">Xin lỗi website yêu cầu sử dụng Javascript. Hãy bật Javascript trên trình duyệt của bạn đề tiếp tục.</p>
+        <style>div { display:none; }</style>
+    </noscript>
     <?php $this->head() ?>
 </head>
 <body>

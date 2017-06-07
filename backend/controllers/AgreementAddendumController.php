@@ -73,7 +73,7 @@ class AgreementAddendumController extends BackendController
             $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
             $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
             if ($model->save()) {
-                return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+                return $this->redirect(['/agreement-addendum/view', 'id' => $model->addendum_id]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -104,7 +104,7 @@ class AgreementAddendumController extends BackendController
             $model->from_date = Utility::formatDataTime($model->from_date, '/', '-', false);
             $model->to_date = Utility::formatDataTime($model->to_date, '/', '-', false);
             if ($model->save()) {
-                return $this->redirect(['/agreement/view', 'id' => $model->agreement_id]);
+                return $this->redirect(['/agreement-addendum/view', 'id' => $model->addendum_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,

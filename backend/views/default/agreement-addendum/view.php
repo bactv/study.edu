@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $model backend\models\AgreementAddendum */
 
 $this->title = $model->addendum_number;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Phụ lục'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('cms', 'Hợp đồng'), 'url' => ['/agreement/view', 'id' => $model->agreement_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agreement-addendum-view">
@@ -34,6 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'addendum_content',
                 'format' => 'raw'
+            ],
+            [
+                'attribute' => 'from_date',
+                'label' => Yii::t('cms', 'Ngày hiệu lực'),
+                'value' => \common\components\Utility::formatDataTime($model['from_date'], '-', '/', false)
+            ],
+            [
+                'attribute' => 'to_date',
+                'label' => Yii::t('cms', 'Ngày hết hạn'),
+                'value' => \common\components\Utility::formatDataTime($model['to_date'], '-', '/', false)
             ],
             [
                 'attribute' => 'addendum_created_time',

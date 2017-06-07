@@ -13,7 +13,7 @@
         <div id="notificationsBody" class="notifications">
             <?php foreach ($list_notification as $item) { ?>
                 <div class="item <?php echo ($item['status'] == 0) ? 'new_no' : '' ?>" id="<?php echo $item['id'] ?>">
-                    <a href="#">
+                    <a href="<?php echo \yii\helpers\Url::toRoute(['/thong-bao/' . $item['id']]) ?>">
                         <div class="avatar">
                             <?php
                             $img = '';

@@ -106,6 +106,8 @@ Icon::map($this, Icon::FA);
                         <p class="btn_reg"><a href="<?php echo Url::toRoute(['/detail/' . Utility::rewrite($course['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $course['id'])]) ?>" role="button" class="btn btn-warning">Vào lớp <?php echo Icon::show('angle-double-right ') ?></a></p>
                     <?php } else { ?>
                         <p class="btn_reg"><a href="javascript:void(0)" role="button" class="btn btn-warning" id="btn_reg"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký khóa học</a></p>
+                        <p class="w3-center">hoặc</p>
+                        <p class="w3-center"><a href="javascript:void(0)" role="button" class="btn btn-info" id="btn_reg_try"><?php echo Icon::show('cart-arrow-down') ?> Đăng ký học thử</a></p>
                     <?php } ?>
                 </div>
 
@@ -139,7 +141,7 @@ Icon::map($this, Icon::FA);
 
 <script>
     $(document).ready(function () {
-//        $(".box_right").stick_in_parent();
+        $(".box_right").stick_in_parent();
     });
 
 
@@ -149,9 +151,9 @@ Icon::map($this, Icon::FA);
         var user_id = '<?php echo $user_id ?>';
         var course_id = '<?php echo $course['id'] ?>';
 
-        if (user_id == '') {
+        if (user_id == 0) {
             BootstrapDialog.show({
-                title: 'Thông báo!',
+                title: 'Thông báo',
                 message: 'Bạn phải đăng nhập để đăng ký khóa học!'
             });
         } else {
@@ -178,9 +180,9 @@ Icon::map($this, Icon::FA);
         var lesson_id = $(this).data('lesson_id');
         var _csrf = $("meta[name='csrf-param']").attr('content');
 
-        if (user_id == '') {
+        if (user_id == 0) {
             BootstrapDialog.show({
-                title: 'Thông báo!',
+                title: 'Thông báo',
                 message: 'Bạn phải đăng nhập để xem bài giảng!'
             });
             return false;
@@ -204,4 +206,32 @@ Icon::map($this, Icon::FA);
             });
         }
     });
+
+    // đăng ký học thử
+    $(document).on('click', '#btn_reg_try', function () {
+        var _csrf = $("meta[name='csrf-param']").attr('content');
+        var user_id = '<?php echo $user_id ?>';
+        var course_id = '<?php echo $course['id'] ?>';
+
+        if (user_id == 0) {
+            BootstrapDialog.show({
+                title: 'Thông báo',
+                message: 'Bạn phải đăng nhập để đăng ký học thử khóa học!'
+            });
+        } else {
+            $.ajax({
+                method: 'POST',
+                data: {'user_id' : user_id, 'course_id' : course_id, '_csrf' : _csrf},
+                url: '<?php echo Url::toRoute(['/course/try-register']) ?>',
+                success: function (data) {
+                    var res = JSON.parse(data);
+                    BootstrapDialog.show({
+                        title: res.code,
+                        message: res.message
+                    })
+                }
+            });
+        }
+    });
+
 </script>

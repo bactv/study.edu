@@ -62,9 +62,9 @@ function charging() {
                 var res = JSON.parse(data);
                 var title = '';
                 if (res.status != 200) {
-                    title = 'Error!';
+                    title = 'Thông báo';
                 } else {
-                    title = 'Success';
+                    title = 'Thông báo';
                 }
                 BootstrapDialog.show({
                     title: title,

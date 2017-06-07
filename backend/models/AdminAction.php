@@ -32,7 +32,7 @@ class AdminAction extends \common\models\AdminActionBase
      */
     public static function getAllAdminActions($conditions = array())
     {
-        return self::find()->where($conditions)->asArray()->all();
+        return self::find()->where($conditions)->all();
     }
 
     /**

@@ -47,6 +47,7 @@ $data = (array)json_decode($attempt['data']);
                     <ul class="box_answer">
                         <?php foreach ($arr_ans as $k2 => $ans) {
                         $arr_label = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+                        $html = preg_replace("/<\\/?" . 'p' . "(.|\\s)*?>/",'',$ans->content);
                         $checked = '';
                         if (isset($data['results']->{$question['id']}->{'check'}) && $data['results']->{$question['id']}->{'ans_id'} == $ans['ans_id']) {
                             $checked = 'checked';
@@ -56,7 +57,7 @@ $data = (array)json_decode($attempt['data']);
                         }
                         ?>
                         <li>
-                            <input type="radio" <?php echo $checked ?> name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $ans['content'] ?></span>
+                            <input type="radio" <?php echo $checked ?> name="<?php echo $question['id'] ?>" value="<?php echo $ans['ans_id'] ?>"><span id="ans_name"><span id="stt"><?php echo $arr_label[$k2] . '. ' ?></span> <?php echo $html ?></span>
                         </li>
                         <?php } ?>
                     </ul>
@@ -69,7 +70,7 @@ $data = (array)json_decode($attempt['data']);
                         ?>
                         <span class="w3-text-<?php echo $text_color ?>" style="margin-right: 10px"><?php echo $icon . ' ' . $vl?></span>
                         <span class="w3-text-teal"><a href="javascript:void(0)" id="<?php echo $question['id'] ?>" class="btn_show_solution">Xem đáp án</a></span>
-                        <?php if (!empty(Yii::$app->user->identity->getId())) { ?>
+                        <?php if (!empty(Yii::$app->user->identity)) { ?>
                             <span class="w3-text-blue w3-right">
                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#modal_report_question_<?php echo $question['id'] ?>" data-question_id="<?php echo $question['id'] ?>"><?php echo Icon::show('commenting-o') . ' Báo cáo' ?></a>
                             </span>
@@ -118,7 +119,7 @@ $data = (array)json_decode($attempt['data']);
                 <p id="title">Đề thi khác</p>
                 <ul style="text-align: left">
                     <?php foreach ($other_quiz as $q) { ?>
-                        <li style="padding: 0 0 10px 0;"><a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($q['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $q['id'])]) ?>"><?php echo $quiz['name'] ?></a></li>
+                        <li style="padding: 0 0 10px 0;"><a href="<?php echo Url::toRoute(['/chi-tiet/' . Utility::rewrite($q['name']) . '-cn' . Utility::encrypt_decrypt('encrypt', $q['id'])]) ?>"><?php echo $q['name'] ?></a></li>
                     <?php }  ?>
                     <li>...</li>
                 </ul>
@@ -207,7 +208,7 @@ $data = (array)json_decode($attempt['data']);
     function report_question(selector) {
         var question_id = $(selector).data('question_id');
         var content = $("#ct_rp_" + question_id).val();
-        var user_id = '<?php echo Yii::$app->user->identity->getId() ?>';
+        var user_id = '<?php echo !empty(Yii::$app->user->identity) ? Yii::$app->user->identity->getId() : 0 ?>';
         var quiz_id = '<?php echo $quiz['id'] ?>';
         var _csrf = $("meta[name='csrf-param']").attr('content');
         if (content == '') {
@@ -240,7 +241,7 @@ $data = (array)json_decode($attempt['data']);
 
                 if (student_id == 0) {
                     BootstrapDialog.show({
-                        title: 'Error!',
+                        title: 'Thông báo',
                         message: 'Bạn cần đăng nhập để bình chọn cho đề thi này.'
                     });
                     return false;

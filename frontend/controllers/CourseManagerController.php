@@ -7,8 +7,11 @@
  */
 namespace frontend\controllers;
 use common\components\Utility;
+use common\models\search\CourseNewsSearch;
+use frontend\components\Notification;
 use frontend\components\TeacherManagerController;
 use frontend\models\Course;
+use frontend\models\CourseNews;
 use frontend\models\CourseTeacher;
 use frontend\models\Lesson;
 use frontend\models\LessonDocument;
@@ -223,11 +226,11 @@ class CourseManagerController extends TeacherManagerController
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstances($model, 'file');
             if ($model->upload_file($lesson->course_id, $lesson_id, 'document')) {
-                foreach ($model->file as $file) {
+                foreach ($model->file as $k => $file) {
                     $model2 = new LessonDocument();
                     $model2->lesson_id = $lesson_id;
                     $model2->document_name = Utility::rewrite($file->baseName) . '.' . $file->extension;
-
+                    $model2->file = $file;
                     if (!$model2->save()) {
                         throw new Exception("Có lỗi xảy ra");
                     }
@@ -312,5 +315,87 @@ class CourseManagerController extends TeacherManagerController
             throw new NotFoundHttpException("Trang bạn yêu cầu không tìm thấy hoặc bạn không có quyền");
         }
         return $model;
+    }
+
+    public function actionNews()
+    {
+        if (!isset($_GET['course_id'])) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại.");
+        }
+        $course = Course::findOne(['id' => $_GET['course_id']]);
+        $searchModel = new CourseNewsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('news/index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'course' => $course
+        ]);
+    }
+
+    public function actionCreateNews()
+    {
+        if (!isset($_GET['course_id'])) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại.");
+        }
+        $model = new CourseNews();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->course_id = $_GET['course_id'];
+            $model->user_id = 0;
+            if ($model->save()) {
+
+                // thông báo notification đến học sinh trong khóa học
+                Notification::create_notification_in_course($_GET['course_id'], $model->id, Yii::$app->user->identity->getId());
+
+                return $this->redirect(['news/view', 'id' => $model->id]);
+            } else {
+                return $this->render('news/create', [
+                    'model' => $model,
+                    'course_id' => $_GET['course_id']
+                ]);
+            }
+        } else {
+            return $this->render('news/create', [
+                'model' => $model,
+                'course_id' => $_GET['course_id']
+            ]);
+        }
+    }
+
+    public function actionUpdateNews($news_id)
+    {
+        if (!isset($_GET['course_id'])) {
+            throw new NotFoundHttpException("Trang bạn yêu cầu không tồn tại.");
+        }
+        $model = new CourseNews();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->course_id = $_GET['course_id'];
+            $model->user_id = 0;
+            if ($model->save()) {
+
+                // thông báo notification đến học sinh trong khóa học
+                Notification::create_notification_in_course($_GET['course_id'], $model->id, Yii::$app->user->identity->getId());
+
+                return $this->redirect(['news/view', 'id' => $model->id]);
+            } else {
+                return $this->render('news/create', [
+                    'model' => $model,
+                    'course_id' => $_GET['course_id']
+                ]);
+            }
+        } else {
+            return $this->render('news/create', [
+                'model' => $model,
+                'course_id' => $_GET['course_id']
+            ]);
+        }
+    }
+
+    public function actionViewNews($id)
+    {
+        $model = CourseNews::findOne(['id' => $id]);
+        return $this->render('news/view', ['model' => $model]);
     }
 }

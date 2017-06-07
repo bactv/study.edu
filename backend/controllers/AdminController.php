@@ -109,9 +109,6 @@ class AdminController extends BackendController
 
         $request = Yii::$app->request->post();
         if ($model->load($request) && $model->validate()) {
-            var_dump($model);
-            var_dump($request);die();
-            die();
             $model->birthday = Utility::formatDataTime($model->birthday, '/', '-');
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
             if (!empty($request['Admin']['group_ids'])) {

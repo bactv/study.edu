@@ -45,9 +45,7 @@ class NotificationController extends Controller
         $model->type = Yii::$app->params['type_notification']['send_request_course'];
         $model->created_time = date('Y-m-d H:i:s');
         $model->status = 0;
-        var_dump($model->save());
-        var_dump($model->getErrors());
-        echo "OK";
+        $model->save();
         Yii::$app->end();
     }
 }

@@ -63,22 +63,6 @@ $this->params['menu'] = [
             </div>
             <div class="col-md-3 item">
                 <?php
-                echo '<label class="control-label">Loại phản hồi</label>';
-                echo \kartik\select2\Select2::widget([
-                    'name' => 'notification_type',
-                    'value' => $notification_type,
-                    'data' => Yii::$app->params['type_notification_name'],
-                    'options' => [
-                        'prompt' => 'Loại phản hồi',
-                    ],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]);
-                ?>
-            </div>
-            <div class="col-md-3 item">
-                <?php
                 echo '<label class="control-label">Trạng thái</label>';
                 echo \kartik\select2\Select2::widget([
                     'name' => 'notification_status',
@@ -145,6 +129,9 @@ $this->params['menu'] = [
                 'label' => 'Người gửi',
                 'format' => 'raw',
                 'value' => function ($model) {
+                    if ($model['sender_id'] == 0) {
+                        return 'Hệ thống';
+                    }
                     return \backend\models\User::findOne(['id' => $model['sender_id']])['username'];
                 },
                 'headerOptions' => ['style'=>'text-align: center; vertical-align: middle;'],

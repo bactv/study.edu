@@ -17,7 +17,7 @@ class ReportController extends BackendController
     public function actionAccessStatistic()
     {
         $request = Yii::$app->request->get();
-        $from_date = date('d/m/Y', strtotime(date('d/m/Y') . ' -1 days'));
+        $from_date = date('d/m/Y', strtotime(date('Y-m-d') . ' -1 days'));
         $to_date = date('d/m/Y');
 
         $daterange = isset($request{'daterange'}) ? $request['daterange'] : "$from_date - $to_date";
@@ -29,8 +29,12 @@ class ReportController extends BackendController
                 $from_date = Utility::formatDataTime(trim($ex[0]), '/', '-', false);
                 $to_date = Utility::formatDataTime(trim($ex[1]), '/', '-', false);
             }
+        } else {
+            $from_date = Utility::formatDataTime(trim($from_date), '/', '-', false);
+            $to_date = Utility::formatDataTime(trim($to_date), '/', '-', false);
         }
-        if ($from_date == $to_date) {
+
+        if (strtotime($from_date) == strtotime($to_date)) {
             $curr_hours = date('H');
             if (strtotime($from_date) < strtotime(date('Y-m-d'))) {
                 $curr_hours = 23;
@@ -44,8 +48,6 @@ class ReportController extends BackendController
                 ];
             }
         } else {
-            $from_date = Utility::formatDataTime($from_date, '/', '-', false);
-            $to_date = Utility::formatDataTime($to_date, '/', '-', false);
             foreach (Utility::getDatesFromRange($from_date, $to_date) as $date) {
                 $results[$date] = [
                     'total_visits' => 0,
@@ -54,16 +56,15 @@ class ReportController extends BackendController
                 ];
             }
         }
-
         $datas = [];
         foreach ($results as $k => $item) {
-            if ($from_date == $to_date) {
+            if (strtotime($from_date) == strtotime($to_date)) {
                 $start = date('Y-m-d ' . $k . ':00:00', strtotime($from_date));
                 $end = date('Y-m-d ' . $k . ':59:59', strtotime($from_date));
                 $tmp = $k . ':00';
             } else {
-                $start = date('Y-m-d', strtotime($from_date)) . ' 00:00:00';
-                $end = date('Y-m-d', strtotime($to_date)) . ' 23:59:59';
+                $start = date('Y-m-d', strtotime($k)) . ' 00:00:00';
+                $end = date('Y-m-d', strtotime($k)) . ' 23:59:59';
                 $tmp = Utility::formatDataTime($k, '-', '/', false);
             }
             $data = Report::access_statistic($start, $end);
@@ -96,8 +97,11 @@ class ReportController extends BackendController
                 $from_date = Utility::formatDataTime(trim($ex[0]), '/', '-', false);
                 $to_date = Utility::formatDataTime(trim($ex[1]), '/', '-', false);
             }
+        } else {
+            $from_date = Utility::formatDataTime(trim($from_date), '/', '-', false);
+            $to_date = Utility::formatDataTime(trim($to_date), '/', '-', false);
         }
-        if ($from_date == $to_date) {
+        if (strtotime($from_date) == strtotime($to_date)) {
             $curr_hours = date('H');
             if (strtotime($from_date) < strtotime(date('Y-m-d'))) {
                 $curr_hours = 23;
@@ -111,8 +115,6 @@ class ReportController extends BackendController
                 ];
             }
         } else {
-            $from_date = Utility::formatDataTime($from_date, '/', '-', false);
-            $to_date = Utility::formatDataTime($to_date, '/', '-', false);
             foreach (Utility::getDatesFromRange($from_date, $to_date) as $date) {
                 $results[$date] = [
                     'total_subscribe' => 0,
@@ -124,13 +126,13 @@ class ReportController extends BackendController
 
         $datas = [];
         foreach ($results as $k => $item) {
-            if ($from_date == $to_date) {
+            if (strtotime($from_date) == strtotime($to_date)) {
                 $start = date('Y-m-d ' . $k . ':00:00', strtotime($from_date));
                 $end = date('Y-m-d ' . $k . ':59:59', strtotime($from_date));
                 $tmp = $k . ':00';
             } else {
-                $start = date('Y-m-d', strtotime($from_date)) . ' 00:00:00';
-                $end = date('Y-m-d', strtotime($to_date)) . ' 23:59:59';
+                $start = date('Y-m-d', strtotime($k)) . ' 00:00:00';
+                $end = date('Y-m-d', strtotime($k)) . ' 23:59:59';
                 $tmp = Utility::formatDataTime($k, '-', '/', false);
             }
             $data = Report::total_statistic($start, $end);

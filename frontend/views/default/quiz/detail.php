@@ -69,6 +69,7 @@ $user_id = isset(Yii::$app->user->identity->id) ? Yii::$app->user->identity->get
         text-align: justify;
         padding: 10px 10px 40px 10px;
         line-height: 30px;
+        text-align: center;
     }
     .quiz_detail .quiz_info{
         text-align: center;

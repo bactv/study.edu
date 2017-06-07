@@ -13,7 +13,7 @@
     #publisher {
         width: 90%;
         height: 450px;
-        border: 2px solid #00AA88;
+        border: 5px solid #00AA88;
         margin: 50px auto;
     }
     .subscriber2 {
@@ -69,6 +69,7 @@
 //            }
 //        });
         initializeSession();
+        startArchive();
     });
 
     function initializeSession() {
@@ -98,6 +99,11 @@
                 console.log('There was an error connecting to the session: ', error.code, error.message);
             }
         });
+    }
+
+    function startArchive() {
+        var url = "<?php echo \yii\helpers\Url::toRoute(['/lesson/start-archive', 'lesson_id' => $lesson['id']]) ?>";
+        $.post(url + '/start/' + sessionId);
     }
 </script>
 
